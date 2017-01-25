@@ -1,0 +1,42 @@
+[02-Jun-2016 09:49:08 America/Guayaquil] PHP Fatal error:  Uncaught exception 'phpmailerException' with message 'SMTP Error: Data not accepted.' in C:\Winginx\home\nginx.educalinks.com.ec\public_html\includes\common\phpmailer\class.phpmailer.php:757
+Stack trace:
+#0 C:\Winginx\home\nginx.educalinks.com.ec\public_html\includes\common\phpmailer\class.phpmailer.php(576): PHPMailer->SmtpSend('Date: Thu, 2 Ju...', '--b1_a4eede1f57...')
+#1 C:\Winginx\home\nginx.educalinks.com.ec\public_html\modulos\finan\verDocumentosAutorizados\controller.php(442): PHPMailer->Send()
+#2 C:\Winginx\home\nginx.educalinks.com.ec\public_html\modulos\finan\verDocumentosAutorizados\controller.php(450): handler()
+#3 {main}
+  thrown in C:\Winginx\home\nginx.educalinks.com.ec\public_html\includes\common\phpmailer\class.phpmailer.php on line 757
+[02-Jun-2016 09:49:14 America/Guayaquil] PHP Fatal error:  Uncaught exception 'phpmailerException' with message 'SMTP Error: Data not accepted.' in C:\Winginx\home\nginx.educalinks.com.ec\public_html\includes\common\phpmailer\class.phpmailer.php:757
+Stack trace:
+#0 C:\Winginx\home\nginx.educalinks.com.ec\public_html\includes\common\phpmailer\class.phpmailer.php(576): PHPMailer->SmtpSend('Date: Thu, 2 Ju...', '--b1_9645f7038d...')
+#1 C:\Winginx\home\nginx.educalinks.com.ec\public_html\modulos\finan\verDocumentosAutorizados\controller.php(442): PHPMailer->Send()
+#2 C:\Winginx\home\nginx.educalinks.com.ec\public_html\modulos\finan\verDocumentosAutorizados\controller.php(450): handler()
+#3 {main}
+  thrown in C:\Winginx\home\nginx.educalinks.com.ec\public_html\includes\common\phpmailer\class.phpmailer.php on line 757
+[07-Jun-2016 08:24:19 America/Guayaquil] PHP Fatal error:  Uncaught exception 'phpmailerException' with message 'Invalid address: ' in C:\Winginx\home\nginx.educalinks.com.ec\public_html\includes\common\phpmailer\class.phpmailer.php:462
+Stack trace:
+#0 C:\Winginx\home\nginx.educalinks.com.ec\public_html\includes\common\phpmailer\class.phpmailer.php(440): PHPMailer->AddAnAddress('ReplyTo', NULL, NULL)
+#1 C:\Winginx\home\nginx.educalinks.com.ec\public_html\modulos\finan\verDocumentosAutorizados\controller.php(425): PHPMailer->AddReplyTo(NULL, NULL)
+#2 C:\Winginx\home\nginx.educalinks.com.ec\public_html\modulos\finan\verDocumentosAutorizados\controller.php(450): handler()
+#3 {main}
+  thrown in C:\Winginx\home\nginx.educalinks.com.ec\public_html\includes\common\phpmailer\class.phpmailer.php on line 462
+[07-Jun-2016 11:22:19 America/Guayaquil] PHP Fatal error:  Uncaught exception 'phpmailerException' with message 'SMTP Error: Data not accepted.' in C:\Winginx\home\nginx.educalinks.com.ec\public_html\includes\common\phpmailer\class.phpmailer.php:757
+Stack trace:
+#0 C:\Winginx\home\nginx.educalinks.com.ec\public_html\includes\common\phpmailer\class.phpmailer.php(576): PHPMailer->SmtpSend('Date: Tue, 7 Ju...', '--b1_9bbf9eab6f...')
+#1 C:\Winginx\home\nginx.educalinks.com.ec\public_html\modulos\finan\verDocumentosAutorizados\controller.php(442): PHPMailer->Send()
+#2 C:\Winginx\home\nginx.educalinks.com.ec\public_html\modulos\finan\verDocumentosAutorizados\controller.php(450): handler()
+#3 {main}
+  thrown in C:\Winginx\home\nginx.educalinks.com.ec\public_html\includes\common\phpmailer\class.phpmailer.php on line 757
+[14-Jun-2016 10:42:36 America/Guayaquil] PHP Fatal error:  Uncaught exception 'phpmailerException' with message 'Invalid address: ' in C:\Winginx\home\nginx.educalinks.com.ec\public_html\includes\common\phpmailer\class.phpmailer.php:462
+Stack trace:
+#0 C:\Winginx\home\nginx.educalinks.com.ec\public_html\includes\common\phpmailer\class.phpmailer.php(440): PHPMailer->AddAnAddress('ReplyTo', NULL, NULL)
+#1 C:\Winginx\home\nginx.educalinks.com.ec\public_html\modulos\finan\verDocumentosAutorizados\controller.php(427): PHPMailer->AddReplyTo(NULL, NULL)
+#2 C:\Winginx\home\nginx.educalinks.com.ec\public_html\modulos\finan\verDocumentosAutorizados\controller.php(452): handler()
+#3 {main}
+  thrown in C:\Winginx\home\nginx.educalinks.com.ec\public_html\includes\common\phpmailer\class.phpmailer.php on line 462
+[14-Jun-2016 11:07:06 America/Guayaquil] PHP Fatal error:  Uncaught exception 'phpmailerException' with message 'Invalid address: ' in C:\Winginx\home\nginx.educalinks.com.ec\public_html\includes\common\phpmailer\class.phpmailer.php:462
+Stack trace:
+#0 C:\Winginx\home\nginx.educalinks.com.ec\public_html\includes\common\phpmailer\class.phpmailer.php(440): PHPMailer->AddAnAddress('ReplyTo', NULL, NULL)
+#1 C:\Winginx\home\nginx.educalinks.com.ec\public_html\modulos\finan\verDocumentosAutorizados\controller.php(427): PHPMailer->AddReplyTo(NULL, NULL)
+#2 C:\Winginx\home\nginx.educalinks.com.ec\public_html\modulos\finan\verDocumentosAutorizados\controller.php(452): handler()
+#3 {main}
+  thrown in C:\Winginx\home\nginx.educalinks.com.ec\public_html\includes\common\phpmailer\class.phpmailer.php on line 462

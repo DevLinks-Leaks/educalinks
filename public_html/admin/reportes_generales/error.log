@@ -1,0 +1,1 @@
+[08-Jun-2016 09:54:01 America/Guayaquil] PHP Fatal error:  Using $this when not in object context in C:\Winginx\home\nginx.educalinks.com.ec\public_html\admin\reportes_generales\usuarios_claves_alumnos.php on line 67

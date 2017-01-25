@@ -1,0 +1,8 @@
+[15-Jun-2016 13:02:33 America/Guayaquil] PHP Fatal error:  Uncaught exception 'PHPExcel_Exception' with message 'Cell coordinate can not be zero-length string' in C:\Winginx\home\nginx.educalinks.com.ec\public_html\framework\PHPExcel\Classes\PHPExcel\Cell.php:555
+Stack trace:
+#0 C:\Winginx\home\nginx.educalinks.com.ec\public_html\framework\PHPExcel\Classes\PHPExcel\Worksheet.php(1289): PHPExcel_Cell::coordinateFromString('')
+#1 C:\Winginx\home\nginx.educalinks.com.ec\public_html\framework\PHPExcel\Classes\PHPExcel\Worksheet.php(1692): PHPExcel_Worksheet->cellExists(NULL)
+#2 C:\Winginx\home\nginx.educalinks.com.ec\public_html\admin\actas\cuadro_cali_final_excel_new.php(788): PHPExcel_Worksheet->mergeCells('BN7:BM7')
+#3 C:\Winginx\home\nginx.educalinks.com.ec\public_html\admin\actas\cuadro_cali_final_excel_new.php(361): genera_detalle(Object(PHPExcel), 65, 7, 'PROMEDIO RENDIM...', 0, Array)
+#4 {main}
+  thrown in C:\Winginx\home\nginx.educalinks.com.ec\public_html\framework\PHPExcel\Classes\PHPExcel\Cell.php on line 555

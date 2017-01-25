@@ -1,0 +1,8 @@
+[13-Jun-2016 12:59:30 America/Guayaquil] PHP Fatal error:  Uncaught exception 'PHPExcel_Exception' with message 'Invalid cell coordinate @33' in C:\Winginx\home\nginx.educalinks.com.ec\public_html\framework\PHPExcel\Classes\PHPExcel\Cell.php:558
+Stack trace:
+#0 C:\Winginx\home\nginx.educalinks.com.ec\public_html\framework\PHPExcel\Classes\PHPExcel\Worksheet.php(1227): PHPExcel_Cell::coordinateFromString('@33')
+#1 C:\Winginx\home\nginx.educalinks.com.ec\public_html\framework\PHPExcel\Classes\PHPExcel\Worksheet.php(1205): PHPExcel_Worksheet->_createNewCell('@33')
+#2 C:\Winginx\home\nginx.educalinks.com.ec\public_html\framework\PHPExcel\Classes\PHPExcel\Worksheet.php(1110): PHPExcel_Worksheet->getCellByColumnAndRow(-1, 33)
+#3 C:\Winginx\home\nginx.educalinks.com.ec\public_html\docentes\actas\acta_nota_parc_mate_excel_new.php(537): PHPExcel_Worksheet->setCellValueByColumnAndRow(-1, 33, 'Promedio del Cu...')
+#4 {main}
+  thrown in C:\Winginx\home\nginx.educalinks.com.ec\public_html\framework\PHPExcel\Classes\PHPExcel\Cell.php on line 558

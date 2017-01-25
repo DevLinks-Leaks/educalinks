@@ -1,0 +1,44 @@
+select * from cursos_paralelos_materias where mate_codi=80111 and curs_para_codi in (select curs_para_codi from cursos_paralelo where peri_codi=2)
+select * from notas where alum_curs_para_mate_codi in
+(select alum_curs_para_mate_codi from alumnos_cursos_paralelos_materias where curs_para_mate_codi in
+(select curs_para_mate_codi from cursos_paralelos_materias where mate_codi=80111 and curs_para_codi in (select curs_para_codi from cursos_paralelo where peri_codi=2)))
+
+--1.
+delete from Educalinks_uemag..notas where alum_curs_para_mate_codi in 
+	 (select alum_curs_para_mate_codi from Educalinks_uemag..alumnos_cursos_paralelos_materias where curs_para_mate_codi in
+	 (select curs_para_mate_codi from Educalinks_uemag..cursos_paralelos_materias where mate_codi=80111 and curs_para_codi in 
+	 (select curs_para_codi from Educalinks_uemag..cursos_paralelo where peri_codi=2))) 
+
+--2.
+delete from Educalinks_uemag..alumnos_cursos_paralelos_materias where curs_para_mate_codi in
+	 (select curs_para_mate_codi from Educalinks_uemag..cursos_paralelos_materias where mate_codi=80111 and curs_para_codi in 
+	 (select curs_para_codi from Educalinks_uemag..cursos_paralelo where peri_codi=2))
+
+--3.
+delete from Educalinks_uemag..cursos_paralelos_materias where mate_codi=80111 and curs_para_codi in 
+	 (select curs_para_codi from Educalinks_uemag..cursos_paralelo where peri_codi=2)
+
+--4.
+SET IDENTITY_INSERT Educalinks_uemag..cursos_paralelos_materias OFF;  
+insert into Educalinks_uemag..cursos_paralelos_materias
+select * from Educalinks_uemag_bk..cursos_paralelos_materias
+where mate_codi=80111 and curs_para_codi in 
+	 (select curs_para_codi from Educalinks_uemag_bk..cursos_paralelo where peri_codi=2)
+SET IDENTITY_INSERT Educalinks_uemag..cursos_paralelos_materias ON;  
+--5.
+SET IDENTITY_INSERT Educalinks_uemag..alumnos_cursos_paralelos_materias OFF;
+insert into Educalinks_uemag..alumnos_cursos_paralelos_materias
+select * from Educalinks_uemag_bk..alumnos_cursos_paralelos_materias
+where curs_para_mate_codi in
+	 (select curs_para_mate_codi from Educalinks_uemag_bk..cursos_paralelos_materias where mate_codi=80111 and curs_para_codi in 
+	 (select curs_para_codi from Educalinks_uemag_bk..cursos_paralelo where peri_codi=2))
+SET IDENTITY_INSERT Educalinks_uemag..alumnos_cursos_paralelos_materias ON;
+--6.
+--SET IDENTITY_INSERT Educalinks_uemag..notas OFF;
+insert into Educalinks_uemag..notas
+select * from Educalinks_uemag_bk..notas
+where alum_curs_para_mate_codi in 
+	 (select alum_curs_para_mate_codi from Educalinks_uemag_bk..alumnos_cursos_paralelos_materias where curs_para_mate_codi in
+	 (select curs_para_mate_codi from Educalinks_uemag_bk..cursos_paralelos_materias where mate_codi=80111 and curs_para_codi in 
+	 (select curs_para_codi from Educalinks_uemag_bk..cursos_paralelo where peri_codi=2))) 
+--SET IDENTITY_INSERT Educalinks_uemag..notas ON;

@@ -1,0 +1,21 @@
+[13-May-2016 14:58:53 America/Guayaquil] PHP Fatal error:  Uncaught exception 'PHPExcel_Exception' with message 'File  not found!' in C:\Winginx\home\nginx.educalinks.com.ec\public_html\framework\PHPExcel\Classes\PHPExcel\Worksheet\Drawing.php:114
+Stack trace:
+#0 C:\Winginx\home\nginx.educalinks.com.ec\public_html\admin\cursos_paralelo_nomina_distrito_main_view_xls.php(227): PHPExcel_Worksheet_Drawing->setPath(NULL)
+#1 {main}
+  thrown in C:\Winginx\home\nginx.educalinks.com.ec\public_html\framework\PHPExcel\Classes\PHPExcel\Worksheet\Drawing.php on line 114
+[13-May-2016 14:58:54 America/Guayaquil] PHP Fatal error:  Uncaught exception 'PHPExcel_Exception' with message 'File  not found!' in C:\Winginx\home\nginx.educalinks.com.ec\public_html\framework\PHPExcel\Classes\PHPExcel\Worksheet\Drawing.php:114
+Stack trace:
+#0 C:\Winginx\home\nginx.educalinks.com.ec\public_html\admin\cursos_paralelo_nomina_distrito_main_view_xls.php(227): PHPExcel_Worksheet_Drawing->setPath(NULL)
+#1 {main}
+  thrown in C:\Winginx\home\nginx.educalinks.com.ec\public_html\framework\PHPExcel\Classes\PHPExcel\Worksheet\Drawing.php on line 114
+[13-May-2016 14:58:54 America/Guayaquil] PHP Fatal error:  Uncaught exception 'PHPExcel_Exception' with message 'File  not found!' in C:\Winginx\home\nginx.educalinks.com.ec\public_html\framework\PHPExcel\Classes\PHPExcel\Worksheet\Drawing.php:114
+Stack trace:
+#0 C:\Winginx\home\nginx.educalinks.com.ec\public_html\admin\cursos_paralelo_nomina_distrito_main_view_xls.php(227): PHPExcel_Worksheet_Drawing->setPath(NULL)
+#1 {main}
+  thrown in C:\Winginx\home\nginx.educalinks.com.ec\public_html\framework\PHPExcel\Classes\PHPExcel\Worksheet\Drawing.php on line 114
+[16-May-2016 15:40:58 America/Guayaquil] PHP Fatal error:  Uncaught exception 'PHPExcel_Exception' with message 'Invalid character found in sheet title' in C:\Winginx\home\nginx.educalinks.com.ec\public_html\framework\PHPExcel\Classes\PHPExcel\Worksheet.php:467
+Stack trace:
+#0 C:\Winginx\home\nginx.educalinks.com.ec\public_html\framework\PHPExcel\Classes\PHPExcel\Worksheet.php(841): PHPExcel_Worksheet::_checkSheetTitle(NULL)
+#1 C:\Winginx\home\nginx.educalinks.com.ec\public_html\admin\cursos_paralelo_listas_main_view_xls.php(154): PHPExcel_Worksheet->setTitle(NULL)
+#2 {main}
+  thrown in C:\Winginx\home\nginx.educalinks.com.ec\public_html\framework\PHPExcel\Classes\PHPExcel\Worksheet.php on line 467
