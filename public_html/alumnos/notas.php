@@ -61,7 +61,7 @@
 											<td width="87%"><?= $row_peri_dist_peri_view['peri_dist_deta'];?> </td>
 											<td width="13%">
 											<?php
-												if($_SESSION['directorio']=='duplos' or $_SESSION['directorio']=='ecobab' or $_SESSION['directorio']=='ecobabvesp' or $_SESSION['directorio']=='delfos' or $_SESSION['directorio']=='delfosvesp'  or $_SESSION['demo']=='demo'){
+												if($_SESSION['directorio']=='duplos' or $_SESSION['directorio']=='ecobab' or $_SESSION['directorio']=='ecobabvesp' or $_SESSION['directorio']=='delfos' or $_SESSION['directorio']=='delfosvesp'  or $_SESSION['demo']=='demo' or $_SESSION['directorio']=='liceopanamericano' or $_SESSION['directorio']=='liceopanamericanosur'){
 											?>
 												<a  class="btn btn-success" 
 												href="<?= $url_libreta?>?peri_dist_codi=<?= $row_peri_dist_peri_view['peri_dist_codi'];?>&alum_codi=<?= $_SESSION['alum_codi']?>&curs_para_codi=<?= $_SESSION['curs_para_codi']?>">
