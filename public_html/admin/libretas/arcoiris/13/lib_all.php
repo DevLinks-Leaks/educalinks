@@ -267,9 +267,11 @@ while ($alumno = sqlsrv_fetch_array($alumnos_view))
 								}
 								break;
 								case "D":
+								if ($row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]>0)
 								$calificaciones.= notas_prom_quali($_SESSION['peri_codi'],'D',$row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]);
 								break;
 								case "P":
+								if ($row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]>0)
 								$calificaciones.= notas_prom_quali($_SESSION['peri_codi'],'P',$row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]);
 								break;
 							}

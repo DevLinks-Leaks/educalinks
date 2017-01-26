@@ -542,4 +542,11 @@ function ejecutar_submit(frm){
 }
 </script><!-- InstanceEndEditable -->
 </body>
+
+<script>
+
+var myVar=setInterval(function () {myTimer()}, 120000);
+
+
+</script>
 <!-- InstanceEnd --></html>
