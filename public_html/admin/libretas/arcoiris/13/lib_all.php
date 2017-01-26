@@ -397,7 +397,9 @@ while ($alumno = sqlsrv_fetch_array($alumnos_view))
 			</style>
 			<br/><br/>
 			{$calificaciones}
-			<br/><br/>
+			<br/>
+			<label style="font-size: 12 px;">Revise y comunique a SECRETARIA cualquier novedad, en los 5 días siguientes a la fecha de entrega de notas.</label>
+			<br/>
 			<table width="99%">
 			<tr>
 			<td width="20%">{$tabla_comportamiento}</td>
