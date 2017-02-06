@@ -23,6 +23,12 @@ switch($opc){
 		
 	break;
 	case 'add':
+		$alum_resp_form_banc_tarj_nume = $_POST['alum_resp_form_banc_tarj_nume'];
+		/*Codigo de encriptado de Número de tarjeta de crédito*/
+		$iv = base64_decode($_SESSION['clie_iv']);
+		$alum_resp_form_banc_tarj_nume_encrypt = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $_SESSION['clie_key'],$alum_resp_form_banc_tarj_nume, MCRYPT_MODE_CBC, $iv);
+		$alum_resp_form_banc_tarj_nume_encrypt =base64_encode($alum_resp_form_banc_tarj_nume_encrypt);
+		/*FIN*/
 		$alum_fech_naci=substr($_POST['alum_fech_naci'],6,4)."".substr($_POST['alum_fech_naci'],3,2)."".substr($_POST['alum_fech_naci'],0,2);
 		$alum_fech_vcto=substr($_POST['alum_resp_form_fech_vcto'],6,4)."".substr($_POST['alum_resp_form_fech_vcto'],3,2)."".substr($_POST['alum_resp_form_fech_vcto'],0,2);
 		$sql_opc = "{call alum_add(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
@@ -54,7 +60,7 @@ switch($opc){
 							$_POST['alum_motivo_condicion'], 
 							$_POST['alum_resp_form_pago'], 
 							$_POST['alum_resp_form_banc_tarj'], 
-							$_POST['alum_resp_form_banc_tarj_nume'], 
+							$alum_resp_form_banc_tarj_nume_encrypt, 
 							$_POST['alum_resp_form_banc_tipo'], 
 							$_POST['alum_resp_form_cedu'], 
 							$_POST['alum_resp_form_tipo_iden'],
@@ -196,6 +202,17 @@ switch($opc){
 	break;
 	
 	case 'edi':
+		$alum_resp_form_banc_tarj_nume = $_POST['alum_resp_form_banc_tarj_nume'];
+		if(strpos($alum_resp_form_banc_tarj_nume, 'X') ===false){
+			/*Codigo de encriptado de Número de tarjeta de crédito*/
+			$iv = base64_decode($_SESSION['clie_iv']);
+			$alum_resp_form_banc_tarj_nume_encrypt = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $_SESSION['clie_key'], $alum_resp_form_banc_tarj_nume, MCRYPT_MODE_CBC, $iv);
+			$alum_resp_form_banc_tarj_nume_encrypt =base64_encode($alum_resp_form_banc_tarj_nume_encrypt);
+			/*FIN*/
+		}else{
+			$alum_resp_form_banc_tarj_nume_encrypt=null;
+		}
+		
 		$alum_fech_naci=substr($_POST['alum_fech_naci'],6,4)."".substr($_POST['alum_fech_naci'],3,2)."".substr($_POST['alum_fech_naci'],0,2);
 		$alum_fech_vcto=substr($_POST['alum_resp_form_fech_vcto'],6,4)."".substr($_POST['alum_resp_form_fech_vcto'],3,2)."".substr($_POST['alum_resp_form_fech_vcto'],0,2);
 		$sql_opc = "{call alum_upd(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
@@ -228,7 +245,7 @@ switch($opc){
 							$_POST['alum_motivo_condicion'], 
 							$_POST['alum_resp_form_pago'], 
 							$_POST['alum_resp_form_banc_tarj'], 
-							$_POST['alum_resp_form_banc_tarj_nume'], 
+							$alum_resp_form_banc_tarj_nume_encrypt, 
 							$_POST['alum_resp_form_banc_tipo'], 
 							$_POST['alum_resp_form_cedu'],
 							$_POST['alum_resp_form_tipo_iden'],  

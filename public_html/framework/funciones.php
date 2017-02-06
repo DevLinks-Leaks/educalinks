@@ -144,7 +144,7 @@
 						{	if ($_SESSION['ISBIEN_ALUM']=='NOTIN')
 								header("Location: ../index.php");
 							else
-								header("Location: actualizacion_datos.php");
+								header("Location: preinscripcion.php");
 						}
 					} 
 					else
@@ -165,6 +165,22 @@
 			$_SESSION['peri_codi']=$row_peri_acti_etap['peri_codi'];
 			$_SESSION['peri_deta']=$row_peri_acti_etap['peri_deta'];
 			$_SESSION['peri_ano']=$row_peri_acti_etap['peri_ano'];		
+		}
+	}
+	if (!function_exists('PreinscripcionActivo')) {
+		function PreinscripcionActivo($peri_codi){
+			include ('dbconf.php');
+			$params3 = array($peri_codi);
+			
+			$sql="{call preins_view(?)}";
+			$peri_acti_etap = sqlsrv_query($conn, $sql, $params3);  
+			$row_peri_acti_etap = sqlsrv_fetch_array($peri_acti_etap);
+			$_SESSION['peri_codi_dest']=$row_peri_acti_etap['peri_codi_dest'];		
+		}
+	}
+	if (!function_exists('creditCardMask')) {
+		function creditCardMask($credit_num,$start,$num_repeat){
+			return substr_replace($credit_num, str_repeat("X", $num_repeat), $start, $num_repeat);
 		}
 	}
 	if (!function_exists('Periodo_Distribucion_Peri_Codi')) {
@@ -533,7 +549,7 @@
 		}
 	}
 	if (!function_exists('pasarMayusculas'))
-	{   function pasarMayusculas($cadena)
+		{   function pasarMayusculas($cadena)
 		{   $cadena = strtoupper($cadena); 
 			$cadena = str_replace("á", "Á", $cadena); 
 			$cadena = str_replace("é", "É", $cadena); 
@@ -585,6 +601,24 @@
 			$cadena = str_replace("í", "&Iacute;", $cadena);
 			$cadena = str_replace("ó", "&Oacute;", $cadena);
 			$cadena = str_replace("ú", "&Uacute;", $cadena); 
+			return ($cadena); 
+		}
+	}
+	if (!function_exists('reemplazarTilde'))
+	{
+		function reemplazarTilde($cadena)
+		{   $cadena = str_replace("Ñ", "&Ntilde;", $cadena);
+			$cadena = str_replace("Á", "&Aacute;", $cadena);
+			$cadena = str_replace("É", "&Eacute;", $cadena);
+			$cadena = str_replace("Í", "&Iacute;", $cadena);
+			$cadena = str_replace("Ó", "&Oacute;", $cadena);
+			$cadena = str_replace("Ú", "&Uacute;", $cadena);
+			$cadena = str_replace("ñ", "&ntilde;", $cadena); 
+			$cadena = str_replace("á", "&aacute;", $cadena);
+			$cadena = str_replace("é", "&eacute;", $cadena);
+			$cadena = str_replace("í", "&iacute;", $cadena);
+			$cadena = str_replace("ó", "&oacute;", $cadena);
+			$cadena = str_replace("ú", "&uacute;", $cadena); 
 			return ($cadena); 
 		}
 	}

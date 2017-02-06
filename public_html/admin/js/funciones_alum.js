@@ -1,10 +1,58 @@
 function activar_boton(value){
-	if (value==0 )
+	var deuda = document.getElementById('total_deuda').value;
+	if (value==0 || deuda>0)
 		$('#btn_aplicar').prop('disabled', true);
 	else
 		$('#btn_aplicar').prop('disabled', false);
 }
+function alum_change_course (curs_para_codi,alum_curs_para_codi)
+{	$('#btn_curs_para_change').button('loading');
+	var data = new FormData();	
+	data.append('opc', 'alum_change_course');
+	data.append('alum_curs_para_codi', alum_curs_para_codi);
+	data.append('curs_para_codi', curs_para_codi);
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', 'script_alum.php' , true);
+	xhr.send(data);
+	xhr.onreadystatechange=function(){
+		if (xhr.readyState==4 && xhr.status==200)
+		{	obj = JSON.parse(xhr.responseText);
+			if (obj.error == "no")
+			{	$.growl.notice({ title: "Educalinks informa:",message: obj.mensaje });
+				$('#btn_curs_para_change').button('reset');
+				$('#ModalCambiarCurso').modal('hide');
+			}
+			else
+			{	$.growl.error({ title: "Educalinks informa:",message: obj.mensaje });
+				$('#btn_curs_para_change').button('reset');
+			}
+			
+		} 
+	}
+}
+function BuscarAlumnos(alum_codi,alum_apel,curs_para_codi)
+{	 document.getElementById('alum_main').innerHTML='<div align="center" style="height:100%;"><img src="../imagenes/ajax-loader.gif"/> Buscando registros...</div>';
+	var data = new FormData();	
+	data.append('alum_codi', alum_codi);
+	data.append('alum_apel', alum_apel);
+	data.append('curs_para_codi', curs_para_codi);
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', 'alumnos_main_lista.php' , true);
+	xhr.send(data);
+	xhr.onreadystatechange=function(){
+		if (xhr.readyState==4 && xhr.status==200)
+		{	document.getElementById('alum_main').innerHTML=xhr.responseText;
 
+		$('#alum_table').datatable({
+			pageSize: 30,
+			sort: [true,true, true, true, false],
+			filters: [false,false, false, false, false],
+			filterText: 'Buscar... '
+		}) ;
+
+		} 
+	}
+}
 function aplicar_estado(div,alum_curs_para_codi,alum_codi)
 {	
 	$('#btn_aplicar').button('loading');
@@ -29,7 +77,9 @@ function aplicar_estado(div,alum_curs_para_codi,alum_codi)
 			var json = JSON.parse(xmlhttp.responseText);
 			if (json.state=="success"){				
 				$.growl.notice({ title: "Educalinks informa:",message: alum_est_mensaje('add_alum_est_reg', true) });
-				$('#btn_aplicar').button('reset');				
+				$('#btn_aplicar').button('reset');
+				$('#ModalEstado').modal('hide');
+				BuscarAlumnos(document.getElementById('alum_codi_in').value,document.getElementById('alum_apel_in').value,document.getElementById('curs_para_codi_in').value);			
 			}else{
 				$.growl.error({ title: "Educalinks informa:",message: alum_est_mensaje('add_alum_est_reg', false) });
 				$('#btn_aplicar').button('reset');
@@ -104,6 +154,7 @@ function load_ajax_retiro(div,url,check,alum_codi,alum_curs_para_codi){
 				// $('#ModalMatri').modal('hide');
 			}
 			load_ajax_noload(div,'modal_estado_retiro_view.php','alum_codi='+alum_codi);
+			BuscarAlumnos(document.getElementById('alum_codi_in').value,document.getElementById('alum_apel_in').value,document.getElementById('curs_para_codi_in').value);
 		}
 	}
 	xmlhttp.open("POST",url,true);
@@ -938,53 +989,11 @@ function alum_curs_para_info (alum_curs_para_codi)
 			}
 			else
 				{	document.getElementById("estudiante_info").innerHTML = obj.mensaje;
-		}
-	} 
-}
-}
-function alum_change_course (curs_para_codi,alum_curs_para_codi)
-{	var data = new FormData();	
-	data.append('opc', 'alum_change_course');
-	data.append('alum_curs_para_codi', alum_curs_para_codi);
-	data.append('curs_para_codi', curs_para_codi);
-	var xhr = new XMLHttpRequest();
-	xhr.open('POST', 'script_alum.php' , true);
-	xhr.send(data);
-	xhr.onreadystatechange=function(){
-		if (xhr.readyState==4 && xhr.status==200)
-			{	obj = JSON.parse(xhr.responseText);
-				if (obj.error == "no")
-					{	$.growl.notice({ title: "Educalinks informa:",message: obj.mensaje });
 			}
-			else
-				{	$.growl.error({ title: "Educalinks informa:",message: obj.mensaje });
-		}
-	} 
+		} 
+	}
 }
-}
-function BuscarAlumnos(alum_codi,alum_apel,curs_para_codi)
-{	 document.getElementById('alum_main').innerHTML='<div align="center" style="height:100%;"><img src="../imagenes/ajax-loader.gif"/> Buscando registros...</div>';
-var data = new FormData();	
-data.append('alum_codi', alum_codi);
-data.append('alum_apel', alum_apel);
-data.append('curs_para_codi', curs_para_codi);
-var xhr = new XMLHttpRequest();
-xhr.open('POST', 'alumnos_main_lista.php' , true);
-xhr.send(data);
-xhr.onreadystatechange=function(){
-	if (xhr.readyState==4 && xhr.status==200)
-		{	document.getElementById('alum_main').innerHTML=xhr.responseText;
 
-		$('#alum_table').datatable({
-			pageSize: 30,
-			sort: [true,true, true, true, false],
-			filters: [false,false, false, false, false],
-			filterText: 'Buscar... '
-		}) ;
-
-} 
-}
-}
 function validarNI(strCedula,tipo_iden)
 {	
 	if (tipo_iden==3){

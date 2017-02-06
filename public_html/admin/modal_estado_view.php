@@ -120,6 +120,7 @@
 					</table>
 				</td>
 			</tr>
+			<?php if(!($alum_esta_info['esta_abre']=='MAT' or $alum_esta_info['esta_abre']=='OYE')){ ?>
 			<tr>
 				<td colspan="2">&nbsp;</td>
 			</tr>
@@ -136,7 +137,7 @@
 					</ul>
 				</td>
 			</tr>
-			
+			<? } ?>
 		</table>
 	</div>
 	<div class="row">&nbsp;
@@ -144,5 +145,5 @@
 </div>
 <div id='ModalMatri_footer' class="modal-footer">
 	<button id="btn_aplicar" type='button' class='btn btn-success' data-dismiss='modal' onclick="aplicar_estado('modal_estado_content','<?= $alum_curs_para_codi;?>','<?= $alum_esta_info['alum_codi'];?>');" disabled>Aplicar Estado</button>
-	<button type='button' class='btn btn-default' data-dismiss='modal'>Cerrar</button>
+	<button type='button' class='btn btn-default' data-dismiss='modal' >Cerrar</button>
 </div>

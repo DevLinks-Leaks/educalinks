@@ -437,7 +437,15 @@
 			<td colspan="2"><br/></td>
 			</tr>
 			<tr width="100%">
-				<td width="50%"></td>
+				<td width="50%" align="center" class="firma">
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					<br/>
+					__________________________________<br/>
+					Tutor(a)
+				</td>
 				<td width="50%" align="center" class="firma">
 					<img width="100" height="50" src="{$firma_foto}" />
 					__________________________________<br/>

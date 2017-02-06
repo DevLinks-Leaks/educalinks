@@ -8,7 +8,11 @@
 	xhr.open('POST', '../alumnos/script_set_alum.php' , true);
 	xhr.onreadystatechange=function()
 	{   if (xhr.readyState==4 && xhr.status==200)
-		{   window.location="index.php";
+		{   
+			if(xhr.responseText=='N')
+				window.location="index.php";
+			else
+				window.location="preinscripcion.php";
 		} 
 	};
 	xhr.send(data);

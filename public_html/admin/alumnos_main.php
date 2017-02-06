@@ -128,7 +128,7 @@
 									</div>
 								</div>
 								<div class="modal-footer">
-									<button type='button' class='btn btn-success' onclick="alum_change_course(document.getElementById('cmb_curs_para').value,document.getElementById('alum_curs_para_codi').value)">Cambiar</button>
+									<button id='btn_curs_para_change' type='button' class='btn btn-success' onclick="alum_change_course(document.getElementById('cmb_curs_para').value,document.getElementById('alum_curs_para_codi').value)">Cambiar</button>
 									<button type='button' class='btn btn-default' data-dismiss='modal'>Cerrar</button>
 								</div>
 							</div>
@@ -219,6 +219,14 @@
 													</td>
 													<td style="padding-top: 15px">
 														<a onclick="window.open('reportes_generales/autorizacion_fotos_pdf.php?alum_curs_para_codi='+document.getElementById('alum_curs_para_codi').value,'_blank')">Descargar</a>
+													</td>
+												</tr>
+												<tr>
+													<td width="75%" style="padding-top: 15px">
+														Autorización de débito <b>(El alumno debe estar registrado en un curso)</b>
+													</td>
+													<td style="padding-top: 15px">
+														<a onclick="window.open('reportes_generales/debito_pdf.php?alum_curs_para_codi='+document.getElementById('alum_curs_para_codi').value,'_blank')">Descargar</a>
 													</td>
 												</tr>
 											</table>

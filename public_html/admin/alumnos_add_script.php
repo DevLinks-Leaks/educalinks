@@ -26,6 +26,16 @@ if( $stmt === false ){
 	echo "Error in executing statement .\n";die( print_r( sqlsrv_errors(), true));
 } 
 $alum_view= sqlsrv_fetch_array($stmt);
+/*descencriptar numero tarjeta*/
+if($alum_view['alum_resp_form_banc_tarj_nume']!=null){
+	$alum_resp_form_banc_tarj_nume_dec=base64_decode($alum_view['alum_resp_form_banc_tarj_nume']);
+	$iv = base64_decode($_SESSION['clie_iv']);
+	$alum_resp_form_banc_tarj_nume = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $_SESSION['clie_key'], $alum_resp_form_banc_tarj_nume_dec, MCRYPT_MODE_CBC, $iv );
+	// $alum_resp_form_banc_tarj_nume=rtrim($alum_resp_form_banc_tarj_nume,"\0");
+	$alum_resp_form_banc_tarj_nume=preg_replace('/[^A-Za-z0-9\-]/', '',$alum_resp_form_banc_tarj_nume);
+	$alum_resp_form_banc_tarj_nume =  creditCardMask($alum_resp_form_banc_tarj_nume,4,8);
+}
+/*FIN*/
 ?>
 <div id="div_noti">&nbsp;</div>
 <div id="div_blacklist_warning" style=""></div>
@@ -425,7 +435,7 @@ $alum_view= sqlsrv_fetch_array($stmt);
             </div>
             <div class="form_element">
                 <label for="alum_resp_form_banc_tarj_nume">Número Cuenta o Tarjeta</label>
-                <input id="alum_resp_form_banc_tarj_nume" name="alum_resp_form_banc_tarj_nume" type="text" placeholder="Ingrese numero de Cuenta o Tarjeta..." value="<?=$alum_view['alum_resp_form_banc_tarj_nume'];?>">
+                <input id="alum_resp_form_banc_tarj_nume" name="alum_resp_form_banc_tarj_nume" type="text" placeholder="Ingrese numero de Cuenta o Tarjeta..." value="<?=$alum_resp_form_banc_tarj_nume;?>">
             </div>
 			<div class="form_element">
 				<label for="alum_resp_form_fech_vcto">Fecha de Vencimiento de Tarjeta:</label>
