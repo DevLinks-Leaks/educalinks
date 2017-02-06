@@ -11,7 +11,7 @@ if(isset($_POST['DO'])){
 				//$mens_para = $_POST['mens_para'];
 				//$mens_para_tipo = $_POST['mens_para_tipo'];
 				$mens_dest = $_POST['mens_dest'];
-				$mens_titu = utf8_encode($_POST['mens_titu']);
+				$mens_titu = reemplazarTilde($_POST['mens_titu']);
 				$mens_deta = str_replace("**","&",$_POST['mens_deta']);
 			 	$mens_dest_array = json_decode($mens_dest);
 			 	
