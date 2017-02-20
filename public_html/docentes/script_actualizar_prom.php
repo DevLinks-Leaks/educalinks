@@ -48,13 +48,19 @@ switch($opc)
 			}
 		}
 		else
-		{	$row = sqlsrv_fetch_array($stmt);
+		{	
 			include ('../framework/funciones.php');
+			$row= sqlsrv_fetch_array($stmt);
+
+			$sql	= "{call curs_para_mate_prof_info (?)}";
+			$params	= array($curs_para_mate_prof_codi);
+			$curs_para_mate_prof_info	= sqlsrv_query($conn,$sql,$params);
+			$row_curs_para_mate_prof_info = sqlsrv_fetch_array($curs_para_mate_prof_info);
 			//Auditoria
-			$detalle.=" Curso: ".$row['curs_deta'];
-			$detalle.=" Paralelo: ".$row['para_deta'];
-			$detalle.=" Asignatura: ".$row['mate_deta'];
-			$detalle.=" Parcial: ".$row['peri_dist_deta'];
+			$detalle.=" Curso: ".$row_curs_para_mate_prof_info['curs_deta'];
+			$detalle.=" Paralelo: ".$row_curs_para_mate_prof_info['para_deta'];
+			$detalle.=" Asignatura: ".$row_curs_para_mate_prof_info['mate_deta'];
+			$detalle.=" Parcial: ".$row['peri_dist_padr_deta'];
 			$detalle.=" Archivo Excel Notas: " . $_POST['path'];
 			
 			registrar_auditoria (58, $detalle);

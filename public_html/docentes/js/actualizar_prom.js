@@ -1,6 +1,7 @@
 ﻿function actualizarProm (path_auditoria,nota_perm_codi,curs_para_mate_prof_codi,peri_dist_codi,es_hija,mensaje,firstTime)
 {	var xmlhttp;
 	/*Agrego la data*/
+	$('#btn_actualizar').button('loading');
 	var tabla_info = document.getElementById("tabla_info");
 	if (firstTime==1)
 		while(tabla_info.rows.length > 1)
@@ -43,6 +44,7 @@
 						cellMensaje.innerHTML = obj.mensaje;
 						cellProgreso.innerHTML = "Actualización de notas completa";
 						$.growl.notice({ title: "Educalinks informa: ",message: "¡Notas guardadas exitosamente!" });
+						$('#btn_actualizar').button('reset');
 						/*Desactivar permiso*/
 						nota_perm_in (nota_perm_codi);
 						window.setTimeout(function(){
@@ -57,6 +59,7 @@
 					cellMensaje.innerHTML = obj.mensaje;
 					$.growl.error({ title: "Educalinks informa: ",message: "¡No se completó la actualización de notas!" });
 					cellProgreso.innerHTML = "No se ha completado la actualización de notas, intente nuevamente y luego comunique a sistemas.";
+					$('#btn_actualizar').button('reset');
 				}
 			}
   		}
