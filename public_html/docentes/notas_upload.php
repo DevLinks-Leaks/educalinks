@@ -293,7 +293,8 @@ xmlns:fb="http://www.facebook.com/2008/fbml"><!-- InstanceBegin template="/Templ
 													$cc = 0;
 													$CC_COLUM_index=0;
 													
-													$tbl_notas='<table class="table_striped">';
+													$tbl_notas='<h3 style="color: red;text-align: center;"> ¡ALERTA! PARA COMPLETAR EL PROCESO DE SUBIDA DE NOTAS</h3><h2 style="color: red;text-align: center;"><b> DAR CLIC EN GUARDAR.</b></h2>
+																<table class="table_striped">';
 													$tbl_notas.='<thead>';
 													$tbl_notas.="<tr>";
 													$tbl_notas.='<th>N°</th>';
@@ -318,7 +319,9 @@ xmlns:fb="http://www.facebook.com/2008/fbml"><!-- InstanceBegin template="/Templ
 														$CC_COLUM_index =0;
 														while($CC_COLUM_index < $CC_COLUM )
 														{	if ($row_curs_peri_info['nota_refe_cab_tipo']=='C')
-															{	$tbl_notas.='<td>'.truncar($row_curs_para_nota_peri_dist_view[$CC_COLUM_index + 10])."</td>";
+															{	
+																$nota_cero = truncar($row_curs_para_nota_peri_dist_view[$CC_COLUM_index + 10])<=0 ? 'style="background-color: red !important;color: white;"' : '';
+																$tbl_notas.='<td '.$nota_cero.' >'.truncar($row_curs_para_nota_peri_dist_view[$CC_COLUM_index + 10])."</td>";
 															}
 															else
 															{	$tbl_notas.='<td>'.nota_peri_cual_cons ($_SESSION['peri_codi'],$row_curs_peri_info['nota_refe_cab_cod'],$row_curs_para_nota_peri_dist_view[$CC_COLUM_index + 10]).'</td>';
@@ -332,11 +335,13 @@ xmlns:fb="http://www.facebook.com/2008/fbml"><!-- InstanceBegin template="/Templ
 													echo $tbl_notas;
 												?>
 													<div style="width:95%; height:90; text-align:right; clear: both">
-														<script type="text/javascript" src="js/actualizar_prom.js"></script>
+														<script type="text/javascript" src="js/actualizar_prom.js?<?=$rand;?>"></script>
 														<button 
+															id="btn_actualizar"
 															class="btn btn-primary" 
 															style="margin: 40px 10px; width: 20%;" 
 															data-toggle="modal" 
+															data-loading-text="Guardando..."
 															data-target="#ModalProgActualizacion" 
 															onclick="actualizarProm('<?= $path_auditoria?>',<?= $nota_perm_codi?>,<?= $curs_para_mate_prof_codi?>,<?= $peri_dist_codi ?>,<?= $es_hija ?>,'Iniciando proceso de actualización de notas...',1);">
 															Guardar
@@ -542,11 +547,4 @@ function ejecutar_submit(frm){
 }
 </script><!-- InstanceEndEditable -->
 </body>
-
-<script>
-
-var myVar=setInterval(function () {myTimer()}, 120000);
-
-
-</script>
 <!-- InstanceEnd --></html>
