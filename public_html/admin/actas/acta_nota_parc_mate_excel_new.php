@@ -497,8 +497,8 @@
 					if($retirado_switch==false)
 					{
 						$cont_alumnos++;
-						$sum_curso=$sum_curso+truncar($nota_final);
-						$notas_prom[]=$nota_final;
+						$sum_curso=$sum_curso+truncar($nota);
+						$notas_prom[]=$nota;
 					}
                 }
                 $prom_curso=$sum_curso/$cont_alumnos;
@@ -511,7 +511,7 @@
 		{
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow($w-3, $i+9, show_this_phrase(20000012).':');
 					$objPHPExcel->getActiveSheet()->getStyle(PHPExcel_Cell::stringFromColumnIndex($w-3).($i+9))->getFont($w-3)->setBold(true);
-                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow($w+1, $i+9, truncar($sum_curso));
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow($w+1, $i+9, truncar($prom_curso));
 					$objPHPExcel->getActiveSheet()->getStyle(PHPExcel_Cell::stringFromColumnIndex($w+1).($i+9))->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                     $objPHPExcel->getActiveSheet()->getStyle(PHPExcel_Cell::stringFromColumnIndex($w+1).($i+9))->getFont($w+1)->setBold(true);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow($w, $i+9, notas_prom_quali($_SESSION['peri_codi'],$row_curs_peri_info['nota_refe_cab_tipo'],$prom_curso));
