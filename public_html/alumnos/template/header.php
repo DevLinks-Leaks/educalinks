@@ -50,11 +50,11 @@
 								<img src="{fotoUsuario}" class="user-image" alt="">
 								<span class="hidden-xs"><small>{usua_nombres}</small></span>
 							</a>
-							<ul class="dropdown-menu">
+							<ul class="dropdown-menu" >
 								<li class="header"><small>Seleccione un alumno</small></li>
 								<li>
 									<!-- inner menu: contains the actual data -->
-									<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto;">
+									
 										<ul class="menu" style="overflow: hidden; width: 100%;">';
 										$params2 = array($_SESSION['repr_codi'],$_SESSION['peri_codi']);
 										$sql2="{call repr_alum_info_princ_usua(?,?)}";
@@ -85,7 +85,6 @@
 										}
 								$combo.='	<div class="slimScrollBar" style="width: 3px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; height: 131.148px; background: rgb(0, 0, 0);"></div><div class="slimScrollRail" style="width: 3px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; opacity: 0.2; z-index: 90; right: 1px; background: rgb(51, 51, 51);"></div>
 										</ul>
-									</div>
 								</li>
 							</ul>
 						</li>

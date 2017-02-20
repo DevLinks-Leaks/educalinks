@@ -71,7 +71,7 @@
                       <tr>
                         <td style="width:20px; text-align:center;"> <input    type="checkbox" value='<?= $row_alum_curs_para_view["alum_codi"]; ?>' id="ch_<?= $OP; ?>_<?php echo $cc; ?>" name="ch_<?= $OP; ?>_<?php echo $cc; ?>"   /></td>
                         <td style="width:45px;"><img src="<?php echo $pp; ?>" style="width:40px; height:40px;"  /></td>
-                        <td style="width:205px;"><?php echo strtoupper($row_alum_curs_para_view["alum_apel"]); ?> <?php echo strtoupper($row_alum_curs_para_view["alum_nomb"]); ?></td>
+                        <td style="width:205px;"><?php echo mb_strtoupper($row_alum_curs_para_view["alum_apel"]); ?> <?php echo mb_strtoupper($row_alum_curs_para_view["alum_nomb"]); ?></td>
                       </tr>
                     </table>
    
@@ -99,7 +99,7 @@
 
 <?php  while ($row_alum_curs_para_view = sqlsrv_fetch_array($alum_curs_para_view)) {
 		$cc +=1; ?> 
-      <div   id=""  class="usua_style" title="REPRESENTANTE: <?= strtoupper($row_alum_curs_para_view["repr_apel"]); ?> <?= strtoupper($row_alum_curs_para_view["repr_nomb"]); ?>  (<?= strtoupper($row_alum_curs_para_view["repr_parentesco"]); ?>)"    onmouseover="this.className='usua_style-on';"  onmouseout="this.className='usua_style';" onclick="selectcheck('ch_<?= $OP; ?>_<?php echo $cc; ?>');"   > 
+      <div   id=""  class="usua_style" title="REPRESENTANTE: <?= mb_strtoupper($row_alum_curs_para_view["repr_apel"]); ?> <?= mb_strtoupper($row_alum_curs_para_view["repr_nomb"]); ?>  (<?= mb_strtoupper($row_alum_curs_para_view["repr_parentesco"]); ?>)"    onmouseover="this.className='usua_style-on';"  onmouseout="this.className='usua_style';" onclick="selectcheck('ch_<?= $OP; ?>_<?php echo $cc; ?>');"   > 
       	<?php
               $file_exi=$_SESSION['ruta_foto_alumno'].$row_alum_curs_para_view["alum_codi"].'.jpg';
       
@@ -114,7 +114,7 @@
                       <tr>
                         <td style="width:20px; text-align:center;"> <input  type="checkbox" data-alum-codi='<?= $row_alum_curs_para_view["alum_codi"] ?>' value='<?= $row_alum_curs_para_view["repr_codi"]; ?>' id="ch_<?= $OP; ?>_<?php echo $cc; ?>" name="ch_<?= $OP; ?>_<?php echo $cc; ?>"   /></td>
                         <td style="width:45px;"><img src="<?php echo $pp; ?>" style="width:40px; height:40px;"  /></td>
-                        <td style="width:205px;"><?php echo strtoupper($row_alum_curs_para_view["alum_apel"]); ?> <?php echo strtoupper($row_alum_curs_para_view["alum_nomb"]); ?></td>
+                        <td style="width:205px;"><?php echo mb_strtoupper($row_alum_curs_para_view["alum_apel"]); ?> <?php echo mb_strtoupper($row_alum_curs_para_view["alum_nomb"]); ?></td>
                       </tr>
                     </table>
       
@@ -157,7 +157,7 @@
                       <tr>
                         <td style="width:20px; text-align:center;"> <input  type="checkbox" value='<?php echo $row_prof_view["prof_codi"]; ?>' id="ch_<?= $OP; ?>_<?php echo $cc; ?>"   name="ch_<?= $OP; ?>_<?php echo $cc; ?>" /></td>
                         <td style="width:45px;"><img src="<?php echo $pp; ?>" style="width:40px; height:40px;"  /></td>
-                        <td style="width:205px;"><?php echo strtoupper($row_prof_view["prof_apel"]); ?> <?php echo strtoupper($row_prof_view["prof_nomb"]); ?></td>
+                        <td style="width:205px;"><?php echo mb_strtoupper($row_prof_view["prof_apel"]); ?> <?php echo mb_strtoupper($row_prof_view["prof_nomb"]); ?></td>
                       </tr>
                     </table>
          

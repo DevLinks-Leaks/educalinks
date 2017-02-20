@@ -175,7 +175,7 @@
 														<input type="hidden" id="alum_codi" value="" />
 													</td>
 													<td style="padding-top: 15px">
-														<a onclick="window.open('reportes_generales/soli_matr_<?= $_SESSION['directorio'] ?>_pdf.php?alum_codi='+document.getElementById('alum_codi').value,'_blank')">Descargar</a>
+														<a onclick="window.open('reportes_generales/soli_matr_<?= $_SESSION['directorio'] ?>_pdf.php?alum_codi='+document.getElementById('alum_codi').value+'&peri_codi=<?=$_SESSION["peri_codi"]?>','_blank')">Descargar</a>
 													</td>
 												</tr>
 												<tr>
@@ -227,6 +227,28 @@
 													</td>
 													<td style="padding-top: 15px">
 														<a onclick="window.open('reportes_generales/debito_pdf.php?alum_curs_para_codi='+document.getElementById('alum_curs_para_codi').value,'_blank')">Descargar</a>
+													</td>
+												</tr>
+												<tr>
+													<td width="75%" style="padding-top: 15px">
+														Compromiso de rendimiento académico <b>(El alumno debe estar registrado en un curso)</b>
+														<input type="hidden" id="alum_curs_para_codi" value="" />
+													</td>
+													<td style="padding-top: 15px">
+														<a onclick="window.open('reportes_generales/compromiso_rendimiento_pdf.php?alum_curs_para_codi='+document.getElementById('alum_curs_para_codi').value,'_blank')">
+															Descargar
+														</a>
+													</td>
+												</tr>
+												<tr>
+													<td width="75%" style="padding-top: 15px">
+														Compromiso de comportamiento <b>(El alumno debe estar registrado en un curso)</b>
+														<input type="hidden" id="alum_curs_para_codi" value="" />
+													</td>
+													<td style="padding-top: 15px">
+														<a onclick="window.open('reportes_generales/compromiso_comportamiento_pdf.php?alum_curs_para_codi='+document.getElementById('alum_curs_para_codi').value,'_blank')">
+															Descargar
+														</a>
 													</td>
 												</tr>
 											</table>

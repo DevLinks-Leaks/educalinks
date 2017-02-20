@@ -34,6 +34,7 @@ switch($opc){
 			$alum_resp_form_banc_tarj_nume_encrypt =base64_encode($alum_resp_form_banc_tarj_nume_encrypt);
 			/*FIN*/
 		}
+		$alum_condicionado = ($_POST['alum_condicionado']=='on'?1:0);
 		$alum_tiene_discapacidad = ($_POST['alum_tiene_discapacidad']=='on'?1:0);
 		$alum_genero = ($_POST['alum_genero']=='Hombre'?1:0);
 		$alum_fech_naci=substr($_POST['alum_fech_naci'],6,4)."".substr($_POST['alum_fech_naci'],3,2)."".substr($_POST['alum_fech_naci'],0,2);
@@ -60,7 +61,7 @@ switch($opc){
 							$_POST['alum_motivo_cambio'], 
 							$alum_tiene_discapacidad,
 							$_POST['alum_discapacidad'], 
-							$_POST['alum_condicionado'], 
+							$alum_condicionado, 
 							$_POST['alum_conducta'], 
 							$_POST['alum_ultimo_anio'], 
 							$_POST['alum_nacionalidad'], 
@@ -230,6 +231,7 @@ switch($opc){
 			}
 		}
 		$alum_tiene_discapacidad = ($_POST['alum_tiene_discapacidad']=='on'?1:0);
+		$alum_condicionado = ($_POST['alum_condicionado']=='on'?1:0);
 		$alum_genero = ($_POST['alum_genero']=='Hombre'?1:0);
 		$alum_fech_naci=substr($_POST['alum_fech_naci'],6,4)."".substr($_POST['alum_fech_naci'],3,2)."".substr($_POST['alum_fech_naci'],0,2);
 		$alum_fech_vcto=substr($_POST['alum_resp_form_fech_vcto'],6,4)."".substr($_POST['alum_resp_form_fech_vcto'],3,2)."".substr($_POST['alum_resp_form_fech_vcto'],0,2);
@@ -256,7 +258,7 @@ switch($opc){
 							$_POST['alum_motivo_cambio'], 
 							$alum_tiene_discapacidad,
 							$_POST['alum_discapacidad'], 
-							$_POST['alum_condicionado'], 
+							$alum_condicionado, 
 							$_POST['alum_conducta'], 
 							$_POST['alum_ultimo_anio'], 
 							$_POST['alum_nacionalidad'], 
@@ -728,17 +730,20 @@ switch($opc){
 		$params		= array($_POST['curs_para_codi'],$_POST['alum_curs_para_codi']);
 		$stmt	 	= sqlsrv_query( $conn, $sql, $params);
 		if( $stmt === false )
-		{	echo "Error in executing statement .\n";
-			die( print_r( sqlsrv_errors(), true));
+		{	
+			// echo "Error in executing statement .\n";
+			// die( print_r( sqlsrv_errors(), true));
+			$result = array ("state"=>"error",
+							 "mensaje"=>"Ocurrió un error al cambiar curso.");
 		}
 		if (sqlsrv_has_rows($stmt))
 		{	$row = sqlsrv_fetch_array($stmt);
-			$result = array ("error"=>"no",
+			$result = array ("state"=>$row['estado'],
 							 "mensaje"=>$row["mensaje"]);
 		}
 		else
-		{	$result = array ("error"=>"si",
-							 "mensaje"=>"No hay datos devueltos.");
+		{	$result = array ("state"=>"error",
+							 "mensaje"=>"Ocurrió un error al cambiar curso.");
 		}
 		echo json_encode($result);
 	break;

@@ -59,7 +59,7 @@
 				<h4 class="modal-title" id="myModalLabel">Instrucciones Preinscripción</h4>
 			</div>
 			<div class="modal-body">
-				<img width='100%' src="../imagenes/instrucciones_act_datos.jpg" />
+				<img width='100%' src="../imagenes/instrucciones_preinscripcion.png" />
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Ocultar</button>
@@ -67,8 +67,9 @@
 		</div>
 	</div>
 </div>		
-<script type="text/javascript">
+<script type="text/javascript" charset="utf-8">
+$("#alum_fech_naci").datepicker();
 $(window).load(function(){
-	//$('#myModal').modal('show');
+	$('#myModalPre').modal('show');
 });
 </script>

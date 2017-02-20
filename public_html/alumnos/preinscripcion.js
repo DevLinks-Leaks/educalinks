@@ -25,57 +25,6 @@ function CargarBancosTarjetas (codigo)
 	xmlhttp.open("GET", "select_banco_tarjeta.php?idpadre="+codigo, true);
 	xmlhttp.send();
 }
-function CargarProvincias(id,value)
-{	
-	var xmlhttp;
-	if (window.XMLHttpRequest)
-	{	xmlhttp = new XMLHttpRequest ();
-	}
-	else
-	{	xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
-	}
-	xmlhttp.onreadystatechange = function ()
-	{	if (xmlhttp.readyState==4 && xmlhttp.status==200)
-		{	document.getElementById(id).innerHTML=xmlhttp.responseText;
-		}
-	}
-	xmlhttp.open("GET", "select_provincia.php?codigo="+value, true);
-	xmlhttp.send();
-}
-function CargarCiudades(id,value)
-{	
-	var xmlhttp;
-	if (window.XMLHttpRequest)
-	{	xmlhttp = new XMLHttpRequest ();
-	}
-	else
-	{	xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
-	}
-	xmlhttp.onreadystatechange = function ()
-	{	if (xmlhttp.readyState==4 && xmlhttp.status==200)
-		{	document.getElementById(id).innerHTML=xmlhttp.responseText;
-		}
-	}
-	xmlhttp.open("GET", "select_ciudad.php?codigo="+value, true);
-	xmlhttp.send();
-}
-function CargarParroquias(id,value)
-{	
-	var xmlhttp;
-	if (window.XMLHttpRequest)
-	{	xmlhttp = new XMLHttpRequest ();
-	}
-	else
-	{	xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
-	}
-	xmlhttp.onreadystatechange = function ()
-	{	if (xmlhttp.readyState==4 && xmlhttp.status==200)
-		{	document.getElementById(id).innerHTML=xmlhttp.responseText;
-		}
-	}
-	xmlhttp.open("GET", "select_parroquia.php?codigo="+value, true);
-	xmlhttp.send();
-}
 function load_modal_preinscripcion_view(div,url,data){
 	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
 	if (window.XMLHttpRequest)
@@ -91,7 +40,6 @@ function load_modal_preinscripcion_view(div,url,data){
 		if (xmlhttp.readyState==4 && xmlhttp.status==200){
 			document.getElementById(div).innerHTML=xmlhttp.responseText;
 			$("#repr_fech_promoc").datepicker();
-			$("#repr_fech_naci").datepicker();
 		}
 	}
 	xmlhttp.open("POST",url,true);
@@ -134,10 +82,6 @@ function actualizar_representante(repr_codi)
 		data.append('repr_escolaborador',$('#repr_escolaborador').prop('checked'));
 		data.append('repr_fech_promoc', document.getElementById('repr_fech_promoc').value);
 		data.append('repr_ex_alum',$('#repr_ex_alum').prop('checked') );
-		data.append('repr_fech_naci', $('#repr_fech_naci').val());
-		data.append('repr_pais_naci', $('#repr_pais_naci option:selected').text());
-		data.append('repr_prov_naci', $('#repr_prov_naci option:selected').text());
-		data.append('repr_ciud_naci', $('#repr_ciud_naci option:selected').text());
 
 		xmlhttp.onreadystatechange=function()
 		{
@@ -162,7 +106,7 @@ function actualizar_representante(repr_codi)
 		xmlhttp.send(data);
 	}
 }
-function preinscribir_alumno()
+function preinscribir_alumno(alum_codi,curs_codi,peri_codi)
 {	
 	if(comprobarObligatoriosAlum()){
 		$('#btn_reservar').button('loading');
@@ -176,6 +120,7 @@ function preinscribir_alumno()
 		}
 		var data = new FormData();
 		data.append('opc', 'res_add');
+		data.append('peri_codi', peri_codi);
 		data.append('alum_nomb', document.getElementById('alum_nomb').value);
 		data.append('alum_apel', document.getElementById('alum_apel').value);
 		data.append('alum_fech_naci', document.getElementById('alum_fech_naci').value);
@@ -186,14 +131,15 @@ function preinscribir_alumno()
 		data.append('alum_celu', document.getElementById('alum_celu').value);
 		data.append('alum_domi', document.getElementById('alum_domi').value);
 		data.append('alum_telf', document.getElementById('alum_telf').value);
-		data.append('alum_ciud', $('#alum_ciud option:selected').text());
-		data.append('alum_parroquia', $('#alum_parroquia option:selected').text());
+		data.append('alum_ciud', document.getElementById('alum_ciud').value);
+		data.append('alum_parroq', document.getElementById('alum_parroq').value);
+		data.append('alum_pais', document.getElementById('alum_pais').value);
 		data.append('alum_nacionalidad', $('#alum_nacionalidad').val());
 		data.append('alum_religion', $('#alum_religion').val());
 		data.append('alum_vive_con', $('#alum_vive_con').val());
 		data.append('alum_parentesco_vive_con', $('#alum_parentesco_vive_con').val());
 		data.append('alum_estado_civil_padres', $('#alum_estado_civil_padres').val());
-		data.append('alum_movilizacion',$('#alum_movilizacion option:selected').text());
+		data.append('alum_movilizacion',$('#alum_movilizacion').val());
 		data.append('alum_activ_deportiva', document.getElementById('alum_activ_deportiva').value);
 		data.append('alum_activ_artistica',document.getElementById('alum_activ_artistica').value );
 		data.append('alum_enfermedades', document.getElementById('alum_enfermedades').value);
@@ -210,14 +156,6 @@ function preinscribir_alumno()
 		data.append('alum_resp_form_cedu', document.getElementById('alum_resp_form_cedu').value);
 		data.append('alum_resp_form_tipo_iden', $('#alum_resp_form_tipo_iden').val());
 		data.append('alum_resp_form_nomb', document.getElementById('alum_resp_form_nomb').value);
-		data.append('alum_pais',$('#alum_pais option:selected').text());
-		data.append('alum_prov_naci', $('#alum_prov_naci option:selected').text());
-		data.append('alum_ciud_naci', $('#alum_ciud_naci option:selected').text());
-		data.append('alum_parr_naci', $('#alum_parr_naci option:selected').text());
-		data.append('alum_sect_naci', $('#alum_sect_naci option:selected').text());
-		data.append('alum_ex_plantel', $('#alum_ex_plantel').val());
-		data.append('alum_ex_plantel_dire', $('#alum_ex_plantel_dire').val());
-		data.append('alum_repr_finan', $('.check_finan:checked').attr('id'));
 
 		xmlhttp.onreadystatechange=function()
 		{
@@ -226,9 +164,8 @@ function preinscribir_alumno()
 				var json = JSON.parse(xmlhttp.responseText);
 				if (json.state=="success"){				
 					$.growl.notice({ title: "Educalinks informa:",message: json.result });
-					// $('#btn_reservar').button('reset');
+					$('#btn_reservar').button('reset');
 					// $('#modal_preinscripcion').modal('hide');
-					window.location.reload();
 					
 				}else{
 					$.growl.error({ title: "Educalinks informa:",message: json.result });
@@ -284,37 +221,25 @@ function comprobarObligatoriosRepre(){
 function comprobarObligatoriosAlum(){
 	if ($('#alum_fech_naci').val().trim()=='')
 	{	$('#alum_fech_naci').closest('.form-group').addClass('has-error');
-		$.growl.error({
-				title: 'Educalinks informa',
-				message: 'Por favor ingrese fecha de nacimiento del alumno.' });
 		return false;
 	}
 	else
 	{	$('#alum_fech_naci').closest('.form-group').removeClass('has-error');
 	}
-	if (document.getElementById('alum_cedu').value.trim()=='' && $('#alum_cedu').hasClass('required'))
+	if (document.getElementById('alum_cedu').value.trim()=='')
 	{	$('#alum_cedu').closest('.form-group').addClass('has-error');
-		$.growl.error({
-				title: 'Educalinks informa',
-				message: 'Por favor ingrese la cédula del alumno.' });
 		return false;
 	}else{
 		var response = validarNI(document.getElementById('alum_cedu').value,document.getElementById('alum_tipo_iden').options[document.getElementById('alum_tipo_iden').selectedIndex].value);
 		if(response=="Cédula Correcta" || response=="RUC Correcto" || response=="Pasaporte" ){
 			$('#alum_cedu').closest('.form-group').removeClass('has-error');
 		}else{
-			$.growl.error({
-				title: 'Educalinks informa',
-				message: 'Por favor ingresar número de cédula o RUC correcto.' });
 			$('#alum_cedu').closest('.form-group').addClass('has-error');
 			return false;
 		}
 	}
 	if ($('#alum_domi').val().trim()=='')
 	{	$('#alum_domi').closest('.form-group').addClass('has-error');
-		$.growl.error({
-				title: 'Educalinks informa',
-				message: 'Por favor ingresar domicilio del alumno.' });
 		return false;
 	}
 	else
@@ -322,32 +247,24 @@ function comprobarObligatoriosAlum(){
 	}
 	if ($('#alum_ciud').val().trim()=='')
 	{	$('#alum_ciud').closest('.form-group').addClass('has-error');
-		$.growl.error({
-				title: 'Educalinks informa',
-				message: 'Por favor ingresar ciudad domicilio del alumno.' });
 		return false;
 	}
 	else
 	{	$('#alum_ciud').closest('.form-group').removeClass('has-error');
 	}
-	if ($('#alum_parroquia').val().trim()=='')
-	{	$('#alum_parroquia').closest('.form-group').addClass('has-error');
-		$.growl.error({
-				title: 'Educalinks informa',
-				message: 'Por favor ingresar parroquia domicilio del alumno.' });
+	if ($('#alum_parroq').val().trim()=='')
+	{	$('#alum_parroq').closest('.form-group').addClass('has-error');
 		return false;
 	}
 	else
 	{	$('#alum_parroq').closest('.form-group').removeClass('has-error');
 	}
-	if ($('#alum_resp_form_banc_tarj_nume').val().trim()=='' && $('#alum_resp_form_banc_tarj_nume').hasClass('required'))
-	{	$('#alum_resp_form_banc_tarj_nume').closest('.form-group').addClass('has-error');
-		$.growl.error({
-				title: 'Educalinks informa',
-				message: 'Por favor ingresar número de tarjeta o cuenta de banco.' });
+	if ($('#alum_parroq').val().trim()=='')
+	{	$('#alum_parroq').closest('.form-group').addClass('has-error');
 		return false;
-	}else
-	{	$('#alum_resp_form_banc_tarj_nume').closest('.form-group').removeClass('has-error');
+	}
+	else
+	{	$('#alum_parroq').closest('.form-group').removeClass('has-error');
 	}
 	if (document.getElementById('alum_resp_form_cedu').value.trim()=='')
 	{	$('#alum_resp_form_cedu').closest('.form-group').addClass('has-error');

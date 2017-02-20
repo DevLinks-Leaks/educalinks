@@ -68,10 +68,14 @@ function alum_change_course (curs_para_codi,alum_curs_para_codi)
 	xhr.onreadystatechange=function(){
 		if (xhr.readyState==4 && xhr.status==200)
 		{	obj = JSON.parse(xhr.responseText);
-			if (obj.error == "no")
+			if (obj.state == "success")
 			{	$.growl.notice({ title: "Educalinks informa:",message: obj.mensaje });
 				$('#btn_curs_para_change').button('reset');
 				$('#ModalCambiarCurso').modal('hide');
+				BuscarAlumnos(document.getElementById('alum_codi_in').value,document.getElementById('alum_apel_in').value,document.getElementById('curs_para_codi_in').value);
+			}else if (obj.state == "warning"){
+				$.growl.warning({ title: "Educalinks informa:",message: obj.mensaje });
+				$('#btn_curs_para_change').button('reset');
 			}
 			else
 			{	$.growl.error({ title: "Educalinks informa:",message: obj.mensaje });

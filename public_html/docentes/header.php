@@ -28,7 +28,7 @@
 
          </a>
           <ul class="dropdown-menu" role="menu" >
-             <li><a href="admin_foto.php"> <span class="li_pict">Cambiar foto</span></a></li>								
+             <!-- <li><a href="admin_foto.php"> <span class="li_pict">Cambiar foto</span></a></li>								 -->
              <li><a href="admin_pass.php"> <span class="li_pass">Cambiar password</span></a></li>
              <li><a href="admin_info.php"> <span class="li_user">Ver Información</span></a></li>
              <li><a href="../salir.php"><span class="li_logout">Cerrar Sesión</span></a></li>
