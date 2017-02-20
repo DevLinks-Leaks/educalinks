@@ -90,7 +90,7 @@ if(isset($_POST['DO'])){
 			            	$mail->AltBody = 'Para ver este correo, por favor use un visualizador de email compatible con HTML.'; 
 			            	$body="<html><head><meta charset='UTF-8'><title></title></head><body>";
 			            	$body .="<p>Estimado $nombre_parti,</p>";
-			            	$body .="<p>Se ha recibido un mensaje desde Educalinks</p>";
+			            	$body .="<p>Se ha recibido un mensaje desde Educalinks por parte del usuario administrativo <b> ".$_SESSION['usua_nomb']." ".$_SESSION['usua_apel']."</b></p>";
 			            	$body .="<p>Mensaje recibido:</p>";
 			            	$body .="<p style='color: #000011 ;font-style: italic;'>".$mens_deta."</p>";
 			            	$body.="<p>Para mayor informaci&oacute;n ingrese con su usuario y contrase&ntilde;a al sistema Educalinks</p></body></html>";
@@ -192,7 +192,7 @@ if(isset($_POST['DO'])){
 		            	$mail->AltBody = 'Para ver este correo, por favor use un visualizador de email compatible con HTML.'; 
 		            	$body="<html><head><meta charset='UTF-8'><title></title></head><body>";
 		            	$body .="<p>Estimado $nombre_parti,</p>";
-		            	$body .="<p>Se ha recibido un mensaje desde Educalinks</p>";
+		            	$body .="<p>Se ha recibido un mensaje desde Educalinks por parte del usuario administrativo <b> ".$_SESSION['usua_nomb']." ".$_SESSION['usua_apel']."</b></p>";
 		            	$body .="<p>Mensaje recibido:</p>";
 		            	$body .="<p style='color: #000011 ;font-style: italic;'>".$mens_deta."</p>";
 		            	$body.="<p>Para mayor informaci&oacute;n ingrese con su usuario y contrase&ntilde;a al sistema Educalinks</p></body></html>";
