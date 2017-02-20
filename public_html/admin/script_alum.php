@@ -24,18 +24,25 @@ switch($opc){
 	break;
 	case 'add':
 		$alum_resp_form_banc_tarj_nume = $_POST['alum_resp_form_banc_tarj_nume'];
-		/*Codigo de encriptado de Número de tarjeta de crédito*/
-		$iv = base64_decode($_SESSION['clie_iv']);
-		$alum_resp_form_banc_tarj_nume_encrypt = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $_SESSION['clie_key'],$alum_resp_form_banc_tarj_nume, MCRYPT_MODE_CBC, $iv);
-		$alum_resp_form_banc_tarj_nume_encrypt =base64_encode($alum_resp_form_banc_tarj_nume_encrypt);
-		/*FIN*/
+		if($alum_resp_form_banc_tarj_nume==''){
+			$alum_resp_form_banc_tarj_nume_encrypt='';
+		
+		}else{
+			/*Codigo de encriptado de Número de tarjeta de crédito*/
+			$iv = base64_decode($_SESSION['clie_iv']);
+			$alum_resp_form_banc_tarj_nume_encrypt = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $_SESSION['clie_key'], $alum_resp_form_banc_tarj_nume, MCRYPT_MODE_CBC, $iv);
+			$alum_resp_form_banc_tarj_nume_encrypt =base64_encode($alum_resp_form_banc_tarj_nume_encrypt);
+			/*FIN*/
+		}
+		$alum_tiene_discapacidad = ($_POST['alum_tiene_discapacidad']=='on'?1:0);
+		$alum_genero = ($_POST['alum_genero']=='Hombre'?1:0);
 		$alum_fech_naci=substr($_POST['alum_fech_naci'],6,4)."".substr($_POST['alum_fech_naci'],3,2)."".substr($_POST['alum_fech_naci'],0,2);
 		$alum_fech_vcto=substr($_POST['alum_resp_form_fech_vcto'],6,4)."".substr($_POST['alum_resp_form_fech_vcto'],3,2)."".substr($_POST['alum_resp_form_fech_vcto'],0,2);
-		$sql_opc = "{call alum_add(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+		$sql_opc = "{call alum_add(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 		$params_opc= array($alum_fech_naci,
 							$_POST['alum_apel'],
 							$_POST['alum_nomb'],
-							$_POST['alum_genero'],
+							$alum_genero,
 							$_POST['alum_mail'],
 							$_POST['alum_celu'],
 							$_POST['alum_telf'],
@@ -47,11 +54,11 @@ switch($opc){
 							$_POST['alum_telf_emerg'],
 							$_POST['alum_ex_plantel'],
 							$_POST['alum_usua'], 
-							$_POST['alum_parroq'], 
+							$_POST['alum_parroquia'], 
 							$_POST['alum_vive_con'], 
 							$_POST['alum_movilizacion'], 
 							$_POST['alum_motivo_cambio'], 
-							$_POST['alum_tiene_discapacidad'],
+							$alum_tiene_discapacidad,
 							$_POST['alum_discapacidad'], 
 							$_POST['alum_condicionado'], 
 							$_POST['alum_conducta'], 
@@ -81,7 +88,12 @@ switch($opc){
 							$_POST['alum_banc_emisor'],
 							$_POST['alum_parentesco_emerg'],
 							$_POST['alum_pers_emerg'],
-							$_POST['alum_tipo_sangre']);
+							$_POST['alum_tipo_sangre'],
+							$_POST['alum_prov_naci'],
+							$_POST['alum_ciud_naci'],
+							$_POST['alum_parr_naci'],
+							$_POST['alum_sect_naci'],
+							$_POST['alum_ex_plantel_dire']);
 		$stmt_opc = sqlsrv_query( $conn, $sql_opc,$params_opc);
 		if( $stmt_opc === false )
 		{
@@ -203,24 +215,30 @@ switch($opc){
 	
 	case 'edi':
 		$alum_resp_form_banc_tarj_nume = $_POST['alum_resp_form_banc_tarj_nume'];
-		if(strpos($alum_resp_form_banc_tarj_nume, 'X') ===false){
-			/*Codigo de encriptado de Número de tarjeta de crédito*/
-			$iv = base64_decode($_SESSION['clie_iv']);
-			$alum_resp_form_banc_tarj_nume_encrypt = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $_SESSION['clie_key'], $alum_resp_form_banc_tarj_nume, MCRYPT_MODE_CBC, $iv);
-			$alum_resp_form_banc_tarj_nume_encrypt =base64_encode($alum_resp_form_banc_tarj_nume_encrypt);
-			/*FIN*/
-		}else{
-			$alum_resp_form_banc_tarj_nume_encrypt=null;
-		}
+		if($alum_resp_form_banc_tarj_nume==''){
+			$alum_resp_form_banc_tarj_nume_encrypt='';
 		
+		}else{
+			 if(strpos($alum_resp_form_banc_tarj_nume, 'X') ===false){
+				/*Codigo de encriptado de Número de tarjeta de crédito*/
+				$iv = base64_decode($_SESSION['clie_iv']);
+				$alum_resp_form_banc_tarj_nume_encrypt = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $_SESSION['clie_key'], $alum_resp_form_banc_tarj_nume, MCRYPT_MODE_CBC, $iv);
+				$alum_resp_form_banc_tarj_nume_encrypt =base64_encode($alum_resp_form_banc_tarj_nume_encrypt);
+				/*FIN*/
+			}else{
+				$alum_resp_form_banc_tarj_nume_encrypt=null;
+			}
+		}
+		$alum_tiene_discapacidad = ($_POST['alum_tiene_discapacidad']=='on'?1:0);
+		$alum_genero = ($_POST['alum_genero']=='Hombre'?1:0);
 		$alum_fech_naci=substr($_POST['alum_fech_naci'],6,4)."".substr($_POST['alum_fech_naci'],3,2)."".substr($_POST['alum_fech_naci'],0,2);
 		$alum_fech_vcto=substr($_POST['alum_resp_form_fech_vcto'],6,4)."".substr($_POST['alum_resp_form_fech_vcto'],3,2)."".substr($_POST['alum_resp_form_fech_vcto'],0,2);
-		$sql_opc = "{call alum_upd(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+		$sql_opc = "{call alum_upd(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 		$params_opc= array( $_POST['alum_codi'],
 							$alum_fech_naci,
 							$_POST['alum_apel'],
 							$_POST['alum_nomb'],
-							$_POST['alum_genero'],
+							$alum_genero,
 							$_POST['alum_mail'],
 							$_POST['alum_celu'],
 							$_POST['alum_telf'],
@@ -232,11 +250,11 @@ switch($opc){
 							$_POST['alum_telf_emerg'],
 							$_POST['alum_ex_plantel'],
 							$_POST['alum_usua'], 
-							$_POST['alum_parroq'], 
+							$_POST['alum_parroquia'], 
 							$_POST['alum_vive_con'], 
 							$_POST['alum_movilizacion'], 
 							$_POST['alum_motivo_cambio'], 
-							$_POST['alum_tiene_discapacidad'],
+							$alum_tiene_discapacidad,
 							$_POST['alum_discapacidad'], 
 							$_POST['alum_condicionado'], 
 							$_POST['alum_conducta'], 
@@ -266,7 +284,12 @@ switch($opc){
 							$_POST['alum_banc_emisor'],
 							$_POST['alum_parentesco_emerg'],
 							$_POST['alum_pers_emerg'],
-							$_POST['alum_tipo_sangre']);
+							$_POST['alum_tipo_sangre'],
+							$_POST['alum_prov_naci'],
+							$_POST['alum_ciud_naci'],
+							$_POST['alum_parr_naci'],
+							$_POST['alum_sect_naci'],
+							$_POST['alum_ex_plantel_dire']);
 		$stmt_opc = sqlsrv_query( $conn, $sql_opc,$params_opc);
 		if($stmt_opc === false)
 		{   echo "Error in executing statement .\n";

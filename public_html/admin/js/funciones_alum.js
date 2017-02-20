@@ -5,6 +5,57 @@ function activar_boton(value){
 	else
 		$('#btn_aplicar').prop('disabled', false);
 }
+function CargarProvincias(id,value)
+{	
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+	{	xmlhttp = new XMLHttpRequest ();
+	}
+	else
+	{	xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
+	}
+	xmlhttp.onreadystatechange = function ()
+	{	if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{	document.getElementById(id).innerHTML=xmlhttp.responseText;
+		}
+	}
+	xmlhttp.open("GET", "select_provincia.php?codigo="+value, true);
+	xmlhttp.send();
+}
+function CargarCiudades(id,value)
+{	
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+	{	xmlhttp = new XMLHttpRequest ();
+	}
+	else
+	{	xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
+	}
+	xmlhttp.onreadystatechange = function ()
+	{	if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{	document.getElementById(id).innerHTML=xmlhttp.responseText;
+		}
+	}
+	xmlhttp.open("GET", "select_ciudad.php?codigo="+value, true);
+	xmlhttp.send();
+}
+function CargarParroquias(id,value)
+{	
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+	{	xmlhttp = new XMLHttpRequest ();
+	}
+	else
+	{	xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
+	}
+	xmlhttp.onreadystatechange = function ()
+	{	if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{	document.getElementById(id).innerHTML=xmlhttp.responseText;
+		}
+	}
+	xmlhttp.open("GET", "select_parroquia.php?codigo="+value, true);
+	xmlhttp.send();
+}
 function alum_change_course (curs_para_codi,alum_curs_para_codi)
 {	$('#btn_curs_para_change').button('loading');
 	var data = new FormData();	
@@ -328,11 +379,11 @@ function load_ajax_add_alum_est_reg(div,url,data){
 }
 /////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////
-function load_ajax_add_alum(div,url,data,elem){	
+function load_ajax_add_alum(div,url,elem){	
 	//document.getElementById(div).innerHTML='<div align="center" style="height:100%;"><img src="../imagenes/ajax-loader.gif"/></div>';
 	if(ValidarAlumno() && ValidarUsuario())
-		{   document.getElementById(div).innerHTML='';
-	if (window.XMLHttpRequest)
+	{   document.getElementById(div).innerHTML='';
+		if (window.XMLHttpRequest)
 		{// code for IE7+, Firefox, Chrome, Opera, Safari
 			xmlhttp=new XMLHttpRequest();
 		}
@@ -340,6 +391,59 @@ function load_ajax_add_alum(div,url,data,elem){
 		{// code for IE6, IE5
 			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
 		}
+		var data = new FormData();
+		data.append('opc', 'add');
+		data.append('alum_nomb', document.getElementById('alum_nomb').value);
+		data.append('alum_apel', document.getElementById('alum_apel').value);
+		data.append('alum_fech_naci', document.getElementById('alum_fech_naci').value);
+		data.append('alum_cedu', document.getElementById('alum_cedu').value);
+		data.append('alum_tipo_iden', document.getElementById('alum_tipo_iden').options[document.getElementById('alum_tipo_iden').selectedIndex].value);
+		data.append('alum_mail', document.getElementById('alum_mail').value);
+		data.append('alum_celu', document.getElementById('alum_celu').value);
+		data.append('alum_domi', document.getElementById('alum_domi').value);
+		data.append('alum_telf', document.getElementById('alum_telf').value);
+		data.append('alum_ciud', $('#alum_ciud option:selected').text());
+		data.append('alum_parroquia', $('#alum_parroquia option:selected').text());
+		data.append('alum_telf_emerg', document.getElementById('alum_telf_emerg').value);
+		data.append('alum_ex_plantel', document.getElementById('alum_ex_plantel').value);
+		data.append('alum_usua', document.getElementById('alum_usua').value);
+		data.append('alum_vive_con', document.getElementById('alum_vive_con').value);
+		data.append('alum_movilizacion',$('#alum_movilizacion option:selected').text());
+		data.append('alum_motivo_cambio', document.getElementById('alum_motivo_cambio').value);
+		data.append('alum_discapacidad', document.getElementById('alum_discapacidad').value);
+		data.append('alum_condicionado', document.getElementById('alum_condicionado').value);
+		data.append('alum_conducta', document.getElementById('alum_conducta').value);
+		data.append('alum_ultimo_anio', document.getElementById('alum_ultimo_anio').value);
+		data.append('alum_nacionalidad', document.getElementById('alum_nacionalidad').value);
+		data.append('alum_motivo_condicion', document.getElementById('alum_motivo_condicion').value);
+		data.append('alum_resp_form_pago', document.getElementById('sl_form_pago').value);
+		data.append('alum_resp_form_banc_tarj', document.getElementById('sl_banco_tarjeta').value);
+		data.append('alum_resp_form_banc_tarj_nume', document.getElementById('alum_resp_form_banc_tarj_nume').value);
+		data.append('alum_resp_form_banc_tipo', (document.getElementById('cta_corriente').checked?'C':'A'));
+		data.append('alum_resp_form_cedu', document.getElementById('alum_resp_form_cedu').value);
+		data.append('alum_resp_form_nomb', document.getElementById('alum_resp_form_nomb').value);
+		data.append('alum_grup_econ', document.getElementById('sl_alum_grup_econ').value);
+		data.append('alum_tiene_discapacidad', document.getElementById('alum_tiene_discapacidad').checked);
+		data.append('alum_genero', document.getElementById('alum_hombre').checked);
+		data.append('idreligion', document.getElementById('alum_religion').value);
+		data.append('idparentescovivecon', document.getElementById('alum_parentesco_vive_con').value);
+		data.append('idestadocivilpadres', document.getElementById('alum_estado_civil_padres').value);
+		data.append('alum_activ_deportiva', document.getElementById('alum_activ_deportiva').value);
+		data.append('alum_activ_artistica', document.getElementById('alum_activ_artistica').value);
+		data.append('alum_resp_form_fech_vcto', document.getElementById('alum_resp_form_fech_vcto').value);
+		data.append('alum_enfermedades', document.getElementById('alum_enfermedades').value);
+		data.append('alum_banc_emisor', document.getElementById('sl_banco_emisor').value);
+		data.append('alum_parentesco_emerg', document.getElementById('alum_parentesco_emerg').value);
+		data.append('alum_pers_emerg', document.getElementById('alum_pers_emerg').value);
+		data.append('alum_tipo_sangre', document.getElementById('alum_tipo_sangre').value);
+		data.append('alum_resp_form_tipo_iden', document.getElementById('alum_resp_form_tipo_iden').options[document.getElementById('alum_resp_form_tipo_iden').selectedIndex].value);
+		data.append('alum_pais',$('#alum_pais option:selected').text());
+		data.append('alum_prov_naci', $('#alum_prov_naci option:selected').text());
+		data.append('alum_ciud_naci', $('#alum_ciud_naci option:selected').text());
+		data.append('alum_parr_naci', $('#alum_parr_naci option:selected').text());
+		data.append('alum_sect_naci', $('#alum_sect_naci option:selected').text());
+		data.append('alum_ex_plantel_dire', $('#alum_ex_plantel_dire').val());
+
 		xmlhttp.onreadystatechange=function()
 		{   if (xmlhttp.readyState==4 && xmlhttp.status==200)
 			{   if ( xmlhttp.responseText > 0 )
@@ -352,15 +456,15 @@ function load_ajax_add_alum(div,url,data,elem){
 				}else
 				{   $.growl.error({ title: "Educalinks informa",message: "Ocurrió un error al grabar los datos del alumno." });	
 				document.getElementById('alum_usua').focus();
+				}
 			}
-		}
-	};
+		};
 	xmlhttp.open("POST",url,true);
-	xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+	// xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 	xmlhttp.send(data);	
+	}
 }
-}
-function load_ajax_edit_alum(div,url,data){
+function load_ajax_edit_alum(div,url,alum_codi){
 	if(ValidarAlumno())
 		{	document.getElementById(div).innerHTML='<div align="center" style="height:100%;"><img src="../imagenes/ajax-loader.gif"/></div>';
 	document.getElementById(div).innerHTML='';
@@ -372,6 +476,60 @@ function load_ajax_edit_alum(div,url,data){
 		{// code for IE6, IE5
 			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
 		}
+		var data = new FormData();
+		data.append('opc', 'edi');
+		data.append('alum_codi', alum_codi);
+		data.append('alum_nomb', document.getElementById('alum_nomb').value);
+		data.append('alum_apel', document.getElementById('alum_apel').value);
+		data.append('alum_fech_naci', document.getElementById('alum_fech_naci').value);
+		data.append('alum_cedu', document.getElementById('alum_cedu').value);
+		data.append('alum_tipo_iden', document.getElementById('alum_tipo_iden').options[document.getElementById('alum_tipo_iden').selectedIndex].value);
+		data.append('alum_mail', document.getElementById('alum_mail').value);
+		data.append('alum_celu', document.getElementById('alum_celu').value);
+		data.append('alum_domi', document.getElementById('alum_domi').value);
+		data.append('alum_telf', document.getElementById('alum_telf').value);
+		data.append('alum_ciud', $('#alum_ciud option:selected').text());
+		data.append('alum_parroquia', $('#alum_parroquia option:selected').text());
+		data.append('alum_telf_emerg', document.getElementById('alum_telf_emerg').value);
+		data.append('alum_ex_plantel', document.getElementById('alum_ex_plantel').value);
+		data.append('alum_usua', document.getElementById('alum_usua').value);
+		data.append('alum_vive_con', document.getElementById('alum_vive_con').value);
+		data.append('alum_movilizacion',$('#alum_movilizacion option:selected').text());
+		data.append('alum_motivo_cambio', document.getElementById('alum_motivo_cambio').value);
+		data.append('alum_discapacidad', document.getElementById('alum_discapacidad').value);
+		data.append('alum_condicionado', document.getElementById('alum_condicionado').value);
+		data.append('alum_conducta', document.getElementById('alum_conducta').value);
+		data.append('alum_ultimo_anio', document.getElementById('alum_ultimo_anio').value);
+		data.append('alum_nacionalidad', document.getElementById('alum_nacionalidad').value);
+		data.append('alum_motivo_condicion', document.getElementById('alum_motivo_condicion').value);
+		data.append('alum_resp_form_pago', document.getElementById('sl_form_pago').value);
+		data.append('alum_resp_form_banc_tarj', document.getElementById('sl_banco_tarjeta').value);
+		data.append('alum_resp_form_banc_tarj_nume', document.getElementById('alum_resp_form_banc_tarj_nume').value);
+		data.append('alum_resp_form_banc_tipo', (document.getElementById('cta_corriente').checked?'C':'A'));
+		data.append('alum_resp_form_cedu', document.getElementById('alum_resp_form_cedu').value);
+		data.append('alum_resp_form_nomb', document.getElementById('alum_resp_form_nomb').value);
+		data.append('alum_grup_econ', document.getElementById('sl_alum_grup_econ').value);
+		data.append('alum_tiene_discapacidad', document.getElementById('alum_tiene_discapacidad').checked);
+		data.append('alum_genero', document.getElementById('alum_hombre').checked);
+		data.append('idreligion', document.getElementById('alum_religion').value);
+		data.append('idparentescovivecon', document.getElementById('alum_parentesco_vive_con').value);
+		data.append('idestadocivilpadres', document.getElementById('alum_estado_civil_padres').value);
+		data.append('alum_activ_deportiva', document.getElementById('alum_activ_deportiva').value);
+		data.append('alum_activ_artistica', document.getElementById('alum_activ_artistica').value);
+		data.append('alum_resp_form_fech_vcto', document.getElementById('alum_resp_form_fech_vcto').value);
+		data.append('alum_enfermedades', document.getElementById('alum_enfermedades').value);
+		data.append('alum_banc_emisor', document.getElementById('sl_banco_emisor').value);
+		data.append('alum_parentesco_emerg', document.getElementById('alum_parentesco_emerg').value);
+		data.append('alum_pers_emerg', document.getElementById('alum_pers_emerg').value);
+		data.append('alum_tipo_sangre', document.getElementById('alum_tipo_sangre').value);
+		data.append('alum_resp_form_tipo_iden', document.getElementById('alum_resp_form_tipo_iden').options[document.getElementById('alum_resp_form_tipo_iden').selectedIndex].value);
+		data.append('alum_pais',$('#alum_pais option:selected').text());
+		data.append('alum_prov_naci', $('#alum_prov_naci option:selected').text());
+		data.append('alum_ciud_naci', $('#alum_ciud_naci option:selected').text());
+		data.append('alum_parr_naci', $('#alum_parr_naci option:selected').text());
+		data.append('alum_sect_naci', $('#alum_sect_naci option:selected').text());
+		data.append('alum_ex_plantel_dire', $('#alum_ex_plantel_dire').val());
+
 		xmlhttp.onreadystatechange=function()
 		{   if ( xmlhttp.readyState == 4 && xmlhttp.status == 200 )
 			{  	if ( xmlhttp.responseText != '-1' )
@@ -384,9 +542,39 @@ function load_ajax_edit_alum(div,url,data){
 }
 };
 xmlhttp.open("POST",url,true);
-xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+// xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 xmlhttp.send(data);	
 }
+}
+function alum_bloq_view()
+{	
+	/*div='alum_bloq_view';
+	document.getElementById(div).innerHTML='<div align="center" style="height:100%;"><img src="../imagenes/ajax-loader.gif"/></div>';
+	
+	url='alumnos_bloq_view.php?';
+	url += data = 	'alum_bloq_nomb='   + document.getElementById('alum_nomb').value + 
+			'&alum_bloq_apel='  + document.getElementById('alum_apel').value + 
+			'&alum_bloq_cedu='  + document.getElementById('alum_cedu').value;
+			
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200){
+			
+			document.getElementById(div).innerHTML=xmlhttp.responseText;
+			
+		}
+	}
+	xmlhttp.open("GET",url + data,true);
+	xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+	xmlhttp.send(data);	*/
 }
 function vali_matri(cupo_actual,curs_para_codi,alum_codi)
 {	
@@ -839,6 +1027,22 @@ return false;
 else
 	{	document.getElementById('alum_usua').style.border='';
 }
+if (document.getElementById('alum_cedu').value=='' && $('#alum_cedu').hasClass('required')){
+	document.getElementById('alum_cedu').style.border='solid 1px red';
+	$.growl.error({
+				title: 'Educalinks informa',
+				message: 'Por favor ingrese la cédula del alumno.' });
+	return false;
+}else{
+	var response = validarNI(document.getElementById('alum_cedu').value,document.getElementById('alum_tipo_iden').options[document.getElementById('alum_tipo_iden').selectedIndex].value);
+	if(response=="Cédula Correcta" || response=="RUC Correcto" || response=="Pasaporte" ){
+		document.getElementById('alum_cedu').style.border='';
+	}else{
+		$.growl.error({ title: "Educalinks informa",message: response+". Por favor ingrese el número de identificación de acuerdo al tipo correctamente." });
+		document.getElementById('alum_cedu').style.border='solid 1px red';
+		return false;
+	}
+}
 if (document.getElementById('alum_fech_naci').value=='')
 	{	$.growl.error({ title: "Educalinks informa",message: "Por favor ingrese la fecha de nacimiento del estudiante." });
 document.getElementById('alum_fech_naci').style.border='solid 1px red';
@@ -851,17 +1055,7 @@ if (!document.getElementById('alum_mujer').checked && !document.getElementById('
 	{	$.growl.error({ title: "Educalinks informa",message: "Por favor escoja el género del estudiante del estudiante." });
 return false;
 }
-if (document.getElementById('alum_cedu').value==''){	
-}else{
-	var response = validarNI(document.getElementById('alum_cedu').value,document.getElementById('alum_tipo_iden').options[document.getElementById('alum_tipo_iden').selectedIndex].value);
-	if(response=="Cédula Correcta" || response=="RUC Correcto" || response=="Pasaporte" ){
-		document.getElementById('alum_cedu').style.border='';
-	}else{
-		$.growl.error({ title: "Educalinks informa",message: response+". Por favor ingrese el número de identificación de acuerdo al tipo correctamente." });
-		document.getElementById('alum_cedu').style.border='solid 1px red';
-		return false;
-	}
-}
+
 if (document.getElementById('alum_domi').value=='')
 	{	$.growl.error({ title: "Educalinks informa",message: "Por favor ingrese el domicilio del estudiante." });
 document.getElementById('alum_domi').style.border='solid 1px red';
@@ -917,6 +1111,15 @@ return false;
 }
 else
 	{	document.getElementById('alum_tipo_sangre').style.border='';
+}
+if ($('#alum_resp_form_banc_tarj_nume').val().trim()=='' && $('#alum_resp_form_banc_tarj_nume').hasClass('required'))
+{	document.getElementById('alum_resp_form_banc_tarj_nume').style.border='solid 1px red';
+	$.growl.error({
+			title: 'Educalinks informa',
+			message: 'Por favor ingresar número de tarjeta o cuenta de banco.' });
+	return false;
+}else
+{	document.getElementById('alum_resp_form_banc_tarj_nume').style.border='';
 }
 if (document.getElementById('alum_telf_emerg').value=='')
 	{	$.growl.error({ title: "Educalinks informa",message: "Por favor ingrese el teléfono de emergencia del estudiante." });

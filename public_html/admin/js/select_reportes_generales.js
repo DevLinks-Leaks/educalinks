@@ -192,6 +192,21 @@ function getURLCertMatriculaPDF()
       window.open(direccion);
     }
   }
+  function getURLFichaMatricula(dom)
+   {
+     if (Validar())
+     {
+       var direccion;
+       if(dom=='liceopanamericano' || dom=='liceopanamericanosur')
+        direccion="reportes_generales/ficha_matricula_"+dom+"_pdf.php?curso_paralelo=";
+       else
+        direccion="reportes_generales/ficha_matricula_pdf.php?curso_paralelo=";
+       direccion=direccion+document.getElementById('sl_paralelos').value+"&alum_curs_para_codi="+document.getElementById('sl_alumnos').value;
+       //window.location.href=direccion;
+       window.open(direccion);
+     }
+
+  }
 	function Validar()
 	{
 		

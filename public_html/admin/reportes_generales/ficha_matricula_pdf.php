@@ -40,83 +40,88 @@
 	$pdf->SetMargins(PDF_MARGIN_LEFT, 5, PDF_MARGIN_RIGHT);
 	$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
 	$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);	 
-	$pdf->AddPage();
-
 	
-/*Consulta de datos del alumno*/
-$sql = "{call alum_curs_para_info(?)}";
-$params=array($alum_curs_para_codi);
-$stmt = sqlsrv_query($conn, $sql, $params);
-$row_alum = sqlsrv_fetch_array($stmt);
-$alum_fech_naci = date_format($row_alum["alum_fech_naci"],'d/m/Y');
-$alum_codi = $row_alum["alum_codi"];
-/*Datos de la madre*/
-$sql = "{call repr_info_vida(?,?)}";
-$params=array($alum_codi,"M");
-$stmt = sqlsrv_query($conn, $sql, $params);
-$row_madre = sqlsrv_fetch_array($stmt);
-/*Datos de la padre*/
-$sql = "{call repr_info_vida(?,?)}";
-$params=array($alum_codi,"P");
-$stmt = sqlsrv_query($conn, $sql, $params);
-$row_padre = sqlsrv_fetch_array($stmt);
-/*Datos del representante*/
-$sql = "{call repr_info_vida(?,?)}";
-$params=array($alum_codi,"R");
-$stmt = sqlsrv_query($conn, $sql, $params);
-$row_representante = sqlsrv_fetch_array($stmt);
+	$sql="{call ficha_matricula_cons(?,?)}";
+	$params = array($_GET['curso_paralelo'],$alum_curs_para_codi);
+	$stmt = sqlsrv_query($conn, $sql, $params);
+	if( $stmt === false )
+	{
+		echo "Error in executing statement .\n";
+		die( print_r( sqlsrv_errors(), true));
+	}
 
-/*No intentar esto en casa*/
-if ($dominio=='duplos.educalinks.com.ec' or $dominio=='arcoiris.educalinks.com.ec')
-{	$genero  = "<tr>";
-	$genero .= '<td width="25%" class="negrita">';
-	$genero .= "Género:";
-	$genero .= "</td>";
-	$genero .= "<td>";
-	$genero .= ($row_alum["alum_genero"]?"M":"F");
-	$genero .= "</td>";
-	$genero .= "</tr>";
-}
-else
-{	$genero .= "";
-}
-if ($dominio=='duplos.educalinks.com.ec' or $dominio=='arcoiris.educalinks.com.ec')
-{	$emergencia  = "<tr>";
-	$emergencia .= '<td width="25%" class="negrita">';
-	$emergencia .= "Emergencia:";
-	$emergencia .= "</td>";
-	$emergencia .= "<td>";
-	$emergencia .= $row_alum["alum_telf_emerg"]." - ".$row_alum["alum_pers_emerg"]." (".$row_alum["alum_paren_emerg"].")";
-	$emergencia .= "</td>";
-	$emergencia .= "</tr>";
-}
-else
-{	$genero .= "";
-}
-if ($dominio=='duplos.educalinks.com.ec' or $dominio=='arcoiris.educalinks.com.ec')
-{	$observacion = "El infraescrito representante del estudiante matriculado, declara que se encuentra conforme con los datos que anteceden y además está dispuesto a colaborar y asistir a todas las actividades y reuniones a las que sea convocado.";
-}
-else
-{	$observacion = "Observación:";
-}
-if ($dominio=='duplos.educalinks.com.ec' or $dominio=='arcoiris.educalinks.com.ec')
-{	$firma  = "_____________________________________<br/>";
-	$firma .= $rector."<br/>";
-	$firma .= $etiqueta_rector;
-}
-else
-{	$firma  = "_____________________________________<br/>";
-	$firma .= $secretario."<br/>";
-	$firma .= $etiqueta_secretario;
-}
-if ($dominio=='moderna.educalinks.com.ec')
-{	$curso_nive_para ='<p><h4>En el curso '.$row_alum["curs_deta"].' DE '.$row_alum["nive_deta"].' "'.$row_alum["para_deta"].'"</h4></p>';
-}else
-{
-	$curso_nive_para ='<p><h4>En el curso '.$row_alum["curs_deta"].' '.$row_alum["para_deta"].'</h4></p>';
-}
+	while ($row_alum = sqlsrv_fetch_array($stmt)){
+		$pdf->AddPage();
 
-/*Fin*/
+		$alum_fech_naci = date_format($row_alum["alum_fech_naci"],'d/m/Y');
+		$alum_codi = $row_alum["alum_codi"];
+		/*Datos de la madre*/
+		$sql = "{call repr_info_vida(?,?)}";
+		$params=array($alum_codi,"M");
+		$stmt1 = sqlsrv_query($conn, $sql, $params);
+		$row_madre = sqlsrv_fetch_array($stmt1);
+		/*Datos de la padre*/
+		$sql = "{call repr_info_vida(?,?)}";
+		$params=array($alum_codi,"P");
+		$stmt2 = sqlsrv_query($conn, $sql, $params);
+		$row_padre = sqlsrv_fetch_array($stmt2);
+		/*Datos del representante*/
+		$sql = "{call repr_info_vida(?,?)}";
+		$params=array($alum_codi,"R");
+		$stmt3 = sqlsrv_query($conn, $sql, $params);
+		$row_representante = sqlsrv_fetch_array($stmt3);
+
+		/*No intentar esto en casa*/
+		if ($dominio=='duplos.educalinks.com.ec' or $dominio=='arcoiris.educalinks.com.ec')
+		{	$genero  = "<tr>";
+			$genero .= '<td width="25%" class="negrita">';
+			$genero .= "Género:";
+			$genero .= "</td>";
+			$genero .= "<td>";
+			$genero .= ($row_alum["alum_genero"]?"M":"F");
+			$genero .= "</td>";
+			$genero .= "</tr>";
+		}
+		else
+		{	$genero .= "";
+		}
+		if ($dominio=='duplos.educalinks.com.ec' or $dominio=='arcoiris.educalinks.com.ec')
+		{	$emergencia  = "<tr>";
+			$emergencia .= '<td width="25%" class="negrita">';
+			$emergencia .= "Emergencia:";
+			$emergencia .= "</td>";
+			$emergencia .= "<td>";
+			$emergencia .= $row_alum["alum_telf_emerg"]." - ".$row_alum["alum_pers_emerg"]." (".$row_alum["alum_paren_emerg"].")";
+			$emergencia .= "</td>";
+			$emergencia .= "</tr>";
+		}
+		else
+		{	$genero .= "";
+		}
+		if ($dominio=='duplos.educalinks.com.ec' or $dominio=='arcoiris.educalinks.com.ec')
+		{	$observacion = "El infraescrito representante del estudiante matriculado, declara que se encuentra conforme con los datos que anteceden y además está dispuesto a colaborar y asistir a todas las actividades y reuniones a las que sea convocado.";
+		}
+		else
+		{	$observacion = "Observación:";
+		}
+		if ($dominio=='duplos.educalinks.com.ec' or $dominio=='arcoiris.educalinks.com.ec')
+		{	$firma  = "_____________________________________<br/>";
+			$firma .= $rector."<br/>";
+			$firma .= $etiqueta_rector;
+		}
+		else
+		{	$firma  = "_____________________________________<br/>";
+			$firma .= $secretario."<br/>";
+			$firma .= $etiqueta_secretario;
+		}
+		if ($dominio=='moderna.educalinks.com.ec')
+		{	$curso_nive_para ='<p><h4>En el curso '.$row_alum["curs_deta"].' DE '.$row_alum["nive_deta"].' "'.$row_alum["para_deta"].'"</h4></p>';
+		}else
+		{
+			$curso_nive_para ='<p><h4>En el curso '.$row_alum["curs_deta"].' '.$row_alum["para_deta"].'</h4></p>';
+		}
+
+		/*Fin*/
 	
 $html=<<<EOD
 	<style>
@@ -313,34 +318,35 @@ $html=<<<EOD
 	</table>
 	</p>
 EOD;
-$pdf->writeHTML($html, true, false, false, false, '');
-if ($_SERVER['HTTP_HOST']=="moderna.educalinks.com.ec"){
-	$file_exi='../'.$_SESSION['ruta_foto_alumno'].$alum_codi.'.jpg';
-	if (file_exists($file_exi)){
-	    $img_alum=$file_exi;
-	}else{
-	    $img_alum='../../fotos/'.$_SESSION['directorio'].'/alumnos/0.jpg';
+		$pdf->writeHTML($html, true, false, false, false, '');
+		if ($_SERVER['HTTP_HOST']=="moderna.educalinks.com.ec"){
+			$file_exi='../'.$_SESSION['ruta_foto_alumno'].$alum_codi.'.jpg';
+			if (file_exists($file_exi)){
+			    $img_alum=$file_exi;
+			}else{
+			    $img_alum='../../fotos/'.$_SESSION['directorio'].'/alumnos/0.jpg';
+			}
+			$pdf->Image($img_alum, 170, 25, 25, 30, 'JPG', '', 'C', false, 300, '', false, false, 0, false, false, false);
+		}else{
+			$pdf->SetFont('helvetica', 'I', 7);
+			$pdf->MultiCell(25,
+				  	23,
+				  	'Autorizo para que en caso de ser aceptado, se pegue en este lugar, copia de la fotografía del carné estudiantil',
+				  	1,
+				  	 'J',
+				  	false,
+				  	1,
+				  	'170',
+				  	'15',
+				  	 true,
+				  	 0,
+				  	 false,
+				  	 true,
+				  	 0,
+				  	 'T',
+				  	 false 
+			) ;
+		}
 	}
-	$pdf->Image($img_alum, 170, 25, 25, 30, 'JPG', '', 'C', false, 300, '', false, false, 0, false, false, false);
-}else{
-	$pdf->SetFont('helvetica', 'I', 7);
-	$pdf->MultiCell(25,
-		  	23,
-		  	'Autorizo para que en caso de ser aceptado, se pegue en este lugar, copia de la fotografía del carné estudiantil',
-		  	1,
-		  	 'J',
-		  	false,
-		  	1,
-		  	'170',
-		  	'15',
-		  	 true,
-		  	 0,
-		  	 false,
-		  	 true,
-		  	 0,
-		  	 'T',
-		  	 false 
-	) ;
-}
 $pdf->Output('solicitud_matricula.pdf', 'I');
 ?>
