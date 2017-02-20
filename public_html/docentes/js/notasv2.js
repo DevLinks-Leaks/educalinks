@@ -2,6 +2,36 @@
 {
 	load_ajax(div,'notas_view_inaccordv2.php','curs_para_mate_prof_codi=' + curs_para_mate_prof_codi);	
 }
+function CargarCursosParalelosAlumnos (curs_para_codi)
+{
+  	var xmlhttp;
+
+    /*Agrego la data*/
+    var data = new FormData();
+    data.append("curs_para_codi", curs_para_codi);
+    data.append("select", "CursosParalelosAlumnos")
+
+  	if (window.XMLHttpRequest)
+  	{
+  		xmlhttp = new XMLHttpRequest ();
+  	}
+  	else
+  	{
+  		xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');
+  	}
+
+  	xmlhttp.onreadystatechange = function ()
+  	{
+  		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+  		{
+  			document.getElementById('div_sl_alumno').innerHTML=xmlhttp.responseText;
+  		}
+  	}
+
+  	xmlhttp.open("POST", "select_reportes_generales.php", true);
+  	xmlhttp.send(data);
+}
+
 function form_notas_send (curs_para_mate_prof_codi,curs_para_mate_codi,peri_dist_codi,nota_perm_codi,accion){
 	document.getElementById('curs_para_mate_prof_codi').value = curs_para_mate_prof_codi;
 	document.getElementById('curs_para_mate_codi').value = curs_para_mate_codi;
