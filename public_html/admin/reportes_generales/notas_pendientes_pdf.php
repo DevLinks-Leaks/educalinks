@@ -63,8 +63,9 @@
 			$alumnos.='<tr class="letras_pequenas">';
 			$alumnos.="<td width=\"8%\">codigo</td>";
 			$alumnos.="<td width=\"25%\">Alumno</td>";
-			$alumnos.="<td width=\"25%\">Materia</td>";
-			$alumnos.="<td width=\"25%\">Profesor</td>";
+			$alumnos.="<td width=\"20%\">Materia</td>";
+			$alumnos.="<td width=\"22%\">Profesor</td>";
+			$alumnos.="<td width=\"18%\">Nota Detalle</td>";
 			$alumnos.="<td>Curso Paralelo</td>";
 			$alumnos.="</tr>";
 		}
@@ -76,8 +77,9 @@
 		$alumnos.='<tr style="'.$active_color.'">';
 		$alumnos.="<td width=\"8%\" style=\"font-size:xx-small;\">".$alumno['alum_codi']."</td>";
 		$alumnos.="<td width=\"25%\" style=\"font-size:xx-small;\">".$alumno['alum_nombre']."</td>";
-		$alumnos.="<td width=\"25%\" style=\"font-size:xx-small;\">".$alumno['mate_deta']."</td>";
-		$alumnos.="<td width=\"25%\" style=\"font-size:xx-small;\">".$alumno['prof_nomb']."</td>";
+		$alumnos.="<td width=\"20%\" style=\"font-size:xx-small;\">".$alumno['mate_deta']."</td>";
+		$alumnos.="<td width=\"22%\" style=\"font-size:xx-small;\">".$alumno['prof_nomb']."</td>";
+		$alumnos.="<td width=\"18%\" style=\"font-size:xx-small;\">".$alumno['peri_dist_detalle']."</td>";
 		$alumnos.="<td style=\"font-size:xx-small;\">".$alumno['curs_deta']." ".$alumno['para_deta']."</td>";
 		$alumnos.="</tr>";
 	}
