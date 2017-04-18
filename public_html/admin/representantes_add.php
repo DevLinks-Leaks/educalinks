@@ -90,5 +90,10 @@
     
 <!-- InstanceBeginEditable name="EditRegion4" -->
         <!-- InstanceEndEditable -->
+<script type="text/javascript" charset="utf-8">
+  shortcut.add("Shift+E+G", function() {
+      $('#btn_guardar').trigger("click");
+  },{'disable_in_input':true});
+</script>
 </body>
 <!-- InstanceEnd --></html>

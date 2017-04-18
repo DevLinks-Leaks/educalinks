@@ -28,12 +28,13 @@
 				if( $_SESSION['certus_medic'] == '1' )
 				{	?><li class="<? if ($Menu==700) echo 'active'; ?>"><a href="visitas_medicas.php"><i class="fa fa-medkit"></i> <span>Visitas Médicas</span></a></li><?php
 				}
+				$_SESSION['cita_medica'] = para_sist(402);
 				if($_SESSION['USUA_TIPO']=='R')
-				{   if (para_sist(402))
+				{   if ( $_SESSION['cita_medica'] )
 					{	?><li class="<? if ($Menu==5) echo 'active'; ?>"><a href="citas.php"><i class="fa fa-clock-o"></i> <span>Citas</span></a></li><?php 
 					}
 				}
-				if( $_SESSION['certus_medic'] == '1' )
+				if( $_SESSION['certus_boton_de_pago'] == '1' )
 				{	echo '<li><a href="#" onclick="js_menu_pagos();"><i class="fa fa-credit-card"></i> <span>Pagos</span></a></li>';
 				}
 				?>

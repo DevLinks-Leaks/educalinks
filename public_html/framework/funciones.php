@@ -178,6 +178,18 @@
 			$_SESSION['peri_codi_dest']=$row_peri_acti_etap['peri_codi_dest'];		
 		}
 	}
+	if (!function_exists('EncuestaActiva')) {
+		function EncuestaActiva($peri_codi){
+			include ('dbconf.php');
+			$params3 = array($peri_codi);
+			
+			$sql="{call encu_view(?)}";
+			$encu_view = sqlsrv_query($conn, $sql, $params3);  
+			$row_encu_view = sqlsrv_fetch_array($encu_view);
+			$_SESSION['encu_deta']=$row_encu_view['encu_deta'];
+			$_SESSION['encu_codi']=$row_encu_view['peri_acti_codi'];	
+		}
+	}
 	if (!function_exists('creditCardMask')) {
 		function creditCardMask($credit_num,$start,$num_repeat){
 			return substr_replace($credit_num, str_repeat("X", $num_repeat), $start, $num_repeat);
@@ -961,4 +973,21 @@
 			}
 		}
 	}
+    if (!function_exists('licencia_activa')) {
+        function licencia_activa(){
+            $current_file_name = basename($_SERVER['PHP_SELF']);
+            /*echo "=======>".$current_file_name;
+            echo "=======>".$_SESSION['alum_curs_para_codi'];
+            echo "=======>".$_SESSION['pin'];
+            echo "=======>".para_sist(407);*/
+            if (para_sist(407)){
+                if ($_SESSION['alum_curs_para_codi']!= null && $_SESSION['alum_curs_para_codi']!= ""){
+                    if ($_SESSION['pin'] == null || $_SESSION['pin'] == ""){
+                        if ($current_file_name != "activar_licencia.php")
+                            header("Location: activar_licencia.php");
+                    }
+                }
+            }
+        }
+    }
 ?>

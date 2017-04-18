@@ -361,14 +361,14 @@
 			</tr>
 			<tr>
 				
-				<td colspan="2" class="titulo" >{$antes_del_distrito} {$nombre_distrito}</td>
+				<td colspan="2" class="titulo" >"{$antes_del_distrito} {$nombre_distrito}"</td>
 			</tr>
 			<tr>
 				<td colspan="2" class="subtitulo">&nbsp;</td>
 			</tr>
 			<tr>
 				
-				<td colspan="2" class="titulo" >{$antes_del_nombre} <br/> "{$nombre_legal}"</td>
+				<td colspan="2" class="titulo" >"{$antes_del_nombre} <br/> {$nombre_legal}"</td>
 			</tr>
 			<tr>
 				<td colspan="2" class="titulo">CERTIFICADO DE PROMOCIÓN</td>

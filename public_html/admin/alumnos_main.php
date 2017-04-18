@@ -6,6 +6,7 @@
       <!-- Nuevos Css Js -->
 	
       <!-- Fin -->
+	  
 	</head> 
 	<body class="general admin"> 
 								<!-- InstanceBeginEditable name="EditRegion3" --><?php  $Menu=102;    ?><!-- InstanceEndEditable -->
@@ -60,13 +61,30 @@
 							}
 							?>
 							</td>
-							<td width="10%" ><button class="btn-primary" style="width:90%;" onclick="BuscarAlumnos(document.getElementById('alum_codi_in').value,document.getElementById('alum_apel_in').value,document.getElementById('curs_para_codi_in').value);">Buscar</button></td>
+							<td width="10%" ><button id='btn_buscar_alumnos' name='btn_buscar_alumnos' class="btn-primary" style="width:90%;"
+								title="Presione [Enter] para buscar alumno(s)"
+								onclick="BuscarAlumnos(document.getElementById('alum_codi_in').value,document.getElementById('alum_apel_in').value,document.getElementById('curs_para_codi_in').value);">Buscar</button></td>
 						</tr>
 					</table>
 				</div>
 				<div id="alum_main">
 				
 				</div>
+			</div>
+			<!-- Modal Revertir deuda y borrar pago-->
+			<div class="modal fade" id="modal_alum_main_ask" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			    <div class="modal-dialog">
+			        <div class="modal-content">
+			            <div class="modal-header">
+			                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			                <h4 class="modal-title" id="myModalLabel">Educalinks</h4>
+			            </div>
+			            <div class="modal-body" id="modal_alum_main_ask_body">
+			            </div>
+			            <div class="modal-footer" id="modal_alum_main_ask_footer">
+			            </div>
+			        </div>
+			    </div>
 			</div>
 					<div class="modal fade" 
 						 id="ModalCambiarCurso" 
@@ -171,7 +189,7 @@
 												</tr>
 												<tr>
 													<td width="75%" style="padding-top: 15px">
-														Solicitud de matrícula <b>(El alumno debe estar registrado en un curso)</b>
+														<?php if($_SESSION['directorio']=='americano') {?>Ficha de Inscripción<?}else{?>Solicitud de Matricula<?}?> <b>(El alumno debe estar registrado en un curso)</b>
 														<input type="hidden" id="alum_codi" value="" />
 													</td>
 													<td style="padding-top: 15px">
@@ -526,4 +544,9 @@
 <!-- InstanceBeginEditable name="EditRegion4" -->
 <!-- InstanceEndEditable -->
 </body>
+<script>
+	shortcut.add("Enter", function() {
+	$('#btn_buscar_alumnos').trigger("click");
+},{'disable_in_input':true});
+</script>
 <!-- InstanceEnd --></html>

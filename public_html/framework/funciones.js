@@ -487,7 +487,6 @@ function periodo_cambio(peri_codi) {
 
 	}
 }
-
 function new_username ()
 {
 	if (!document.getElementById('alum_usua').disabled)
@@ -497,23 +496,44 @@ function new_username ()
 		document.getElementById('alum_usua').value= nombres.substr(0,2)+apellidos.substr(0,6);
 	}
 }
-
-
 function validaNumeros(e, field)
-{
-	key = e.keyCode ? e.keyCode : e.which
-   if (key == 8) return true
-   if (key > 47 && key < 58) 
-   {
-     if (field.value == "") return true
-     regexp = /.[0-9]{5}$/
-     return !(regexp.test(field.value))
-   }
-   if (key == 46) 
-   {
-     if (field.value == "") return false
-     regexp = /^[0-9]+$/
-     return regexp.test(field.value)
-   }
-   return false
+{   key = e.keyCode ? e.keyCode : e.which
+	if (key == 8) return true
+	if (key > 47 && key < 58) 
+	{   if (field.value == "") return true
+		regexp = /.[0-9]{5}$/
+		return !(regexp.test(field.value))
+	}
+	if (key == 46) 
+	{   if (field.value == "") return false
+		regexp = /^[0-9]+$/
+		return regexp.test(field.value)
+	}
+	return false
+}
+function js_funciones_valida_tipo_growl( str )
+{   "use strict";
+    var str1 =  str;
+    var wordsToFind = ["¡exito!", "*¡exito!*"];
+    if (str1.toLowerCase().indexOf(wordsToFind[0]) === 0 || str1.toLowerCase().indexOf(wordsToFind[1]) === 0)
+    {   str = str.replace("¡Exito!", "");
+        $.growl.notice({ title: "Educalinks informa", message: str});
+    }
+    else
+    {   wordsToFind = ["¡error!", "*¡error!*"];
+        if (str1.toLowerCase().indexOf(wordsToFind[0]) === 0 || str1.toLowerCase().indexOf(wordsToFind[1]) === 0)
+        {   str = str.replace("¡Error!", "");
+            $.growl.error({ title: "Educalinks informa", message: str});
+        }
+        else
+        {   wordsToFind = ["¡advertencia!", "*¡advertencia!*"];
+            if (str1.toLowerCase().indexOf(wordsToFind[0]) === 0 || str1.toLowerCase().indexOf(wordsToFind[1]) === 0)
+            {   str = str.replace("¡Advertencia!", "");
+                $.growl.warning({ title: "Educalinks informa", message: str});
+            }
+            else
+            {   $.growl({ title: "Educalinks informa", message: str});
+            }
+        }
+    }
 }

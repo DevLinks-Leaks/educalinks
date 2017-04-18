@@ -18,6 +18,7 @@
 	$ciudad = para_sist (31);
 	$nombre_colegio = para_sist(3);
 	$antes_del_nombre = para_sist(36);
+	$jornada = para_sist(35);
 	$nombre_legal = para_sist(53);
 	$dominio = $_SERVER['HTTP_HOST'];
 
@@ -38,7 +39,7 @@
 	$pdf->SetTitle($cliente);
 	$pdf->SetSubject($cliente);
 	$pdf->SetMargins(PDF_MARGIN_LEFT, 5, PDF_MARGIN_RIGHT);
-	$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+	$pdf->SetAutoPageBreak(TRUE, 8);
 	$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);	 
 	
 	$sql="{call ficha_matricula_cons(?,?)}";
@@ -70,6 +71,18 @@
 		$params=array($alum_codi,"R");
 		$stmt3 = sqlsrv_query($conn, $sql, $params);
 		$row_representante = sqlsrv_fetch_array($stmt3);
+		if ($_SESSION['directorio']=='americano' or $_SESSION['directorio']=='novus')
+		{	$nombre  = $nombre_colegio;
+		}
+		else
+		{	$nombre = $nombre_legal;
+		}
+		if ($_SESSION['directorio']=='delfos' or $_SESSION['directorio']=='delfosvesp')
+		{	$jornada_lbl  = "<h1>Jornada ".$jornada."</h1>";
+		}
+		else
+		{	$jornada_lbl = "";
+		}
 
 		/*No intentar esto en casa*/
 		if ($dominio=='duplos.educalinks.com.ec' or $dominio=='arcoiris.educalinks.com.ec')
@@ -174,10 +187,10 @@ $html=<<<EOD
 		text-align: center;
 	}
 	</style>
-	<br>
 	<p>
 	<h1>{$antes_del_nombre}</h1>
-	<h1>"{$nombre_legal}"</h1>
+	<h1>"{$nombre}"</h1>
+	{$jornada_lbl}
 	<h1>{$_SESSION['peri_deta']}</h1>
 	</p>
 	<p>
@@ -207,7 +220,7 @@ $html=<<<EOD
 		</tr>
 		<tr>
 			<td width="25%" class="negrita">Domicilio:</td>
-			<td>{$row_alum["alum_domi"]}</td>
+			<td width="75%">{$row_alum["alum_domi"]}</td>
 		</tr>
 		<tr>
 			<td width="25%" class="negrita">Teléfono y celular:</td>
@@ -235,7 +248,7 @@ $html=<<<EOD
 			<td width="20%" class="negrita">Lugar de trabajo:</td>
 			<td width="40%">{$row_padre["lugar_trabajo"]}</td>
 			<td width="10%" class="negrita">Telf. Tbj: </td>
-			<td width="30%"></td>
+			<td width="30%">{$row_padre["telefono_trabajo"]}</td>
 		</tr>
 		<tr>
 			<td width="20%" class="negrita">Profesión:</td>
@@ -259,7 +272,7 @@ $html=<<<EOD
 			<td width="20%" class="negrita">Lugar de trabajo:</td>
 			<td width="40%">{$row_madre["lugar_trabajo"]}</td>
 			<td width="10%" class="negrita">Telf. Tbj: </td>
-			<td width="30%"></td>
+			<td width="30%">{$row_madre["telefono_trabajo"]}</td>
 		</tr>
 		<tr>
 			<td width="20%" class="negrita">Profesión:</td>
@@ -283,7 +296,7 @@ $html=<<<EOD
 			<td width="20%" class="negrita">Lugar de trabajo:</td>
 			<td width="40%">{$row_representante["lugar_trabajo"]}</td>
 			<td width="10%" class="negrita">Telf. Tbj: </td>
-			<td width="30%"></td>
+			<td width="30%">{$row_representante["telefono_trabajo"]}</td>
 		</tr>
 		<tr>
 			<td width="20%" class="negrita">Profesión:</td>

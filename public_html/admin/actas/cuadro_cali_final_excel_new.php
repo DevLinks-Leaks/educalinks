@@ -22,7 +22,7 @@
 	$curso_descr = $periodo_descrp = "";
 	$largo_head=0;
 	$materias_cuantitativas_count=0;
-	$ancho_para_firmas=45;//se dividirá por el numero de subcolumnas.
+	$ancho_para_firmas=47;//se dividirá por el numero de subcolumnas.
 	$cont_retirados=0;
 	
 	//Estilo para los bordes de cada celda y las letras
@@ -137,13 +137,16 @@
 	//Escala de impresión
 	$objPHPExcel->getActiveSheet()->getPageSetup()->setScale(55);
 	
+	$objPHPExcel->getActiveSheet()->
+		getPageSetup()->setPaperSize(PHPExcel_Worksheet_PageSetup::PAPERSIZE_A4);
+
 	//Horizontal
 	$objPHPExcel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
 	
 	//Márgenes
 	$objPHPExcel->getActiveSheet()->getPageMargins()->setTop(0.25);
-	$objPHPExcel->getActiveSheet()->getPageMargins()->setRight(0.25);
-	$objPHPExcel->getActiveSheet()->getPageMargins()->setLeft(0.25);
+	$objPHPExcel->getActiveSheet()->getPageMargins()->setRight(0.35);
+	$objPHPExcel->getActiveSheet()->getPageMargins()->setLeft(0.35);
 	$objPHPExcel->getActiveSheet()->getPageMargins()->setBottom(0.25);
         
         $una=true;
@@ -182,14 +185,15 @@
 				$aux_col[$i][3] = $row['mate_padr'];
 				$aux_col[$i][4] = $row['mate_orde'];
 				
-				$aux_sub_col[$i][0] = $row['peri_dist_codi'];
-				$aux_sub_col[$i][1] = $row['peri_dist_deta'];
+				// $aux_sub_col[$i][0] = $row['peri_dist_codi'];
+				// $aux_sub_col[$i][1] = $row['peri_dist_deta'];
 				
 				$aux_fil[$i][0] = $row['alum_codi'];
 				$aux_fil[$i][1] = $row['alum_apel'];
 				$aux_fil[$i][2] = $row['alum_nomb'];
 				$aux_fil[$i][3] = $row['alum_est_det'];
-				
+				$aux_fil[$i][4] = $row['num_mate'];
+
 				$datos[]=$row;
 				$i++;
 			//}
@@ -202,6 +206,18 @@
 		{	$aux[$key] = $row[4];//se guarda en el arreglo auxiliar sólo la columna por la que quieres ordenar.
 		}
 		
+		//Consulta cabeceras
+		$params = array($peri_dist_codi, 'C');
+		$sql="{call peri_dist_padr_libr_view(?,?)}";
+		$peri_dist_padr_view = sqlsrv_query($conn, $sql, $params);
+		$k=0;
+		while($row_peri_dist_padr_view= sqlsrv_fetch_array($peri_dist_padr_view)){
+			$aux_sub_col[$k][0] = $row_peri_dist_padr_view['peri_dist_codi'];
+			$aux_sub_col[$k][1] = $row_peri_dist_padr_view['peri_dist_deta'];
+			$aux_sub_col[$k][2] = $row_peri_dist_padr_view['peri_dist_nota_tipo'];
+			$k++;
+		}
+
 		//Subcolumnas finales
 		$subcolumnas =arrayUnique ($aux_sub_col);
 		
@@ -373,6 +389,7 @@
 		//LISTADO DE ESTUDIANTES Y NOTAS
 		///////////////////////////////////////////////////////////////////////////////////////
 		$acum_rendimiento=0;
+		$p_r_total_flag=array();
 		//PRIMERO NO., LUEGO ESTUDIANTE...
 		for ($i=0;$i<count($filas);$i++) 
 		{	$asterisco="";
@@ -383,6 +400,7 @@
 				$retirado_switch = true;
 			}
 			$w=0;
+			$p_r_total_flag[$i]=0;
 			//listado($objPHPExcel, $w, $i+9, $i+1, $styleArray, true, false);
 			$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow($w, $i+9, $i+1);
 			$objPHPExcel->getActiveSheet()->getStyle(PHPExcel_Cell::stringFromColumnIndex($w).($i+9))->applyFromArray($styleArray);
@@ -390,6 +408,7 @@
 			listado($objPHPExcel, $w, $i+9, $asterisco . rtrim($filas[$i][1]).' '.rtrim($filas[$i][2]), $styleArray, false, false);
 			//...LUEGO INICIO DE NOTAS
 			//LAS DEMAS MATERIAS
+
 			$promedio_rendimiento=array();
             for ($j=0;$j<count($columnas);$j++) 
             {	$aux=0;
@@ -405,12 +424,19 @@
 						//Si la calificación es numérica
 						if ($columnas[$j][2]=='C')
 						{	if ($nota < 7)
-							{	listado($objPHPExcel, $w, $i+9, $nota, $styleArrayRojo, true, false);
+							{	
+								if($subcol[0]==$peri_dist_codi)
+								{
+									$p_r_total_flag[$i]++;
+								}
+								listado($objPHPExcel, $w, $i+9, $nota, $styleArrayRojo, true, false);
 							}else
 							{	listado($objPHPExcel, $w, $i+9, $nota, $styleArray, true, false);
 							}
 							if ($columnas[$j][3]==-1 and ($subcol[1]!='EX. SUPLETORIO' and $subcol[1]!='EX. REMEDIAL' and $subcol[1]!='MEJORAMIENTO' and $subcol[1]!='EX. GRACIA'))
-							{   $promedio_rendimiento[$j][$aux]=truncar($nota);
+							{   
+								
+								$promedio_rendimiento[$j][$aux]=truncar($nota);
 								$aux++;
 							}
 						}
@@ -430,28 +456,28 @@
             //COMPORTAMIENTO
             for ($j=0;$j<count($columnas);$j++)
             {	foreach ($subcolumnas as $subcol)
-            {	$params = array($columnas[$j][0]);
-            $sql="{call curs_para_mate_info(?)}";
+            	{	$params = array($columnas[$j][0]);
+            		$sql="{call curs_para_mate_info(?)}";
 					$curs_peri_info = sqlsrv_query($conn, $sql, $params);
-            					$row_curs_peri_info = sqlsrv_fetch_array($curs_peri_info);
-            					if ($columnas[$j][1]=='COMPORTAMIENTO')
+					$row_curs_peri_info = sqlsrv_fetch_array($curs_peri_info);
+					if ($columnas[$j][1]=='COMPORTAMIENTO')
 					{	$w++;
-            					$nota=buscar_nota_3d($datos,$filas[$i][0],$columnas[$j][0], $subcol[0], 'alum_codi', 'curs_para_mate_codi', 'peri_dist_codi');
+    					$nota=buscar_nota_3d($datos,$filas[$i][0],$columnas[$j][0], $subcol[0], 'alum_codi', 'curs_para_mate_codi', 'peri_dist_codi');
 						if ($columnas[$j][2]=='C')
-            					{	listado($objPHPExcel, $w, $i+9, $nota, $styleArray, true, false);
-            					}
-            					else
-            					{	if ($nota==0)
-            					{	listado($objPHPExcel, $w, $i+9, '--', $styleArray, true, false);
-            					}
-            					else
-            					{	$nota_prom_quali= notas_prom_quali($_SESSION['peri_codi'],$row_curs_peri_info['nota_refe_cab_tipo'],$nota);
-								listado($objPHPExcel, $w, $i+9, $nota_prom_quali, $styleArray, true, false);
-            					}
-            					}
-            					}
-            					}
-            					}
+    					{	listado($objPHPExcel, $w, $i+9, $nota, $styleArray, true, false);
+    					}
+    					else
+    					{	if ($nota==0)
+        					{	listado($objPHPExcel, $w, $i+9, '--', $styleArray, true, false);
+    						}
+        					else
+        					{	$nota_prom_quali= notas_prom_quali($_SESSION['peri_codi'],$row_curs_peri_info['nota_refe_cab_tipo'],$nota);
+							listado($objPHPExcel, $w, $i+9, $nota_prom_quali, $styleArray, true, false);
+        					}
+    					}
+					}
+				}
+			}
 			//PROMEDIO RENDIMIENTO
 			$p_r_total=array();
 			$x=$y=0;
@@ -472,17 +498,23 @@
 			{	
 				if ($subcol[1]!='EX. SUPLETORIO' and $subcol[1]!='EX. REMEDIAL' and $subcol[1]!='MEJORAMIENTO' and $subcol[1]!='EX. GRACIA')
 				{
-				$p_r_total[$z]=truncar(truncar($p_r_total[$z])/$materias_cuantitativas_count);
+				$p_r_total[$z]=truncar(truncar($p_r_total[$z])/$filas[$i][4]);
 				$z++;
 				}
 			}
+			$aux=0;
 			foreach ($p_r_total as $notaRP)
 			{	$w++;
 				if ($notaRP < 7)
 				{	listado($objPHPExcel, $w, $i+9, ($notaRP), $styleArrayRojo, true, false);
 				}else
-				{	listado($objPHPExcel, $w, $i+9, ($notaRP), $styleArray, true, false);
+				{	
+					if ( $p_r_total_flag[$i] > 0 and $aux >= $z-1 )
+						listado($objPHPExcel, $w, $i+9, ($notaRP), $styleArrayRojo, true, false);
+					else
+						listado($objPHPExcel, $w, $i+9, ($notaRP), $styleArray, true, false);
 				}
+				$aux++;
 			}
 		}
 		///////////////////////////////
@@ -694,6 +726,8 @@
 		$objDrawing->setCoordinates('B1');
 		$objDrawing->setHeight($maxHeight);
 		$offsetX =$maxWidth - $objDrawing->getWidth();
+		if($offsetX<0)
+			$offsetX=0;
 		$objDrawing->setOffsetX($offsetX);
 	}
 	else

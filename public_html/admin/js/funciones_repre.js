@@ -204,11 +204,11 @@ function load_ajax_add_repr(div,url){
 		data.append('repr_direc_trabajo', document.getElementById('repr_direc_trabajo').value);
 		data.append('repr_telf_trab', document.getElementById('repr_telf_trab').value);
 		data.append('repr_cargo', document.getElementById('repr_cargo').value);
-		data.append('repr_religion', $('#repr_religion').val());
+		data.append('repr_religion', $('#idreligion').val());
 		data.append('repr_estudios', document.getElementById('repr_estudios').value);
 		data.append('repr_institucion', document.getElementById('repr_institucion').value);
 		data.append('repr_motivo_representa', document.getElementById('repr_motivo_representa').value);
-		data.append('repr_estado_civil', $('#repr_estado_civil').val());
+		data.append('repr_estado_civil', $('#idestadocivil').val());
 		data.append('repr_escolaborador',$('#repr_escolaborador').prop('checked'));
 		data.append('repr_fech_promoc', document.getElementById('repr_fech_promoc').value);
 		data.append('repr_ex_alum',$('#repr_ex_alum').prop('checked') );
@@ -216,6 +216,10 @@ function load_ajax_add_repr(div,url){
 		data.append('repr_pais_naci', $('#repr_pais_naci option:selected').text());
 		data.append('repr_prov_naci', $('#repr_prov_naci option:selected').text());
 		data.append('repr_ciud_naci', $('#repr_ciud_naci option:selected').text());
+        data.append('identificacion_niv_1', $('#identificacion_niv_1').val());
+        data.append('identificacion_niv_2', ($('#identificacion_niv_2') > 0 ? $('#identificacion_niv_2').val() : '') );
+        data.append('identificacion_niv_3', ($('#identificacion_niv_3') > 0 ? $('#identificacion_niv_3').val() : '') );
+		data.append('alum_codi', document.getElementById('alum_codi').value);
 
 		xmlhttp.onreadystatechange=function()
 		{
@@ -298,11 +302,11 @@ function load_ajax_upd_repr(div,url,repr_codi){
 		data.append('repr_direc_trabajo', document.getElementById('repr_direc_trabajo').value);
 		data.append('repr_telf_trab', document.getElementById('repr_telf_trab').value);
 		data.append('repr_cargo', document.getElementById('repr_cargo').value);
-		data.append('repr_religion', $('#repr_religion').val());
+		data.append('repr_religion', $('#idreligion').val());
 		data.append('repr_estudios', document.getElementById('repr_estudios').value);
 		data.append('repr_institucion', document.getElementById('repr_institucion').value);
 		data.append('repr_motivo_representa', document.getElementById('repr_motivo_representa').value);
-		data.append('repr_estado_civil', $('#repr_estado_civil').val());
+		data.append('repr_estado_civil', $('#idestadocivil').val());
 		data.append('repr_escolaborador',$('#repr_escolaborador').prop('checked'));
 		data.append('repr_fech_promoc', document.getElementById('repr_fech_promoc').value);
 		data.append('repr_ex_alum',$('#repr_ex_alum').prop('checked') );
@@ -310,6 +314,11 @@ function load_ajax_upd_repr(div,url,repr_codi){
 		data.append('repr_pais_naci', $('#repr_pais_naci option:selected').text());
 		data.append('repr_prov_naci', $('#repr_prov_naci option:selected').text());
 		data.append('repr_ciud_naci', $('#repr_ciud_naci option:selected').text());
+		data.append('alum_codi', document.getElementById('alum_codi').value);
+        data.append('identificacion_niv_1', $('#identificacion_niv_1').val());
+        data.append('identificacion_niv_2', ($('#identificacion_niv_2') > 0 ? $('#identificacion_niv_2').val() : '') );
+        data.append('identificacion_niv_3', ($('#identificacion_niv_3') > 0 ? $('#identificacion_niv_3').val() : '') );
+
 		xmlhttp.onreadystatechange=function()
 		{
 			if (xmlhttp.readyState==4 && xmlhttp.status==200){
@@ -350,6 +359,7 @@ function ValidarRepresentante ()
 {	if (document.getElementById('repr_nomb').value=='')
 	{	$.growl.error({ title: "Educalinks informa",message: "Por favor ingrese los nombres del representante" });	
 		document.getElementById('repr_nomb').style.border='solid 1px red';
+        document.getElementById('repr_nomb').focus();
 		return false;
 	}
 	else
@@ -358,6 +368,7 @@ function ValidarRepresentante ()
 	if (document.getElementById('repr_apel').value=='')
 	{	$.growl.error({ title: "Educalinks informa",message: "Por favor ingrese los apellidos del representante" });	
 		document.getElementById('repr_apel').style.border='solid 1px red';
+        document.getElementById('repr_apel').focus();
 		return false;
 	}
 	else
@@ -366,10 +377,61 @@ function ValidarRepresentante ()
 	if (document.getElementById('repr_email').value=='')
 	{	$.growl.error({ title: "Educalinks informa",message: "Por favor ingrese el correo electrónico del representante" });	
 		document.getElementById('repr_email').style.border='solid 1px red';
+        document.getElementById('repr_email').focus();
 		return false;
 	}
 	else
 	{	document.getElementById('repr_email').style.border='';
 	}
 	return true;
+}
+function CargarIdentNiv2(id){
+	var data = "id="+id+"&opc=cargar_idenficacion_nivel_2";
+    if (window.XMLHttpRequest)
+    {// code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp=new XMLHttpRequest();
+    }
+    else
+    {// code for IE6, IE5
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange=function()
+    {	if (xmlhttp.readyState==4 && xmlhttp.status==200){
+        	resp = JSON.parse(xmlhttp.responseText);
+        	options = "<option value='-1'>Seleccione</option>";
+			if (resp.res == "success")
+			{	for (key in resp.data)
+                options = options + "<option value='"+resp.data[key].id+"'>"+resp.data[key].nombre+"</option>";
+                document.getElementById('identificacion_niv_2').innerHTML = options;
+			}
+        }
+    }
+    xmlhttp.open("POST","script_repr.php",true);
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.send(data);
+}
+function CargarIdentNiv3(id){
+    var data = "id="+id+"&opc=cargar_idenficacion_nivel_3";
+    if (window.XMLHttpRequest)
+    {// code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp=new XMLHttpRequest();
+    }
+    else
+    {// code for IE6, IE5
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange=function()
+    {	if (xmlhttp.readyState==4 && xmlhttp.status==200){
+        resp = JSON.parse(xmlhttp.responseText);
+        options = "<option value='-1'>Seleccione</option>";
+        if (resp.res == "success")
+        {	for (key in resp.data)
+            options = options + "<option value='"+resp.data[key].id+"'>"+resp.data[key].nombre+"</option>";
+            document.getElementById('identificacion_niv_3').innerHTML = options;
+        }
+    }
+    }
+    xmlhttp.open("POST","script_repr.php",true);
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.send(data);
 }

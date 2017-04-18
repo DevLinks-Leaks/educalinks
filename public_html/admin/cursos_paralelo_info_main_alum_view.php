@@ -40,7 +40,6 @@
       <th>Nombres</th>
       <th>&nbsp;</th>
       <th>&nbsp;</th>
-      <th>&nbsp;</th>
     </tr>
 </thead>
 	<?php  
@@ -150,7 +149,7 @@
             </ul>
         </div>
       </td>
-	  <td>  
+	 <!--  <td>  
         <div class="menu_options">
             <ul>
 				<?
@@ -172,7 +171,7 @@
 				?>
             </ul>
         </div>
-      </td>
+      </td> -->
     </tr>
 <?php }?>
     <tr>

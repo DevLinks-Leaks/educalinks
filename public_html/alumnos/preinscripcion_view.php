@@ -1,12 +1,21 @@
 <?php
 if($_SESSION['peri_codi_dest']!=null){
+	$sql_opc = "{call alum_curs_para_info(?)}";
+	$params_opc= array($_SESSION['alum_curs_para_codi']);
+	$alum_curs_para_codi = sqlsrv_query( $conn, $sql_opc,$params_opc);
+	if( $stmt_opc === false ){echo "Error in executing statement .\n";die( print_r( sqlsrv_errors(), true));} 
+	$row_alum_curs_para_codi=sqlsrv_fetch_array($alum_curs_para_codi);
+
+	if($row_alum_curs_para_codi['curs_sig']!=null){
+
 	if(!(alum_tiene_deuda($_SESSION['alum_codi'],$_SESSION['curs_para_codi']) and para_sist(403)=='1')){
 		$params = array($_SESSION['alum_codi'],$_SESSION['peri_codi_dest']);
 		$sql="{call preins_curs_para(?,?)}";
 		$preins_curs_para = sqlsrv_query($conn, $sql, $params);  
 		$row_preins_curs_para = sqlsrv_fetch_array($preins_curs_para);
 
-		if($row_preins_curs_para['alum_curs_para_codi_res']==null){
+		
+		if($row_preins_curs_para['alum_curs_para_codi_res']==null ){
 			// $_SESSION['ISBIEN_ALUM'] == 'INNOT';
 			$params = array($_SESSION['curs_para_codi']);
 			$sql="{call curs_para_info(?)}";
@@ -27,11 +36,7 @@ if($_SESSION['peri_codi_dest']!=null){
 			if( $stmt_opc === false ){echo "Error in executing statement .\n";die( print_r( sqlsrv_errors(), true));} 
 			$row_repr_view=sqlsrv_fetch_array($stmt_opc);
 
-			$sql_opc = "{call alum_curs_para_info(?)}";
-			$params_opc= array($_SESSION['alum_curs_para_codi']);
-			$alum_curs_para_codi = sqlsrv_query( $conn, $sql_opc,$params_opc);
-			if( $stmt_opc === false ){echo "Error in executing statement .\n";die( print_r( sqlsrv_errors(), true));} 
-			$row_alum_curs_para_codi=sqlsrv_fetch_array($alum_curs_para_codi);
+			
 
 			$sql_opc = "{call peri_info(?)}";
 			$params_opc= array($_SESSION['peri_codi_dest']);
@@ -155,7 +160,7 @@ if($_SESSION['peri_codi_dest']!=null){
 											<label for="alum_prov_naci">Provincia de nacimiento:</label>
 											<select onchange="CargarCiudades('alum_ciud_naci',this.value);" class='form-control' id='alum_prov_naci' name='alum_prov_naci'>
 											<?php 
-											$params = array(null,$alum_view["alum_pais"]);
+											$params = array(null,($alum_view["alum_pais"]==null ? 'Ecuador' : $alum_view["alum_pais"]));
 											$sql="{call cata_provincia_cons(?,?)}";
 											$stmt = sqlsrv_query($conn, $sql, $params);
 									
@@ -214,7 +219,7 @@ if($_SESSION['peri_codi_dest']!=null){
 											<label for="alum_sect_naci">Sector de nacimiento:</label>
 											<select class="form-control" id="alum_sect_naci" name="alum_sect_naci">
 											<?php 
-											$params = array(337);
+											$params = array(400);
 											$sql="{call cata_hijo_view(?)}";
 											$stmt = sqlsrv_query($conn, $sql, $params);
 									
@@ -290,11 +295,37 @@ if($_SESSION['peri_codi_dest']!=null){
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
+											<label for="alum_prov">Provincia:</label>
+											<select onchange="CargarCiudades('alum_ciud',this.value);" class='form-control' id='alum_prov' name='alum_prov'>
+											<?php 
+											$params = array('ECU',null);
+											$sql="{call cata_provincia_cons(?,?)}";
+											$stmt = sqlsrv_query($conn, $sql, $params);
+									
+											while($ciudad_view= sqlsrv_fetch_array($stmt))
+											{
+												$seleccionado="";
+												if($alum_view['alum_prov']==null){
+													if($ciudad_view["descripcion"]=='Guayas'){
+														$seleccionado="selected";
+													}
+												}else{
+													if ($ciudad_view["descripcion"]==$alum_view["alum_prov"])
+														$seleccionado="selected";
+												}
+												echo '<option value="'.$ciudad_view["codigo"].'" '.$seleccionado.'>'.$ciudad_view["descripcion"].'</option>';
+											}
+											echo '</select>';
+											?>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
 											<label for="alum_ciud">(*)Ciudad:</label>
 											<!-- <input class="form-control" id="alum_ciud" name="alum_ciud" type="text" placeholder="Ingrese la ciudad del alumno..." value="<?=$alum_view['alum_ciud'];?>"> -->
-											<select onchange="CargarParroquias('alum_parroq',this.value);" class='form-control' id='alum_ciud' name='alum_ciud'>
+											<select onchange="CargarParroquias('alum_parroquia',this.value);" class='form-control' id='alum_ciud' name='alum_ciud'>
 											<?php 
-											$params = array(10,null);
+											$params = array(null,($alum_view["alum_prov"]==''?'Guayas':$alum_view["alum_prov"]));
 											$sql="{call cata_ciudad_cons(?,?)}";
 											$stmt = sqlsrv_query($conn, $sql, $params);
 											while($ciudad_view= sqlsrv_fetch_array($stmt))
@@ -397,7 +428,7 @@ if($_SESSION['peri_codi_dest']!=null){
 											<label for="alum_movilizacion">Movilización:</label>
 											<?php 
 												include ('../framework/dbconf.php');		
-												$params = array(343);
+												$params = array(406);
 												$sql="{call cata_hijo_view(?)}";
 												$stmt = sqlsrv_query($conn, $sql, $params);
 										
@@ -707,7 +738,7 @@ if($_SESSION['peri_codi_dest']!=null){
 			<div class="col-md-12">
 				<div class="alert alert-success">
 					<h3><i class="fa fa-ticket"></i> Detalles de la Preinscripción</h3>
-					<label class="lead">Se realizó una reserva de cupo para el alumno <b><?=$row_preins_curs_para['alum_apel'];?> <?=$row_preins_curs_para['alum_nomb'];?> </b> en el curso <b><?=$row_preins_curs_para['curs_deta'];?> de <?=$row_preins_curs_para['nive_deta'];?> "<?=$row_preins_curs_para['para_deta'];?>"</b> en el periodo Lectivo <b><?=$row_preins_curs_para['peri_deta'];?></b>.</label>
+					<label class="lead">Se actualizaron los datos para el alumno <b><?=$row_preins_curs_para['alum_apel'];?> <?=$row_preins_curs_para['alum_nomb'];?> </b> en el curso <b><?=$row_preins_curs_para['curs_deta'];?> de <?=$row_preins_curs_para['nive_deta'];?> "<?=$row_preins_curs_para['para_deta'];?>"</b> en el periodo Lectivo <b><?=$row_preins_curs_para['peri_deta'];?></b>.</label>
 				</div>
 			</div>
 			<div class="col-md-10 col-md-offset-1">
@@ -727,28 +758,12 @@ if($_SESSION['peri_codi_dest']!=null){
 							</td>
 						</tr> -->
 						<tr>
-							<td >Solicitud de Matricula</td>
+							<td ><?php if($_SESSION['directorio']=='americano') {?>Ficha de Inscripción<?}else{?>Solicitud de Matricula<?}?></td>
 							<td class="text-center">
 								<a class="btn btn-success" onclick="window.open('../admin/reportes_generales/soli_matr_<?= $_SESSION['directorio'] ?>_pdf.php?alum_codi=<?=$_SESSION['alum_codi'];?>&peri_codi=<?=$_SESSION['peri_codi_dest'];?>','_blank')"><i class="fa fa-download"></i> Descargar</a>
 							</td>
 						</tr>
-						<tr>
-							<td>Ficha de Matrícula</td>
-							<td class="text-center">
-								<?php 
-									if($_SESSION['directorio']=='liceopanamericano' or $_SESSION['directorio']=='liceopanamericanosur'){
-
-								?>
-								<a class="btn btn-success" onclick="window.open('../admin/reportes_generales/ficha_matricula_<?= $_SESSION['directorio'] ?>_pdf.php?alum_curs_para_codi=<?= $row_preins_curs_para['alum_curs_para_codi_res'];?>','_blank')"><i class="fa fa-download"></i> Descargar</a>
-								<?php 
-								}else{
-								?>
-								<a class="btn btn-success" onclick="window.open('../admin/reportes_generales/ficha_matricula_pdf.php?alum_curs_para_codi=<?= $row_preins_curs_para['alum_curs_para_codi_res'];?>','_blank')"><i class="fa fa-download"></i> Descargar</a>
-								<?php
-									}
-								?>
-							</td>
-						</tr>
+						
 						<tr>
 							<td >Autorización de débito</td>
 							<td class="text-center">
@@ -773,20 +788,39 @@ if($_SESSION['peri_codi_dest']!=null){
 
 <? }  }
 else { ?>
-<div class="box box-default">
-  	<!-- <div class="box-header"></div> -->
-  	<div class="box-body">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="alert alert-danger">
-					<h3><i class="fa fa-ticket"></i> Bloqueo de Preinscripción</h3>
-					<label class="lead"> Favor acercarse a la institución para mayor información.</label>
+
+	<div class="box box-default">
+	  	<!-- <div class="box-header"></div> -->
+	  	<div class="box-body">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="alert alert-danger">
+						<h3><i class="fa fa-ticket"></i> Bloqueo de Preinscripción</h3>
+						<label class="lead"> Favor acercarse a la institución para mayor información.</label>
+					</div>
 				</div>
 			</div>
-		</div>
-  	</div>
-  	<div class="box-footer"></div>
-</div>
+	  	</div>
+	  	<div class="box-footer"></div>
+	</div>
+
+<? }
+}else{ ?>
+
+	<div class="box box-default">
+	  	<!-- <div class="box-header"></div> -->
+	  	<div class="box-body">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="alert alert-success">
+						<h3><i class="fa fa-ticket"></i> Preinscripción</h3>
+						<label class="lead"> No se encuentra habilitado para preinscripción dado que está cursando el <b>último nivel </b> de la institución.</label>
+					</div>
+				</div>
+			</div>
+	  	</div>
+	  	<div class="box-footer"></div>
+	</div>
 
 
-<? }} ?>
+<?}} ?>

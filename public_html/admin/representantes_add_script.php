@@ -28,13 +28,15 @@ $repr_view= sqlsrv_fetch_array($stmt_repr);?>
         <ul>
             <li>
             <? if ($repr_codi==0){?>
-                <button id="btn_guardar" name="btn_guardar" type="button" onClick="load_ajax_add_repr('div_repr_list','script_repr.php');">Guardar</button>
+                <button id="btn_guardar" name="btn_guardar" type="button"  title='Presione [Shift+E+G] para guardar'
+                    onClick="load_ajax_add_repr('div_repr_list','script_repr.php');"><font style='text-decoration:underline'>G</font>uardar</button>
             <? }else{?>
-                <button id="btn_guardar" name="btn_guardar" type="button" onClick="load_ajax_upd_repr('div_repr_list','script_repr.php','<?= $repr_codi?>');">Grabar cambios</button>
+                <button id="btn_guardar" name="btn_guardar" type="button"  title='Presione [Shift+E+G] para guardar'
+                    onClick="load_ajax_upd_repr('div_repr_list','script_repr.php','<?= $repr_codi?>');"><font style='text-decoration:underline'>G</font>uardar cambios</button>
             <? }?>
             </li>
             <li>
-                <button id="btn_cancelar" name="btn_cancelar" type="reset">Cancelar</button>
+                <!--<button id="btn_cancelar" name="btn_cancelar" type="reset">Cancelar</button>-->
             </li>
             <li>
                 <button id="btn_regresar" name="btn_regresar" type="button" onclick="window.history.back();">Regresar</button>
