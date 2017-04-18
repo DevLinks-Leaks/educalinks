@@ -45,8 +45,8 @@
 
     <link href="theme/css/main.css" rel="stylesheet" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script type="text/javascript" src="includes/common/shortcut.js"></script>
     <script src="theme/js/select.js"></script>
-
     
 </head>
 
@@ -93,17 +93,17 @@
                         <div class="form_element" style="text-align:center;">
                         <table width="100%">
                             <tr>
-                                <td width="50%"><?php if($_SESSION['certus_acad']){ ?><button onClick="SeleccionarModulo(1)">ACADÉMICO</button><?php }?></td>
-                                <td width="50%"><?php if($_SESSION['certus_finan']){ if($_SESSION['rol_finan']==1){?><button onClick="SeleccionarModulo(2)">FINANCIERO</button><?php }}?></td>
+                                <td width="50%"><?php if($_SESSION['certus_acad']){ ?><button id="btn_acad" onClick="SeleccionarModulo(1)" title="Presione [A] para ir a módulo Académico"><span style='text-decoration: underline;'>A</span>CADÉMICO</button><?php }?></td>
+                                <td width="50%"><?php if($_SESSION['certus_finan']){ if($_SESSION['rol_finan']==1){?><button id="btn_finan" onClick="SeleccionarModulo(2)" title="Presione [F] para ir a módulo Financiero"><span style='text-decoration: underline;'>F</span>INANCIERO</button><?php }}?></td>
                             </tr>
                             <tr><td colspan="2">&nbsp;</td></tr>
                             <tr>
-								<td width="50%"><?php if($_SESSION['certus_biblio']){ if($_SESSION['rol_biblio']==1){?><button onClick="SeleccionarModulo(4)">BIBLIOTECA</button><?php }}?></td>
-                                <td width="50%"><?php if($_SESSION['certus_medic']){ if($_SESSION['rol_medico']==1){?><button onClick="SeleccionarModulo(3)">MÉDICO</button><?php }}?></td>
+								<td width="50%"><?php if($_SESSION['certus_biblio']){ if($_SESSION['rol_biblio']==1){?><button id="btn_biblio" onClick="SeleccionarModulo(4)" title="Presione [B] para ir a módulo Biblioteca"><span style='text-decoration: underline;'>B</span>IBLIOTECA</button><?php }}?></td>
+                                <td width="50%"><?php if($_SESSION['certus_medic']){ if($_SESSION['rol_medico']==1){?><button id="btn_medic" onClick="SeleccionarModulo(3)" title="Presione [M] para ir a módulo Médico"><span style='text-decoration: underline;'>M</span>ÉDICO</button><?php }}?></td>
                             </tr>
                             <tr><td colspan="2">&nbsp;</td></tr>
 							<tr>
-                                <td width="50%"><?php if($_SESSION['certus_admisiones']){ ?><button onClick="SeleccionarModulo(5)">ADMISIONES</button><?php }?></td>
+                                <td width="50%"><?php if($_SESSION['certus_admisiones']){ ?><button id="btn_adm" onClick="SeleccionarModulo(5)" title="Presione [D] para ir a módulo Admisiones">A<span style='text-decoration: underline;'>D</span>MISIONES</button><?php }?></td>
                                 
 								<td width="50%"></td>
                             </tr>
@@ -120,11 +120,25 @@
         </div>
 
 
-    <script>     
-
+    <script>
+		shortcut.add("A", function() {
+			$('#btn_acad').trigger('click');
+		});
+		shortcut.add("F", function() {
+			$('#btn_finan').trigger('click');
+		});
+		shortcut.add("B", function() {
+			$('#btn_biblio').trigger('click');
+		});
+		shortcut.add("M", function() {
+			$('#btn_medic').trigger('click');
+		});
+		shortcut.add("D", function() {
+			$('#btn_adm').trigger('click');
+		});
         function SeleccionarModulo (valor)
         {
-            //valor= $("#sl_modulo").val();        
+            //valor= $("#sl_modulo").val();
             if (valor==1)
             {
                 $("#frm_modulo").attr("action", "admin/index.php");
@@ -147,6 +161,19 @@
                 $("#frm_modulo").attr("action", "main_admisiones.php");
             }
         }
+        /*$(document).keypress(function(e) {
+            console.log(e.keyCode);
+            if ( e.keyCode === 65 || e.keyCode === 97 ) // a
+                $('#btn_acad').trigger('click');
+            if ( e.keyCode === 70 || e.keyCode === 102) // f
+                $('#btn_finan').trigger('click');
+            if ( e.keyCode === 66 || e.keyCode === 98) // b
+                $('#btn_biblio').trigger('click');
+            if ( e.keyCode === 77 || e.keyCode === 109) // m
+                $('#btn_medic').trigger('click');
+            if ( e.keyCode === 68 || e.keyCode === 100) // d
+                $('#btn_adm').trigger('click');
+        });*/
     </script>
 
 	</body>
