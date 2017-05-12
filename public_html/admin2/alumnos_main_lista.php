@@ -23,9 +23,16 @@ include ('../framework/funciones.php');
 	else
 	{	$curs_para_codi = "0";
 	}
+	
+	if (isset($_POST["alum_estado"]))
+	{	$alum_estado = $_POST["alum_estado"];
+	}
+	else
+	{	$alum_estado = "-1";
+	}
   
-	$params = array($alum_codi,$alum_apel,$curs_para_codi,$_SESSION['peri_codi']);
-	$sql="{call alumnos_main_lista2(?,?,?,?)}";
+	$params = array($alum_codi,$alum_apel,$curs_para_codi,$alum_estado,$_SESSION['peri_codi']);
+	$sql="{call alumnos_main_lista2(?,?,?,?,?)}";
 	$alum_busq = sqlsrv_query($conn, $sql, $params);  
 	$cc = 0; 
 ?>
@@ -75,7 +82,7 @@ include ('../framework/funciones.php');
 </style>
 
 <table class="table table-striped" id="alum_table">
- <thead>
+ <thead style='background-color:rgba(1, 126, 186, 0.1) !important;'>
   <tr>
     <th width="5%" class="sort"><span class="icon-sort icon"></span>&nbsp;Código </th>
     <th width="25%" class="sort"><span class="icon-sort icon"></span>&nbsp;Nombre</th>
@@ -134,24 +141,8 @@ include ('../framework/funciones.php');
 				unset($opciones);
 				$tabla = "";
 				$opciones = array();
-				if ($perm_22=='A')
+				if ($perm_22=='A' and $row_alum_busq["alum_estado"]=='A')
 				{   $opciones[]="<div class='rTableCell'>
-						<!-- <a 
-							class='option'
-							data-toggle='modal'
-							data-target='#ModalMatri'
-							onclick=\"
-							document.getElementById('ModalMatri_title').innerHTML='".PrimeraMayuscula($nombre_completo)."';
-							document.getElementById('div_cambiar_estado').innerHTML='';
-							document.getElementById('div_blacklist_view').innerHTML='';
-							document.getElementById('alum_codi').value='".$row_alum_busq['alum_codi']."';
-							document.getElementById('adm_est_alum_est_codi').value='".$alum_est_view['alum_est_peri_codi']."';
-							document.getElementById('adm_est_alum_est_det').value='".PrimeraMayuscula($alum_est_view['alum_est_det'])."';
-							document.getElementById('div_adm_est_alum_curs_para_codi').innerHTML='".PrimeraMayuscula($alum_est_view['alum_est_det'])."';
-							document.getElementById('adm_est_curs_para_codi').value='".$row_alum_busq['curs_para_codi']."';
-							document.getElementById('adm_est_alum_curs_para_codi').value='".$row_alum_busq['alum_curs_para_codi']."';
-							document.getElementById('peri_0').onchange();document.getElementById('div_bloqueos_view').innerHTML=''\" >
-							<span class='icon-signup icon' style='margin-right:3px;'></span>&nbsp;Estado</a> -->
 							<a 
 							class='option' 
 							data-toggle='modal' 
@@ -168,7 +159,7 @@ include ('../framework/funciones.php');
 							class='option'
 							data-toggle='modal' 
 							data-target='#ModalDocumentos'
-							onclick=\"document.getElementById('alum_curs_para_codi').value=".$row_alum_busq['alum_curs_para_codi'].";document.getElementById('alum_codi').value=".$row_alum_busq['alum_codi'].";\">
+							onclick=\"load_ajax('div_document','modal_documentos_view.php','alum_codi=". $row_alum_busq['alum_codi']."&alum_curs_para_codi=". $row_alum_busq['alum_curs_para_codi']."');\">
 								<span class='fa fa-print' style='margin-right:3px;'></span>&nbsp;Documentos
 						</a>
 					 </div>";
@@ -178,7 +169,7 @@ include ('../framework/funciones.php');
 					<div class='rTableCell'>
 						<a 
 							class='option btn_opc_lista_editar'
-							onclick=\"window.location='alumnos_add.php?alum_codi=".$row_alum_busq["alum_codi"]."&alum_curs_para_codi=".$row_alum_busq['alum_curs_para_codi']."';\" >
+							onclick=\"window.location='alumnos_add.php?alum_codi=".$row_alum_busq["alum_codi"]."';\" >
 							<span class='fa fa-pencil' style='margin-right:3px;'></span>&nbsp;Editar
 						</a>
 					</div>";
@@ -203,16 +194,31 @@ include ('../framework/funciones.php');
 							<span class='fa fa-ban' style='margin-right:3px;'></span>&nbsp;Bloquear</a>
 					</div>";
 				}
-				if ($row_alum_busq["alum_curs_para_codi"]!="")
-				{	$opciones[]="
-					<div class='rTableCell'>
-					<a 
-						class='option'
-						data-target='#ModalCambiarCurso'
-						data-toggle='modal'
-						onclick=\"alum_curs_para_info(". $row_alum_busq["alum_curs_para_codi"] .");document.getElementById('alum_curs_para_codi').value=". $row_alum_busq["alum_curs_para_codi"].";\">
-						<span class='fa fa-cog' style='margin-right:3px;'></span><span style='font-size:x-small'> &nbsp;Cambiar Curso</span></a>
-					</div>";
+				if (permiso_activo(22)){
+					if ($row_alum_busq["alum_curs_para_codi"]!="")
+					{	$opciones[]="
+						<div class='rTableCell'>
+						<a 
+							class='option'
+							data-target='#ModalCambiarCurso'
+							data-toggle='modal'
+							onclick=\"alum_curs_para_info(". $row_alum_busq["alum_curs_para_codi"] .");document.getElementById('cb_alum_curs_para_codi').value=". $row_alum_busq["alum_curs_para_codi"].";\">
+							<span class='fa fa-cog' style='margin-right:3px;'></span><span style='font-size:x-small'> &nbsp;Cambiar Curso</span></a>
+						</div>";
+					}
+				}
+				if (permiso_activo(222)){
+					if ($row_alum_busq["alum_curs_para_codi"]!="")
+					{	$opciones[]="
+						<div class='rTableCell'>
+						<a 
+							class='option'
+							data-target='#ModalCambioParalelo'
+							data-toggle='modal'
+							onclick=\"curs_para_cambiar_load('cambiar_paralelo_content','modal_cambio_paralelo_view.php','curs_para_codi=". $row_alum_busq["curs_para_codi"] ."&alum_codi=". $row_alum_busq["alum_codi"] ."',". $row_alum_busq["alum_curs_para_codi"] .", ". $row_alum_busq["alum_codi"] .")\";>
+							<span class='fa fa-circle' style='margin-right:3px;'></span><span style='font-size:x-small'> &nbsp;Cambiar Paralelo</span></a>
+						</div>";
+					}
 				}
 				if (permiso_activo(528))
 				{	$opciones[]="
