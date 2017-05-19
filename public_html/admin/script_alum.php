@@ -15,8 +15,7 @@ switch($opc){
 		{
 			echo "Error in executing statement .\n";
 			die( print_r( sqlsrv_errors(), true));
-		} 
-		
+		}
 		$res = sqlsrv_fetch_array($stmt_opc);
 		echo $res['porcentaje'];
 		
@@ -34,9 +33,9 @@ switch($opc){
 			$alum_resp_form_banc_tarj_nume_encrypt =base64_encode($alum_resp_form_banc_tarj_nume_encrypt);
 			/*FIN*/
 		}
-		$alum_tiene_seguro = ($_POST['alum_tiene_seguro']=='on'?1:0);
-		$alum_condicionado = ($_POST['alum_condicionado']=='on'?1:0);
-		$alum_tiene_discapacidad = ($_POST['alum_tiene_discapacidad']=='on'?1:0);
+		$alum_tiene_seguro = ($_POST['alum_tiene_seguro']=='true'?1:0);
+		$alum_condicionado = ($_POST['alum_condicionado']=='true'?1:0);
+		$alum_tiene_discapacidad = ($_POST['alum_tiene_discapacidad']=='true'?1:0);
 		$alum_genero = ($_POST['alum_genero']=='Hombre'?1:0);
 		$alum_fech_naci=substr($_POST['alum_fech_naci'],6,4)."".substr($_POST['alum_fech_naci'],3,2)."".substr($_POST['alum_fech_naci'],0,2);
 		$alum_fech_vcto=substr($_POST['alum_resp_form_fech_vcto'],6,4)."".substr($_POST['alum_resp_form_fech_vcto'],3,2)."".substr($_POST['alum_resp_form_fech_vcto'],0,2);
@@ -132,7 +131,15 @@ switch($opc){
 			$detalle.=" Usuario: ".$_POST['alum_usua'];
 			$detalle.=" Forma Pago: ".$_POST['alum_resp_form_pago'];
 			$detalle.=" Banco/Tarjeta: ".$_POST['alum_resp_form_banc_tarj'];
-			$detalle.=" # Cta. Banco/Tarjeta: ".$_POST['alum_resp_form_banc_tarj_nume'];
+			// iNFO NUMERO CUENTA
+			if(strpos($alum_resp_form_banc_tarj_nume, 'X') ===true)
+				$detalle.=" # Banco/Tarjeta: ".$_POST['alum_resp_form_banc_tarj_nume'];
+			else{ 
+				if (is_numeric($_POST['alum_resp_form_banc_tarj_nume']))
+					$detalle.=" # Banco/Tarjeta: ".$alum_resp_form_banc_tarj_nume_encrypt;
+				else
+					$detalle.=" # Banco/Tarjeta: ".$_POST['alum_resp_form_banc_tarj_nume'];
+			}
 			$detalle.=" Tipo Cuenta: ".($_POST['alum_resp_form_banc_tipo']=='C'?'Corriente':'Ahorro');
 			$detalle.=" Responsable económico: ".$_POST['alum_resp_form_cedu'].' '.$_POST['alum_resp_form_nomb'];
 			//$detalle.=" Descuento tipo: ".$_POST['alum_desc_tipo'];
@@ -195,14 +202,14 @@ switch($opc){
 		$alum_view_opc = sqlsrv_fetch_array($stmt_opc);
 		if($_POST['alum_usua']!="")
 		{   if($alum_view_opc['veri']>0)
-			{   $mensaje = "<span style='color:red;font-size:small;'><span class='icon-user'></span>
+			{   $mensaje = "<span style='color:red;'><span class='fa fa-user fa-2x'></span>
 								Nombre de usuario ya existe.</span>";
 				$data = array(	"MENSAJE"=>$mensaje,
 								"VERIFIED"=> '0');
 				echo json_encode( $data, true );
 			}
 			else
-			{   $mensaje = "<span style='color:green;font-size:small;' class='icon-user'></span><span style='color:green;font-size:small;' class='icon-checkbox-checked'></span>";
+			{   $mensaje = "<span style='color:green;' class='fa fa-user fa-2x'></span><span style='color:green;' class='fa fa-check fa-2x'></span>";
 				$data = array(	"MENSAJE"=>$mensaje,
 								"VERIFIED"=> '1');
 				echo json_encode( $data, true );
@@ -367,7 +374,15 @@ switch($opc){
 			$detalle.=" Usuario: ".$_POST['alum_usua'];
 			$detalle.=" Forma Pago: ".$_POST['alum_resp_form_pago'];
 			$detalle.=" Banco/Tarjeta: ".$_POST['alum_resp_form_banc_tarj'];
-			$detalle.=" # Cta. Banco/Tarjeta: ".$_POST['alum_resp_form_banc_tarj_nume'];
+			// iNFO NUMERO CUENTA
+			if(strpos($alum_resp_form_banc_tarj_nume, 'X') ===true)
+				$detalle.=" # Banco/Tarjeta: ".$_POST['alum_resp_form_banc_tarj_nume'];
+			else{ 
+				if (is_numeric($_POST['alum_resp_form_banc_tarj_nume']))
+					$detalle.=" # Banco/Tarjeta: ".$alum_resp_form_banc_tarj_nume_encrypt;
+				else
+					$detalle.=" # Banco/Tarjeta: ".$_POST['alum_resp_form_banc_tarj_nume'];
+			}
 			$detalle.=" Tipo Cuenta: ".($_POST['alum_resp_form_banc_tipo']=='C'?'Corriente':'Ahorro');
 			$detalle.=" Responsable económico: ".$_POST['alum_resp_form_cedu'].' '.$_POST['alum_resp_form_nomb'];
 			//$detalle.=" Descuento tipo: ".$_POST['alum_desc_tipo'];
@@ -611,7 +626,7 @@ switch($opc){
 		{	echo "Error in executing statement .\n";
 			die( print_r( sqlsrv_errors(), true));
 		}
-		echo "<table class='table_striped' id='tbl_alum_bloq'>";
+		echo "<table class='table table-striped' id='tbl_alum_bloq'>";
 		echo "<thead>";
 		echo "<tr>";
 		echo "<th>Motivo</th>";
@@ -626,14 +641,10 @@ switch($opc){
 			echo "<td>".$row["moti_bloq_deta"]."</td>";
 			echo "<td>".$row["opci_deta"]."</td>";
 			echo "<td>".$row["peri_deta"]."</td>";
-			echo "<td>";
-			echo "<div class='menu_options'>";
-			echo "<ul>";
+			echo "<td style='text-align:center;'>";
 			if (permiso_activo(520)){
-				echo "<li><a class=\"option\" onclick=\"alum_bloq_moti_opci_del('div_bloqueos',".$alum_codi.",".$row["alum_moti_bloq_opci_codi"].",'alum_moti_bloq_opci_view')\"><span class='icon-remove icon'></span> Quitar</a><li>";
+				echo "<a title='Quitar' onmouseover='$(this).tooltip(\"show\")' class=\"btn btn-default\" onclick=\"alum_bloq_moti_opci_del('div_bloqueos',".$alum_codi.",".$row["alum_moti_bloq_opci_codi"].",'alum_moti_bloq_opci_view')\"><span class='fa fa-trash btn_opc_lista_eliminar'></span></a>";
 			}
-			echo "</ul>";
-			echo "</div>";
 			echo "</td>";
 			echo "</tr>";
 		}
@@ -650,7 +661,7 @@ switch($opc){
 			die( print_r( sqlsrv_errors(), true));
 		}
 		if (sqlsrv_has_rows($stmt))
-		{	echo "<table class='table_striped' id='tbl_alum_bloq'>";
+		{	echo "<table class='table table-striped' id='tbl_alum_bloq'>";
 			echo "<thead>";
 			echo "<tr>";
 			echo "<th>Motivo</th>";

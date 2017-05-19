@@ -46,7 +46,7 @@
 	
 		}
 	}
-	
+
 	if (!function_exists('permiso_activo')) {
 		function permiso_activo($perm_codi){
 			session_start();
@@ -139,13 +139,24 @@
 				break;
 				
 				case 3:
+					
 					if(isset($_SESSION['ISBIEN_ALUM']))
 					{	if ($_SESSION['ISBIEN_ALUM'] <> 'YESIN') 
 						{	if ($_SESSION['ISBIEN_ALUM']=='NOTIN')
 								header("Location: ../index.php");
-							else
+							else{
+								
 								header("Location: preinscripcion.php");
+							}
 						}
+						// else{
+						// 	if($_SESSION['repr_upd']){
+						// 		header( 'Location: '.$_SESSION['protocol'].$_SERVER['HTTP_HOST'].'/alumnos/index.php' );
+						// 	}
+						// 	else{
+						// 		header( 'Location: '.$_SESSION['protocol'].$_SERVER['HTTP_HOST'].'/alumnos/actualizacion_datos.php' );
+						// 	}
+						// }
 					} 
 					else
 					{	header("Location: ../index.php");		
@@ -987,6 +998,20 @@
                             header("Location: activar_licencia.php");
                     }
                 }
+            }
+        }
+    }
+    if (!function_exists('actualizacion_activa')) {
+        function actualizacion_activa(){
+            $current_file_name = basename($_SERVER['PHP_SELF']);
+            /*echo "=======>".$current_file_name;
+            echo "=======>".$_SESSION['alum_curs_para_codi'];
+            echo "=======>".$_SESSION['pin'];
+            echo "=======>".para_sist(407);*/
+            
+            if (!$_SESSION['repr_upd'] || !$_SESSION['alum_upd']){
+                if ($current_file_name != "actualizacion_datos.php" && $current_file_name != "activar_licencia.php")
+                    header("Location: actualizacion_datos.php");
             }
         }
     }

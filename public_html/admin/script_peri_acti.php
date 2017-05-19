@@ -20,7 +20,7 @@
 			$encu_deta=$_POST['encu_deta'];
 			
 			$params = array($peri_codi,$peri_fech_ini,$peri_fech_fin,$peri_etap_codi,$peri_dist_codi,$usua_codi,$peri_codi_dest,$encu_deta);
-			$sql="{call peri_acti_add(?,?,?,?,?,?,?,?)}";
+			$sql="{call peri_acti_add(?,?,?,?,?,?,?,?)}";;
 			$peri_acti_add = sqlsrv_query($conn, $sql, $params);  
 
 			if ($peri_acti_add===false){

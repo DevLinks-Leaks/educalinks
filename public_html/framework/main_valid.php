@@ -88,7 +88,7 @@
 						$sql2="{call repr_info_usua(?)}";
 						$repr_info_usua = sqlsrv_query($conn, $sql2, $params2);  
 						$row_repr_info_usua = sqlsrv_fetch_array($repr_info_usua);
-
+						
 						$_SESSION['repr_codi']=$row_repr_info_usua['repr_codi'];
 						$_SESSION['repr_nomb']=$row_repr_info_usua['repr_nomb'];
 						$_SESSION['repr_apel']=$row_repr_info_usua['repr_apel'];
@@ -156,9 +156,12 @@
 							header( 'Location: '.$_SESSION['protocol'].$_SERVER['HTTP_HOST'].'/alumnos/preinscripcion.php' );
 						}else{
 							// if ($_SESSION['alum_upd'] && $_SESSION['repr_upd'])
-							// {	
+							// {
 								$_SESSION['ISBIEN_ALUM'] = 'YESIN';
-								header( 'Location: '.$_SESSION['protocol'].$_SERVER['HTTP_HOST'].'/alumnos/index.php' );
+								// if($_SESSION['repr_upd'])
+									header( 'Location: '.$_SESSION['protocol'].$_SERVER['HTTP_HOST'].'/alumnos/index.php' );
+								// else
+								// 	header( 'Location: '.$_SESSION['protocol'].$_SERVER['HTTP_HOST'].'/alumnos/actualizacion_datos.php' );
 							// }
 							// else
 							// {	$_SESSION['ISBIEN_ALUM'] = 'INNOT';
@@ -341,6 +344,9 @@
 	$_SESSION['ruta_foto_logo_subse']="../imagenes/clientes/".$_SESSION['directorio']."/logo_subse.png";
 	$_SESSION['ruta_foto_usuario']="";
 	$_SESSION['foto_default']="../fotos/".$_SESSION['directorio']."/default.jpg";
+	$_SESSION['foto_carnet']="../imagenes/default.jpg";
+	$_SESSION['foto_carnet_hombre']="../imagenes/guia_hombre.png";
+	$_SESSION['foto_carnet_mujer']="../imagenes/guia_mujer.png";
 	$_SESSION['ruta_materiales_carga']="../files/".$_SESSION['directorio'].'/'.$_SESSION['peri_codi']."/";
 	switch($_POST['tipo']){
 		case '1':

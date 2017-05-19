@@ -98,7 +98,7 @@ function load_ajax_lista(div,url,data,div_cont,tabla){
 	{
 		if (xmlhttp.readyState==4 && xmlhttp.status==200){
 			document.getElementById(div).innerHTML=xmlhttp.responseText;	
-			$('#'+tabla).datatable({pageSize: 10,sort: [true, true, false],filters: [true, false, false],filterText: 'Escriba para buscar... '});
+			$('#'+tabla).DataTable();
 		}
 	}
 	xmlhttp.open("POST",url,true);
@@ -126,8 +126,8 @@ function load_ajax_lista_twofilters(div,url,data,div_cont,tabla){
 	xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 	xmlhttp.send(data);	
 }
-function load_ajax_mensajes(div,url,data,column){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+function load_ajax_mensajes(div,url,data,column)
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
 	if (window.XMLHttpRequest)
 	{// code for IE7+, Firefox, Chrome, Opera, Safari
 		xmlhttp=new XMLHttpRequest();
@@ -137,30 +137,33 @@ function load_ajax_mensajes(div,url,data,column){
 		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
 	}
 	xmlhttp.onreadystatechange=function()
-	{
-		if (xmlhttp.readyState==4 && xmlhttp.status==200){
-			document.getElementById(div).innerHTML=xmlhttp.responseText;
-			if (column==5){
-				$(document).ready(function() {
-			      $('#mensajes_table').datatable({
-			        pageSize: 8,
-			        sort: [false,true, false,false],
-			        filters: [true,true, false,false],
-			        filterText: 'Buscar... '
-			      }) ;
-			  } );
-			}else{
-				$(document).ready(function() {
-			      $('#mensajes_table').datatable({
-			        pageSize: 8,
-			        sort: [false,true, false],
-			        filters: [true,true, false],
-			        filterText: 'Buscar... '
-			      }) ;
-			  } );
-			}
+	{   if (xmlhttp.readyState === 4 && xmlhttp.status === 200 )
+		{   document.getElementById(div).innerHTML = xmlhttp.responseText;
+			document.getElementById( 'hd_op' ).value = data.replace("OP=", "");
+			$('#mensajes_table').DataTable({
+				"bPaginate": false,
+				"bStateSave": false,
+				"bAutoWidth": false,
+				"bScrollAutoCss": true,
+				"bProcessing": true,
+				"bRetrieve": true,
+				"aLengthMenu": [[10,25, 50, 100, -1], [10,25, 50, 100, "Todos"]],
+				"fnInitComplete": function() {
+					this.css("visibility", "visible");
+					$("div.toolbar").html("<button class='btn btn-default margin-bottom' type='button' id='ckb_codigoDocumento_head2' name='ckb_codigoDocumento_head2'"+
+												"onClick='js_mensajes_select_all( )'>"+
+												"<span id='span_codigoDocumento_head1' class='fa fa-square-o'></span>&nbsp;"+
+												"<span id='span_codigoDocumento_head2'>Marcar todos</span></button>"+
+											"&nbsp;<button style='display:none;' class='btn btn-default margin-bottom' type='button' id='btn_delete_all_sms' name='btn_delete_all_sms' onclick='js_mensajes_delete_all_sms();'><span class='fa fa-trash'></span> Eliminar todos</button>");
+				},
+				paging: true,
+				lengthChange: false,
+				searching: true,
+				language: {url: '//cdn.datatables.net/plug-ins/1.10.8/i18n/Spanish.json'},
+				"dom": '<"toolbar">frtip'
+			});
 		}
-	}
+	};
 	xmlhttp.open("POST",url,true);
 	xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 	xmlhttp.send(data);	
@@ -460,32 +463,27 @@ function numero_validacion(evt,minimo,maximo) {
 }
 
 
-function periodo_cambio(peri_codi) {
-	
-	 if (confirm("Esta seguro del cambio?")) {
-		url='../admin/script_peri_cambio.php';
-	 	data='upd_peri=Y&peri_codi=' + peri_codi;
-		if (window.XMLHttpRequest)
-		{// code for IE7+, Firefox, Chrome, Opera, Safari
-			xmlhttp=new XMLHttpRequest();
-		}
-		else
-		{// code for IE6, IE5
-			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-		}
-		xmlhttp.onreadystatechange=function()
-		{
-			if (xmlhttp.readyState==4 && xmlhttp.status==200){
-				
-				location.reload();
-				
-			}
-		}
-		xmlhttp.open("POST",url,true);
-		xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
-		xmlhttp.send(data);	
-
+function periodo_cambio( peri_codi )
+{   url='../admin/script_peri_cambio.php';
+	data='upd_peri=Y&peri_codi=' + peri_codi;
+	$("button[type=button]").attr("disabled", "disabled");
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
 	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange=function()
+	{   if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{   $.growl.notice({ title: "Educalinks informa",message: "Período activo cambiado correctamente." });
+			setTimeout(function(){location.reload();},1000);
+		}
+	}
+	xmlhttp.open("POST",url,true);
+	xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+	xmlhttp.send(data);
 }
 function new_username ()
 {
@@ -535,5 +533,37 @@ function js_funciones_valida_tipo_growl( str )
             {   $.growl({ title: "Educalinks informa", message: str});
             }
         }
+    }
+}
+function js_funciones_compare_dates_ddmmyyyy( fecha, fecha2 ) /* recibe el formato: dd/mm/aaaa y lo transforma en mm/dd/aaaa. */
+{   
+    fecha = fecha.substring(3, 5) + '/' + fecha.substring(0, 2) + '/' + fecha.substring(6, 10);
+    fecha2 = fecha2.substring(3, 5) + '/' + fecha2.substring(0, 2) + '/' + fecha2.substring(6, 10);
+    
+    var primera = Date.parse(fecha);
+    var segunda = Date.parse(fecha2);
+     
+    if ( primera == segunda ) {
+        return 'OK';
+    } else if ( primera > segunda ) {
+        return 'NO';
+    } else {
+        return 'OK';
+    }
+}
+function js_funciones_compare_dates_yyyymmdd( fecha, fecha2 )  /* recibe el formato: yyyy-mm-dd dd-mm-aaaa y lo transforma en mm/dd/aaaa. */
+{   
+	fecha = fecha.substring(5, 7) + '/' + fecha.substring(8, 10) + '/' + fecha.substring(0, 4);
+    fecha2 = fecha2.substring(5, 7) + '/' + fecha2.substring(8, 10) + '/' + fecha2.substring(0, 4);
+    
+	var primera = Date.parse(fecha);
+    var segunda = Date.parse(fecha2);
+     
+    if ( primera == segunda ) {
+        return 'OK';
+    } else if ( primera > segunda ) {
+        return 'NO';
+    } else {
+        return 'OK';
     }
 }

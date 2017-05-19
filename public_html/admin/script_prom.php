@@ -20,11 +20,7 @@ switch($opc){
 			$result= json_encode(array ('state'=>'error',
 						'result'=>'Error al actualizar promoción.' ));
 		}else{
-			//Para auditoría
-			$detalle="prom_codi: ".$_POST['prom_codi'];
-			$detalle.=" curs_codi: ".$_POST['curs_codi'];
-			$detalle.=" valor: ".$_POST['prom_valu'];
-			registrar_auditoria (118, $detalle);
+
 			$result= json_encode(array ('state'=>'success',
 					'result'=>'Promoción actualizada con éxito.' ));
 		} 

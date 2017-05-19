@@ -115,8 +115,8 @@ switch($opc){
 		$stmp_opc = sqlsrv_query($conn, $sql_opc,$params_opc); 
 		if( $stmp_opc === false){echo "Error in connection.\n";die( print_r( sqlsrv_errors(), true));}?>
 		<div>&nbsp;</div>
-        <table class="table_striped">
-            <thead>
+        <table class="table table-striped">
+            <thead style='background-color:rgba(1, 126, 186, 0.1) !important'>
                 <tr>
                 	<th width="15%">Tipo de Observaci&oacute;n</th>
 					<th width="40%">Observaci&oacute;n</th>

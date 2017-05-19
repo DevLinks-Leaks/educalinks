@@ -12,7 +12,7 @@
 	$cc = 0;
 ?>
 
-<table class="table_striped" id="para_sist_table">
+<table class="table table-striped" id="para_sist_table">
   <thead>
   <tr>
     <th width="50%">Parámetro</th>
@@ -31,16 +31,10 @@
         <?php echo $row_para_sist["para_sist_valu"];?>
     </td>
     <td>
-    <div class="menu_options">
-        <ul>
-            <?php if (permiso_activo(85)){?>
-            <li>
-                <a data-toggle="modal" data-target="#ModalUsuaEdi" onclick="carga_info_para_sist_edit
-                ('<?= $row_para_sist['para_sist_codi']?>');" class="option"><span class="icon-pencil2 icon"></span>Editar</a>
-            </li>
-            <?php } ?>
-        </ul>
-    </div>
+		<?php if (permiso_activo(85)){?>
+			<a data-toggle="modal" data-target="#ModalUsuaEdi" onclick="carga_info_para_sist_edit
+			('<?= $row_para_sist['para_sist_codi']?>');" class="btn btn-default"><span class="fa fa-pencil btn_opc_lista_editar"></span> Editar</a>
+		<?php } ?>
     </td>
   </tr>
  <?php  }?>

@@ -1,3 +1,6 @@
+shortcut.add("Shift+M", function() {
+	$('#modal_quick_access').modal("show");
+},{'disable_in_input':true});
 /*Alumnos*/
 shortcut.add("Alt+A", function() {
 	$('#acc_alumnos').trigger('click');

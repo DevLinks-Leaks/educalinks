@@ -9,11 +9,11 @@ function carga_permisos(div,url,rol_usuario,a){
 		
 		xhr.onreadystatechange=function(){
 			if (xhr.readyState==4 && xhr.status==200){
-			//$.growl.notice({ title: "Informacion: ",message: "Se Enviaron  Mensajes" });	
+			$.growl.notice({ title: "Educalinks informa ",message: "Lista de permisos cargada" });
 			document.getElementById(div).innerHTML=xhr.responseText;
 			$('#permi_ul').bonsai({  expandAll: true,  checkboxes: true, createCheckboxes: true});
 			} 
-		}
+		};
 		xhr.send(data);
 	}else{
 		document.getElementById(div).innerHTML="<input type='hidden' id='a' name='a' value='"+a+"'/>";
@@ -40,9 +40,9 @@ function graba_permi(check,url,tipo_permi,rol_usuario){
 	xhr.open('POST', url , true);
 	xhr.onreadystatechange=function(){
 		if (xhr.readyState==4 && xhr.status==200){
-		//$.growl.notice({ title: "Informacion: ",message: "Se Enviaron  Mensajes" });	
+			$.growl.notice({ title: "Educalinks informa ",message: "Proceso realizado" });
 		
 		} 
-	}
+	};
 	xhr.send(data);
 }

@@ -176,6 +176,8 @@
 
 					$xml=$xml_representante->saveXML();
 					$xml = str_replace('UTF-8', 'ISO-8859-1',$xml );
+					
+					echo $xml;
 
 					$params = array($xml);
 					$sql="{call migracion_representantes_xls(?)}";
@@ -187,7 +189,6 @@
 						$result= json_encode(array ('state'=>'error',
 							'result'=>'Error al realizar la importación.' ));
 						// die(print_r(sqlsrv_errors(),true));
-						echo print_r(sqlsrv_errors(),true);
 					}else{
 						//registrar_auditoria (315, '');
 						$result= json_encode(array ('state'=>'success',

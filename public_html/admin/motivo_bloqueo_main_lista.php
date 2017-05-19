@@ -13,12 +13,12 @@
 	}
 	$cc = 0;
 	?>
-    <table class="table_striped" id="moti_table">
+    <table class="table table-striped" id="moti_table">
 	<thead>
 		<tr>
 			<th width="60%">Motivo</th>
 			<th width="20%">Obligatorio</th>
-			<th width="20%">Opciones</th>
+			<th width="20%" align='center'>Opciones</th>
 		</tr>
 	</thead>
       <tbody>
@@ -33,24 +33,16 @@
 			<?= ($row["moti_bloq_obli"]=="true"?'SI':'NO'); ?>
 		</td>
         <td>
-        <div class="menu_options">
-			<ul>
-			<? if (permiso_activo(518)){?>
-				<li>
-					<a class="option" onclick="load_ajax_moti('moti_main','script_moti_bloq.php','del',<?= $row["moti_bloq_codi"];?>);">
-						<span class="icon-remove icon"></span> Eliminar
-					</a>
-				</li>
-			<?}?>
 			<? if (permiso_activo(517)){?>
-				<li>
-					<a class="option" onclick="show_edit(<?= $row["moti_bloq_codi"];?>);" data-toggle="modal" data-target="#ModalMotiEdi">
-						<span class="icon-pencil icon"></span> Editar
-					</a>
-				</li>
+				<a class='btn btn-default' onclick="show_edit(<?= $row["moti_bloq_codi"];?>);" data-toggle="modal" data-target="#ModalMotiEdi">
+					<span class="fa fa-pencil btn_opc_lista_editar"></span> Editar
+				</a>
 			<?}?>
-			</ul>
-        </div>
+			<? if (permiso_activo(518)){?>
+				<a class='btn btn-default' onclick="load_ajax_moti('moti_main','script_moti_bloq.php','del',<?= $row["moti_bloq_codi"];?>);">
+					<span class="fa fa-trash btn_opc_lista_eliminar"></span> Eliminar
+				</a>
+			<?}?>
         </td>
       </tr>
      <?php  }?>

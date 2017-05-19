@@ -15,8 +15,8 @@
 		{
 			if (sqlsrv_has_rows($stmt))
 			{		
-				echo 'Paralelo: <select id="sl_paralelos" name="sl_paralelos">';
-				echo '<option value="0">Seleccione...</option>';
+				echo '<label>Paralelo:</label><select class="form-control input-sm" id="sl_paralelos" name="sl_paralelos">';
+				echo '<option value="0">- Seleccione Paralelo -</option>';
 				while($curso_view= sqlsrv_fetch_array($stmt))
 				{
 					echo '<option value="'.$curso_view["codigo"].'">'.$curso_view["descripcion"].'</option>';
@@ -25,8 +25,8 @@
 			}
 			else
 			{
-				echo 'Paralelo:<select id="sl_paralelos" name="sl_paralelos"  disabled="disabled">';
-                echo '<option value="-1">Seleccione</option>';
+				echo '<label>Paralelo:</label><select class="form-control input-sm" id="sl_paralelos" name="sl_paralelos"  disabled="disabled">';
+                echo '<option value="-1">- Seleccione Paralelo -</option>';
                 echo '</select>';
 			}
 		}
