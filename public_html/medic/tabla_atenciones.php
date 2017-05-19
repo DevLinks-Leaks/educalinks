@@ -7,14 +7,16 @@ $atenciones_hoy = new Atenciones();
 $atenciones_hoy->get_all_atenciones();
 $atencion_detalles_hoy = new Atenciones();
 ?>
-<table class="table table-stripped table-hover table-responsive" id="table_atenciones" data-page-length='10'>
+<table class="table table-stripped table-hover table-responsive" id="table_atenciones" data-page-length='10' style='font-size:10px'>
     <thead>
     <tr>
         <th>#</th>
         <th>Estudiante</th>
+        <th>Edad</th>
         <th>Curso</th>
         <th>Motivo</th>
         <th>Fecha - Hora</th>
+        <th>Materia</th>
         <th>Tratamiento</th>
         <th>Opciones</th>
     </tr>
@@ -27,9 +29,11 @@ $atencion_detalles_hoy = new Atenciones();
         <tr>
             <td><?= $i;?></td>
             <td><?= $atencion_hoy['pers_tipo']==1?$atencion_hoy['alum_apel']." ".$atencion_hoy['alum_nomb']:$atencion_hoy['pers_apel']." ".$atencion_hoy['pers_nomb'];?></td>
-            <td><?= $atencion_hoy['pers_tipo']==1?$atencion_hoy['curs_deta']." - ".$atencion_hoy['para_deta']:$atencion_hoy['usua_tipo_deta'];?></td>
-            <td><?= $atencion_hoy['enfe_descripcion'];?></td>
+            <td><?= $atencion_hoy['edad'];?></td>
+			<td><?= $atencion_hoy['pers_tipo']==1?$atencion_hoy['curs_deta']." - ".$atencion_hoy['para_deta']:$atencion_hoy['usua_tipo_deta'];?></td>
+			<td><?= $atencion_hoy['enfe_descripcion'];?></td>
             <td><?= date_format($atencion_hoy['aten_fechaCreacion'],"d/m/Y H:i:s");?></td>
+			<td><?= $atencion_hoy['mate_deta'];?></td>
             <td>
                 <ul>
                     <?php 

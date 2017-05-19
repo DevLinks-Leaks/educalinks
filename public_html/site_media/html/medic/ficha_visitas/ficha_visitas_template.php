@@ -19,7 +19,7 @@ session_start();
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="{ruta_includes_common}/bootstrap/css/bootstrap.css">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
@@ -135,6 +135,7 @@ session_start();
     <link  href="{ruta_includes_common}/growl/jquery.growl.css" rel="stylesheet" type="text/css" />
 	<script src="{ruta_includes_common}/maskmoney/src/jquery.maskMoney.js" type="text/javascript"></script>
 	<script src="{ruta_includes_common}/bootstrap-validator-master/js/validator.js" type="text/javascript"></script>
+	<script src="{ruta_includes_common}/shortcut.js"></script>
     
 	<script src="{ruta_js_medic}/general.js"></script>
 	<script src="{ruta_js_medic}/menu.js"></script>

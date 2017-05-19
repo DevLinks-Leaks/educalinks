@@ -1,25 +1,77 @@
-// JavaScript Document
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-36251023-1']);
+_gaq.push(['_setDomainName', 'jqueryscript.net']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
 
 $(document).ready(function(){
-	actualiza_badge_sms();
+	var toggle = $('#ss_toggle');
+	var menu = $('#ss_menu');
+	var rot;
+  
+	$('#ss_toggle').on('click', function(ev) {
+		rot = parseInt($(this).data('rot')) - 180;
+		menu.css('transform', 'rotate(' + rot + 'deg)');
+		menu.css('webkitTransform', 'rotate(' + rot + 'deg)');
+		if ((rot / 180) % 2 == 0) {
+		  //Moving in
+		  toggle.parent().addClass('ss_active');
+		  toggle.addClass('close');
+		} else {
+		  //Moving Out
+		  toggle.parent().removeClass('ss_active');
+		  toggle.removeClass('close');
+		}
+		$(this).data('rot', rot);
+	});
+
+	menu.on('transitionend webkitTransitionEnd oTransitionEnd', function() {
+		if ((rot / 180) % 2 == 0) {
+		  $('#ss_menu div i').addClass('ss_animate');
+		} else {
+		  $('#ss_menu div i').removeClass('ss_animate');
+		}
+	});
+    actualiza_badge_sms();
+	if(document.getElementById( 'hd_chan_flag' ))
+	{   if( document.getElementById( 'hd_chan_flag' ).value > 0 )
+		{   $('#modal_changelog').modal('show');
+			$('#modal_changelog').on('shown.bs.modal',function(){
+				$('.carousel').slick({
+					dots: true,
+					fade: true,
+					speed: 500,
+					autoplay: true,
+					adaptiveHeight: true,
+					prevArrow:'<span style="left: -15px;width: 20px;height: 18px;transform: translate(0, -50%);cursor: pointer;position: absolute;top: 50%;" class="fa fa-chevron-left fa-2x"></span>',
+					nextArrow:'<span style="right: -15px;width: 20px;height: 18px;transform: translate(0, -50%);cursor: pointer;position: absolute;top: 50%;" class="fa fa-chevron-right fa-2x"></span>'
+				});
+			});
+		}
+	}
 });
 var spanish="//cdn.datatables.net/plug-ins/f2c75b7247b/i18n/Spanish.json";
 var var_actualiza_badge = setInterval(function () {"use strict"; actualiza_badge_sms();}, 120000);
 var gest=0;
 function set_skin(logo, cls)
 {   var data = new FormData();
-	data.append( 'event', 'change_logo');
-    data.append( 'logo', logo );	
-    data.append( 'skin', cls );	
-	var xhr = new XMLHttpRequest();
-	xhr.open('POST', document.getElementById('ruta_html_common').value + '/general/controller.php' , true);
-	xhr.onreadystatechange=function(){
-		if (xhr.readyState==4 && xhr.status==200)
-		{	document.getElementById('a_nav_main').innerHTML = xhr.responseText;
-			document.getElementById('hd_ui_skin').value = cls;
-		} 
-	}
-	xhr.send(data);
+    data.append( 'event', 'change_logo');
+    data.append( 'logo', logo );    
+    data.append( 'skin', cls );    
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', document.getElementById('ruta_html_common').value + '/general/controller.php' , true);
+    xhr.onreadystatechange=function(){
+        if (xhr.readyState==4 && xhr.status==200)
+        {   document.getElementById('a_nav_main').innerHTML = xhr.responseText;
+            document.getElementById('hd_ui_skin').value = cls;
+        } 
+    }
+    xhr.send(data);
 }
 function go_home(url){
     "use strict";
@@ -29,121 +81,122 @@ function go_home(url){
     xhr.open('POST', url , true);
     xhr.send(data);
 }
-function js_general_change_periodo(url)
-{	var data = new FormData();
-	var select_periodo = document.getElementById('cmb_sidebar_periodo');
-	data.append('event', 'change_periodo');
-	data.append('peri_codi', select_periodo.options[select_periodo.selectedIndex].value);
-	data.append('peri_deta', select_periodo.options[select_periodo.selectedIndex].text);
-	var xhr = new XMLHttpRequest();
-	xhr.open('POST', url , true);
-	xhr.onreadystatechange=function()
-	{   if (xhr.readyState==4 && xhr.status==200)
-		{   var n = xhr.responseText.length;
-			if (n > 0)
-			{   valida_tipo_growl(xhr.responseText);
-			}
-			else
-			{   $.growl.warning({ title: "Educalinks informa:",message: "Proceso realizado." + xhr.responseText });
-			}
-			//localStorage.setItem("Status",data.OperationStatus)
-			//location.reload(); 
-			setTimeout(function(){location.reload();},1000);
-		} 
-	};
-	xhr.send(data);
+function js_general_change_periodo(url,peri_codi)
+{   var data = new FormData();
+    var select_periodo = document.getElementById('cmb_sidebar_periodo');
+    $("button[type=button]").attr("disabled", "disabled");
+    data.append('event', 'change_periodo');
+    data.append('peri_codi', peri_codi );
+    data.append('peri_deta', $( '#btn_header_peri_' + peri_codi ).data("deta") );
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', url , true);
+    xhr.onreadystatechange=function()
+    {   if (xhr.readyState==4 && xhr.status==200)
+        {   var n = xhr.responseText.length;
+            if (n > 0)
+            {   valida_tipo_growl(xhr.responseText);
+            }
+            else
+            {   $.growl.warning({ title: "Educalinks informa:",message: "Proceso realizado." + xhr.responseText });
+            }
+            //localStorage.setItem("Status",data.OperationStatus)
+            //location.reload(); 
+            setTimeout(function(){location.reload();},1000);
+        } 
+    };
+    xhr.send(data);
 }
 function js_general_change_periodo_2( peri_codi, peri_deta, url )
-{	var data = new FormData();
-	var select_periodo =document.getElementById( 'periodo_select' );
-	data.append('event', 'change_periodo' );
-	data.append('peri_codi', peri_codi );
-	data.append('peri_deta', peri_deta );
-	var xhr = new XMLHttpRequest();
-	xhr.open('POST', url , true);
-	xhr.onreadystatechange=function()
-	{   if (xhr.readyState==4 && xhr.status==200)
-		{   document.getElementById( 'div_periodo' ).style.display = 'none';
-		    document.getElementById( 'div_opciones_principales' ).style.display = 'inline';
-		} 
-	};
-	xhr.send(data);
+{   var data = new FormData();
+    var select_periodo =document.getElementById( 'periodo_select' );
+    data.append('event', 'change_periodo' );
+    data.append('peri_codi', peri_codi );
+    data.append('peri_deta', peri_deta );
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', url , true);
+    xhr.onreadystatechange=function()
+    {   if (xhr.readyState==4 && xhr.status==200)
+        {   document.getElementById( 'div_periodo' ).style.display = 'none';
+            document.getElementById( 'div_opciones_principales' ).style.display = 'inline';
+        } 
+    };
+    xhr.send(data);
 }
 function leer_mensaje(url, mens_codi, box, div)
 {   var data = new FormData();
     data.append('event', 'leer');
     data.append('mens_codi', mens_codi);
     data.append('box', box);
-	var xhr = new XMLHttpRequest();
-	xhr.open('POST', url , true);
-	xhr.onreadystatechange=function()
-	{   if (xhr.readyState==4 && xhr.status==200)
-		{   document.getElementById(div).innerHTML=xhr.responseText;
-		}
-	};
-	xhr.send(data);
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', url , true);
+    xhr.onreadystatechange=function()
+    {   if (xhr.readyState==4 && xhr.status==200)
+        {   document.getElementById(div).innerHTML=xhr.responseText;
+        }
+    };
+    xhr.send(data);
 }
 function get_box(box, url, div)
 {   var data = new FormData();
     data.append('event', 'get_box');
     data.append('box', box);
-	var xhr = new XMLHttpRequest();
-	xhr.open('POST', url , true);
-	xhr.onreadystatechange=function()
-	{   if (xhr.readyState==4 && xhr.status==200)
-		{   document.getElementById(div).innerHTML=xhr.responseText;
-		}
-	};
-	xhr.send(data);
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', url , true);
+    xhr.onreadystatechange=function()
+    {   if (xhr.readyState==4 && xhr.status==200)
+        {   document.getElementById(div).innerHTML=xhr.responseText;
+        }
+    };
+    xhr.send(data);
 }
 function get_badge_class(num)
 {   //bg-light-blue,yellow,red,green
-	var bg_class = '';
-	if (num === 0)
-		bg_class = 'label pull-right';
-	if((num>0) && (num <=10))
-		bg_class = 'label pull-right bg-light-blue';
-	if((num>10) && (num <=30))
-		bg_class = 'label pull-right bg-green';
-	if((num>30) && (num <=100))
-		bg_class = 'label pull-right bg-yellow';
-	if(num>100)
-		bg_class = 'label pull-right bg-red';
-	return bg_class;
+    var bg_class = '';
+    if (num === 0)
+        bg_class = 'label pull-right';
+    if((num>0) && (num <=10))
+        bg_class = 'label pull-right bg-light-blue';
+    if((num>10) && (num <=30))
+        bg_class = 'label pull-right bg-green';
+    if((num>30) && (num <=100))
+        bg_class = 'label pull-right bg-yellow';
+    if(num>100)
+        bg_class = 'label pull-right bg-red';
+    return bg_class;
 }
 function get_menu_span_badge_class(num)
 {   //bg-light-blue,yellow,red,green
-	var bg_class = '';
-	if (num === 0)
-		bg_class = 'label';
-	if((num>0) && (num <=10))
-		bg_class = 'label label-info';
-	if((num>10) && (num <=30))
-		bg_class = 'label label-success';
-	if((num>30) && (num <=100))
-		bg_class = 'label label-warning';
-	if(num>100)
-		bg_class = 'label label-danger';
-	return bg_class;
+    var bg_class = '';
+    if (num === 0)
+        bg_class = 'label';
+    if((num>0) && (num <=10))
+        bg_class = 'label label-info';
+    if((num>10) && (num <=30))
+        bg_class = 'label label-success';
+    if((num>30) && (num <=100))
+        bg_class = 'label label-warning';
+    if(num>100)
+        bg_class = 'label label-danger';
+    return bg_class;
 }
 function get_progress_bar_badge_class(num)
 {   //bg-light-blue,yellow,red,green
-	var bg_class = '';
-	if (num === 0)
-		bg_class = 'progress-bar';
-	if((num>0) && (num <=10))
-		bg_class = 'progress-bar progress-bar-aqua';
-	if((num>10) && (num <=30))
-		bg_class = 'progress-bar progress-bar-green';
-	if((num>30) && (num <=100))
-		bg_class = 'progress-bar progress-bar-yellow';
-	if(num>100)
-		bg_class = 'progress-bar progress-bar-red';
-	return bg_class;
+    var bg_class = '';
+    if (num === 0)
+        bg_class = 'progress-bar';
+    if((num>0) && (num <=10))
+        bg_class = 'progress-bar progress-bar-aqua';
+    if((num>10) && (num <=30))
+        bg_class = 'progress-bar progress-bar-green';
+    if((num>30) && (num <=100))
+        bg_class = 'progress-bar progress-bar-yellow';
+    if(num>100)
+        bg_class = 'progress-bar progress-bar-red';
+    return bg_class;
 }
 function actualiza_badge_sms()
-{   "use strict";
-    var url=document.getElementById('ruta_html_common').value + '/mensajeria/controller.php';
+{   "use strict";console.log("viene");
+    var url='../../../modulos/common/mensajeria/controller.php';
     var data = new FormData();
     data.append('event', 'view_badge_sms');
     var xhrbadge_sms = new XMLHttpRequest();
@@ -151,23 +204,25 @@ function actualiza_badge_sms()
     xhrbadge_sms.onreadystatechange=function(){
         if (xhrbadge_sms.readyState === 4 && xhrbadge_sms.status === 200){
             if(xhrbadge_sms.responseText === '0'){
-				if( document.getElementById('badge_sms_header1') )
-					document.getElementById('badge_sms_header1').innerHTML= "";
-				if( document.getElementById('badge_sms_header2') )
-					document.getElementById('badge_sms_header2').innerHTML= "No tienes mensajes nuevos";
-				$('#span_badge_sms_header1').removeClass().addClass(get_menu_span_badge_class(xhrbadge_sms.responseText));
+                if( document.getElementById('badge_sms_header1') )
+                    document.getElementById('badge_sms_header1').innerHTML= "";
+                if( document.getElementById('badge_sms_header2') )
+                    document.getElementById('badge_sms_header2').innerHTML= "No tienes mensajes nuevos";
+                $('#span_badge_sms_header1').removeClass().addClass(get_menu_span_badge_class(xhrbadge_sms.responseText));
             }else
-			{   if(document.getElementById('badge_sms_header1'))
+            {   if(document.getElementById('badge_sms_header1'))
                 {   if(document.getElementById('badge_sms_header1').innerHTML !== xhrbadge_sms.responseText)
-					{   document.getElementById('badge_sms_header1').innerHTML=xhrbadge_sms.responseText;
-						document.getElementById('badge_sms_header2').innerHTML="Tienes " + xhrbadge_sms.responseText + " mensaje(s)";
-						$('#span_badge_sms_header1').removeClass().addClass(get_menu_span_badge_class(xhrbadge_sms.responseText));
-					}
-				}
-            }
+                    {   document.getElementById('badge_sms_header1').innerHTML=xhrbadge_sms.responseText;
+                        document.getElementById('badge_sms_header2').innerHTML="Tienes " + xhrbadge_sms.responseText + " mensaje(s)";
+                        $('#span_badge_sms_header1').removeClass().addClass(get_menu_span_badge_class(xhrbadge_sms.responseText));
+						
+                    }
+                }
+            }console.log(get_menu_span_badge_class(xhrbadge_sms.responseText));
+			
             //document.getElementById('badge_gest_fac').innerHTML=gest;
             //desbloquear si se hace sms en MENU//document.getElementById('badge_sms').innerHTML='<span class="' + get_badge_class(xhrbadge_sms.responseText) + '">' + xhrbadge_sms.responseText + '</span>';
-			actualiza_badge_sms_detail();
+            actualiza_badge_sms_detail();
         }
     };
     xhrbadge_sms.send(data);
@@ -181,73 +236,73 @@ function actualiza_badge_sms_detail()
     xhrbadge_sms.open('POST', url , true);
     xhrbadge_sms.onreadystatechange=function(){
         if (xhrbadge_sms.readyState === 4 && xhrbadge_sms.status === 200){
-			if( document.getElementById('badge_sms_detail') )
-				document.getElementById('badge_sms_detail').innerHTML = xhrbadge_sms.responseText;
+            if( document.getElementById('badge_sms_detail') )
+                document.getElementById('badge_sms_detail').innerHTML = xhrbadge_sms.responseText;
         }
     };
     xhrbadge_sms.send(data);
 }
 function toggleFullScreen_at_startup(  ) {
-	var toggle = document.getElementById('hd_toggle_fullscreen').value;
-	if ( toggle == 'true' )
-	{   if (document.documentElement.requestFullScreen)
-		{   document.documentElement.requestFullScreen();  
-		}
-		else if (document.documentElement.mozRequestFullScreen)
-		{   document.documentElement.mozRequestFullScreen();  
-		}
-		else if (document.documentElement.webkitRequestFullScreen)
-		{   document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);  
-		}
-	}
-	if ( toggle == 'false' )
-	{   if (document.cancelFullScreen)
-		{   document.cancelFullScreen();  
-		}
-		else if (document.mozCancelFullScreen)
-		{   document.mozCancelFullScreen();  
-		}
-		else if (document.webkitCancelFullScreen)
-		{   document.webkitCancelFullScreen();  
-		}
-	}
+    var toggle = document.getElementById('hd_toggle_fullscreen').value;
+    if ( toggle == 'true' )
+    {   if (document.documentElement.requestFullScreen)
+        {   document.documentElement.requestFullScreen();  
+        }
+        else if (document.documentElement.mozRequestFullScreen)
+        {   document.documentElement.mozRequestFullScreen();  
+        }
+        else if (document.documentElement.webkitRequestFullScreen)
+        {   document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);  
+        }
+    }
+    if ( toggle == 'false' )
+    {   if (document.cancelFullScreen)
+        {   document.cancelFullScreen();  
+        }
+        else if (document.mozCancelFullScreen)
+        {   document.mozCancelFullScreen();  
+        }
+        else if (document.webkitCancelFullScreen)
+        {   document.webkitCancelFullScreen();  
+        }
+    }
 }
 function toggleFullScreen(  ) {
-	var toggle = 'false';
-	if ((document.fullScreenElement && document.fullScreenElement !== null) || (!document.mozFullScreen && !document.webkitIsFullScreen))
-	{   if (document.documentElement.requestFullScreen)
-		{   document.documentElement.requestFullScreen();  
-		}
-		else if (document.documentElement.mozRequestFullScreen)
-		{   document.documentElement.mozRequestFullScreen();  
-		}
-		else if (document.documentElement.webkitRequestFullScreen)
-		{   document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);  
-		} 
-		toggle = 'true';
-	}
-	else 
-	{   if (document.cancelFullScreen)
-		{   document.cancelFullScreen();  
-		}
-		else if (document.mozCancelFullScreen)
-		{   document.mozCancelFullScreen();  
-		}
-		else if (document.webkitCancelFullScreen)
-		{   document.webkitCancelFullScreen();  
-		}
-		toggle = 'false';
-	}
-	var data = new FormData();
+    var toggle = 'false';
+    if ((document.fullScreenElement && document.fullScreenElement !== null) || (!document.mozFullScreen && !document.webkitIsFullScreen))
+    {   if (document.documentElement.requestFullScreen)
+        {   document.documentElement.requestFullScreen();  
+        }
+        else if (document.documentElement.mozRequestFullScreen)
+        {   document.documentElement.mozRequestFullScreen();  
+        }
+        else if (document.documentElement.webkitRequestFullScreen)
+        {   document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);  
+        } 
+        toggle = 'true';
+    }
+    else 
+    {   if (document.cancelFullScreen)
+        {   document.cancelFullScreen();  
+        }
+        else if (document.mozCancelFullScreen)
+        {   document.mozCancelFullScreen();  
+        }
+        else if (document.webkitCancelFullScreen)
+        {   document.webkitCancelFullScreen();  
+        }
+        toggle = 'false';
+    }
+    var data = new FormData();
     data.append('event', 'toggle_fullscreen');
     data.append('toggle', toggle);
     var xhr = new XMLHttpRequest();
     xhr.open('POST', document.getElementById('ruta_html_common').value + '/general/controller.php' , true);
     xhr.onreadystatechange=function(){
         if (xhr.readyState === 4 && xhr.status === 200){
-			console.log(xhr.responseText);
-			console.log(toggle);console.log(document.getElementById('hd_toggle_fullscreen').value)
-			document.getElementById('hd_toggle_fullscreen').value = xhr.responseText;console.log(document.getElementById('hd_toggle_fullscreen').value)
+            console.log(xhr.responseText);
+            console.log(toggle);console.log(document.getElementById('hd_toggle_fullscreen').value)
+            document.getElementById('hd_toggle_fullscreen').value = xhr.responseText;console.log(document.getElementById('hd_toggle_fullscreen').value)
         }
     };
     xhr.send(data);
@@ -256,17 +311,17 @@ function aumenta_porc(porc){
     "use strict";
     var div='prog_bar_deudas';
     var val_now= parseInt(document.getElementById(div).getAttribute('aria-valuenow'))+porc;
-	if(val_now<=100){
-		document.getElementById(div).setAttribute('aria-valuenow',val_now);
-		document.getElementById(div).style.width=String(val_now)+'%';
-		if(val_now<100){
-			document.getElementById(div).innerHTML=String(val_now)+'%';
-			document.getElementById('prog_bar_deudas').setAttribute('class','progress-bar progress-bar-striped active');
-		}else{
-			document.getElementById(div).innerHTML='Completado';
-			document.getElementById('prog_bar_deudas').setAttribute('class','progress-bar progress-bar-striped');
-		}
-	}
+    if(val_now<=100){
+        document.getElementById(div).setAttribute('aria-valuenow',val_now);
+        document.getElementById(div).style.width=String(val_now)+'%';
+        if(val_now<100){
+            document.getElementById(div).innerHTML=String(val_now)+'%';
+            document.getElementById('prog_bar_deudas').setAttribute('class','progress-bar progress-bar-striped active');
+        }else{
+            document.getElementById(div).innerHTML='Completado';
+            document.getElementById('prog_bar_deudas').setAttribute('class','progress-bar progress-bar-striped');
+        }
+    }
 }
 function validaNumerosEnteros(e, field){
     "use strict";
@@ -453,3 +508,61 @@ function js_general_resultado_sql(str)
         }
     }
 }
+function js_general_compare_dates( fecha, fecha2 ) /* recibe el formato: dd/mm/aaaa y lo transforma en mm/dd/aaaa. */
+{   
+    fecha = fecha.substring(3, 5) + '/' + fecha.substring(0, 2) + '/' + fecha.substring(6, 10);
+    fecha2 = fecha2.substring(3, 5) + '/' + fecha2.substring(0, 2) + '/' + fecha2.substring(6, 10);
+    
+    var primera = Date.parse(fecha);
+    var segunda = Date.parse(fecha2);
+     
+    if ( primera == segunda ) {
+        return 'OK';
+    } else if ( primera > segunda ) {
+        return 'NO';
+    } else {
+        return 'OK';
+    }
+}
+function cerrar_changelog(){
+    if($('#chk_mostrar').is(':checked')==true){
+        registrar_changelog();
+        $('#modal_changelog').modal('toggle');
+    }else
+        $('#modal_changelog').modal('toggle');
+}
+function registrar_changelog(){
+  if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+      xmlhttp=new XMLHttpRequest();
+  }
+  else
+  {// code for IE6, IE5
+      xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  var jsonC = [];
+  $('.changelog_div').each(function(){ 
+    jsonC.push({
+        chan_codi: $(this).attr('id')
+    });
+  });
+  var data = new FormData();
+  data.append('opc', 'validate_changelog_show');
+  data.append('jsonC', JSON.stringify(jsonC));
+  xmlhttp.onreadystatechange=function()
+  {
+      if (xmlhttp.readyState==4 && xmlhttp.status==200){
+          var json = JSON.parse(xmlhttp.responseText);
+          
+      }
+  };
+  xmlhttp.open("POST",'script_general.php',true);
+  xmlhttp.send(data);
+}
+/*SHORTCUTS
+shortcut.add("Shift+Space+M", function() {
+	$('#modal_quick_access').modal("show");
+});
+shortcut.add("Shift+Space+S", function() {
+	$('.control-sidebar').collapse()
+});*/

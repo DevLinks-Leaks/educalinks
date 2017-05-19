@@ -1,3 +1,20 @@
+<!-- Modal SELECCION DE PERIODO -->
+<div class="modal fade" id="ModalPeriodoActivo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title" id="myModalLabel"><span class='fa fa-calendar'></span>&nbsp;Seleccione un período</h4>
+			</div>
+			<div class="modal-body" style='text-align:center;'>
+				{cmb_sidebar_periodo}
+			</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <form name="frm_menu" id="frm_menu" action="../general/" enctype="multipart/form-data" method="post">
 	<input type="hidden" name="event" id="event" value="" />
 	<header class="main-header">
@@ -10,7 +27,7 @@
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
-          <!-- Sidebar toggle button -->
+			<!-- Sidebar toggle button -->
 			<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
 				<span class="sr-only">Toggle navigation</span>
 				<span class="icon-bar"></span>
@@ -19,6 +36,9 @@
 			</a>
 			<div class="navbar-custom-menu">
 				<ul class="nav navbar-nav">
+					<li title="Seleccionar período activo">
+						<a href="#" data-toggle="modal" data-target="#ModalPeriodoActivo"><i class="fa fa-calendar"></i>&nbsp;Período: {peri_deta}</a>
+					</li>
 					<li class="dropdown user user-menu">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 							<img src="../{fotoUsuario}" class="user-image" alt="Imagen de usuario">
@@ -46,10 +66,12 @@
 							</li>
 						</ul>
 					</li>
-					<li title='Expandir'>
+					<!--<li title='Expandir'>
 						<a href="#" onclick="toggleFullScreen();"><i class="fa fa-television"></i>&nbsp;</a>
+					</li>-->
+					<li title='Ver módulos del sistema' >
+						<a onmouseover='$(this).tooltip("show");' href="#" data-toggle="control-sidebar"><i class="fa fa-briefcase"></i>&nbsp;</a>
 					</li>
-					<li><a href="#" data-toggle="control-sidebar"><i class="fa fa-globe"></i>&nbsp;</a></li>
 				</ul>
 			</div>
         </nav>

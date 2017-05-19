@@ -45,6 +45,7 @@ $(document).ready(function(){
 	$('#modal_showDebtState').on('shown.bs.modal', function () {
 	}); 
 });
+shortcut.add("Enter", function() {$('#btn_search').trigger("click");});
 // Consulta filtrada
 function js_clientes_externo_add_return_btn ( )
 {   document.getElementById( 'span_button_return' ).innerHTML='<button class="btn btn-primary fa fa-chevron-left" type="button" ' +

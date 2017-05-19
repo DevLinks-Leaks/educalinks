@@ -1,3 +1,20 @@
+<!-- Modal SELECCION DE PERIODO -->
+<div class="modal fade" id="ModalPeriodoActivo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title" id="myModalLabel"><span class='fa fa-calendar'></span>&nbsp;Seleccione un período</h4>
+			</div>
+			<div class="modal-body" style='text-align:center;'>
+				{cmb_sidebar_periodo}
+			</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <form name="frm_menu" id="frm_menu" action="../general/" enctype="multipart/form-data" method="post">
 	<input type="hidden" name="event" id="event" value="" />
 	<header class="main-header">
@@ -20,103 +37,14 @@
 			<div class="navbar-custom-menu">
 				<ul class="nav navbar-nav">
 					<!-- Tasks: style can be found in dropdown.less -->
-					<li class="dropdown tasks-menu">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-							&nbsp;<i class="fa fa-flag"></i>
-							<span id="span_badge_gest_fac_header1" class="label"><span id="badge_gest_fac_header1"></span></span>
-						</a>
-						<ul class="dropdown-menu">
-							<li class="header">Tienes <span id="badge_gest_fac_header2"></span> tarea(s) pendiente(s)</li>
-							<li>
-								<!-- inner menu: contains the actual data -->
-								<ul class="menu">
-									<li><!-- Task item -->
-										<a href="../gestionFacturas/controller.php">
-											<h3>
-												Facturas al SRI
-											<small class="pull-right"><span id="badge_gest_fac_in_header1"></span></small>
-											</h3>
-											<div class="progress xs">
-												<div id="pb_fac" name="pb_fac" class="progress-bar" style="width: 0%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-													<span class="sr-only"><span id="badge_gest_fac_in_header2"></span></span>
-												</div>
-											</div>
-										</a>
-									</li><!-- end task item -->
-									<li><!-- Task item -->
-										<a href="../gestionNotascredito/controller.php">
-											<h3>
-												Notas de crédito al SRI
-												<small class="pull-right"><span id="badge_gest_nc_in_header1"></span></small>
-												<div class="progress xs">
-													<div id="pb_nc" name="pb_nc" class="progress-bar" style="width: 0%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-														<span class="sr-only"><span id="badge_gest_nc_in_header2"></span></span>
-													</div>
-												</div>
-											</h3>
-										</a>
-									</li>
-									<!--<li> Task item
-										<a href="../gestionNotasdebito/controller.php">
-											<h3>
-												Notas de débito
-												<small class="pull-right"><span id="badge_gest_nd_in_header1"></span></small>
-											</h3>
-											<div class="progress xs">
-												<div id="pb_nd" name="pb_nd" class="progress-bar" style="width: 0%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-													<span class="sr-only"><span id="badge_gest_nd_in_header2"></span></span>
-												</div>
-											</div>
-										</a>
-									</li><!-- end task item -->
-									<li>
-										<a href="../gestionContifico/controller.php">
-											<h3>
-												Deudas a contabilidad
-												<small class="pull-right"><span id="badge_gest_deudas_in_header1"></span></small>
-												<div class="progress xs">
-													<div id="pb_deudas" name="pb_deudas" class="progress-bar" style="width: 0%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-														<span class="sr-only"><span id="badge_gest_deudas_in_header2"></span></span>
-													</div>
-												</div>
-											</h3>
-										</a>
-									</li>
-									<li><!-- Task item -->
-										<a href="../gestionContifico/controller.php">
-											<h3>
-												Pagos a contabilidad
-												<small class="pull-right"><span id="badge_gest_pagos_in_header1"></span></small>
-												<div class="progress xs">
-													<div id="pb_pagos" name="pb_pagos" class="progress-bar" style="width: 0%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-														<span class="sr-only"><span id="badge_gest_pagos_in_header2"></span></span>
-													</div>
-												</div>
-											</h3>
-										</a>
-									</li>
-									<li><!-- Task item -->
-										<a href="../valida_cheques/controller.php">
-											<h3>
-												Cheques por validar
-												<small class="pull-right"><span id="badge_gest_cheques_in_header1"></span></small>
-												<div class="progress xs">
-													<div id="pb_cheques" name="pb_cheques" class="progress-bar" style="width: 0%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-														<span class="sr-only"><span id="badge_gest_cheques_in_header2"></span></span>
-													</div>
-												</div>
-											</h3>
-										</a>
-									</li>
-								</ul>
-							</li>
-						</ul>
+					<li title="Seleccionar período activo">
+						<a href="#" data-toggle="modal" data-target="#ModalPeriodoActivo"><i class="fa fa-calendar"></i>&nbsp;Período: {peri_deta}</a>
 					</li>
-				  <!-- User Account: style can be found in dropdown.less -->
+					<!-- User Account: style can be found in dropdown.less -->
 					<li class="dropdown user user-menu">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 							<img src="../{fotoUsuario}" class="user-image" alt="Imagen de usuario">
-							<span class="hidden-xs">{usua_nombres} {usua_apellidos}</span>&nbsp;
+							<span class="hidden-xs hidden-sm">{usua_nombres} {usua_apellidos}</span>&nbsp;
 						</a>
 						<ul class="dropdown-menu">
 							<!-- User image -->
@@ -140,10 +68,27 @@
 							</li>
 						</ul>
 					</li>
-					<li title='Expandir'>
-						<a href="#" onclick="toggleFullScreen();"><i class="fa fa-television"></i>&nbsp;</a>
+					<li class="dropdown messages-menu">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						  &nbsp;<i class="fa fa-envelope-o"></i>
+						  <span id="span_badge_sms_header1" class="label"><span id="badge_sms_header1"></span></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li class="header" id="badge_sms_header2" ></li>
+							<li>
+								<!-- inner menu: contains the actual data -->
+								<ul id='badge_sms_detail' name='badge_sms_detail' class="menu">
+								</ul>
+							</li>
+							<li class="footer"><a href="../../admin/mensajes.php">Ver todos los mensajes</a></li>
+						</ul>
 					</li>
-					<li><a href="#" data-toggle="control-sidebar"><i class="fa fa-globe"></i>&nbsp;</a></li>
+					<!--<li title='Expandir'>
+						<a href="#" onclick="toggleFullScreen();"><i class="fa fa-television"></i>&nbsp;</a>
+					</li>-->
+					<li title='Ver módulos del sistema' >
+						<a onmouseover='$(this).tooltip("show");' href="#" data-toggle="control-sidebar"><i class="fa fa-briefcase"></i>&nbsp;</a>
+					</li>
 				</ul>
 			</div>
         </nav>

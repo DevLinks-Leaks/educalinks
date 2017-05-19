@@ -23,6 +23,9 @@
         
         <link rel="SHORTCUT ICON" href="http://108.179.196.99/educalinks/imagenes/logo_icon.png"/>
         <!-- <link href="../theme/css/base/bootstrap-combined.min.css?<?= $rand?>" rel="stylesheet" type="text/css" > -->
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        
         <link href="../theme/css/base/dataTables.bootstrap.css" rel="stylesheet" type="text/css" >
         <link href="../theme/css/main.css?<?= $rand?>" rel="stylesheet" type="text/css">
         <link href="../theme/css/print.css?<?= $rand?>" media="print" rel="stylesheet" type="text/css">
@@ -40,7 +43,8 @@
         <script src="../theme/js/moment.min.js"></script>
         <script src="js/posts.js?<?= $rand?>"></script>
         <script src="js/agenda.js?<?= $rand?>"></script>
-    
+        <script type="text/javascript" src="js/general.js?<?= $rand?>"></script>
+
         <script src="../theme/js/effects.js"></script>
         <script src="../theme/jquery1_11/jquery-ui.js"></script>
         <script src="../theme/jquery1_11/external/jquery/jquery_growl/javascripts/jquery.growl.js" type="text/javascript"></script>
@@ -50,6 +54,10 @@
         <script type="text/javascript" language="javascript" src="../theme/js/dataTables.bootstrap.js"></script>
         <script type="text/javascript" language="javascript" src="../theme/js/datatable.js"></script>
         
+        <!-- Slick Carousel -->
+        <link href="../includes/common/slick/slick.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="../includes/common/slick/slick-theme.css"/>
+        <script type="text/javascript" src="../includes/common/slick/slick.min.js"></script>
         
         <!-- InstanceBeginEditable name="EditRegion5" -->
         <link href="../theme/jquery1_11/jquery-ui.css" rel="stylesheet">

@@ -63,7 +63,9 @@
 	<!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs-3.3.6/dt-1.10.12/b-print-1.2.2/se-1.2.0/datatables.min.css"/>
 	 
 	<script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.6/dt-1.10.12/b-print-1.2.2/se-1.2.0/datatables.min.js"></script> -->
-
+  <!-- SLICK -->
+  <script type="text/javascript" src="../includes/common/slick/slick.min.js"></script>
+  
   <script src="../../includes/common/growl/jquery.growl.js" type="text/javascript"></script>
   <link  href="../../includes/common/growl/jquery.growl.css" rel="stylesheet" type="text/css" />
   <script src="../../includes/common/maskmoney/src/jquery.maskMoney.js" type="text/javascript"></script>
@@ -78,7 +80,8 @@
   <script type="text/javascript" src="js/funciones_editoriales.js?<?= $rand?>"></script>
   <script type="text/javascript" src="js/funciones_recursos.js?<?= $rand?>"></script>
   <script type="text/javascript" src="js/funciones_items.js?<?= $rand?>"></script>
+  <script type="text/javascript" src="js/general.js?<?= $rand?>"></script>
   <script type="text/javascript" src="js/funciones_prestamos.js?<?= $rand?>"></script>
   <script type="text/javascript" src="js/funciones_upload.js?<?= $rand?>"></script>
   <script type="text/javascript" src="../framework/funciones.js?<?= $rand?>"></script> 
-  <script type="text/javascript" src="clases/Js/Lib_Libros.js?<?= $rand?>"></script> 
+  <script type="text/javascript" src="clases/Js/Lib_Libros.js?<?= $rand?>"></script>

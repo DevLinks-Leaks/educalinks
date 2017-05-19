@@ -1,8 +1,27 @@
+<!-- Modal SELECCION DE PERIODO -->
+<div class="modal fade" id="ModalPeriodoActivo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title" id="myModalLabel"><span class='fa fa-calendar'></span>&nbsp;Seleccione un período</h4>
+			</div>
+			<div class="modal-body" style='text-align:center;'>
+				<div class="btn-group-vertical" style='text-align:left;'>
+                    <? 	echo $_SESSION['cmb_sidebar_periodo'];?>
+				</div>
+			</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <form name="frm_menu" id="frm_menu" action="../general/" enctype="multipart/form-data" method="post">
 	<input type="hidden" name="event" id="event" value="" />
 	<header class="main-header">
-        <a href="·" class="logo" id='a_nav_main' name='a_nav_main' data-toggle="offcanvas" role="button">
-			<span class="logo-mini"><div style="margin-top:10px" id='div_nav_logo_small' name='div_nav_logo_small'><img src="../../includes/common/logos/LOGO_EDUCALINKS_red_small.png" alt="EL"></div></span>
+        <a href="#/" class="logo" id='a_nav_main' name='a_nav_main' data-toggle="offcanvas" role="button">
+			<span class="logo-mini"><div  id='div_nav_logo_small' name='div_nav_logo_small'><img src="../../includes/common/logos/LOGO_EDUCALINKS_white_small.png" alt="EL"></div></span>
 			<span class="logo-lg"><div style="margin-left:-10px;" id='div_nav_logo' name='div_nav_logo'><img src="../../includes/common/logos/LOGO_EDUCALINKS_red.png" alt="Educalinks"></div></span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
@@ -16,6 +35,9 @@
 			</a>
 			<div class="navbar-custom-menu">
 				<ul class="nav navbar-nav">
+					<li title="Seleccionar período activo">
+						<a href="#" data-toggle="modal" data-target="#ModalPeriodoActivo"><i class="fa fa-calendar"></i>&nbsp;Período: <?= $_SESSION['peri_deta']; ?></a>
+					</li>
 					<!-- Messages: style can be found in dropdown.less-->
 					<li class="dropdown user user-menu">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -44,10 +66,12 @@
 							</li>
 						</ul>
 					</li>
-					<li title='Expandir'>
+					<!--<li title='Expandir'>
 						<a href="#" onclick="toggleFullScreen();"><i class="fa fa-television"></i>&nbsp;</a>
+					</li>-->
+					<li title='Ver módulos del sistema' >
+						<a onmouseover='$(this).tooltip("show");' href="#" data-toggle="control-sidebar"><i class="fa fa-briefcase"></i>&nbsp;</a>
 					</li>
-					<li><a href="#" data-toggle="control-sidebar"><i class="fa fa-globe"></i>&nbsp;</a></li>
 				</ul>
 			</div>
         </nav>

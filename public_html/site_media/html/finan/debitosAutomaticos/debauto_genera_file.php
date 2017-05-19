@@ -9,6 +9,30 @@
             </span><span class='glyphicon glyphicon-list'></span> Listado</a></li>
     </ul>
     <form id="file_form" action="{ruta_html_finan}/debitosAutomaticos/controller.php" enctype="multipart/form-data" method="post" target="_blank">
+		<!-- Modal cargar archivo-->
+		<div class="modal fade bs-example-modal-sm" id="modal_ask_load_file" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header" style="background-color:#5cb85c">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<h4 class="modal-title" style='color:white;'><span class="fa fa-upload"></span> Subida de archivo</h4>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-12" style='text-align:center;'>
+								¿Cargar archivo ahora?
+							</div>
+						</div>
+						<input type='hidden' id='hd_del_mes_codi' name='hd_del_mes_codi' value=''></input>
+					</div>
+					<div class="modal-footer" style='text-align:center;'>
+						<button class="btn btn-success" type="button" onclick="js_debtAuto_subirarchivo_followed( )">Continuar</button>
+						<button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Modal cargar archivo-->
 		<!-- Modal Guardar-->
 		<div class="modal fade" id="modal_formato" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
@@ -297,48 +321,48 @@
                             <div class='col-sm-8' style='display:inline;'>
                                 <input type="hidden" name="event" id="evento" value="subir_archivo"></input>
                                 
-									<button id='btn_crear_formato_new' name='btn_crear_formato_new'
-                                            class="btn bg-orange btn-flat fa fa-file" type="button"
-                                            onclick="return nuevo_formato();"
-                                            title='Nuevo formato'
-											style='margin-top:2px;height:34px'>&nbsp;<i class='fa fa-plus'></i>
-                                    </button>
-                                    <div class="btn-group">
-                                        <button type="button" class="btn bg-purple btn-flat dropdown-toggle glyphicon glyphicon-floppy-disk" data-toggle="dropdown"
-                                                id='btn_formato_nuevo_guardar' name='btn_formato_nuevo_guardar' disabled='disabled'
-                                                data-placement="top"
-                                                title='Guardar cambios'
-												style='margin-top:1px;height:34px'><span class="caret"></span></button>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#" onclick="return create_file_guardar('file_form','{ruta_html_finan}/debitosAutomaticos/controller.php');">Guardar</a></li>
-                                                <li><a href="#" onclick="$('#modal_formato').modal('show');">Guardar como...</a></li>
-                                            </ul>
-                                    </div>
-                                    <button id='btn_crear_formato_reset' name='btn_crear_formato_reset'
-                                            class="btn btn-danger btn-flat glyphicon glyphicon-erase" type="button"
-                                            onclick="limpia_crear_formato();"
-                                            title='Limpiar todo'
-											style='margin-top:1px;height:34px'>
-                                    </button>
-                                    <button id='btn_formato_cargar' name='btn_formato_cargar' 
-											class="btn btn-success btn-flat" type="button"
-                                            onclick="$('#modal_cargarFormatoArchivo').modal('show');"
-                                            data-placement="bottom"
-                                            title='Abrir'
-                                            onfocus='$(this).tooltip("show")'
-                                            onmouseover='$(this).tooltip("show")'
-											style='margin-top:2px;height:34px'>
-                                        <span style='color:#FFDC89;' aria-hidden='true' class='glyphicon glyphicon-folder-open cursorlink'></span>
-                                    </button>
-                                    <button id='btn_formato_exportar' name='btn_formato_exportar' 
-                                            class="btn btn-info btn-flat glyphicon glyphicon-export" type="button"
-                                            onclick="return js_debtAut_genera_archivo();"
-                                            data-placement="bottom"
-                                            title='Exportar informaci&oacute;n'
-                                            onfocus='$(this).tooltip("show")'
-                                            onmouseover='$(this).tooltip("show")'
-											style='margin-top:1px;height:34px'>
-									</button>
+								<button id='btn_crear_formato_new' name='btn_crear_formato_new'
+                                        class="btn bg-orange btn-flat fa fa-file" type="button"
+                                        onclick="return nuevo_formato();"
+                                        title='Nuevo formato'
+										style='margin-top:2px;height:34px'>&nbsp;<i class='fa fa-plus'></i>
+                                </button>
+                                <div class="btn-group">
+                                    <button type="button" class="btn bg-purple btn-flat dropdown-toggle glyphicon glyphicon-floppy-disk" data-toggle="dropdown"
+                                            id='btn_formato_nuevo_guardar' name='btn_formato_nuevo_guardar' disabled='disabled'
+                                            data-placement="top"
+                                            title='Guardar cambios'
+											style='margin-top:1px;height:34px'><span class="caret"></span></button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#" onclick="return create_file_guardar('file_form','{ruta_html_finan}/debitosAutomaticos/controller.php');">Guardar</a></li>
+                                            <li><a href="#" onclick="$('#modal_formato').modal('show');">Guardar como...</a></li>
+                                        </ul>
+                                </div>
+                                <button id='btn_crear_formato_reset' name='btn_crear_formato_reset'
+                                        class="btn btn-danger btn-flat glyphicon glyphicon-erase" type="button"
+                                        onclick="limpia_crear_formato();"
+                                        title='Limpiar todo'
+										style='margin-top:1px;height:34px'>
+                                </button>
+                                <button id='btn_formato_cargar' name='btn_formato_cargar' 
+										class="btn btn-success btn-flat" type="button"
+                                        onclick="$('#modal_cargarFormatoArchivo').modal('show');"
+                                        data-placement="bottom"
+                                        title='Abrir'
+                                        onfocus='$(this).tooltip("show")'
+                                        onmouseover='$(this).tooltip("show")'
+										style='margin-top:2px;height:34px'>
+                                    <span style='color:#FFDC89;' aria-hidden='true' class='glyphicon glyphicon-folder-open cursorlink'></span>
+                                </button>
+                                <button id='btn_formato_exportar' name='btn_formato_exportar' 
+                                        class="btn btn-info btn-flat glyphicon glyphicon-export" type="button"
+                                        onclick="return js_debtAut_genera_archivo();"
+                                        data-placement="bottom"
+                                        title='Exportar informaci&oacute;n'
+                                        onfocus='$(this).tooltip("show")'
+                                        onmouseover='$(this).tooltip("show")'
+										style='margin-top:1px;height:34px'>
+								</button>
                             </div>
                         </div>
                         <div class='col-sm-4' style='text-align:right;'>
@@ -353,28 +377,36 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class='col-sm-3'>
-                            {combo_campos_file}
-                        </div>
-                        <div class='col-sm-1'>
-                            <button class="glyphicon glyphicon-plus btn btn-primary btn-sm" type="button" id='btn_add_field' name='btn_add_field'
-                                    onclick="add_field(document.getElementById('campos_add'),'div_campos','{ruta_html_finan}/debitosAutomaticos/controller.php',this);"></button>
-                        </div>
-                        <div class="checkbox checkbox-primary col-sm-3" style='text-align:right;'>
-                            <input type="checkbox" name="secuencial " id="secuencial" onclick='return cambia_check_sec(this);'></input>
-                            <label class='control-label' for='secuencial'>Agregar Campo Secuencial
-                                <div id='EducaLinksHelperCliente' style='display:inline;font-size:x-small;text-align:left;vertical-align:middle;'>
-                                    <a href='#' data-placement="top" onmouseover='$(this).tooltip("show")' title='Dar clic si desea que su formato tenga como primera columna un n&uacute;mero id. secuencial.' data-placement='right'><span class='glyphicon glyphicon-question-sign'></span></a>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="col-sm-2">
+                         <div class='col-sm-4'>
+                         	<input type='hidden' id='hd_vista' name='hd_vista' value='V_DatosAlumnosDebitos_Detalle' />
                             <div id='grp_input_sec' class="input-group" data-placement="bottom"
-                                    title='Inicio secuencial. Ej.: 1.'
+                                    title='Dependiendo de los datos con los que quiera trabajar, se cargarán los campos.'
                                     onfocus='$(this).tooltip("show")'
                                     onmouseover='$(this).tooltip("show")'>
-                                <span class="input-group-addon"><small>Secuencia</small></span>
-                                <input type="number" style="font-size:small;" min="0" class="form-control" name="secuencia" id="secuencia" disabled='disabled' placeholder="0"></input>
+                                <span class="input-group-addon"><small>Ver</small></span>
+                                <select id='cmb_vista' name='cmb_vista' class='form-control'>
+                                	<option value='V_DatosAlumnosDebitos_Detalle' selected='selected'>Campos para débito bancario</option>
+                                	<option value='V_DatosAlumnos_CobroVentanilla_Detalle'>Campos para cobro por ventanilla</option>
+                                	<!--<option value=''>- Datos personales de Alumnos -</option>
+                                	<option value=''>- Datos personales de Representantes -</option>-->
+                                </select>
+                                <span class="input-group-btn">
+                                	<button class="btn btn-info" type="button" id='btn_choose_view' name='btn_choose_view'
+                                    	onclick="js_debtAut_change_view();">Ir</button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class='col-sm-3'>
+                            <div id='grp_input_sec' class="input-group" data-placement="bottom"
+                                    title='Dependiendo de los datos con los que quiera trabajar, se cargarán los campos.'
+                                    onfocus='$(this).tooltip("show")'
+                                    onmouseover='$(this).tooltip("show")'>
+                                <span class="input-group-addon"><small>Campos</small></span>
+                                <div id='div_cmb_campos' name='div_cmb_campos'>{combo_campos_file}</div>
+                                <span class="input-group-btn">
+                                	<button class="btn btn-primary" type="button" id='btn_add_field' name='btn_add_field'
+                                    	onclick="add_field(document.getElementById('campos_add'),'div_campos','{ruta_html_finan}/debitosAutomaticos/controller.php',this);"><span class='fa fa-plus'></span>&nbsp;</button>
+                                </span>
                             </div>
                         </div>
                         <div class="col-sm-2">
@@ -383,6 +415,39 @@
                                 <span class="input-group-addon"><small>No. columnas</small></span>
                                 <input type="number" style="font-size:small;" min="0" class="form-control" name="lbl_num_total_campos" id="lbl_num_total_campos" disabled='disabled' placeholder="0"></input>
                             </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-4 col-md-3">
+                            <div id='grp_input_sec' class="input-group" data-placement="bottom"
+                                    title='Inicio secuencial. Ej.: 1.'
+                                    onfocus='$(this).tooltip("show")'
+                                    onmouseover='$(this).tooltip("show")'>
+                                <span class="input-group-addon"><small>Secuencia</small></span>
+                                <input type="number" style="font-size:small;" min="0" class="form-control input-sm" name="secuencia" id="secuencia" disabled='disabled'
+                                	onkeypress="validate_save_button_followed(false);"
+                                	placeholder="0"></input>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-md-3">
+                            <div id='grp_input_sec' class="input-group" data-placement="bottom"
+                                    title='Ej. Si pone "4", el secuencial saldrá en la columna numero 4 del archivo, desplazando las demás columnas a partir de su ubicación.'
+                                    onfocus='$(this).tooltip("show")'
+                                    onmouseover='$(this).tooltip("show")'>
+                                <span class="input-group-addon "><small>Ubicar en col. no.</small></span>
+                                <input type="number" min="1" class="form-control input-sm" name="ubicacion" id="ubicacion" disabled='disabled' 
+                                	onkeypress="validate_save_button_followed(false);"
+                                	placeholder="1"></input>
+                            </div>
+                        </div>
+                        <div class="checkbox checkbox-primary col-sm-3" style='text-align:right;'>
+                            <input type="checkbox" name="secuencial " id="secuencial" onclick='return cambia_check_sec(this);'></input>
+                            <label class='control-label' for='secuencial'>Agregar Campo Secuencial
+                                <div id='EducaLinksHelperCliente' style='display:inline;font-size:x-small;text-align:left;vertical-align:middle;'>
+                                    <a href='#' data-placement="top" onmouseover='$(this).tooltip("show")' title='Dar clic si desea que su formato incluya en una columna un n&uacute;mero id. secuencial.' data-placement='right'><span class='glyphicon glyphicon-question-sign'></span></a>
+                                </div>
+                            </label>
                         </div>
                     </div>
                     <br>
@@ -408,60 +473,30 @@
             <div id="menu2" class="tab-pane fade {active2}">
                 <br/>
 				<div class="grid">
-                    <div class="row">
-                        <div class='col-sm-7'>
-                            <div class='col-sm-7' style='display:inline;'>
-                                    <button id='btn_formato_nuevo_generar' name='btn_formato_nuevo_generar' 
-											class="btn btn-success btn-flat glyphicon glyphicon-import" type="button"
-                                            onclick="subirarchivo('file_form','procesar','{ruta_html_finan}/debitosAutomaticos/controller.php'); closeself();"
-                                            data-placement="right"
-                                            title='Importar archivo de respuesta del banco al sistema.'
-                                            onfocus='$(this).tooltip("show")'
-                                            onmouseover='$(this).tooltip("show")'>
-                                    </button>
-                            </div>
-                        </div>
-                        <div class='col-sm-5' style='text-align:right;'>
-                            <div id='div_maint_file_status' style='display:inline;font-size:small;text-align:left;vertical-align:middle;'></div><span id='span_info_formato' name='span_info_formato' style='font-size:x-small;'></span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class='col-sm-12'>
-                            <hr>
-                        </div>
-                    </div>
                 </div>
                 <div id="procesar" name="procesar" class="grid">
 					<input type='hidden' id='hd_caja_abierta' name='hd_caja_abierta' value='{hd_caja_abierta}'></input>
                     <div class="row">
                         <div class='col-sm-12'>
-                            <label>Cargue el archivo recibido del banco/instituci&oacute;n financiera. El archivo debe tener la siguiente informaci&oacute;n: <b><i>c&oacute;digo de deuda</i></b>, <b><i>valor de pago</i></b> y <b><i>estado</i></b>.</label>
+							<div class="alert alert-default" role="alert">
+								<p><span class="fa fa-upload" aria-hidden="true"></span>
+									Subida de archivo de respuesta del banco
+									<hr style="padding:3px;margin:0px;">
+									Cargue el archivo recibido del banco/instituci&oacute;n financiera. El archivo debe tener la siguiente informaci&oacute;n:
+								<ul>
+									<li><b><i>C&oacute;digo de deuda</i></b></li>
+									<li><b><i>Valor de pago</i></b></li>
+									<li><b><i>Estado del proceso en el banco</i></b></li>
+								</ul>
+								</p>
+							</div>
                         </div>
                     </div>
-					<div class="row">
-						<div class="form-group" >
-							<div class='col-sm-8'>
-								<div class="alert alert-info" role="alert">
-									<p><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-										Educalinks Informa
-										<hr style="padding:3px;margin:0px;">
-										Tener en cuenta las fechas de caducidad de los descuentos (prontopago, descuentos asignados, etc.) 
-										aplicados a las facturas. Al subir a Educalinks el archivo de respuesta del banco, el valor pendiente 
-										de una deuda pudo haber aumentado o disminuido dependiendo de los días de validez de los descuentos, 
-										lo que ocasionaría saldos a favor o saldos pendientes, según el caso.
-										<br><br>Es recomendable verificar los días de validez de los descuentos asignados 
-										a las deudas, antes de descargar el formato, y subir el formato de respuesta antes de las fechas de 
-										caducidad de los descuentos, si es que se desea considerarlos.
-									</p>
-								</div>
-							</div>
-						</div>
-					</div>
 					<div class="row">
                         <br>
                         <div class='col-sm-3' style='text-align:left;'>
                             <div id='div_fecha_debito' name='div_fecha_debito' class='input-group'>
-                                <span id='span_ig_filainicia' name='span_ig_filainicia' class="input-group-addon"><small>Fecha de débito</small></span>
+                                <span id='span_fecha_debito' name='span_fecha_debito' class="input-group-addon"><small>Fecha de débito</small></span>
                                 <input class="form-control" name="txt_fecha_debito" id="txt_fecha_debito"
                                         data-placement="top"
                                         title='Fecha en la que el banco procesó el débito.'
@@ -496,6 +531,28 @@
 					<div class="row">
                         <div class='col-sm-3' style='text-align:left;'>
                             <input type="file" name="fileToUpload" id="fileToUpload" required="required">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class='col-sm-12'>
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class='col-sm-7'>
+                            <div class='col-sm-7' style='display:inline;'>
+                                    <button id='btn_formato_nuevo_generar' name='btn_formato_nuevo_generar' 
+											class="btn btn-success btn-flat" type="button"
+											onclick="js_debtAuto_subirarchivo();"
+                                            data-placement="right"
+                                            title='Importar archivo de respuesta del banco al sistema.'
+                                            onfocus='$(this).tooltip("show")'
+                                            onmouseover='$(this).tooltip("show")'><span class='fa fa-upload'></span> Importar archivo
+                                    </button>
+                            </div>
+                        </div>
+                        <div class='col-sm-5' style='text-align:right;'>
+                            <div id='div_maint_file_status' style='display:inline;font-size:small;text-align:left;vertical-align:middle;'></div><span id='span_info_formato' name='span_info_formato' style='font-size:x-small;'></span>
                         </div>
                     </div>
                 </div>

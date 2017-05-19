@@ -7,16 +7,17 @@ $(document).ready(function() {
 	});
 	
 	$("#desplegable_busqueda").show();
+	$("#cmb_producto").select2();
 });
 
 function js_rep_emisiones_carga_reports_deudores( div, url, evento ) //PDF DE LA TABLA PRINCIPAL CON TOTALES VERTICALES Y HORIZONTALES
 {   "use strict";
     var doit = 'yes';
-    if ( ( document.getElementById('curso').value == -1 ) || ( document.getElementById('curso').value == 0 ) )
+    /*if ( ( document.getElementById('curso').value == -1 ) || ( document.getElementById('curso').value == 0 ) )
     {   $('#modal_msg').modal('show');
         document.getElementById('modal_msg_body').innerHTML='¡Debe seleccionar un curso para poder descargar el archivo PDF!';
         doit = 'no';
-    }
+    }*/
 	console.log(doit);
     if( doit === 'yes' )
     {   var curso =0;
@@ -54,36 +55,6 @@ function js_rep_emisiones_carga_reports_deudores( div, url, evento ) //PDF DE LA
         console.log(url2);
         window.open(url2);
     }
-}
-function js_rep_emisiones_add_field(field, div, url, obj)
-{   var obj_id = obj.attributes["id"].value;
-    document.getElementById(obj_id).disabled = true;
-	document.getElementById(div + '_load_gif').innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
-    var combo=field;
-    var valor=combo.value;
-    var texto = combo.options[combo.selectedIndex].text;
-    var data = new FormData();
-    data.append('event', 'get_campos');
-    data.append('text',texto);
-    data.append('value',valor);
-    data.append('num_campo', parseInt(num_campos)+parseInt(1));
-    var xhraf = new XMLHttpRequest();
-    xhraf.open('POST', url , true);
-    xhraf.onreadystatechange=function()
-    {   if (xhraf.readyState==4 && xhraf.status==200)
-        {   num_campos = num_campos+1;
-            num_total_campos = num_total_campos+1;
-            document.getElementById(div + '_load_gif').innerHTML="";
-            var container = document.createElement("div");
-            container.innerHTML = xhraf.responseText;
-            document.getElementById(div).appendChild(container); //De esta forma no se borra el contenido del formulario al agregar o quitar.
-            document.getElementById(obj_id).disabled = false;
-            document.getElementById("lbl_num_total_campos").value = num_total_campos;
-            $.growl.notice({title: 'Educalinks Informa:', message: 'Campo "' + texto + '" agregado.'});
-            validate_save_button(num_total_campos);
-        }
-    };
-    xhraf.send(data);
 }
 function js_rep_emisiones_check_fecha()
 {   "use strict";

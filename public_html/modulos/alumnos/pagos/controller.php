@@ -78,16 +78,19 @@ function handler() {
 			if( empty( $_SESSION['sidebar_status'] ) )
 				$_SESSION['sidebar_status']='';
 			
-			$cmb_sidebar_periodo = '<select name="alum_sel" id="alum_sel" required="required" class="form-control">';	
-			for($i=0;$i<count($periodo->rows)-1;$i++){
-				if(trim($periodo->rows[$i][0])==trim(''))
-				{   $sel="selected='selected'";
-				}else
-				{ $sel="";
-				}
-				$cmb_sidebar_periodo .= "<option value='".$periodo->rows[$i][0]."'". $sel." >".$periodo->rows[$i][1]."</option>";
+			$periodo->get_all();
+			$cmb_sidebar_periodo = '<div class="btn-group-vertical" style="text-align:center;">';
+			for($i=0;$i<count($periodo->rows)-1;$i++)
+			{ 	$cmb_sidebar_periodo.= '<button type="button"
+					id="btn_header_peri_'.$periodo->rows[$i]['peri_codi'].'" 
+					name="btn_header_peri_'.$periodo->rows[$i]['peri_codi'].'" 
+					data-deta="'.$periodo->rows[$i]['peri_deta'].'"
+					class="'.( $periodo->rows[$i]['peri_codi'] == $_SESSION['peri_codi'] ? 'btn btn-primary': 'btn btn-default').'"
+					onClick="js_general_change_periodo(document.getElementById(\'ruta_html_common\').value + \'/general/controller.php\','.$periodo->rows[$i]['peri_codi'].')"
+					>ACTIVAR PERIODO LECTIVO '.$periodo->rows[$i]['peri_deta'].'</button>';
 			}
-			$cmb_sidebar_periodo .= "</select>";
+			$cmb_sidebar_periodo.= '</div>';
+		
 		
 			$data = array(
 				'usua_codigo'=>$gene_data['usua_codigo'],
@@ -170,19 +173,25 @@ function handler() {
 					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_ecobab;
 					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_ecobab_bg;
 					$_SESSION['id_commerce_pagos_web'] = '7825';
+					$_SESSION['id_commerce_diners_acquireid'] = 'https://ecobab.educalinks.com.ec/alumnos/pagos/';
+					$_SESSION['id_commerce_diners_pay'] = '';
+					$_SESSION['local_id_diners_pay'] = 'GN01';
 					break;
-				case  "desarrollo.educalinks.com.ec":
+				case  "dev.educalinks.com.ec":
 					$_SESSION['llaveactiva']=$llavedesarrollo;
 					$_SESSION['passllaveactiva']=$clavellavedesarrollo;
 					$_SESSION['rutallave']=$rutallavedesarrollo;
 					$_SESSION['ambiente']=1;
 					$_SESSION['correofacturas']='malvear@redlinks.com.ec';
-					$_SESSION['visor']='desarrollo.educalinks.com.ec/finan/visor';
+					$_SESSION['visor']='dev.educalinks.com.ec/finan/visor';
 					$_SESSION['dir_logo_cliente']=$ruta_logo_desarrollo;
 					$_SESSION['dir_logo_cliente_bg']=$ruta_logo_desarrollo_bg;
 					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_liceopanamericano;
 					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_liceopanamericano_bg;
 					$_SESSION['id_commerce_pagos_web'] = '7940';
+					$_SESSION['id_commerce_diners_acquireid'] = 'http://dev.educalinks.com.ec/alumnos/pagos/';
+					$_SESSION['id_commerce_diners_pay'] = '0992336919001';
+					$_SESSION['local_id_diners_pay'] = 'GN01';
 					break;
 				case  "ecobabvesp.educalinks.com.ec":
 					$_SESSION['llaveactiva']=$llavebabahoyo;
@@ -196,6 +205,9 @@ function handler() {
 					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_ecobabvesp;
 					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_ecobabvesp_bg;
 					$_SESSION['id_commerce_pagos_web'] = '7940';
+					$_SESSION['id_commerce_diners_acquireid'] = 'https://ecobabvesp.educalinks.com.ec/alumnos/pagos/';
+					$_SESSION['id_commerce_diners_pay'] = '';
+					$_SESSION['local_id_diners_pay'] = 'GN02';
 					break;
 				case  "liceopanamericano.educalinks.com.ec":
 					$_SESSION['llaveactiva']=$llaveliceopanamericano;
@@ -209,6 +221,9 @@ function handler() {
 					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_liceopanamericano;
 					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_liceopanamericano_bg;
 					$_SESSION['id_commerce_pagos_web'] = '7822';
+					$_SESSION['id_commerce_diners_acquireid'] = 'https://liceopanamericano.educalinks.com.ec/alumnos/pagos/';
+					$_SESSION['id_commerce_diners_pay'] = '0991505318001';
+					$_SESSION['local_id_diners_pay'] = 'GN01';
 					break;
 				case  "liceopanamericanosur.educalinks.com.ec":
 					$_SESSION['llaveactiva']=$llaveliceopanamericano;
@@ -222,6 +237,9 @@ function handler() {
 					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_liceopanamericanosur;
 					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_liceopanamericanosur_bg;
 					$_SESSION['id_commerce_pagos_web'] = '7938';
+					$_SESSION['id_commerce_diners_acquireid'] = 'https://liceopanamericanosur.educalinks.com.ec/alumnos/pagos/';
+					$_SESSION['id_commerce_diners_pay'] = '0991505318001';
+					$_SESSION['local_id_diners_pay'] = 'GN02';
 					break;
 				case  "delfos.educalinks.com.ec":
 					$_SESSION['llaveactiva']=$llavedelfos;
@@ -235,6 +253,9 @@ function handler() {
 					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_delfos;
 					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_delfos_bg;
 					$_SESSION['id_commerce_pagos_web'] = '7824';
+					$_SESSION['id_commerce_diners_acquireid'] = 'https://delfos.educalinks.com.ec/alumnos/pagos/';
+					$_SESSION['id_commerce_diners_pay'] = '0992336919001';
+					$_SESSION['local_id_diners_pay'] = 'GN01';
 					break;
 				case  "delfosvesp.educalinks.com.ec":
 					$_SESSION['llaveactiva']=$llavedelfos;
@@ -248,6 +269,9 @@ function handler() {
 					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_delfosvesp;
 					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_delfosvesp_bg;
 					$_SESSION['id_commerce_pagos_web'] = '7939';
+					$_SESSION['id_commerce_diners_acquireid'] = 'https://delfosvesp.educalinks.com.ec/alumnos/pagos/';
+					$_SESSION['id_commerce_diners_pay'] = '0992336919001';
+					$_SESSION['local_id_diners_pay'] = 'GN02';
 					break;
 				case  "moderna.educalinks.com.ec":
 					$_SESSION['llaveactiva']=$llavemoderna;
@@ -261,6 +285,9 @@ function handler() {
 					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_moderna;
 					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_moderna_bg;
 					$_SESSION['id_commerce_pagos_web'] = '7823';
+					$_SESSION['id_commerce_diners_acquireid'] = 'https://moderna.educalinks.com.ec/alumnos/pagos/';
+					$_SESSION['id_commerce_diners_pay'] = '0990606900001';
+					$_SESSION['local_id_diners_pay'] = 'GN01';
 					break;
 				case  "americano.educalinks.com.ec":
 					$_SESSION['llaveactiva']=$llavecolegioamericanoguayaquil;
@@ -407,6 +434,8 @@ function handler() {
             $array_send['reserved9'] = '000';
             $array_send['reserved10']= '000'; //Monto Grava VIA
 			
+			  
+   
 			/*
 			//Envío de Parametros a V-POS
             $array_send['acquirerId'] = '107';//no cambia
@@ -478,7 +507,6 @@ function handler() {
 					'<br> <b>Estado:</b> Guayaquil' .
 					'<br> <b>País:</b> Ecuador' .
 					'<br> <b>Teléfono:</b> ' . $row['repr_telf'] .
-					'<br> <b>Domicilio:</b> ' . $row['repr_domi'] .
 				'</div>
 			</div>
 			<div class="form-group">
@@ -507,67 +535,463 @@ function handler() {
 			VPOSSend($array_send,$array_get,$llaveVPOSCryptoPub,$llaveComercioFirmaPriv,$vector);
 			//$privres = openssl_pkey_get_private(array($privatekey,null));
 			
+			/*
+			/ -----------------------------------------------/
+			/ DINERS PAY                                     /
+			/ -----------------------------------------------/
+			*/
+			
+			include_once("../../../includes/common/PlugInClient/PlugInClientSend.php");
+			include_once("../../../includes/common/PlugInClient/RSAEncryption.php");
+			$plugin = new PlugInClientSend(); 
+			$AdquirerID = $_SESSION['id_commerce_diners_pay'];
+			$MerchantID = $_SESSION['id_commerce_diners_pay'];
+			$LocalID = $_SESSION['local_id_diners_pay']; 
+			
+			$moneda = "840";
+			$URL_Tecnico = $_SESSION['id_commerce_diners_acquireid'];
+			
+			$vector_diners = "mV6VoYVJ54A=";
+			$simetrica_diners = "g0yoaxPT4GQmvKIf7wcCV3Uv1SDgp9n0";
+			
+            
+            $llaveVPOSCryptoPub_diners = "-----BEGIN PUBLIC KEY-----\n".
+			"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCMEHg0R08b6SynYlich36KEnxe\n".
+			"JRjRGG9thQpQOjy5j8qOVowx2NuD+Ew7ZC/dRtnpdh5rZGI3WMAymLd/zDa+mawA\n".
+			"8Wg/8fa14ePumKhGhsfVXWPfBTAjo0gizKIIpinsF4LiDh+5zgv+2CtaaZloPqRC\n".
+			"bO9en7FG4Xa7hnCoHQIDAQAB\n".
+			"-----END PUBLIC KEY-----";
+			
+            $llaveComercioFirmaPriv_diners = "-----BEGIN RSA PRIVATE KEY-----\n".
+			"MIICXQIBAAKBgQDDUnsVZqvVsYuhTmRM6Q1ePktIBn5Nnl3OqV30Cmf/Q1j8JGSa\n".
+			"yORvintItmLYC9xZcAi9fP4s1bUb5phkN9w8ZHC5wKnEA0SEhLe/H47dw92KAc9S\n".
+			"H0ElIDSDDhSFfWHe3gOGKJ3+aq1VYuybpuBImlLZyfaBp6ozjBykbsbupQIDAQAB\n".
+			"AoGBAJnM19iZOROSs2U4Cii5lmowWS0E1+2clzdFDBM/InbQ/D/HFGUBbUcbX0p5\n".
+			"O0ntxPu0CV3UD30UZoDqyfKYPdT73TBxgUG7AAD7dn3ndW0tGj+Sdjva1SjdqbFt\n".
+			"Dbp5NBJfCz6NcyBfO8n6AskJLdU2vdHyN8u6iP/HqL6ORj2hAkEA5mbkcVRGzIMb\n".
+			"iW2sLdavwDjBAMZFvEpv8G8W/+TwfC7SPsiMvMrt1eHnJYPfXSvCL1gW9QJyV3bx\n".
+			"uFtX39X9LQJBANkF2SVlrMbAtzXg53GNN2b+5N681GdxdVKaVR489WcKhaJaQ4lV\n".
+			"KV0Hqwevbll+9PNgHasKitCQ8cl5SaBf0lkCQHdZ44qlaot0eyZErsWMCbzcaXZa\n".
+			"PzObp8L3+QUT9lON+ZFWWDlQMcXy4Mc5OdLM4SmfSz0eSFbwoaSrhKjJ8/0CQQDN\n".
+			"NEpuogUMqYyS1WYCaJTKPpoKQmJUrWNSB7wUK2+fTsOtD8xsPqot3OJLEgY1eWYD\n".
+			"+g4TfJRlQahd6OFFU1WBAkBk/S6KpzjQXnnE/GBbVChFw/moEonqHbhfZbxHKKSE\n".
+			"J8zci75Ai6SA+8SPOcLTKsb0XPQFlIyGCt7eoGXbSGhj\n".
+			"-----END RSA PRIVATE KEY-----";
+			
+            //Monto incluido con impuestos
+            
+			$e = $plugin->setLocalID( $LocalID );
+			if($e!= "")
+				echo "Error: $e";
+			$e = $plugin->setTransacctionID( $row['pon_code'] );
+			if($e!= "")
+				echo "Error: $e";
+			$e = $plugin->setTransacctionValue( $deud_totalPendiente*100 );
+			if($e!= "")
+				echo "Error: $e";
+			$e = $plugin->setTaxValue1(000);
+			if($e!= "")
+				echo "Error: $e";
+			$e = $plugin->setTaxValue2(000);
+			if($e!= "")
+				echo "Error: $e";
+			$e = $plugin->setTipValue(000);
+			if($e!= "")
+				echo "Error: $e";
+			$e = $plugin->setCurrencyID($moneda);
+			if($e!= "")
+				echo "Error: $e";
+			$e = $plugin->setReferencia1("");
+			if($e!= "")
+				echo "Error: $e";
+			$e = $plugin->setReferencia2("");
+			if($e != "")
+				echo "Error: $e";
+			$e = $plugin->setReferencia3("");
+			if($e!= "")
+				echo "Error: $e";
+			$e = $plugin->setReferencia4("");
+			if($e!= "")
+				echo "Error: $e";
+			$e = $plugin->setReferencia5("");
+			if($e!= "")
+				echo "Error: $e";
+			$e = $plugin->setIV( $vector_diners );
+			if($e!= "")
+				echo "Error: $e";
+			try
+			{
+				$plugin->setSignPrivateKey( $llaveComercioFirmaPriv_diners );
+				$plugin->setCipherPublicKey( $llaveVPOSCryptoPub_diners );
+				$xmlGenerateKeyI = $plugin->CreateXMLGENERATEKEY();
+				$plugin->XMLProcess($URL_Tecnico);
+				$xmlRequest = $plugin->getXMLREQUEST();
+				$xmlFirma 	= $plugin->getXMLDIGITALSIGN(); 
+			}
+			catch (Exception $e)
+			{
+				echo "Error: $e";
+			}
+
+			/* FIN DINERS CLUB */
+			
+			
 			$data['frm_pago_sbmt'] = '
 				<form name="frmVPOS" method="POST" action="https://integracion.alignetsac.com/VPOS/MM/transactionStart20.do">
+																											
 				<!--<form name="frmVPOS" method="POST" action="../pagos_respuesta/">-->
-					<input TYPE="text" NAME="IDACQUIRER" 	ID="IDACQUIRER" 	value="'.$array_send['acquirerId'].'">
-					<input TYPE="text" NAME="IDCOMMERCE" 	ID="IDCOMMERCE"		value="'.$array_send['commerceId'].'">
-					<input TYPE="text" NAME="XMLREQ" 	 	ID="XMLREQ"			value="'.$array_get['XMLREQ'].'">
-					<input TYPE="text" NAME="DIGITALSIGN" 	ID="DIGITALSIGN" 	value="'.$array_get['DIGITALSIGN'].'">
-					<input TYPE="text" NAME="SESSIONKEY" 	ID="SESSIONKEY"		value="'.$array_get['SESSIONKEY'].'">
-					<input TYPE="text" NAME="url" 			ID="url"			value="'.$_SESSION['id_commerce_pagos_web'].'">
-					<input TYPE="text" NAME="name" 			ID="name"			value="'.$row['pon_code'].'">
+					<input TYPE="hidden" NAME="IDACQUIRER" 	ID="IDACQUIRER" 	value="'.$array_send['acquirerId'].'">
+					<input TYPE="hidden" NAME="IDCOMMERCE" 	ID="IDCOMMERCE"		value="'.$array_send['commerceId'].'">
+					<input TYPE="hidden" NAME="XMLREQ" 	 	ID="XMLREQ"			value="'.$array_get['XMLREQ'].'">
+					<input TYPE="hidden" NAME="DIGITALSIGN" 	ID="DIGITALSIGN" 	value="'.$array_get['DIGITALSIGN'].'">
+					<input TYPE="hidden" NAME="SESSIONKEY" 	ID="SESSIONKEY"		value="'.$array_get['SESSIONKEY'].'">
+					<input TYPE="hidden" NAME="url" 			ID="url"			value="'.$_SESSION['id_commerce_pagos_web'].'">
+					<input TYPE="hidden" NAME="name" 			ID="name"			value="'.$row['pon_code'].'">
+																								   
+																															   
+																									 
 					
-					<input TYPE="text" NAME="ape" 			ID="ape"			value="Juan Perez">
-					<input TYPE="text" NAME="email" 		ID="email"			value="'.$row['repr_email'].'">
-					<input TYPE="text" NAME="valordeuda" 	ID="valordeuda"		value="8600">
+					<input TYPE="hidden" NAME="ape" 			ID="ape"			value="Juan Perez">
+					<input TYPE="hidden" NAME="email" 		ID="email"			value="'.$row['repr_email'].'">
+					<input TYPE="hidden" NAME="valordeuda" 	ID="valordeuda"		value="8600">
 
-					<button class="btn btn-warning" type="submit" NAME="btn_pagar" ID="btn_pagar">Pagar pensión</span>
+					<button title="Visa / Mastercard Pagar con botón de pago Banco Bolivariano" onmouseover="$(this).tooltip(\'show\');" width="60%" class="btn btn-default" type="submit" NAME="btn_pagar" ID="btn_pagar">Pagar con&nbsp;
+						<img width="25%" src="../../imagenes/mcvisa.png">
+						<img width="25%" src="../../imagenes/bolivariano.png"></button>
+					<br>
+				</form>
+				<form name="frmSolicitudPago" method="post" action="https://www3.optar.ec/webmpi/vpos">
+				<!--Produccion <form name="frmSolicitudPago" method="post" action="https://www.interdinmpi.com.ec/webmpi/vpos?">-->
+					<input type="text" name="XMLREQUEST"	 value="'.$xmlRequest.'">
+					<input type="text" name="XMLDIGITALSIGN" value="'.$xmlFirma.'">
+					<input type="text" name="XMLACQUIRERID"  value="'.$_SESSION['id_commerce_diners_acquireid'].'">
+					<input type="text" name="XMLMERCHANTID"  value="'.$_SESSION['id_commerce_diners_pay'].'">
+					<input type="text" name="XMLGENERATEKEY" value="'.$xmlGenerateKeyI.'">
+
+					<button title="Visa / MasterCard  / Diners Pagar con botón de pago Diners Club" onmouseover="$(this).tooltip(\'show\');" width="60%" class="btn btn-default" type="submit" NAME="btn_pagar_diners" ID="btn_pagar_diners">Pagar con&nbsp;
+					<img width="25%" src="../../imagenes/mcvisa.png">
+					<img width="25%" src="../../imagenes/diners.png"></button>
+					<br>
 				</form>';
             
 			retornar_vista_general(VIEW_DEBT, $data);
 			break;
-		case GET_DEBT_ANS:
+		case GET_DEBT_ANS_DINERS:
 			global $diccionario;
-			include("../../../includes/common/vpos_plugin.php");
-			$vector = "F1A06EE948DC5B9B";	
+			$_SESSION['IN']="OK";
+			if( empty( $_SESSION['sidebar_status'] ) )
+				$_SESSION['sidebar_status']='';
 			
-			//Llave Firma Publica de Alignet
-            $llaveVPOSFirmaPub = "-----BEGIN PUBLIC KEY-----\n". 
-            "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCvJS8zLPeePN+fbJeIvp/jjvLW\n".
-            "Aedyx8UcfS1eM/a+Vv2yHTxCLy79dEIygDVE6CTKbP1eqwsxRg2Z/dI+/e14WDRs\n".
-            "g0QzDdjVFIuXLKJ0zIgDw6kQd1ovbqpdTn4wnnvwUCNpBASitdjpTcNTKONfXMtH\n".
-            "pIs4aIDXarTYJGWlyQIDAQAB\n".
-            "-----END PUBLIC KEY-----";
-
-            //Llave Crypto Privada del Comercio
-            $llaveComercioCryptoPriv = "-----BEGIN RSA PRIVATE KEY-----\n".
-            "MIICXQIBAAKBgQC6hOMFsiAVbHR5x2zPFyBo+Fhh7izXtk09pOJcmrb+TpQx8Wq+\n".
-            "D6kqywWswYwh4hSCQlQ2WDIXlKeG04Z6CtzbXaPJGIfIoRXy/irfvsOLP34zHnfz\n".
-            "MHd/jh+Prb5Bk8hTOKb1iIqPcjaTBshNS9JfXtCl3Ab6TOVlv2Xy2mvYJQIDAQAB\n".
-            "AoGAHcCQzhnJ0GEKe1p6WtZfjx7+SjDJ6mbkD0875HWxdwNl1EmkM0kgPPlBoHsH\n".
-            "NWhwyQ53jGupIeXOi002iEUvUXDyHvNcRqpFTT1buXAwPUZpJwM6S56iEoEF7I3X\n".
-            "XxT+Qc5nhYMbuwpXAVHW9aLb4Ve3uofEVnJ2E2dHqwwCfcECQQDhDjAMB29jSpIX\n".
-            "C4geFuYze+jtwvMML15F72ZvSCw4gXS16QnVtMpg8XXHda/HnEHOjzpL35J6f2Ci\n".
-            "1i716QM5AkEA1Co+dH9RyJg1yZDmM0TT5sa/oGPseruWs2MbY69picWNPhfke83U\n".
-            "+6uU08N4THzuNo2rov0VqzRcc8+4cKTgTQJBALn2aDs4VZEdCDQkojgCwfres2zr\n".
-            "frud1G9DT0g6wdd7GP5LboX42pVaT/EdzL7K3hGZhhk1xyqTYD2Nb8Zg4PkCQQCl\n".
-            "Y4jsJ5QJWx4S0vGgZbcJ30TiMwLVagZAMLHZM5SB4Y4JKXbjS8ELruWFbosIlRrd\n".
-            "S/LQS5norBil7vdIWD7BAkAakLBSj5ZCrNfCnrbXNBFizotEuU4cTv8yPyEzwGZn\n".
-            "HLiBear8u4ddEFKaHrHoqGIXLoYLcYsQgJZPKdDarxCa\n".
-            "-----END RSA PRIVATE KEY-----";
+			include_once("../../../includes/common/PlugInClient/PlugInClientSend.php");
+			include_once("../../../includes/common/PlugInClient/RSAEncryption.php");
 			
-			//Parametros de Recepción de Autorización
-            $arrayIn['IDACQUIRER'] = $_POST['IDACQUIRER'];
-            $arrayIn['IDCOMMERCE'] = $_POST['IDCOMMERCE'];
-            $arrayIn['XMLRES'] 	   = $_POST['XMLRES'];
-            $arrayIn['DIGITALSIGN']= $_POST['DIGITALSIGN'];
-            $arrayIn['SESSIONKEY'] = $_POST['SESSIONKEY'];
-            $arrayOut = '';
-                
-            //Ejecución de Creación de Valores para la Solicitud de Interpretación de la Respuesta
-            if(VPOSResponse($arrayIn,$arrayOut,$llaveVPOSFirmaPub,$llaveComercioCryptoPriv,$vector))
-			{   $general->set_operacion_respuesta(
+			$periodo->get_all();
+			$cmb_sidebar_periodo = '<div class="btn-group-vertical" style="text-align:center;">';
+			for($i=0;$i<count($periodo->rows)-1;$i++)
+			{ 	$cmb_sidebar_periodo.= '<button type="button"
+					id="btn_header_peri_'.$periodo->rows[$i]['peri_codi'].'" 
+					name="btn_header_peri_'.$periodo->rows[$i]['peri_codi'].'" 
+					data-deta="'.$periodo->rows[$i]['peri_deta'].'"
+					class="'.( $periodo->rows[$i]['peri_codi'] == $_SESSION['peri_codi'] ? 'btn btn-primary': 'btn btn-default').'"
+					onClick="js_general_change_periodo(document.getElementById(\'ruta_html_common\').value + \'/general/controller.php\','.$periodo->rows[$i]['peri_codi'].')"
+					>ACTIVAR PERIODO LECTIVO '.$periodo->rows[$i]['peri_deta'].'</button>';
+			}
+			$cmb_sidebar_periodo.= '</div>';
+		
+			$data = array(
+				'usua_codigo'=>$gene_data['usua_codigo'],
+				'usua_nombres'=>$general->usua_nombres,
+				'usua_apellidos'=>$general->usua_apellidos,
+				'usua_correoElectronico'=>$general->usua_correoElectronico,
+				'usua_codigoRol'=>$general->usua_codigoRol,
+				'puntVent_codigo'=>$general->puntVent_codigo,
+				'cmb_sidebar_periodo' => $cmb_sidebar_periodo );
+				
+			$_SESSION['ui_skin']='skin-blue';
+			$_SESSION['toggle_fullscreen']='false';
+			$_SESSION['usua_codigo']=$data['usua_codigo'];
+			$_SESSION['usua_nombres']=$data['usua_nombres'];
+			$_SESSION['usua_apellidos']=$data['usua_apellidos'];
+			$_SESSION['cmb_sidebar_periodo']=$data['cmb_sidebar_periodo'];
+			$_SESSION['usua_correoElectronico']=$data['usua_correoElectronico'];
+			$_SESSION['usua_codigoRol']=$data['usua_codigoRol'];
+			$_SESSION['puntVent_codigo']=$data['puntVent_codigo'];		
+			
+			$_SESSION['dir_logo_educalinks']=$ruta_logo_educalinks;
+			
+			$_SESSION['dir_logo_educalinks_long_red']=$ruta_logo_educalinks_long_red;
+			$_SESSION['dir_logo_educalinks_long_red_small']=$ruta_logo_educalinks_long_red_sm;
+			$_SESSION['dir_logo_educalinks_long_white']=$ruta_logo_educalinks_long_white;
+			$_SESSION['dir_logo_educalinks_long_white_small']=$ruta_logo_educalinks_long_white_sm;
+			$_SESSION['dir_logo_educalinks_long_white_red']=$ruta_logo_educalinks_long_white_red;
+			
+			$_SESSION['dir_logo_educalinks_long'] = $_SESSION['dir_logo_educalinks_long_white'];
+			$_SESSION['dir_logo_educalinks_long_small'] = $_SESSION['dir_logo_educalinks_long_white_small'];
+			
+			$_SESSION['dir_logo_redlinks_black']=$ruta_logo_redlinks_black;
+			$_SESSION['dir_logo_redlinks_white']=$ruta_logo_redlinks_white;
+			$_SESSION['dir_logo_links_md']=$ruta_logo_links_md;
+			$_SESSION['dir_logo_links']=$ruta_logo_links;
+			$_SESSION['print_dir_logo_educalinks']=$print_ruta_logo_educalinks;
+			$_SESSION['print_dir_logo_educalinks_long_sm']=$print_ruta_logo_educalinks_long_small;
+			$_SESSION['print_dir_logo_redlinks_black']=$print_ruta_logo_redlinks_black;
+			$_SESSION['print_dir_logo_redlinks_white']=$print_ruta_logo_redlinks_white;
+			$_SESSION['print_dir_logo_links_md']=$print_ruta_logo_links_md;
+			$_SESSION['print_dir_logo_links']=$print_ruta_logo_links;
+			$_SESSION['ruta_documentos_requisitos'] = $ruta_documentos_requisitos;
+			$_SESSION['ruta_documentos_sintesis'] = $ruta_documentos_sintesis;
+			
+			$_SESSION['domain'] = $domain;
+			
+			switch($domain){
+				case  "ecobab.educalinks.com.ec":
+					$_SESSION['llaveactiva']=$llavebabahoyo;
+					$_SESSION['passllaveactiva']=$clavellavebabahoyo;
+					$_SESSION['rutallave']=$rutallave;
+					$_SESSION['ambiente']=2;
+					$_SESSION['correofacturas']='factura@ecomundobabahoyo.com.ec';
+					$_SESSION['visor']='ecobab.educalinks.com.ec/finan/visor';
+					$_SESSION['dir_logo_cliente']=$ruta_logo_ecobab;
+					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_ecobab;
+					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_ecobab_bg;
+					$_SESSION['id_commerce_pagos_web'] = '6924';
+					break;
+				case  "desarrollo.educalinks.com.ec":
+					$_SESSION['llaveactiva']=$llavedesarrollo;
+					$_SESSION['passllaveactiva']=$clavellavedesarrollo;
+					$_SESSION['rutallave']=$rutallavedesarrollo;
+					$_SESSION['ambiente']=1;
+					$_SESSION['correofacturas']='malvear@redlinks.com.ec';
+					$_SESSION['visor']='desarrollo.educalinks.com.ec/finan/visor';
+					$_SESSION['dir_logo_cliente']=$ruta_logo_desarrollo;
+					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_liceopanamericano;
+					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_liceopanamericano_bg;
+					$_SESSION['id_commerce_pagos_web'] = '7822';
+					break;
+				case  "ecobabvesp.educalinks.com.ec":
+					$_SESSION['llaveactiva']=$llavebabahoyo;
+					$_SESSION['passllaveactiva']=$clavellavebabahoyo;
+					$_SESSION['rutallave']=$rutallave;
+					$_SESSION['ambiente']=2;
+					$_SESSION['correofacturas']='factura@ecomundobabahoyo.com.ec';
+					$_SESSION['visor']='ecobabvesp.educalinks.com.ec/finan/visor';
+					$_SESSION['dir_logo_cliente']=$ruta_logo_ecobabvesp;
+					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_ecobabvesp;
+					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_ecobabvesp_bg;
+					$_SESSION['id_commerce_pagos_web'] = '7058';
+					break;
+				case  "liceopanamericano.educalinks.com.ec":
+					$_SESSION['llaveactiva']=$llaveliceopanamericano;
+					$_SESSION['passllaveactiva']=$clavellaveliceopanamericano;
+					$_SESSION['rutallave']=$rutallave;
+					$_SESSION['ambiente']=2;
+					$_SESSION['correofacturas']='e-electronica@liceopanamericano.edu.ec';
+					$_SESSION['visor']='liceopanamericano.educalinks.com.ec/finan/visor';
+					$_SESSION['dir_logo_cliente']=$ruta_logo_liceopanamericano;
+					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_liceopanamericano;
+					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_liceopanamericano_bg;
+					$_SESSION['id_commerce_pagos_web'] = '6921';
+					break;
+				case  "liceopanamericanosur.educalinks.com.ec":
+					$_SESSION['llaveactiva']=$llaveliceopanamericano;
+					$_SESSION['passllaveactiva']=$clavellaveliceopanamericano;
+					$_SESSION['rutallave']=$rutallave;
+					$_SESSION['ambiente']=2;
+					$_SESSION['correofacturas']='e-electronica@liceopanamericano.edu.ec';
+					$_SESSION['visor']='liceopanamericanosur.educalinks.com.ec/finan/visor';
+					$_SESSION['dir_logo_cliente']=$ruta_logo_liceopanamericanosur;
+					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_liceopanamericanosur;
+					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_liceopanamericanosur_bg;
+					$_SESSION['id_commerce_pagos_web'] = '7056';
+					break;
+				case  "delfos.educalinks.com.ec":
+					$_SESSION['llaveactiva']=$llavedelfos;
+					$_SESSION['passllaveactiva']=$clavellavedelfos;
+					$_SESSION['rutallave']=$rutallave;
+					$_SESSION['ambiente']=2;
+					$_SESSION['correofacturas']='malvear@redlinks.com.ec';
+					$_SESSION['visor']='delfos.educalinks.com.ec/finan/visor';
+					$_SESSION['dir_logo_cliente']=$ruta_logo_delfos;
+					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_delfos;
+					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_delfos_bg;
+					$_SESSION['id_commerce_pagos_web'] = '6923';
+					break;
+				case  "delfosvesp.educalinks.com.ec":
+					$_SESSION['llaveactiva']=$llavedelfos;
+					$_SESSION['passllaveactiva']=$clavellavedelfos;
+					$_SESSION['rutallave']=$rutallave;
+					$_SESSION['ambiente']=2;
+					$_SESSION['correofacturas']='malvear@redlinks.com.ec';
+					$_SESSION['visor']='delfosvesp.educalinks.com.ec/finan/visor';
+					$_SESSION['dir_logo_cliente']=$ruta_logo_delfosvesp;
+					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_delfosvesp;
+					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_delfosvesp_bg;
+					$_SESSION['id_commerce_pagos_web'] = '7057';
+					break;
+				case  "moderna.educalinks.com.ec":
+					$_SESSION['llaveactiva']=$llavemoderna;
+					$_SESSION['passllaveactiva']=$clavellavemoderna;
+					$_SESSION['rutallave']=$rutallave;
+					$_SESSION['ambiente']=2;
+					$_SESSION['correofacturas']='malvear@redlinks.com.ec';
+					$_SESSION['visor']='moderna.educalinks.com.ec/finan/visor';
+					$_SESSION['dir_logo_cliente']=$ruta_logo_moderna;
+					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_moderna;
+					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_moderna_bg;
+					$_SESSION['id_commerce_pagos_web'] = '6922';
+					break;
+				case  "americano.educalinks.com.ec":
+					$_SESSION['llaveactiva']=$llavecolegioamericanoguayaquil;
+					$_SESSION['passllaveactiva']=$clavecolegioamericanoguayaquil;
+					$_SESSION['rutallave']=$rutallave;
+					$_SESSION['ambiente']=2;
+					$_SESSION['correofacturas']='pablo.villao@colegioamericano.edu.ec';
+					$_SESSION['visor']='americano.educalinks.com.ec/finan/visor';
+					$_SESSION['dir_logo_cliente']=$ruta_logo_cag;
+					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_cag;
+					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_cag_bg;
+					break;
+				default:
+					$_SESSION['llaveactiva']='default';
+				break;
+			}
+			
+			$firmaPrivada_comercio = "-----BEGIN PUBLIC KEY-----\n".
+				"MIICXAIBAAKBgQCG2SM+eNoJwyYW5EbFgHk/Mw8K2PHIjBHBaCMR4V+xbw14mdGo\n".
+				"1TklGIpJb1SKiNiqJa6i0YzTLQVZsU9ylCtFh+FOTQ5g56LozLY10ImhSWxxP9Cq\n".
+				"5r7aC4q7wM8qT2/4sURcWZ/PFRNrqt+LsUZ0Lj13Kl/G76ldBMmeeRUs/QIDAQAB\n".
+				"AoGARgnLo2vzm3RveR5Rn80trGShoHmzgv01T6X96RCMukS603PZEH7Gsny/forD\n".
+				"dzzChAUUYl7CbQCKMd7FK/bHThGsOxIkHpZ5P9ZWwQICz2q7C9dTPjqceee6D8bx\n".
+				"KZlMhqBcOGhlMqWKyjAj6CDG4AIhjYQt1Saco1sJiINCJQECQQDBrQgozyfNL9Qa\n".
+				"mGkm6rrm8oDC+e5/lu2d4Tz93ETUx88cjPsCD/UBCwpcqZQQFTpAtd40foWe2C/Q\n".
+				"S5Go5F69AkEAsj3lHuQHLvPRvcbVgkAx61vQefUtCQsGWdpDf2mhZ7BDS5uhWrVl\n".
+				"Mx7RDrCGJLVO0/wgj+7blhHwNNbUKxMLQQJAOGvD+L+AhNHuJGFKIMA4+pai1Coj\n".
+				"RKAfUOMQ9ZN5qdMbjuGzLgKgCVHCDwSH0bedZMSWmwxQuNmZ9EBPirgcsQJAa983\n".
+				"vkVE766SHmeqqgSN8aIEfvraAaIReum0dfUIwQcVAzoyIgKsN48L+PbuiGLOTU9G\n".
+				"qbVmYeGDXYcyqssAwQJBAKJX6O4xvTFze0ujcH2oJigZjwodVMVu4Su/QSi1ypwR\n".
+				"Qzyf7Kgs2KXdga7R29gnQxYDPmHWdcz1LoNu1nhmRbg=\n".
+				"-----END PUBLIC KEY-----";
+			
+			$firmaPublica_diners = '-----BEGIN RSA PRIVATE KEY-----\n'.
+				'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCM6iId+CeR/CmgXJ5IbHLbtnZv\n'.
+				'zbk/HGDowFdOVQZaa2ZFklTV+bmuhAfrwNJSDeakzT0OqnQgYc73Xfb5y6Kn8TFs\n'.
+				'Hq9YW+/TCuMNdA6gQXO1lDxHTIAVgkHUaRJ5Gy/fvWzJuzqVWYFBo/WyPslO274h\n'.
+				'1DYv/IbnU/IEmyq3hQIDAQAB\n'.
+				'-----END RSA PRIVATE KEY-----';
+			
+			$plugin = new PlugInClientSend(); 
+			$AdquirerID = $_SESSION['id_commerce_diners_pay'];
+			$MerchantID = $_SESSION['id_commerce_diners_pay'];
+			$LocalID = $_SESSION['local_id_diners_pay']; 
+			
+			$moneda = "840";
+			$URL_Tecnico = $_SESSION['id_commerce_diners_acquireid'];
+			
+			$vector_diners = "mV6VoYVJ54A=";
+			$simetrica_diners = "g0yoaxPT4GQmvKIf7wcCV3Uv1SDgp9n0";
+			
+			$xmlGenerateKey = $_POST["XMLGENERATEKEY"];
+			$pluginr = new PlugInClientRecive();
+			$pluginr->setIV($vector);
+			
+			$pluginr->setSignPublicKey( $firmaPublica_diners );
+			$pluginr->setCipherPrivateKey( $firmaPrivada_comercio );
+			$error = $pluginr->setXMLGENERATEKEY($xmlGenerateKey);
+			$resultado = "";
+			if($error != "")
+			{
+				$resultado = "Error:" . $error;
+				return;
+			}
+			$cadeEnc = $_POST["XMLRESPONSE"];
+			$firmaCorrecta = $pluginr->XMLProcess($cadeEnc, $_POST["XMLDIGITALSIGN"]);
+			if($firmaCorrecta == 0)
+			{
+				//echo "<b>Los datos han sido alterados.</b><br>";
+				return;
+			}
+			else
+			{
+				/*if($firmaCorrecta != 1)
+				{
+				$resultado = "<br><br>Error: $firmaCorrecta";
+				return;
+				}
+				else 
+					$resultado = "<b>Los datos no han sido alterados.</b><br>";*/
+				$resultado = '<TABLE id="Table16" style="WIDTH: 456px; HEIGHT: 249px" height="249" cellSpacing="1" cellPadding="1" width="456" border="0">
+					<TR>
+						<TD style="WIDTH: 128px" width="128"></TD>
+						<TD>Transaccion ID Session Portal <? ?></TD>
+						<TD>'.$pluginr->getTransacctionID().'</TD>
+					</TR>
+					<TR>
+						<TD style="WIDTH: 128px" width="128"></TD>
+						<TD>Impuesto 1</TD>
+						<TD>'.$pluginr->getTaxValue1().'</TD>
+					</TR>
+					<TR>
+						<TD style="WIDTH: 128px" width="128"></TD>
+						<TD>Impuesto 2</TD>
+						<TD>'.$pluginr->getTaxValue2().'</TD>
+					</TR>
+					<TR>
+						<TD style="WIDTH: 128px" width="128"></TD>
+						<TD>Propina</TD>
+						<TD>'.$pluginr->getTipValue().'</TD>
+					</TR>
+					<TR>
+						<TD style="WIDTH: 128px" width="128"></TD>
+						<TD>Valor</TD>
+						<TD>'.$pluginr->getTransacctionValue().'</TD>
+					</TR>
+					<TR>
+						<TD style="WIDTH: 128px" width="128"></TD>
+						<TD>ESTADO</TD>
+						<TD>'.$pluginr->getAuthorizationState().'</TD>
+					</TR>
+					<TR>
+						<TD style="WIDTH: 128px" width="128"></TD>
+						<TD>NUMERO AUTORIZACION</TD>
+						<TD>'.$pluginr->getAuthorizationCode().'</TD>
+					</TR>
+					<TR>
+						<TD style="WIDTH: 128px" width="128"></TD>
+						<TD>Referencia 1</TD>
+						<TD>'.$pluginr->getReferencia1().'</TD>
+					</TR>
+					<TR>
+						<TD style="WIDTH: 128px" width="128"></TD>
+						<TD>Referencia 2</TD>
+						<TD>'.$pluginr->getReferencia2().'</TD>
+					</TR>
+					<TR>
+						<TD style="WIDTH: 128px" width="128"></TD>
+						<TD>Referencia 3</TD>
+						<TD>'.$pluginr->getReferencia3().'</TD>
+					</TR>
+					<TR>
+						<TD style="WIDTH: 128px" width="128"></TD>
+						<TD>Referencia 4</TD>
+						<TD>'.$pluginr->getReferencia4().'</TD>
+					</TR>
+					<TR>
+						<TD style="WIDTH: 128px" width="128"></TD>
+						<TD>Referencia 5</TD>
+						<TD>'.$pluginr->getReferencia5().'</TD>
+					</TR>
+				</TABLE>';	
+			}
+			
+			
+			if(VPOSResponse($arrayIn,$arrayOut,$llaveVPOSFirmaPub,$llaveComercioCryptoPriv,$vector))
+			{   $general->set_operacion_auditoria(
+												$arrayOut['authorizationCode'], $arrayOut['authorizationResult'],
+												$arrayOut['errorCode'], $arrayOut['errorMessage'],
+												$arrayOut['cardNumber'], $arrayOut['cardType'],
+												$arrayOut['purchaseOperationNumber'], $arrayOut['purchaseAmount']/100,
+												$arrayOut['reserved11'] );
+				$general->set_operacion_respuesta(
 												$arrayOut['authorizationCode'], $arrayOut['authorizationResult'],
 												$arrayOut['errorCode'], $arrayOut['errorMessage'],
 												$arrayOut['cardNumber'], $arrayOut['cardType'],
@@ -618,7 +1042,314 @@ function handler() {
 				}
             }
 			else
-			{   $general->set_operacion_respuesta(
+			{  
+            }
+			$_SESSION['dominio_debt_ans'] = $'';
+			retornar_vista_general(VIEW_DEBT_ANS, $data);
+			break;
+		case GET_DEBT_ANS:
+			global $diccionario;
+			$_SESSION['IN']="OK";
+			if( empty( $_SESSION['sidebar_status'] ) )
+				$_SESSION['sidebar_status']='';
+			
+			$periodo->get_all();
+			$cmb_sidebar_periodo = '<div class="btn-group-vertical" style="text-align:center;">';
+			for($i=0;$i<count($periodo->rows)-1;$i++)
+			{ 	$cmb_sidebar_periodo.= '<button type="button"
+					id="btn_header_peri_'.$periodo->rows[$i]['peri_codi'].'" 
+					name="btn_header_peri_'.$periodo->rows[$i]['peri_codi'].'" 
+					data-deta="'.$periodo->rows[$i]['peri_deta'].'"
+					class="'.( $periodo->rows[$i]['peri_codi'] == $_SESSION['peri_codi'] ? 'btn btn-primary': 'btn btn-default').'"
+					onClick="js_general_change_periodo(document.getElementById(\'ruta_html_common\').value + \'/general/controller.php\','.$periodo->rows[$i]['peri_codi'].')"
+					>ACTIVAR PERIODO LECTIVO '.$periodo->rows[$i]['peri_deta'].'</button>';
+			}
+			$cmb_sidebar_periodo.= '</div>';
+		
+		
+			$data = array(
+				'usua_codigo'=>$gene_data['usua_codigo'],
+				'usua_nombres'=>$general->usua_nombres,
+				'usua_apellidos'=>$general->usua_apellidos,
+				'usua_correoElectronico'=>$general->usua_correoElectronico,
+				'usua_codigoRol'=>$general->usua_codigoRol,
+				'puntVent_codigo'=>$general->puntVent_codigo,
+				'cmb_sidebar_periodo' => $cmb_sidebar_periodo );
+				
+			$_SESSION['ui_skin']='skin-blue';
+			$_SESSION['toggle_fullscreen']='false';
+			$_SESSION['usua_codigo']=$data['usua_codigo'];
+			$_SESSION['usua_nombres']=$data['usua_nombres'];
+			$_SESSION['usua_apellidos']=$data['usua_apellidos'];
+			$_SESSION['cmb_sidebar_periodo']=$data['cmb_sidebar_periodo'];
+			$_SESSION['usua_correoElectronico']=$data['usua_correoElectronico'];
+			$_SESSION['usua_codigoRol']=$data['usua_codigoRol'];
+			$_SESSION['puntVent_codigo']=$data['puntVent_codigo'];		
+			
+			$_SESSION['dir_logo_educalinks']=$ruta_logo_educalinks;
+			
+			$_SESSION['dir_logo_educalinks_long_red']=$ruta_logo_educalinks_long_red;
+			$_SESSION['dir_logo_educalinks_long_red_small']=$ruta_logo_educalinks_long_red_sm;
+			$_SESSION['dir_logo_educalinks_long_white']=$ruta_logo_educalinks_long_white;
+			$_SESSION['dir_logo_educalinks_long_white_small']=$ruta_logo_educalinks_long_white_sm;
+			$_SESSION['dir_logo_educalinks_long_white_red']=$ruta_logo_educalinks_long_white_red;
+			
+			$_SESSION['dir_logo_educalinks_long'] = $_SESSION['dir_logo_educalinks_long_white'];
+			$_SESSION['dir_logo_educalinks_long_small'] = $_SESSION['dir_logo_educalinks_long_white_small'];
+			
+			$_SESSION['dir_logo_redlinks_black']=$ruta_logo_redlinks_black;
+			$_SESSION['dir_logo_redlinks_white']=$ruta_logo_redlinks_white;
+			$_SESSION['dir_logo_links_md']=$ruta_logo_links_md;
+			$_SESSION['dir_logo_links']=$ruta_logo_links;
+			$_SESSION['print_dir_logo_educalinks']=$print_ruta_logo_educalinks;
+			$_SESSION['print_dir_logo_educalinks_long_sm']=$print_ruta_logo_educalinks_long_small;
+			$_SESSION['print_dir_logo_redlinks_black']=$print_ruta_logo_redlinks_black;
+			$_SESSION['print_dir_logo_redlinks_white']=$print_ruta_logo_redlinks_white;
+			$_SESSION['print_dir_logo_links_md']=$print_ruta_logo_links_md;
+			$_SESSION['print_dir_logo_links']=$print_ruta_logo_links;
+			$_SESSION['ruta_documentos_requisitos'] = $ruta_documentos_requisitos;
+			$_SESSION['ruta_documentos_sintesis'] = $ruta_documentos_sintesis;
+			
+			$_SESSION['sgn_vps_pub'] = "-----BEGIN PUBLIC KEY-----\n".
+			"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDTJt+hUZiShEKFfs7DShsXCkoq\n".
+			"TEjv0SFkTM04qHyHFU90Da8Ep1F0gI2SFpCkLmQtsXKOrLrQTF0100dL/gDQlLt0\n".
+			"Ut8kM/PRLEM5thMPqtPq6G1GTjqmcsPzUUL18+tYwN3xFi4XBog4Hdv0ml1SRkVO\n".
+			"DRr1jPeilfsiFwiO8wIDAQAB\n".
+			"-----END PUBLIC KEY-----";
+			
+			$_SESSION['sgn_com_priv'] = '-----BEGIN RSA PRIVATE KEY-----\n'.
+				'MIICXAIBAAKBgQDRcvWTo1vb3B1qimCJIU7E6TYe+TYdT/beT6L2XhK4CFw0srcT\n'.
+				'8AnznPHEDF2NdjkgmIeemkNfZq16wPxuttAOM1RlzoS6lZ/pvzbWNj9squkppklE\n'.
+				'OSc21IWo7qMYSXqJI0rym+TNt1BOsKXl6/YSxHXwrjUFaVugfzbnr4wk5wIDAQAB\n'.
+				'AoGAN+85gioYOAj6mh9GVJjejluxpmfrebyHMyuVW7IX0an55eDsX5i1L6f0MOUU\n'.
+				'ftjZvMi/Py33XBzxq1yqjW6o9QXFGNOw8KT+dVl1Usf1QdvcGQ7CIZ0CssRAzdij\n'.
+				'GiBmQUG5B9ZNGCi5ptwrK89v6M2FcTvSxx4l29T91NU4ApECQQD7/RdFxdXNMhE0\n'.
+				'Hrn/VNg6O8km9Hs5pXAWQlVsDf/0L1lOuv3jNabyGFT5svJs8bVEUWDDrgKdItO2\n'.
+				'hxd3Q6P9AkEA1MiCn6ehyu3EiPLlWEtapcYGRCIkMdkhpm1rxQh9eIn4dAVFJl9P\n'.
+				'o/016+1dLmXOXrs8yZ3fpn/bkuxXj9PXswJAYqx9s32/tgVYBT/O97QCo/MLVqy/\n'.
+				'oBgvZxf8mT52LulnoFPK3XEB+aUbiVfQZGbV43W2XYnDTkL4Am6t+q7LBQJANytF\n'.
+				'st9js5myO0++5wWimxicx02S1NnXP69fIdbxsS8UnABBzZEotPwR3vnMDxuWRjmF\n'.
+				'qUClnCXKaG2exkvGwQJBANWIbuIYhC3s+3f119bDLsJDsE4t4B+MyU20ZYPohli2\n'.
+				'EWQBSsVWyKSMULk3ICvAGYUK0LQ4A1NPE5ixkbEyTTI=\n'.
+				'-----END RSA PRIVATE KEY-----';
+				
+			$_SESSION['domain'] = $domain;
+			
+			switch($domain){
+				case  "ecobab.educalinks.com.ec":
+					$_SESSION['llaveactiva']=$llavebabahoyo;
+					$_SESSION['passllaveactiva']=$clavellavebabahoyo;
+					$_SESSION['rutallave']=$rutallave;
+					$_SESSION['ambiente']=2;
+					$_SESSION['correofacturas']='factura@ecomundobabahoyo.com.ec';
+					$_SESSION['visor']='ecobab.educalinks.com.ec/finan/visor';
+					$_SESSION['dir_logo_cliente']=$ruta_logo_ecobab;
+					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_ecobab;
+					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_ecobab_bg;
+					$_SESSION['id_commerce_pagos_web'] = '6924';
+					break;
+				case  "dev.educalinks.com.ec":
+					$_SESSION['llaveactiva']=$llavedesarrollo;
+					$_SESSION['passllaveactiva']=$clavellavedesarrollo;
+					$_SESSION['rutallave']=$rutallavedesarrollo;
+					$_SESSION['ambiente']=1;
+					$_SESSION['correofacturas']='malvear@redlinks.com.ec';
+					$_SESSION['visor']='desarrollo.educalinks.com.ec/finan/visor';
+					$_SESSION['dir_logo_cliente']=$ruta_logo_desarrollo;
+					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_liceopanamericano;
+					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_liceopanamericano_bg;
+					$_SESSION['id_commerce_pagos_web'] = '7822';
+					break;
+				case  "ecobabvesp.educalinks.com.ec":
+					$_SESSION['llaveactiva']=$llavebabahoyo;
+					$_SESSION['passllaveactiva']=$clavellavebabahoyo;
+					$_SESSION['rutallave']=$rutallave;
+					$_SESSION['ambiente']=2;
+					$_SESSION['correofacturas']='factura@ecomundobabahoyo.com.ec';
+					$_SESSION['visor']='ecobabvesp.educalinks.com.ec/finan/visor';
+					$_SESSION['dir_logo_cliente']=$ruta_logo_ecobabvesp;
+					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_ecobabvesp;
+					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_ecobabvesp_bg;
+					$_SESSION['id_commerce_pagos_web'] = '7058';
+					break;
+				case  "liceopanamericano.educalinks.com.ec":
+					$_SESSION['llaveactiva']=$llaveliceopanamericano;
+					$_SESSION['passllaveactiva']=$clavellaveliceopanamericano;
+					$_SESSION['rutallave']=$rutallave;
+					$_SESSION['ambiente']=2;
+					$_SESSION['correofacturas']='e-electronica@liceopanamericano.edu.ec';
+					$_SESSION['visor']='liceopanamericano.educalinks.com.ec/finan/visor';
+					$_SESSION['dir_logo_cliente']=$ruta_logo_liceopanamericano;
+					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_liceopanamericano;
+					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_liceopanamericano_bg;
+					$_SESSION['id_commerce_pagos_web'] = '6921';
+					break;
+				case  "liceopanamericanosur.educalinks.com.ec":
+					$_SESSION['llaveactiva']=$llaveliceopanamericano;
+					$_SESSION['passllaveactiva']=$clavellaveliceopanamericano;
+					$_SESSION['rutallave']=$rutallave;
+					$_SESSION['ambiente']=2;
+					$_SESSION['correofacturas']='e-electronica@liceopanamericano.edu.ec';
+					$_SESSION['visor']='liceopanamericanosur.educalinks.com.ec/finan/visor';
+					$_SESSION['dir_logo_cliente']=$ruta_logo_liceopanamericanosur;
+					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_liceopanamericanosur;
+					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_liceopanamericanosur_bg;
+					$_SESSION['id_commerce_pagos_web'] = '7056';
+					break;
+				case  "delfos.educalinks.com.ec":
+					$_SESSION['llaveactiva']=$llavedelfos;
+					$_SESSION['passllaveactiva']=$clavellavedelfos;
+					$_SESSION['rutallave']=$rutallave;
+					$_SESSION['ambiente']=2;
+					$_SESSION['correofacturas']='malvear@redlinks.com.ec';
+					$_SESSION['visor']='delfos.educalinks.com.ec/finan/visor';
+					$_SESSION['dir_logo_cliente']=$ruta_logo_delfos;
+					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_delfos;
+					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_delfos_bg;
+					$_SESSION['id_commerce_pagos_web'] = '6923';
+					break;
+				case  "delfosvesp.educalinks.com.ec":
+					$_SESSION['llaveactiva']=$llavedelfos;
+					$_SESSION['passllaveactiva']=$clavellavedelfos;
+					$_SESSION['rutallave']=$rutallave;
+					$_SESSION['ambiente']=2;
+					$_SESSION['correofacturas']='malvear@redlinks.com.ec';
+					$_SESSION['visor']='delfosvesp.educalinks.com.ec/finan/visor';
+					$_SESSION['dir_logo_cliente']=$ruta_logo_delfosvesp;
+					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_delfosvesp;
+					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_delfosvesp_bg;
+					$_SESSION['id_commerce_pagos_web'] = '7057';
+					break;
+				case  "moderna.educalinks.com.ec":
+					$_SESSION['llaveactiva']=$llavemoderna;
+					$_SESSION['passllaveactiva']=$clavellavemoderna;
+					$_SESSION['rutallave']=$rutallave;
+					$_SESSION['ambiente']=2;
+					$_SESSION['correofacturas']='malvear@redlinks.com.ec';
+					$_SESSION['visor']='moderna.educalinks.com.ec/finan/visor';
+					$_SESSION['dir_logo_cliente']=$ruta_logo_moderna;
+					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_moderna;
+					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_moderna_bg;
+					$_SESSION['id_commerce_pagos_web'] = '6922';
+					break;
+				case  "americano.educalinks.com.ec":
+					$_SESSION['llaveactiva']=$llavecolegioamericanoguayaquil;
+					$_SESSION['passllaveactiva']=$clavecolegioamericanoguayaquil;
+					$_SESSION['rutallave']=$rutallave;
+					$_SESSION['ambiente']=2;
+					$_SESSION['correofacturas']='pablo.villao@colegioamericano.edu.ec';
+					$_SESSION['visor']='americano.educalinks.com.ec/finan/visor';
+					$_SESSION['dir_logo_cliente']=$ruta_logo_cag;
+					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_cag;
+					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_cag_bg;
+					break;
+				default:
+					$_SESSION['llaveactiva']='default';
+				break;
+			}
+			include("../../../includes/common/vpos_plugin.php");
+			
+			$vector = "F1A06EE948DC5B9B";
+			
+			//Llave Firma Publica de Alignet
+            $llaveVPOSFirmaPub = "-----BEGIN PUBLIC KEY-----\n". 
+            "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCvJS8zLPeePN+fbJeIvp/jjvLW\n".
+            "Aedyx8UcfS1eM/a+Vv2yHTxCLy79dEIygDVE6CTKbP1eqwsxRg2Z/dI+/e14WDRs\n".
+            "g0QzDdjVFIuXLKJ0zIgDw6kQd1ovbqpdTn4wnnvwUCNpBASitdjpTcNTKONfXMtH\n".
+            "pIs4aIDXarTYJGWlyQIDAQAB\n".
+            "-----END PUBLIC KEY-----";
+
+            //Llave Crypto Privada del Comercio
+            $llaveComercioCryptoPriv = "-----BEGIN RSA PRIVATE KEY-----\n".
+            "MIICXQIBAAKBgQC6hOMFsiAVbHR5x2zPFyBo+Fhh7izXtk09pOJcmrb+TpQx8Wq+\n".
+            "D6kqywWswYwh4hSCQlQ2WDIXlKeG04Z6CtzbXaPJGIfIoRXy/irfvsOLP34zHnfz\n".
+            "MHd/jh+Prb5Bk8hTOKb1iIqPcjaTBshNS9JfXtCl3Ab6TOVlv2Xy2mvYJQIDAQAB\n".
+            "AoGAHcCQzhnJ0GEKe1p6WtZfjx7+SjDJ6mbkD0875HWxdwNl1EmkM0kgPPlBoHsH\n".
+            "NWhwyQ53jGupIeXOi002iEUvUXDyHvNcRqpFTT1buXAwPUZpJwM6S56iEoEF7I3X\n".
+            "XxT+Qc5nhYMbuwpXAVHW9aLb4Ve3uofEVnJ2E2dHqwwCfcECQQDhDjAMB29jSpIX\n".
+            "C4geFuYze+jtwvMML15F72ZvSCw4gXS16QnVtMpg8XXHda/HnEHOjzpL35J6f2Ci\n".
+            "1i716QM5AkEA1Co+dH9RyJg1yZDmM0TT5sa/oGPseruWs2MbY69picWNPhfke83U\n".
+            "+6uU08N4THzuNo2rov0VqzRcc8+4cKTgTQJBALn2aDs4VZEdCDQkojgCwfres2zr\n".
+            "frud1G9DT0g6wdd7GP5LboX42pVaT/EdzL7K3hGZhhk1xyqTYD2Nb8Zg4PkCQQCl\n".
+            "Y4jsJ5QJWx4S0vGgZbcJ30TiMwLVagZAMLHZM5SB4Y4JKXbjS8ELruWFbosIlRrd\n".
+            "S/LQS5norBil7vdIWD7BAkAakLBSj5ZCrNfCnrbXNBFizotEuU4cTv8yPyEzwGZn\n".
+            "HLiBear8u4ddEFKaHrHoqGIXLoYLcYsQgJZPKdDarxCa\n".
+            "-----END RSA PRIVATE KEY-----";
+			
+			//Parametros de Recepción de Autorización
+            $arrayIn['IDACQUIRER'] = $_POST['IDACQUIRER'];
+            $arrayIn['IDCOMMERCE'] = $_POST['IDCOMMERCE'];
+            $arrayIn['XMLRES'] 	   = $_POST['XMLRES'];
+            $arrayIn['DIGITALSIGN']= $_POST['DIGITALSIGN'];
+            $arrayIn['SESSIONKEY'] = $_POST['SESSIONKEY'];
+            $arrayOut = '';
+                
+            //Ejecución de Creación de Valores para la Solicitud de Interpretación de la Respuesta
+            if(VPOSResponse($arrayIn,$arrayOut,$llaveVPOSFirmaPub,$llaveComercioCryptoPriv,$vector))
+			{   $general->set_operacion_auditoria(
+												$arrayOut['authorizationCode'], $arrayOut['authorizationResult'],
+												$arrayOut['errorCode'], $arrayOut['errorMessage'],
+												$arrayOut['cardNumber'], $arrayOut['cardType'],
+												$arrayOut['purchaseOperationNumber'], $arrayOut['purchaseAmount']/100,
+												$arrayOut['reserved11'] );
+				$general->set_operacion_respuesta(
+												$arrayOut['authorizationCode'], $arrayOut['authorizationResult'],
+												$arrayOut['errorCode'], $arrayOut['errorMessage'],
+												$arrayOut['cardNumber'], $arrayOut['cardType'],
+												$arrayOut['purchaseOperationNumber'], $arrayOut['purchaseAmount']/100,
+												$arrayOut['reserved11'] ); //reserved11 es el URL de procedencia de la solicitud.
+				
+				//$arrayOut['authorizationCode']
+				if( $arrayOut['authorizationResult'] == '00') //AUTORIZADA
+					$data['frm_pago_sbmt'] = "
+						<div class='bs-callout bs-callout-success'>
+							<h4>Exito</h4>
+							Operación Autorizada.
+						</div>";
+				if( $arrayOut['authorizationResult'] == '01') //DENEGADA
+					$data['frm_pago_sbmt'] = "
+						<div class='bs-callout bs-callout-danger'>
+							<h4>Error</h4>
+							Operación Denegada.
+						</div>";
+				if( $arrayOut['authorizationResult'] == '05') //RECHAZADA
+					$data['frm_pago_sbmt'] = "
+						<div class='bs-callout bs-callout-danger'>
+							<h4>Error</h4>
+							Operación Denegada.
+						</div>";
+				
+				$data['datos_deuda'] = "
+					<table>
+						<tr><td>Resultado de la Transacción</td><td>".$arrayOut['authorizationResult']."</td></tr>
+						<tr><td>Detalle del Resultado</td><td>". $arrayOut['errorCode'] . " - " . $arrayOut['errorMessage']."</td></tr>
+						<tr><td>Número de la Tarjeta</td><td>". $arrayOut['cardNumber']."</td></tr>
+						<tr><td>Marca de la Tarjeta</td><td>" . $arrayOut['cardType']."</td></tr>
+						<tr><td>Número de Operacion</td><td>" . $arrayOut['purchaseOperationNumber']."</td></tr>
+						<tr><td>Monto</td><td>S/. " . $arrayOut['purchaseAmount']/100 ."</td></tr>
+					</table>
+					<br/>
+					<br/>";
+				if( $arrayOut['authorizationResult'] == '00')
+				{   $pagos = explode(";", $general->rows[0]['pagos']);
+					$aux = 0; $html  = "";
+					for ($aux = 0; $aux < count($pagos) ; $aux++ )
+					{	$spanHTML="<span class='glyphicon glyphicon-print cursorlink' id='".$pagos[$aux]."_ver_pago' onmouseover='$(this).tooltip(".'"show"'.")' title='Formato impresi&oacute;n grande.' data-placement='left'></span>";
+						$spanPDF="<span class='glyphicon glyphicon-print cursorlink' id='".$pagos[$aux]."_ver_pago_PDF' onmouseover='$(this).tooltip(".'"show"'.")' title='Formato impresi&oacute;n punto de venta.' data-placement='left'></span>";
+						$html .="Recibo de pago no " . $pagos[$aux] . ": <a href='".$diccionario['ruta_html_finan']."/finan/PDF/imprimir/pago/".$pagos[$aux]."' target='_blank'>PDF</a> | ";
+						$html .="<a href='".$diccionario['ruta_html_finan']."/finan/documento/imprimir/pago/".$pagos[$aux]."' target='_blank'>HTML</a><br>";
+					}
+					$data['datos_deuda'] .=  $html;
+				}
+            }
+			else
+			{   $general->set_operacion_auditoria(
+												$arrayOut['authorizationCode'], $arrayOut['authorizationResult'],
+												$arrayOut['errorCode'], $arrayOut['errorMessage'],
+												$arrayOut['cardNumber'], $arrayOut['cardType'],
+												$arrayOut['purchaseOperationNumber'], $arrayOut['purchaseAmount']/100,
+												$arrayOut['reserved11'] );
+				$general->set_operacion_respuesta(
 												$arrayOut['authorizationCode'], $arrayOut['authorizationResult'],
 												$arrayOut['errorCode'], $arrayOut['errorMessage'],
 												$arrayOut['cardNumber'], $arrayOut['cardType'],
@@ -796,30 +1527,4 @@ function tabla_deudas( $tablacliente, $tabla_estado )
 	else
 		return $data;
 }
-/*function get_client_ip()
-{   $ipaddress = '';
-	if (getenv('HTTP_CLIENT_IP'))
-		$ipaddress = getenv('HTTP_CLIENT_IP');
-	else if(getenv('HTTP_X_FORWARDED_FOR'))
-		$ipaddress = getenv('HTTP_X_FORWARDED_FOR');
-	else if(getenv('HTTP_X_FORWARDED'))
-		$ipaddress = getenv('HTTP_X_FORWARDED');
-	else if(getenv('HTTP_FORWARDED_FOR'))
-		$ipaddress = getenv('HTTP_FORWARDED_FOR');
-	else if(getenv('HTTP_FORWARDED'))
-	   $ipaddress = getenv('HTTP_FORWARDED');
-	else if(getenv('REMOTE_ADDR'))
-		$ipaddress = getenv('REMOTE_ADDR');
-	else
-		$ipaddress = 'UNKNOWN';
-	
-	if ( $ipaddress != 'UNKNOWN' )
-	{   $ipq = explode ( '.', $ipaddress );
-		$ipaddress = "";
-		foreach ($ipq as $cuarteto)
-		{   $ipaddress += ( str_repeat("0", 3 - strlen( $cuarteto ) ) ) . $cuarteto;
-		}
-	}
-	return $ipaddress;
-}*/
 ?>

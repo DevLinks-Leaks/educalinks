@@ -75,6 +75,42 @@ function handler() {
 			{   echo "No se encontraron resultados";
 			}
 			break;
+		case GET_FICHA_MED_LISTADO_INDIVIDUAL:
+			global $diccionario;
+			$ficha_medica = new Ficha_medica();
+			$ficha_medica->get_ficha_medica_listado( $_POST['fmex_codi'],$_POST['alum_codi'],$_POST['tipo_ficha'] );
+			if( ( count( $ficha_medica->rows ) ) > 0 )
+			{	$opciones['Editar'] = 	" <button type='button' onclick='js_ficha_med_formulario_pdf( \"modal_ficha_med_print_pdf_result\" , \"{codigo}\",".'"'.$diccionario['rutas_head']['ruta_html_medic'].'/ficha_nuevo/controller.php"'.")' ".
+										" 	class='btn btn-default' aria-hidden='true' id='{codigo}_pdf' " .
+											" onmouseover='$(this).tooltip(\"show\")' title='Ver PDF' data-placement='left'><i style='color:red;' class='fa fa-file-pdf-o' ></i></button>";
+				$data["{resultado}"] = array(  "elemento" => "tabla",
+												"clase" 	=> "table table-striped table-bordered",
+												"id"		=> "tbl_ficha_med_consulta",
+												"datos"     => $ficha_medica->rows,
+												"encabezado"=> array(	"Ficha médica",
+																		"Persona",
+																		"Nombre",
+																		"Tipo",
+																		"Ficha médica",
+																		"Fecha registro",
+																		"Usuario registro",
+																		"Estado",
+																		""),
+												"options"   => array( $opciones ),
+												"campo"  	=> "fmex_codi");
+				if( $user_data['is_back'] == 1 )
+					retornar_result( $data );
+				else
+					retornar_vista( VIEW_CONSULTA, $data );
+			}
+			else
+			{   $data["{resultado}"] = "<div style='text-align:center;'><span class='fa fa-user'></span><br>No se encontraron resultados";
+				if( $user_data['is_back'] == 1 )
+					retornar_result( $data );
+				else
+					retornar_vista( VIEW_CONSULTA, $data );
+			}
+			break;
 		case GET_FICHA_MED_LISTADO:
 			global $diccionario;
 			$ficha_medica = new Ficha_medica();
@@ -594,8 +630,8 @@ function handler() {
 			{   $data[ 'PDF' ]=  "No se encontraron resultados";
 			}
 			
-			//header("Content-type:application/pdf");
-			//header("Content-Disposition:attachment;filename='ficha_medica_".$user_data['fmex_codi'].".pdf'");
+			header("Content-type:application/pdf");
+			header("Content-Disposition:attachment;filename='ficha_medica_".$user_data['fmex_codi'].".pdf'");
 			
 			$pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
@@ -609,7 +645,7 @@ function handler() {
 			$pdf->SetFont('Helvetica', '', 8, '', 'false');
 			$pdf->AddPage('P', 'A4');//P:Portrait, L=Landscape
 			
-			$pdf->Image( $_SESSION['dir_logo_cliente'], 'C', 15, '', '', 'PNG', '', 'C', false, 300, 'C', false, false, 0, false, false, false);
+			$pdf->Image( $_SESSION['dir_logo_cliente'], 'C', 15, '', 10, 'PNG', '', 'C', false, 300, 'C', false, false, 0, false, false, false);
 			
 			$datosInst = new General();
 			$datosInst->getDatosInstitucion_info();
@@ -653,7 +689,7 @@ function handler() {
 			$html .= $data[ 'PDF' ];
 			
 			$pdf->writeHTML($html, true, false, true, false, '');
-			$pdf->Output('../../../documentos/fichas_medicas/'.$v_domain[0].'/ficha_medica_'.$user_data['fmex_codi'].'.pdf', 'FI');
+			$pdf->Output('ficha_medica_'.$user_data['fmex_codi'].'.pdf', 'I');
 			break;
         default:
 			echo "default";
@@ -1605,7 +1641,7 @@ function sub_constructor_formulario_med_pdf( $ficha_medica, $c, $data, $per, $pe
 	
 	/* 2. VACUNAS */
 	
-	$data[ 'PDF' ] .= '<br><table><tr><td colspan="12"><b>VACUNAS</b></td></tr></table><br>';
+	$data[ 'PDF' ] .= '<br><table><tr><td colspan="12"><b>VACUNAS</b></td></tr></table>';
 	
 	$vacuna = new Ficha_medica();
 	$vacuna->get_vacuna( $ficha_medica->rows[$c]['fmex_codi'] );
@@ -1637,7 +1673,7 @@ function sub_constructor_formulario_med_pdf( $ficha_medica, $c, $data, $per, $pe
 							
 	/* 3. ANTECEDENTES PATOLOGICOS FAMILIARES */
 	
-	$data[ 'PDF' ] .= '<br><table width="100%" align="left"><tr><td colspan="12"><b>ANTECEDENTES PATOLOGICOS FAMILIARES</b></td></tr></table><br>';
+	$data[ 'PDF' ] .= '<br><table width="100%" align="left"><tr><td colspan="12"><b>ANTECEDENTES PATOLOGICOS FAMILIARES</b></td></tr></table>';
 	
 	$enfermedad_familia = new Ficha_medica();
 	$enfermedad_familia->get_enfermedad( $ficha_medica->rows[$c]['fmex_codi'], 'F', -1 );
@@ -1673,9 +1709,9 @@ function sub_constructor_formulario_med_pdf( $ficha_medica, $c, $data, $per, $pe
 	else
 		$data[ 'PDF' ] .= '<p style="font-size:small;">(sin antecedentes familiares)</p>';
 	
-	/* 34ANTECEDENTES PATOLOGICOS PERSONALES */
+	/* 4. ANTECEDENTES PATOLOGICOS PERSONALES */
 	
-	$data[ 'PDF' ] .= '<br><table><tr><td colspan="12"><b>ANTECEDENTES PATOLOGICOS PERSONALES</b></td></tr></table><br>';
+	$data[ 'PDF' ] .= '<br><table><tr><td colspan="12"><b>ANTECEDENTES PATOLOGICOS PERSONALES</b></td></tr></table>';
 	
 	$enfermedad_personal = new Ficha_medica();
 	$enfermedad_personal->get_enfermedad( $ficha_medica->rows[$c]['fmex_codi'], 'T', -1  );
@@ -1801,87 +1837,102 @@ function sub_constructor_formulario_med_pdf( $ficha_medica, $c, $data, $per, $pe
 	
 	/* 1. Cirugías */
 	
-	$data[ 'PDF' ] .= '<br><table><tr><td colspan="12"><b>CIRUGÍAS</b></td></tr></table><br>';
+	$data[ 'PDF' ] .= '<br><table><tr><td colspan="12"><b>CIRUGÍAS</b></td></tr></table>';
 	
 	$cirugia = new Ficha_medica();
 	$cirugia->get_cirugia( $ficha_medica->rows[$c]['fmex_codi'] );
 	
-	$data["PDF"] .= '<table cellspacing="0" cellpadding="2" border="1" width="100%" style="font-size:small;">
-						<tr align="center">
-							<td><b>Cirugía</b></td>'.
-							'<td><b>Localización</b></td>
-							<td><b>Extensión</b></td>
-							<td><b>Propósito</b></td>
-							<td><b>Fecha</b></td>
-						</tr>';
-	
-	foreach( $cirugia->rows as $row )
-	{	if ( !empty( $row ) )
-		{	$data["PDF"] .='
-						<tr align="center">
-							<td>'.$row['cir_nombre_desc'].'</td>
-							<td>'.$row['cir_localizacion'].'</td>
-							<td>'.$row['cir_extension'].'</td>
-							<td>'.$row['cir_proposito'].'</td>
-							<td>'.$row['cir_fecha'].'</td>
-						</tr>';
+	if ( count($cirugia->rows)-1 > 0) 
+	{
+		$data["PDF"] .= '<table cellspacing="0" cellpadding="2" border="1" width="100%" style="font-size:small;">
+							<tr align="center">
+								<td><b>Cirugía</b></td>'.
+								'<td><b>Localización</b></td>
+								<td><b>Extensión</b></td>
+								<td><b>Propósito</b></td>
+								<td><b>Fecha</b></td>
+							</tr>';
+		
+		foreach( $cirugia->rows as $row )
+		{	if ( !empty( $row ) )
+			{	$data["PDF"] .='
+							<tr align="center">
+								<td>'.$row['cir_nombre_desc'].'</td>
+								<td>'.$row['cir_localizacion'].'</td>
+								<td>'.$row['cir_extension'].'</td>
+								<td>'.$row['cir_proposito'].'</td>
+								<td>'.$row['cir_fecha'].'</td>
+							</tr>';
+			}
 		}
+		$data[ 'PDF' ] .= '</table><br>';
 	}
+	else
+		$data[ 'PDF' ] .= '<p style="font-size:small;">(sin cirugías)</p>';
 	
-	$data[ 'PDF' ] .= '</table><br>';
 	
 	/* 2. Exámenes de laboratorio */
 	
-	$data[ 'PDF' ] .= '<br><table><tr><td colspan="12"><b>EXAMENES DE LABORATORIO</b></td></tr></table><br>';
+	$data[ 'PDF' ] .= '<br><table><tr><td colspan="12"><b>EXAMENES DE LABORATORIO</b></td></tr></table>';
 	
 	$ex_lab_clinico = new Ficha_medica();
 	$ex_lab_clinico->get_ex_lab_clinico( $ficha_medica->rows[$c]['fmex_codi'] );
 	
-	$data["PDF"] .= '<table cellspacing="0" cellpadding="2" border="1" width="100%" style="font-size:small;">
-						<tr align="center">
-							<td><b>Examen</b></td>'.
-							'<td><b>Resultado</b></td>
-							<td><b>Fecha del examen</b></td>
-						</tr>';
+	if ( count($ex_lab_clinico->rows)-1 > 0) 
+	{
+		$data["PDF"] .= '<table cellspacing="0" cellpadding="2" border="1" width="100%" style="font-size:small;">
+							<tr align="center">
+								<td><b>Examen</b></td>'.
+								'<td><b>Resultado</b></td>
+								<td><b>Fecha del examen</b></td>
+							</tr>';
 	
-	foreach( $ex_lab_clinico->rows as $row )
-	{	if ( !empty( $row ) )
-		{	$data["PDF"] .='
-						<tr align="center">
-							<td>'.$row['lab_nombre_ES'].'</td>
-							<td>'.$row['lab_desc_resultado'].'</td>
-							<td>'.$row['lab_fecha'].'</td>
-						</tr>';
+		foreach( $ex_lab_clinico->rows as $row )
+		{	if ( !empty( $row ) )
+			{	$data["PDF"] .='
+							<tr align="center">
+								<td>'.$row['lab_nombre_ES'].'</td>
+								<td>'.$row['lab_desc_resultado'].'</td>
+								<td>'.$row['lab_fecha'].'</td>
+							</tr>';
+			}
 		}
+		
+		$data[ 'PDF' ] .= '</table><br>';
 	}
-	
-	$data[ 'PDF' ] .= '</table><br>';
+	else
+		$data[ 'PDF' ] .= '<p style="font-size:small;">(sin exámenes clínicos)</p>';
 	
 	/* 3. Radiografías */
-	$data[ 'PDF' ] .= '<br><table><tr><td colspan="12"><b>RADIOGRAFIAS</b></td></tr></table><br>';
+	$data[ 'PDF' ] .= '<br><table><tr><td colspan="12"><b>RADIOGRAFIAS</b></td></tr></table>';
 	
 	$radiografia = new Ficha_medica();
 	$radiografia->get_radiografia( $ficha_medica->rows[$c]['fmex_codi'] );
 	
-	$data["PDF"] .= '<table cellspacing="0" cellpadding="2" border="1" width="100%" style="font-size:small;">
-						<tr align="center">
-							<td><b>Radiografía</b></td>
-							<td><b>Localización en el cuerpo</b></td>
-							<td><b>Fecha de la radiografía</b></td>
-						</tr>';
-	
-	foreach( $radiografia->rows as $row )
-	{	if ( !empty( $row ) )
-		{	$data["PDF"] .='
-						<tr align="center">
-							<td>'.$row['rad_nombre_desc'].'</td>
-							<td>'.$row['rad_localizacion'].'</td>
-							<td>'.$row['rad_fecha'].'</td>
-						</tr>';
+	if ( count($radiografia->rows)-1 > 0) 
+	{
+		$data["PDF"] .= '<table cellspacing="0" cellpadding="2" border="1" width="100%" style="font-size:small;">
+							<tr align="center">
+								<td><b>Radiografía</b></td>
+								<td><b>Localización en el cuerpo</b></td>
+								<td><b>Fecha de la radiografía</b></td>
+							</tr>';
+		
+		foreach( $radiografia->rows as $row )
+		{	if ( !empty( $row ) )
+			{	$data["PDF"] .='
+							<tr align="center">
+								<td>'.$row['rad_nombre_desc'].'</td>
+								<td>'.$row['rad_localizacion'].'</td>
+								<td>'.$row['rad_fecha'].'</td>
+							</tr>';
+			}
 		}
+		
+		$data[ 'PDF' ] .= '</table><br>';
 	}
-	
-	$data[ 'PDF' ] .= '</table><br>';
+	else
+		$data[ 'PDF' ] .= '<p style="font-size:small;">(sin radiografía)</p>';
 	
 	/* CONCLUSIONES */
 	

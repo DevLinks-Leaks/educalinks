@@ -42,6 +42,16 @@ class General extends DBAbstractModel{
 		{	//$this->mensaje=$this->login_mensaje;
         }
     }
+    public function getChangelog_info( $usua_de, $usua_tipo )
+    {   $this->parametros = array( $usua_de, $usua_tipo, 'C');
+        $this->sp = "visi_usua_view";
+        $this->executeSPConsulta();
+        if (count($this->rows)>0){
+            $this->mensaje="¡Exito! Changelog encontrado.";
+        }else{
+            $this->mensaje="¡Error! Changelog no encontrados.";
+        }
+    }
 	public function getDatosInstitucion_info(){
         $this->parametros = array();
         $this->sp = "str_consultaDatosInstitucion_info";
@@ -515,9 +525,10 @@ class General extends DBAbstractModel{
 		{	$this->mensaje="Ocurrió un problema con el cambio de contraseña";
         }
     }
-	public function change_settings($usa_pp_dv = "", $prontopago = "", $iva = "", $enviar_fac_sri_en_cobro = "", $enviar_cheque_a_bandeja="", $rb_forma_aplica_descuento='desc_sobre', $bloqueo = "", 
+	public function change_settings($usa_pp_dv = "", $prontopago = "", $iva = "", $enviar_fac_sri_en_cobro = "", $enviar_cheque_a_bandeja="",
+									$quitar_limite_dias_validez = "", $rb_forma_aplica_descuento='desc_sobre', $bloqueo = "", 
 									$apikey = "", $apikeytoken = "", $gdm = "", $bmpd = "", $bgmpm = "", $bbppp = "", $usua_codigo = "" )
-	{	$this->parametros = array( $usa_pp_dv, $prontopago, $iva, $enviar_fac_sri_en_cobro, $enviar_cheque_a_bandeja, $rb_forma_aplica_descuento, $bloqueo, $apikey, $apikeytoken, $gdm, $bmpd, $bgmpm, $bbppp, $usua_codigo );
+	{	$this->parametros = array( $usa_pp_dv, $prontopago, $iva, $enviar_fac_sri_en_cobro, $enviar_cheque_a_bandeja, $quitar_limite_dias_validez, $rb_forma_aplica_descuento, $bloqueo, $apikey, $apikeytoken, $gdm, $bmpd, $bgmpm, $bbppp, $usua_codigo );
         $this->sp = "str_consultaProntopago_upd";
         $this->executeSPAccion();
         if($this->filasAfectadas>0)
@@ -583,8 +594,8 @@ class General extends DBAbstractModel{
 		{	$this->mensaje="KO";
         }
     }
-	public function para_sist($para_sist_codi)
-	{	$this->parametros = array($para_sist_codi);
+	public function para_sist( $para_sist_codi )
+	{	$this->parametros = array( $para_sist_codi );
         $this->sp = "para_sist_info";
         $this->executeSPConsulta();
         if(count($this->rows)>0)

@@ -4,6 +4,62 @@
  * and open the template in the editor.
  */
 var counter=0;
+function carga_ficha_med_formulario_pdf( fmex_codi )
+{   var data = new FormData();
+	var url2 = document.getElementById( "ruta_html_medic" ).value + '/ficha_nuevo/controller.php?event=print_ficha_med_pdf&fmex_codi=' + fmex_codi;
+	window.open(url2);
+}
+function carga_ficha_medica( alum_codi, div_body,  url )
+{   document.getElementById( div_body ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	var perX  = 'perMain'; 
+	var data = new FormData();
+	data.append( 'option', 'get_ficha_med_listado_individual' );
+	data.append( 'alum_codi', alum_codi );
+	data.append( 'is_back' , 1 );
+	var xhr = new XMLHttpRequest(  );
+	xhr.open( 'POST', url , true );
+	xhr.onreadystatechange=function(  )
+	{   if ( xhr.readyState === 4 && xhr.status === 200 )
+		{   if ( xhr.responseText.length > 0 )
+			{   document.getElementById( div_body ).innerHTML = xhr.responseText;
+				$('#tbl_ficha_med_consulta').DataTable({
+					"bPaginate": true,
+					"bStateSave": false,
+					"bAutoWidth": false,
+					"bScrollAutoCss": true,
+					"bProcessing": true,
+					"bRetrieve": true,
+					"sDom": '<"H"CTrf>t<"F"lip>',
+					"aLengthMenu": [[10,25, 50, 100, -1], [10,25, 50, 100, "Todos"]],
+					"sScrollXInner": "110%",
+					"fnInitComplete": function() {
+						this.css("visibility", "visible");
+					},
+					paging: true,
+					lengthChange: true,
+					searching: true,
+					language: {url: '//cdn.datatables.net/plug-ins/1.10.8/i18n/Spanish.json'},
+					"columnDefs": [
+						{className: "dt-body-center"  , "targets": [0]},
+						{className: "dt-body-center"  , "targets": [1]},
+						{className: "dt-body-center"  , "targets": [2]},
+						{className: "dt-body-center"  , "targets": [3]},
+						{className: "dt-body-center"  , "targets": [4]},
+						{className: "dt-body-center"  , "targets": [5]},
+						{className: "dt-body-center"  , "targets": [6]}
+					]
+				});
+				var table = $('#tbl_ficha_med_consulta').DataTable();
+				table.column( '2:visible' ).order( 'asc' );
+			}
+			else
+			{   $.growl.warning({ title: "Educalinks informa:",message: "Hubo un problema. Por favor intente en unos minutos." +
+											" Si el problema persiste, comuníquese con soporte." });
+			}
+		}
+	};
+	xhr.send(data);
+}
 function carga_materias(div,url,alum_codi,curs_para_codi){
     document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();

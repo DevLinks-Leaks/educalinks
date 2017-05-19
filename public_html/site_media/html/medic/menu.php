@@ -2,11 +2,10 @@
         <section class="sidebar">
 			<div class="user-panel">
 				<div class="pull-left image">
-					<img src="../{fotoUsuario}" class="img-circle" alt="User Image">
+					<img src="{logo_institucion}" class="img-circle" alt="User Image">
 				</div>
-				<div class="pull-left info">
-					<p>{usua_nombres} {usua_apellidos} </p>
-					<a href="#"><i class="fa fa-circle text-success"></i> En línea</a>
+				<div class="pull-left info" style='font-size:x-small;'>
+					<p>Unidad Educativa<br>{nombre_institucion}</p>
 				</div>
 			</div>
 			<!-- search form 

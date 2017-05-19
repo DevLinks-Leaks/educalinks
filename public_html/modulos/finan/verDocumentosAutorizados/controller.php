@@ -198,7 +198,7 @@ function handler()
 			{	if( $user_data['tipo_reporte'] == 'completo' )
 				{   $cabeceras ='Factura ref.,Número de factura,Producto,Tipo Id,Id del titular,Titular,email titular,Número de autorización,'.
 								'Clave de acceso,Fecha de autorización,Numero secuencial,Total bruto,Total descuento,Total I.V.A.,Total I.C.E.,Total neto,Total abonado,Alumno/Cliente ref. interna,'.
-								'Alumno/Cliente nombre,Alumno/Cliente cedula,Alumno/Cliente fecha nacimiento,Fecha creacion DNA/Fecha de pago,Fecha de creación de deuda,Estado electrónico,Curso';
+								'Alumno/Cliente nombre,Alumno/Cliente cedula,Alumno/Cliente fecha nacimiento,Fecha creacion DNA/Fecha de pago,Fecha de creación de deuda,Estado electrónico,Curso,Alumno Estado';
 				}
 				if( $user_data['tipo_reporte'] == 'mini' )
 				{   $cabeceras ='Factura ref.,Titular,Id del titular,Sucursal,Punto de venta,Número secuencial,Total neto,Cliente ref. interna,Cliente nombre,Fecha de emisión,estado electrónico';
@@ -502,19 +502,19 @@ function tablaFacturaAutorizada($tabla, $factura, $permiso, $tipo_documento)
 	$construct_table="
 				<br>
 				<table class='table table-bordered table-hover' id='".$tabla."'>
-					<thead><tr>
+					<thead><tr style='font-size:small;text-align:center;'>
 						".$anidado."
-						<th style='font-size:small;text-align:center;'>Ref.</th>
-						<th style='font-size:small;text-align:center;'>Datos</th>
-						<th style='font-size:small;text-align:center;'>T. Neto</th>
-						<th style='font-size:small;text-align:center;'>C&oacute;digo</th>
-						<th style='font-size:small;text-align:center;'>Estudiante</th>
-						<th style='font-size:small;text-align:center;'>F. Emisión</th>
-						<th style='font-size:small;text-align:center;'>Estado</th>
-						<th style='font-size:small;text-align:center;'>Mail</th>
-						<th style='font-size:small;text-align:center;'>XML</th>
-						<th style='font-size:small;text-align:center;'>PDF</th>
-						<th style='font-size:small;text-align:center;'>HTML</th>
+						<th >Ref.</th>
+						<th>Datos</th>
+						<th>T. Neto</th>
+						<th>C&oacute;digo</th>
+						<th>Estudiante</th>
+						<th>F. Emisión</th>
+						<th>Estado</th>
+						<th>Mail</th>
+						<th>XML</th>
+						<th>PDF</th>
+						<th>HTML</th>
 					</tr></thead>";
 	$body="<tbody>";
 	$c=0;
@@ -531,7 +531,7 @@ function tablaFacturaAutorizada($tabla, $factura, $permiso, $tipo_documento)
 	foreach($factura->rows as $row)
 	{   $dontprint = "false";
 		if($c<($aux-1))
-		{	$body.="<tr>";
+		{	$body.="<tr style='font-size:11px;'>";
 			if ($tipo_documento=='FAC')
 				$body.="<td class='details-control'><i style='color:green;' class='fa fa-plus-circle'></i></td>";
 			$x=0;
@@ -560,26 +560,26 @@ function tablaFacturaAutorizada($tabla, $factura, $permiso, $tipo_documento)
 				}
 				elseif($x==6)
 				{	if ( $dontprint == 'true' )
-						$body.="<td><div style='font-size:11px;'></div></td>";
+						$body.="<td></td>";
 					else
-						$body.= "<td style='text-align:center;font-size:small;'>".
+						$body.= "<td style='text-align:center;'>".
 								"<span class='detalle' id='".$codigo."_cliente_direccion' onmouseover='$(this).tooltip(".'"show"'.")' title='".$datos."' data-placement='bottom'>".
-									"<span class='glyphicon glyphicon-search'></span></span></td>";
+									"<span class='fa fa-search'></span></span></td>";
 					
 					
-					$body.="<td><div style='font-size:11px;'>".$column."</div></td>";
+					$body.="<td>".$column."</td>";
 				}
 				elseif($x==10)
 				{	if ( $dontprint == 'true' )
-						$body.="<td><div style='font-size:11px;'>DEUDA SIN FACTURA</div></td>";
+						$body.="<td>DEUDA SIN FACTURA</td>";
 					else
-						$body.="<td><div style='text-align:center;font-size:11px;'>".$column."</div></td>";
+						$body.="<td><div style='text-align:center;'>".$column."</div></td>";
 				}
 				elseif($x==11)
 				{	//: do nothing
 				}
 				else
-				{	$body.="<td><div style='font-size:11px;'>".$column."</div></td>";
+				{	$body.="<td>".$column."</td>";
 					if($x==0)
 					{	$codigo = $column;
 					}
@@ -590,11 +590,11 @@ function tablaFacturaAutorizada($tabla, $factura, $permiso, $tipo_documento)
 			$archivoPDF = $tipo_documento.$archivo .".PDF";
 			$archivoXML = $tipo_documento.$archivo .".XML";
 			if ( $dontprint == 'false' )
-			{   $spanMail="<span class='glyphicon glyphicon-envelope cursorlink' id='".$codigo."_enviar_correo' 		 onmouseover='$(this).tooltip(".'"show"'.")' title='Enviar al e-mail del titular.' 	data-placement='left' onclick='reenvio_factura(".'"'.$codigo.'"'.",".'"modal_resend_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/VerDocumentosAutorizados/controller.php"'.")'  aria-hidden='true' data-toggle='modal' data-target='#modal_resend'></span>";
-				$spanPDF= "<span class='glyphicon glyphicon-download cursorlink' id='".$row['codigoFactura']."_printPDF' onmouseover='$(this).tooltip(".'"show"'.")' title='Descargar documento en PDF' 				data-placement='top'></span>";
-				$spanXML= "<span class='glyphicon glyphicon-download cursorlink' id='".$row['codigoFactura']."_printXML' onmouseover='$(this).tooltip(".'"show"'.")' title='Descargar documento en XML' 				data-placement='bottom'></span>";
-				$spanHTML="<span class='glyphicon glyphicon-print cursorlink'    id='".$codigo."_ver_factura' 			 onmouseover='$(this).tooltip(".'"show"'.")' title='Ver documento en HTML' 	  					data-placement='left'></span>";
+			{   $spanMail="<span class='glyphicon glyphicon-envelope' id='".$codigo."_enviar_correo' onmouseover='$(this).tooltip(".'"show"'.")' title='Enviar al e-mail del titular.' data-placement='left' onclick='reenvio_factura(".'"'.$codigo.'"'.",".'"modal_resend_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/VerDocumentosAutorizados/controller.php"'.")'  aria-hidden='true' data-toggle='modal' data-target='#modal_resend'></span>";
+				$spanPDF= "<span class='glyphicon glyphicon-download' id='".$row['codigoFactura']."_printPDF' onmouseover='$(this).tooltip(".'"show"'.")' title='Descargar documento en PDF' data-placement='top'></span>";
+				$spanXML= "<span class='glyphicon glyphicon-download' id='".$row['codigoFactura']."_printXML' onmouseover='$(this).tooltip(".'"show"'.")' title='Descargar documento en XML' data-placement='bottom'></span>";
 			}
+			$spanHTML="<span class='glyphicon glyphicon-print' id='".$codigo."_ver_factura' onmouseover='$(this).tooltip(".'"show"'.")' title='Ver documento en HTML' data-placement='left'></span>";
 			$body.="<td style='text-align:center'>".$spanMail."</td>";
 			$body.="<td style='text-align:center'><a href=".$dir_archivos.$archivoXML." target='_blank'>".$spanXML."</a></td>";
 			$body.="<td style='text-align:center'><a href=".$dir_archivos.$archivoPDF." target='_blank'>".$spanPDF."</a></td>";

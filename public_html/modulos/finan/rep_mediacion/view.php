@@ -4,14 +4,12 @@ require_once("../../../core/viewBase.php");
 
 $diccionario = array(
     'subtitle'=>array(
-        VIEW_GENERA_FILE=>'Reportes de mediación',					  
-        VIEW_CARGA_FILE=>'Reportes de mediación',
-		 VIEW_SHOWMENSAJE=>'Resultados:'),
+        VIEW_GET_ALL=>'Reporte de Mediación'),
 	'rutas_head'=>array(),
     'active_menu'=>array(
-        'submenu'  => '{menu410}',
-		'open'  => '{open4}', 
-        'mainmenu' => '{menu4}'
+        'submenu'  	=> '{menu410}',
+		'open'  	=> '{open4}', 
+        'mainmenu' 	=> '{menu4}'
                         ),
 	'usua_datos'=>array(
         'usua_nombres'  => $_SESSION['usua_nombres'], 
@@ -19,3 +17,4 @@ $diccionario = array(
                         )
 );
 $diccionario = add_rutas( $diccionario ); //Llena 'rutas_head'=>array()
+?>

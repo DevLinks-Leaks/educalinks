@@ -58,17 +58,18 @@ function handler() {
 			$_SESSION['caja_codi']=$gene->caja_codi;
 			$_SESSION['caja_fecha']=$gene->caja_fecha;
 			
-			$periodo->get_all_selectFormat();
-			$cmb_sidebar_periodo = '<select name="cmb_sidebar_periodo" id="cmb_sidebar_periodo" required="required" class="form-control">';	
-			for($i=0;$i<count($periodo->rows)-1;$i++){
-				if(trim($periodo->rows[$i][0])==trim(''))
-				{   $sel="selected='selected'";
-				}else
-				{ $sel="";
-				}
-				$cmb_sidebar_periodo .= "<option value='".$periodo->rows[$i][0]."'". $sel." >".$periodo->rows[$i][1]."</option>";
+			$periodo->get_all();
+			$cmb_sidebar_periodo = '<div class="btn-group-vertical" style="text-align:center;">';
+			for($i=0;$i<count($periodo->rows)-1;$i++)
+			{ 	$cmb_sidebar_periodo.= '<button type="button"
+					id="btn_header_peri_'.$periodo->rows[$i]['peri_codi'].'" 
+					name="btn_header_peri_'.$periodo->rows[$i]['peri_codi'].'" 
+					data-deta="'.$periodo->rows[$i]['peri_deta'].'"
+					class="'.( $periodo->rows[$i]['peri_codi'] == $_SESSION['peri_codi'] ? 'btn btn-primary': 'btn btn-default').'"
+					onClick="js_general_change_periodo(document.getElementById(\'ruta_html_common\').value + \'/general/controller.php\','.$periodo->rows[$i]['peri_codi'].')"
+					>ACTIVAR PERIODO LECTIVO '.$periodo->rows[$i]['peri_deta'].'</button>';
 			}
-			$cmb_sidebar_periodo .= "</select>";
+			$cmb_sidebar_periodo.= '</div>';
 		
 			$data = array(
 			'usua_codigo'=>$gene_data['usua_codigo'],
@@ -128,39 +129,19 @@ function handler() {
 					$_SESSION['correofacturas']='factura@ecomundobabahoyo.com.ec';
 					$_SESSION['visor']='ecobab.educalinks.com.ec/finan/visor';
 					$_SESSION['dir_logo_cliente']=$ruta_logo_ecobab;
+					$_SESSION['dir_logo_cliente_bg']=$ruta_logo_ecobab_bg;
 					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_ecobab;
 					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_ecobab_bg;
 					break;
-				case  "ecobabdemo.educalinks.com.ec":
+				case  "dev.educalinks.com.ec":
 					$_SESSION['llaveactiva']=$llavedesarrollo;
 					$_SESSION['passllaveactiva']=$clavellavedesarrollo;
 					$_SESSION['rutallave']=$rutallavedesarrollo;
 					$_SESSION['ambiente']=1;
 					$_SESSION['correofacturas']='malvear@redlinks.com.ec';
-					$_SESSION['visor']='ecobabdemo.educalinks.com.ec/finan/visor';
-					$_SESSION['dir_logo_cliente']=$ruta_logo_ecobab;
-					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_ecobab;
-					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_ecobab_bg;
-					break;
-				case  "contifico.educalinks.com.ec":
-					$_SESSION['llaveactiva']=$llavedesarrollo;
-					$_SESSION['passllaveactiva']=$clavellavedesarrollo;
-					$_SESSION['rutallave']=$rutallavedesarrollo;
-					$_SESSION['ambiente']=1;
-					$_SESSION['correofacturas']='malvear@redlinks.com.ec';
-					$_SESSION['visor']='contifico.educalinks.com.ec/finan/visor';
-					$_SESSION['dir_logo_cliente']=$ruta_logo_ecobab;
-					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_ecobab;
-					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_ecobab_bg;
-					break;
-				case  "desarrollo.educalinks.com.ec":
-					$_SESSION['llaveactiva']=$llavedesarrollo;
-					$_SESSION['passllaveactiva']=$clavellavedesarrollo;
-					$_SESSION['rutallave']=$rutallavedesarrollo;
-					$_SESSION['ambiente']=1;
-					$_SESSION['correofacturas']='malvear@redlinks.com.ec';
-					$_SESSION['visor']='desarrollo.educalinks.com.ec/finan/visor';
+					$_SESSION['visor']='dev.educalinks.com.ec/finan/visor';
 					$_SESSION['dir_logo_cliente']=$ruta_logo_desarrollo;
+					$_SESSION['dir_logo_cliente_bg']=$ruta_logo_desarrollo_bg;
 					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_liceopanamericano;
 					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_liceopanamericano_bg;
 					break;
@@ -172,6 +153,7 @@ function handler() {
 					$_SESSION['correofacturas']='factura@ecomundobabahoyo.com.ec';
 					$_SESSION['visor']='ecobabvesp.educalinks.com.ec/finan/visor';
 					$_SESSION['dir_logo_cliente']=$ruta_logo_ecobabvesp;
+					$_SESSION['dir_logo_cliente_bg']=$ruta_logo_ecobabvesp_bg;
 					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_ecobabvesp;
 					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_ecobabvesp_bg;
 					break;
@@ -183,6 +165,7 @@ function handler() {
 					$_SESSION['correofacturas']='e-electronica@liceopanamericano.edu.ec';
 					$_SESSION['visor']='liceopanamericano.educalinks.com.ec/finan/visor';
 					$_SESSION['dir_logo_cliente']=$ruta_logo_liceopanamericano;
+					$_SESSION['dir_logo_cliente_bg']=$ruta_logo_liceopanamericano_bg;
 					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_liceopanamericano;
 					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_liceopanamericano_bg;
 					break;
@@ -194,6 +177,7 @@ function handler() {
 					$_SESSION['correofacturas']='e-electronica@liceopanamericano.edu.ec';
 					$_SESSION['visor']='liceopanamericanosur.educalinks.com.ec/finan/visor';
 					$_SESSION['dir_logo_cliente']=$ruta_logo_liceopanamericanosur;
+					$_SESSION['dir_logo_cliente_bg']=$ruta_logo_liceopanamericanosur_bg;
 					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_liceopanamericanosur;
 					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_liceopanamericanosur_bg;
 					break;
@@ -205,6 +189,7 @@ function handler() {
 					$_SESSION['correofacturas']='malvear@redlinks.com.ec';
 					$_SESSION['visor']='delfos.educalinks.com.ec/finan/visor';
 					$_SESSION['dir_logo_cliente']=$ruta_logo_delfos;
+					$_SESSION['dir_logo_cliente_bg']=$ruta_logo_delfos_bg;
 					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_delfos;
 					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_delfos_bg;
 					break;
@@ -216,6 +201,7 @@ function handler() {
 					$_SESSION['correofacturas']='malvear@redlinks.com.ec';
 					$_SESSION['visor']='delfosvesp.educalinks.com.ec/finan/visor';
 					$_SESSION['dir_logo_cliente']=$ruta_logo_delfosvesp;
+					$_SESSION['dir_logo_cliente_bg']=$ruta_logo_delfosvesp_bg;
 					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_delfosvesp;
 					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_delfosvesp_bg;
 					break;
@@ -227,6 +213,7 @@ function handler() {
 					$_SESSION['correofacturas']='malvear@redlinks.com.ec';
 					$_SESSION['visor']='moderna.educalinks.com.ec/finan/visor';
 					$_SESSION['dir_logo_cliente']=$ruta_logo_moderna;
+					$_SESSION['dir_logo_cliente_bg']=$ruta_logo_moderna_bg;
 					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_moderna;
 					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_moderna_bg;
 					break;
@@ -238,6 +225,7 @@ function handler() {
 					$_SESSION['correofacturas']='pablo.villao@colegioamericano.edu.ec';
 					$_SESSION['visor']='americano.educalinks.com.ec/finan/visor';
 					$_SESSION['dir_logo_cliente']=$ruta_logo_cag;
+					$_SESSION['dir_logo_cliente_bg']=$ruta_logo_cag_bg;
 					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_cag;
 					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_cag_bg;
 					break;
@@ -247,6 +235,58 @@ function handler() {
 				}
 				$data['usua_permiso']=$_SESSION['usua_permiso'];
 				
+				$changelog = new GeneraL();
+				$changelog->getChangelog_info( $_SESSION['USUA_DE'], $_SESSION['USUA_TIPO_CODI'] );
+
+				$array_chan = array();
+				$aux=0;
+				foreach( $changelog->rows as $row )
+				{   $array_chan[] = $row['chan_codi'];
+				}
+
+				require_once ('../../../framework/dbconf_main.php');
+				$modulo = 'FINAN';
+				$params = array($modulo);
+				$sql="{call changelog_view(?)}";
+				$changelog_view = sqlsrv_query($conn, $sql, $params);  
+				$chan_flag = 0;
+
+				$modal_body=
+					'<div class="carousel" style="padding: 10px;">';
+					while($row_changelog_view = sqlsrv_fetch_array($changelog_view))
+					{   setlocale(LC_ALL, "esp");
+						$fecha_hoy=strftime("%B %d ,%Y", strtotime($row_changelog_view['chan_fech_regi']));
+						// var_dump(in_array($row_changelog_view['chan_codi'],$array_chan));
+						if(!in_array($row_changelog_view['chan_codi'],$array_chan))
+						{   $chan_flag ++;
+							$modal_body.=
+							'<div id="'.$row_changelog_view['chan_codi'].'" class="changelog_div" >
+								<table style="width:100%;">';
+									if($row_changelog_view['chan_img']!=null)
+									{   $modal_body.=
+									'<tr>
+										<td><img class="img-responsive" style="" src="../../../imagenes/changelog/'.$row_changelog_view['chan_img'].'" /></td>
+									</tr>';
+									}
+									$modal_body.=
+									'<tr>
+										<td><b><h3 style="text-align: center; padding-bottom: 0px;">'.$row_changelog_view['chan_titu'].'</h3></b></td>
+									</tr>
+									<tr>
+										<td>
+											<b><i>Cambios en Educalinks- <span style="text-transform: capitalize;"> '.$fecha_hoy.'</span></i></b>
+										</td>
+									</tr>
+									<tr>
+										<td><p>'.$row_changelog_view['chan_desc'].'</p></td>
+									</tr>
+								</table>
+							</div>';
+						} 
+					}
+				$modal_body.=
+				'</div>';
+			
 				$today=new DateTime('yesterday');
 				$tomorrow=new DateTime('today');
 				$data = array(
@@ -257,6 +297,8 @@ function handler() {
 				'usua_codigoRol'=>$_SESSION['usua_codigoRol'],
 				'txt_fecha_ini'=>$today->format('d/m/Y'),
 				'txt_fecha_fin'=>$tomorrow->format('d/m/Y'),
+				'modal_changelog_body'=> $modal_body,
+				'hd_changelog'=> $chan_flag,
 				'{combo_periodo}' => array(	"elemento"  => "combo", 
 											"datos"     => $periodo->rows, 
                                             "options"   => array("name"=>"periodos","id"=>"periodos","required"=>"required", "class"=>"form-control",
@@ -314,6 +356,57 @@ function handler() {
 			global $diccionario;
 			$periodo -> get_all_selectFormat();
 			
+			$changelog = new GeneraL();
+			$changelog->getChangelog_info( $_SESSION['USUA_DE'], $_SESSION['USUA_TIPO_CODI'] );
+
+			$array_chan = array();
+			$aux=0;
+			foreach( $changelog->rows as $row )
+			{   $array_chan[] = $row['chan_codi'];
+			}
+
+			require_once ('../../../framework/dbconf_main.php');
+			$modulo = 'FINAN';
+			$params = array($modulo);
+			$sql="{call changelog_view(?)}";
+			$changelog_view = sqlsrv_query($conn, $sql, $params);  
+			$chan_flag = 0;
+
+			$modal_body=
+				'<div class="carousel" style="padding: 10px;">';
+				while($row_changelog_view = sqlsrv_fetch_array($changelog_view))
+				{   setlocale(LC_ALL, "esp");
+					$fecha_hoy=strftime("%B %d ,%Y", strtotime($row_changelog_view['chan_fech_regi']));
+					// var_dump(in_array($row_changelog_view['chan_codi'],$array_chan));
+					if(!in_array($row_changelog_view['chan_codi'],$array_chan))
+					{   $chan_flag ++;
+						$modal_body.=
+						'<div id="'.$row_changelog_view['chan_codi'].'" class="changelog_div" >
+							<table style="width:100%;">';
+								if($row_changelog_view['chan_img']!=null)
+								{   $modal_body.=
+								'<tr>
+									<td><img class="img-responsive" style="" src="../../../imagenes/changelog/'.$row_changelog_view['chan_img'].'" /></td>
+								</tr>';
+								}
+								$modal_body.=
+								'<tr>
+									<td><b><h3 style="text-align: center; padding-bottom: 0px;">'.$row_changelog_view['chan_titu'].'</h3></b></td>
+								</tr>
+								<tr>
+									<td>
+										<b><i>Cambios en Educalinks- <span style="text-transform: capitalize;"> '.$fecha_hoy.'</span></i></b>
+									</td>
+								</tr>
+								<tr>
+									<td><p>'.$row_changelog_view['chan_desc'].'</p></td>
+								</tr>
+							</table>
+						</div>';
+					} 
+				}
+			$modal_body.=
+			'</div>';
 			$today = new DateTime('yesterday');
 			$tomorrow = new DateTime('today');
 			$data = array(
@@ -324,6 +417,8 @@ function handler() {
 				'usua_codigoRol'=>$_SESSION['usua_codigoRol'],
 				'txt_fecha_ini'=>$today->format('d/m/Y'),
 				'txt_fecha_fin'=>$tomorrow->format('d/m/Y'),
+				'modal_changelog_body'=> $modal_body,
+				'hd_changelog'=> $chan_flag,
 				'{combo_periodo}' => array(
 										"elemento"  => "combo", 
 										"datos"     => $periodo->rows, 

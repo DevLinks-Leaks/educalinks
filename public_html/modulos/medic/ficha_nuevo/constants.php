@@ -6,9 +6,10 @@ const HTML_FILES="medic/ficha_nuevo/ficha_nuevo_";
 
 const GET = 'editar_factura';
 const EDIT = 'edit';
-const SET_FICHA_MED_ESPECIFICO 	= 'set_ficha_med_especifico';
-const GET_FICHA_MED_ESPECIFICO 	= 'get_ficha_med_especifico';
-const GET_FICHA_MED_LISTADO 	= 'get_ficha_med_listado';
+const SET_FICHA_MED_ESPECIFICO 			= 'set_ficha_med_especifico';
+const GET_FICHA_MED_ESPECIFICO 			= 'get_ficha_med_especifico';
+const GET_FICHA_MED_LISTADO 			= 'get_ficha_med_listado';
+const GET_FICHA_MED_LISTADO_INDIVIDUAL 	= 'get_ficha_med_listado_individual';
 
 const SET_CIRUGIA 			= 'setear_cirugia';
 const SET_VACUNA 			= 'setear_vacuna';
@@ -39,7 +40,7 @@ const CONS_EX_LAB_CLINICO 	= 'consultar_ex_lab_clinico';
 const CONS_RADIOGRAFIA 		= 'consultar_radiografia';
 
 const PRINT_FICHA_MED_PDF	= 'print_ficha_med_pdf';
-const PRINTREPVISOR = 'printvisor';
+const PRINTREPVISOR 		= 'printvisor';
 
 # vistas
 const VIEW_FORMULARIO_MED 	= 'formulario_med';

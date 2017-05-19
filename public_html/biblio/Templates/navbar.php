@@ -41,8 +41,10 @@
 						</li>
 					</ul>
 				</li>
-				<!-- <li title='Expandir'><a href="#" onclick="toggleFullScreen();"><i class="fa fa-television"></i>&nbsp;</a></li> -->
-				<li><a href="#" data-toggle="control-sidebar"><i class="fa fa-globe"></i>&nbsp;</a></li>
+				<!--<li title='Expandir'><a href="#" onclick="toggleFullScreen();"><i class="fa fa-television"></i>&nbsp;</a></li>-->
+				<li title='Ver módulos del sistema' >
+					<a onmouseover='$(this).tooltip("show");' href="#" data-toggle="control-sidebar"><i class="fa fa-briefcase"></i>&nbsp;</a>
+				</li>
 			</ul>
 		</div>
 	</nav>

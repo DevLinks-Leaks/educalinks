@@ -136,9 +136,14 @@ class Persona extends DBAbstractModel{
         $this->executeSPConsulta();
         if (count($this->rows)>0)
         {   if(!empty( $this->rows[0]['PER_CODI'] ) )
-			{   $this->mensaje="¡Exito! Datos de ".$per_nomb." ".$per_nomb_seg." ".$per_apel." ".$per_apel_mat." guardados.";
-				$this->per_codi_out = $this->rows[0]['PER_CODI'];
-				$this->empl_codi_out = $this->rows[0]['EMPL_CODI'];
+			{   if( $this->rows[0]['PER_CODI'] == -1 )
+				{   $this->mensaje="¡Error! No se pudo guardar. Número de identificación ya existe.";
+				}
+				else
+				{   $this->mensaje="¡Exito! Datos de ".$per_nomb." ".$per_nomb_seg." ".$per_apel." ".$per_apel_mat." guardados.";
+					$this->per_codi_out = $this->rows[0]['PER_CODI'];
+					$this->empl_codi_out = $this->rows[0]['EMPL_CODI'];
+				}			
 			}
 			else
 			{    $this->mensaje="¡Error! Hubo un problema. Por favor, intente nuevamente luego de unos minutos.".

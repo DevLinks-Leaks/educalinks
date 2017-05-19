@@ -48,5 +48,8 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <!-- Slick Carousel -->
+    <link href="../includes/common/slick/slick.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="../includes/common/slick/slick-theme.css"/>
     
 </head>

@@ -36,8 +36,8 @@ function handler() {
 				$_SESSION['ERROR_MSG']="Por favor inicie sesión";
 				header("Location:".$domain);
 			}
-			$today=new DateTime('yesterday');
-			$tomorrow=new DateTime('today');
+			$today = new DateTime('yesterday');
+			$tomorrow = new DateTime('today');
 			$data['txt_fecha_ini'] = $today->format('d/m/Y');
 			$data['txt_fecha_fin'] = $tomorrow->format('d/m/Y');
 			$categoria->get_selectFormat_all("");

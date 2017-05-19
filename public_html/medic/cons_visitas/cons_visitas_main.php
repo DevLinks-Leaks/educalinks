@@ -14,19 +14,19 @@
 	</div>
 	<div class="panel-body">
 		<div class="row">
-			<div class="col-md-2 col-xs-12 col-sm-6 bottom_10">
+			<div class="col-md-3 col-xs-12 col-sm-6 bottom_10">
 				<input type="text" class="form-control" id="alum_codi" name="alum_codi" placeholder="Código persona" aria-describedby="alum_codi_addon" readonly>
 				<input type="hidden" class="form-control" id="usua_tipo" name="usua_tipo" readonly>
 			</div>
-			<div class="col-md-4 col-xs-12 col-sm-6 bottom_10">
+			<div class="col-md-5 col-xs-12 col-sm-6 bottom_10">
 				<input type="text" class="form-control" id="alum_nombre" name="alum_nombre" placeholder="Nombre" aria-describedby="alum_nombre_addon" readonly>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-4 col-xs-12 col-sm-6 bottom_10">
+			<div class="col-md-3 col-xs-12 col-sm-6 bottom_10">
 				<input type="text" placeholder="Dirección" id="alum_domi" name="alum_domi" class="form-control" aria-describedby="alum_domi_addon" readonly>
 			</div>
-			<div class="col-md-3 col-xs-12 col-sm-6 bottom_10">
+			<div class="col-md-5 col-xs-12 col-sm-6 bottom_10">
 				<input type="text" class="form-control" id="alum_telf" name="alum_telf" placeholder="Teléfono" aria-describedby="alum_telf_addon" readonly>
 			</div>
 		</div>

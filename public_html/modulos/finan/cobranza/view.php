@@ -6,8 +6,8 @@ $diccionario = array(
     'subtitle'=>array(
         VIEW_SET=>'Crear un nuevo deudor',
         VIEW_SET_GET_ALL=>'Crear y mostrar los deudores',
-        VIEW_GET=>'Consulta de deudores vencidos',
-        VIEW_GET_ALL=>'Consulta de todos los deudores',
+        VIEW_GET=>'CRM Cobranzas',
+        VIEW_GET_ALL=>'Cobranzas',
         VIEW_DELETE=>'Eliminar un deudor vencido',
         VIEW_EDIT=>'Modificar deudor vencido'
                      ),

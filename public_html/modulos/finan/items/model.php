@@ -31,7 +31,7 @@ class Item extends DBAbstractModel{
             $this->executeSPConsulta();    
         }
         if (count($this->rows)<0)
-		{   $this->mensaje="Productos no encontrados";
+		{   $this->mensaje="¡Advertencia! Productos no encontrados";
             array_pop($rol);
             array_push($rol, array(0 => '', 
                                    1 => '- Seleccione producto -',
@@ -82,7 +82,7 @@ class Item extends DBAbstractModel{
         $this->executeSPConsulta();
 
         if (count($this->rows)<=0)
-		{   $this->mensaje="No existen categorias en la BD.";
+		{   $this->mensaje="¡Advertencia! No existen categorias en la BD.";
         }
 		else
 		{   $rol = array();
@@ -104,10 +104,10 @@ class Item extends DBAbstractModel{
 		{   foreach($this->rows[0] as $propiedad=>$valor)
 			{   $this->$propiedad=$valor;
             }
-            $this->mensaje="Item encontrado";
+            $this->mensaje="¡Exito! Item encontrado";
         }
 		else
-		{   $this->mensaje="Item no encontrado";
+		{   $this->mensaje="¡Error! Item no encontrado";
         }
     }
     public function set ($data=array())
@@ -119,13 +119,13 @@ class Item extends DBAbstractModel{
             $this->sp = "str_consultaItem_add";
             $this->executeSPAccion();
             if($this->filasAfectadas>0)
-			{   $this->mensaje="Item agregado exitosamente";
+			{   $this->mensaje="¡Exito! Item agregado exitosamente";
             }else
-			{   $this->mensaje="No se ha agregado el item";
+			{   $this->mensaje="¡Error! No se ha agregado el item";
             }
         }
 		else
-		{   $this->mensaje="No se ha agregado el item - Faltan campos importantes.";
+		{   $this->mensaje="¡Error! No se ha agregado el item - Faltan campos importantes.";
         }
     }
     public function edit($data=array())

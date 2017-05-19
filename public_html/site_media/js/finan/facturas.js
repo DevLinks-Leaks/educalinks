@@ -7,6 +7,7 @@ $(document).ready(function()
 	$("#fechaFin_add").datepicker();
 	$("#fechaInicio_add").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
 	$("#fechaFin_add").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+	$("#dias_prontoPago_add").numeric({ decimal : false,  negative : false, precision: 3 });
 });
 var hay_descuento = 0;
 var metodo_descuento = "";
@@ -540,6 +541,7 @@ function facturaToJSON()
 			// Informacion deuda
 			fechaInicio_cobro: '',
 			fechaVencimiento:'',
+			dias_prontoPago:'',
 			generaFactura:''
         },
         detalle: []
@@ -589,6 +591,7 @@ function facturaToJSON()
 	
 	factura.cabecera.fechaInicio_cobro = $('#fechaInicio_add').val();
 	factura.cabecera.fechaVencimiento = $('#fechaFin_add').val();
+	factura.cabecera.dias_prontoPago = $('#dias_prontoPago_add').val();
 	if ( document.getElementById('check_generar_FAC').checked )
 		factura.cabecera.generaFactura = '1';
 	else

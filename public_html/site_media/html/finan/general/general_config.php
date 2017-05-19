@@ -13,27 +13,16 @@
 			</div>
 			<div style='font-size:small'>Los valores configurados en esta pestaña afectan todo el sistema. </div>
 			<br>
-			<div class="form-group">
-				<input type="hidden" class="form-control" name="usua_codigo" id="usua_codigo" value='{usua_codigo}'>
-				<label for="desc_pronto">Usar prontopago y días de validez en descuento</label>
-				<div class="checkbox">
-					<label>
-						<input type="checkbox" id="check_usa_pp_dv" name="check_usa_pp_dv" onclick='js_general_check_usa_pp_dv();' {usa_pp_dv}> Permitir el uso de prontopago y días de validez en el sistema.
-					</label>
-				</div>
-			</div>
-			<br>
-			<div class="form-group">
-				<input type="hidden" class="form-control" name="usua_codigo" id="usua_codigo" value='{usua_codigo}'>
-				<label for="desc_pronto">Porcentaje de descuento en deudas que apliquen al prontopago</label>
-				<div class="input-group">
-					<input type="text" class="form-control" name="desc_pronto" id="desc_pronto" placeholder="Ingrese el porcentaje de descuento"  value='{prontopago}' required="required" {usa_pp_dv_disable_txtpp}><span class="input-group-addon">%</span>
-				</div>
-			</div>
 			<div class="form-group">   
+				<input type="hidden" class="form-control" name="usua_codigo" id="usua_codigo" value='{usua_codigo}'>
 				<label for="desc_pronto">Porcentaje del I.V.A.</label>
 				<div class="input-group">
 					<input type="text" class="form-control" name="desc_prepago" id="desc_prepago" placeholder="Ingrese el porcentaje de descuento"  value='{prepago}' required="required"><span class="input-group-addon" >%</span>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" id="check_usa_pp_dv" name="check_usa_pp_dv" {usa_pp_dv}> Aplicar cambio del IVA a todas las deudas por cobrar con abono 0.
+					</label>
 				</div>
 			</div>
 			<div class="form-group">
@@ -52,12 +41,42 @@
 					</label>
 				</div>
 			</div>
+			<hr>
 			<div class="form-group">
-				<label for="desc_pronto">Método de aplicación de descuentos por cliente/alumno a las deudas.</label>
+				<label for="desc_pronto">Prontopago</label>
+			</div>
+			<div class="form-group">
+				<label for="desc_pronto">Porcentaje de descuento en deudas que apliquen al prontopago</label>
+				<div class="input-group">
+					<input type="text" class="form-control" name="desc_pronto" id="desc_pronto" placeholder="Ingrese el porcentaje de descuento"  value='{prontopago}' required="required"><span class="input-group-addon">%</span>
+				</div>
+			</div>
+			<hr>
+			<div class="form-group">
+				<label for="desc_pronto">Descuentos</label>
+			</div>
+			<div class="form-group">
+				<label for="desc_pronto">Método de aplicación de descuentos a las deudas.</label>
 				<div class="checkbox">
 					<label>
 						<input type="radio" id="rdb_metodo_descuento" name="rdb_metodo_descuento" value="desc_sobre" {desc_sobre}> Aplicar descuento sobre descuento<br>
-						<input type="radio" id="rdb_metodo_descuento" name="rdb_metodo_descuento" value="desc_sumado" {desc_sumado}> Sumar todos los descuento asignados
+						<input type="radio" id="rdb_metodo_descuento" name="rdb_metodo_descuento" value="desc_sumado" {desc_sumado}> Sumar todos los descuento asignados y restar el total de la suma de los porcentajes.
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="desc_pronto">Característica del descuento con fecha límite y abonos parciales
+					<div id='EducaLinksHelperCliente' style='display:inline;font-size:small;text-align:left;vertical-align:middle;'>
+						<a  tabindex="0" data-toggle="popover" data-placement='left'
+							title="<a href='../tipo_descuento/' target='_blank'>Descuento con fecha límite</a>" data-content="<div style='font-size:x-small'>Son descuentos que tienen un tiempo de validez que se determina cuando se asigna a un alumno.</div>"><span class='fa fa-info-circle'></span></a>
+						<a  tabindex="0" data-toggle="popover" data-placement='top'
+							title="<a href='../tipo_descuento/' target='_blank'>Opción de no eliminar el descuento cuando se hace abono</a>" data-content="<div style='font-size:x-small'>Esta opción permite determinar si el descuento no se elimina si es que se ha recibido un abono parcial a una deuda que tenga asignado un descuento con fecha límite de validez.</div>"><span class='fa fa-info-circle'></span></a>
+					</div>
+				</label>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" id="check_quitar_limite_dias_validez" name="check_quitar_limite_dias_validez" {quitar_limite_dias_validez}> Hacer que el descuento no se elimine nunca si se recibe un abono parcial dentro de los días en los que el descuento es considerado válido.
+						
 					</label>
 				</div>
 			</div>

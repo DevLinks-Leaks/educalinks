@@ -146,9 +146,8 @@ class Cliente extends DBAbstractModel{
     }
 
 
-    public function getDscto_selectFormat($busq=""){
-        $busq="";
-        $this->parametros = array($busq);
+    public function getDscto_selectFormat( $busq = "zzz" )
+	{   $this->parametros = array( $busq );
         $this->sp = "str_consultaDescuento_busq";
         $this->executeSPConsulta();
 
@@ -215,89 +214,100 @@ class Cliente extends DBAbstractModel{
         }
     }
 
-    public function getCabeceraEstadoCuenta($codigoAlumno="", $codigoPeriodo="", $fechaInicio="", $fechaFin=""){
-        if($codigoAlumno!=""){
-            $this->parametros = array($codigoAlumno, ($codigoPeriodo==""? null : $codigoPeriodo ), ($fechaInicio==""? null : $fechaInicio), ($fechaFin==""? null : $fechaFin ));
+    public function getCabeceraEstadoCuenta($codigoAlumno="", $codigoPeriodo="", $fechaInicio="", $fechaFin="")
+	{   if($codigoAlumno!="")
+		{   $this->parametros = array($codigoAlumno, ($codigoPeriodo==""? null : $codigoPeriodo ), ($fechaInicio==""? null : $fechaInicio), ($fechaFin==""? null : $fechaFin ));
             $this->sp = "str_consultaCabeceraEstadoCuenta";
             $this->executeSPConsulta();
         }
-
-        if (count($this->rows)>=1){
-            $this->mensaje="Deudas Encontradas";
+        if (count($this->rows)>=1)
+		{   $this->mensaje="Deudas Encontradas";
             array_pop($this->rows);
-        }else{
-            $this->mensaje="Deudas no encontradas";
+        }
+		else
+		{   $this->mensaje="Deudas no encontradas";
         }
     }
- public function getCabeceraEstadoCuentatabla($codigoAlumno="", $codigoPeriodo="", $fechaInicio="", $fechaFin=""){
-        if($codigoAlumno!=""){
-            $this->parametros = array($codigoAlumno,$codigoPeriodo,$fechaInicio,$fechaFin );
+    public function getCabeceraEstadoCuentatabla($codigoAlumno="", $codigoPeriodo="", $fechaInicio="", $fechaFin="")
+	{   if($codigoAlumno!="")
+		{   $this->parametros = array($codigoAlumno,$codigoPeriodo,$fechaInicio,$fechaFin );
             $this->sp = "str_consultaCabeceraEstadoCuentatabla";
             $this->executeSPConsulta();
         }
-
-        if (count($this->rows)>=1){
-            $this->mensaje="Deudas Encontradas";
-           
-        }else{
-            $this->mensaje="Deudas no encontradas";
+        if (count($this->rows)>=1)
+		{   $this->mensaje="Deudas Encontradas";
+        }
+		else
+		{   $this->mensaje="Deudas no encontradas";
         }
     }
-    public function getDetalleEstadoCuenta($codigoDeuda=""){
-        if($codigoDeuda!=""){
-            $this->parametros = array($codigoDeuda);
+    public function getDetalleEstadoCuenta($codigoDeuda="")
+	{   if($codigoDeuda!="")
+		{   $this->parametros = array($codigoDeuda);
             $this->sp = "str_consultaDetalleEstadoCuenta";
             $this->executeSPConsulta();
         }
-
-        if (count($this->rows)>=1){
-            $this->mensaje="Detalles de Pagos Encontradas";
+        if (count($this->rows)>=1)
+		{   $this->mensaje="Detalles de Pagos Encontradas";
             array_pop($this->rows);
-        }else{
-            $this->mensaje="Detalles no encontrados";
+        }
+		else
+		{   $this->mensaje="Detalles no encontrados";
         }
     }
-
-    public function getGrupoEconomicoAsignado($codigoEstudiante=""){
-        if($codigoEstudiante!=""){
-            $this->parametros = array($codigoEstudiante);
+	public function get_alumPensiones_valore_reales( $codigoAlumno="", $codigoPeriodo="" )
+	{   $this->parametros = array( $codigoAlumno, $codigoPeriodo );
+            $this->sp = "str_common_consulta_alumPensiones_valores_reales";
+            $this->executeSPConsulta();
+       
+        if (count($this->rows)>=1)
+		{   $this->mensaje="Deudas Encontradas";
+        }
+		else
+		{   $this->mensaje="Deudas no encontradas";
+        }
+    }
+    public function getGrupoEconomicoAsignado($codigoEstudiante="")
+	{   if($codigoEstudiante!="")
+		{   $this->parametros = array($codigoEstudiante);
             $this->sp = "str_consultaGrupoEconomico_added";
             $this->executeSPConsulta();
         }
-
-        if (count($this->rows)>=1){
-            $this->mensaje="Registro encontrado";
+        if (count($this->rows)>=1)
+		{   $this->mensaje="Registro encontrado";
             array_pop($this->rows);
-        }else{
-            $this->mensaje="Registro no encontrado";
+        }
+		else
+		{   $this->mensaje="Registro no encontrado";
         }
     }
 
-    public function setGrupoEconomico($codigoEstudiante="", $codigoGrupoEconomico="") {
-        if($codigoEstudiante!="" && $codigoGrupoEconomico!=""){
-            $this->parametros = array($codigoEstudiante, $codigoGrupoEconomico);
+    public function setGrupoEconomico( $codigoEstudiante = "", $codigoGrupoEconomico = "" )
+	{   if($codigoEstudiante!="" && $codigoGrupoEconomico!="")
+		{   $this->parametros = array($codigoEstudiante, $codigoGrupoEconomico);
             $this->sp = "str_consultaCliente_addGrupoEconomico";
             $this->executeSPAccion();
         }
-        if($this->filasAfectadas>0){
-            $this->mensaje="¡Exito! Grupo economico modificado.";
-        }else{
-            $this->mensaje="¡Error! Actualización no se pudo realizar.";
+        if($this->filasAfectadas>0)
+		{   $this->mensaje="¡Exito! Grupo economico modificado.";
+        }
+		else
+		{   $this->mensaje="¡Error! Actualización no se pudo realizar.";
         }
 		return $this;
     }
-
-    public function deleteDeuda($codigoDeuda="") {
-        if($codigoDeuda!=""){
-            $this->parametros = array($codigoDeuda);
+    public function deleteDeuda($codigoDeuda="")
+	{   if($codigoDeuda!="")
+		{   $this->parametros = array($codigoDeuda, $_SESSION['usua_codigo'], $_SESSION['USUA_TIPO_CODI'] );
             $this->sp = "str_consultaDeuda_del";
             $this->executeSPAccion();
         }
         
-        if($this->filasAfectadas>0){
-            $this->mensaje="Deuda actualizada!";
-        }else{
-            $this->mensaje="Deuda no actualizada!";
+        if($this->filasAfectadas>0)
+		{   $this->mensaje="¡Exito! Deuda eliminada correctamente";
+        }
+		else
+		{   $this->mensaje="¡Error! No se pudo completar la eliminación";
         }
     }
 

@@ -14,6 +14,7 @@ const SET_HOME = 'set_home';
 const SET_DISCOUNT ='asigna_descuento';
 
 const PRINT_REPORT = 'print_report';
+const PRINT_CERT_REPORT = 'print_cert_report';
 const SET_GRUPO_ECONOMICO = 'asigna_grupo_economico';
 const DELETE_DEUDA = 'delete_deuda';
 const GET_DEUDAS = 'get_deudas';

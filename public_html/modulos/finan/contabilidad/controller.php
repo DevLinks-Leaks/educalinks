@@ -8,7 +8,6 @@ require_once('model.php');
 require_once('view.php');
 
 function handler() {
-	$anioPeriodo= get_mainObject('Contabilidad');
 	$curso= get_mainObject('Contabilidad');
 	$alumnos= get_mainObject('Contabilidad');
 	$fecha=get_mainObject('Contabilidad');
@@ -51,16 +50,16 @@ function handler() {
 			$conta->updproducto($user_data['codigo_productos'],$user_data['prodcontifico_codigo']);
             break;
 		case UPDATE_DNAS:
-			$curso->get_deudas_contificoindividual($user_data['anio'],$user_data['mes']);
+			$conta->get_paidDNAs_contificoindividual( $user_data['anio'], $user_data['mes'] );
 			global $diccionario;
-			$opciones["Migrar"] = "<span onclick='js_aniosPeriodo_migrarfacturasindividuales(".'"{codigo}"'.",".'"modal_deudasconfirmacion_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/aniosPeriodo/controller.php"'.")' class='btn_opc_lista_migrar glyphicon glyphicon-send cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_deudasconfirmacion' id='{codigo}' onmouseover='$(".'"#{codigo}"'.").tooltip(".'"show"'.")' title='Migrar'>&nbsp;</span>";
+			$opciones["Migrar"] = "<span onclick='js_contabilidad_updfacturasindividuales(".'"{codigo}"'.",".'"modal_upd_dnas_confirmacion_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/contabilidad/controller.php"'.")' class='btn_opc_lista_migrar glyphicon glyphicon-send cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_upd_dnas_confirmacion' id='{codigo}' onmouseover='$(".'"#{codigo}"'.").tooltip(".'"show"'.")' title='Migrar'>&nbsp;</span>";
 
-			$data = array('mes' => $user_data['mes']);
+			$data = array('mes_paid_dnas' => $user_data['mes']);
 			
 			$data['{tablapaiddnas}'] =array("elemento"	=>"tabla",
 											"clase"		=>"table table-bordered table-hover",
-											"id"		=>"tabladeudamigrar",
-											"datos"		=> $curso->rows,
+											"id"		=>"tablapaiddnas",
+											"datos"		=> $conta->rows,
 											"encabezado"=>array("Codigo Deuda",
 																"Cliente",
 																"Producto",
@@ -73,7 +72,7 @@ function handler() {
 			retornar_formulario( VIEW_GET_PAID_DNAS, $data );
 			break;
 		case MIGRAR:
-			$conta->get_deudas_contificoindividual($user_data['anio'],$user_data['mes']);
+			$conta->get_deudas_contificoindividual( $user_data['anio'], $user_data['mes'] );
 			global $diccionario;
 			$opciones["Migrar"] = "<span onclick='js_contabilidad_migrarfacturasindividuales(".'"{codigo}"'.",".'"modal_pagosconfirmacion_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/contabilidad/controller.php"'.",".'this'.");' class='btn_opc_lista_migrar glyphicon glyphicon-send cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_pagosconfirmacion' id='{codigo}' onmouseover='$(this).tooltip(".'"show"'.")' title='Migrar'>&nbsp;</span>";
 			$data = array('mes' => $user_data['mes']);
@@ -95,7 +94,7 @@ function handler() {
 		case MIGRARFACTURASINDIVIDUALES:
 	        $datos1 =array();
 			$datos2 =array();
-	        //$curso->getdetallefactura($anioPeriodo->rows[0]['descripcion'],$user_data['codigofactura']);
+	        //$curso->getdetallefactura($conta->rows[0]['descripcion'],$user_data['codigofactura']);
 			$alumnos->getdetallepago($user_data['codigodeuda'],$user_data['codigofactura']);
 			$codigocontifico=  $alumnos->rows[0]['codigodeuda'];
 			for($b=0;$b<=count($alumnos->rows)-2;$b++){
@@ -107,31 +106,31 @@ function handler() {
 			retornar_formulario(VIEW_MIGRACIONINDIVIDUAL, $data);
             break;
 		case MIGRARFACTURASINDIVIDUALESACT:
-			$anioPeriodo->get_deudas_individualmigracion($user_data['codigodeuda']);
+			$conta->get_deudas_individualmigracion($user_data['codigodeuda']);
 			$datos1 =array();
 			$datos2 =array();
-			$datos['id']=$anioPeriodo->rows[0]['idcontifico'];
-			$datos['pos']=$anioPeriodo->rows[0]['apitoken'];
+			$datos['id']=$conta->rows[0]['idcontifico'];
+			$datos['pos']=$conta->rows[0]['apitoken'];
 			
-			$datos['fecha_emision']=$anioPeriodo->rows[0]['fechacreacion'];
-			$datos['tipo_documento']=$anioPeriodo->rows[0]['tipodocumento'];
-			$datos['documento']=$anioPeriodo->rows[0]['id'];
+			$datos['fecha_emision']=$conta->rows[0]['fechacreacion'];
+			$datos['tipo_documento']=$conta->rows[0]['tipodocumento'];
+			$datos['documento']=$conta->rows[0]['id'];
 		
-			$datos['estado']=$anioPeriodo->rows[0]['estado'];
-			$datos['autorizacion']='';
+			$datos['estado']=$conta->rows[0]['estado'];
+			$datos['autorizacion']=$conta->rows[0]['numautorizacion'];
 			$datos['caja_id']='null';
-			$datos['cliente']=array('ruc'=>$anioPeriodo->rows[0]['ruc'],'cedula'=>$anioPeriodo->rows[0]['cedula'],'razon_social'=>$anioPeriodo->rows[0]['razonsocial'],'telefonos'=>$anioPeriodo->rows[0]['telefono'],'direccion'=>$anioPeriodo->rows[0]['direccion'],'tipo'=>$anioPeriodo->rows[0]['tipo'],'email'=>$anioPeriodo->rows[0]['email'],'es_extranjero'=>$anioPeriodo->rows[0]['esextranjero']);
-			$datos['vendedor']=array('ruc'=>$anioPeriodo->rows[0]['rucvendedor'],'cedula'=>$anioPeriodo->rows[0]['cedulavendedor'],'razon_social'=>$anioPeriodo->rows[0]['razonsocialvendedor'],'telefonos'=>$anioPeriodo->rows[0]['telefonovendedor'],'direccion'=>$anioPeriodo->rows[0]['direccionvendedor'],'tipo'=>$anioPeriodo->rows[0]['tipovendedor'],'email'=>$anioPeriodo->rows[0]['emailvendedor'],'es_extranjero'=>$anioPeriodo->rows[0]['extranjerovendedor']);
-			$datos['descripcion']=$anioPeriodo->rows[0]['descripcion'];
-			$datos['subtotal_0']=$anioPeriodo->rows[0]['subtotal0'];
-			$datos['subtotal_12']=$anioPeriodo->rows[0]['subtotaliva'];
-			$datos['iva']=$anioPeriodo->rows[0]['iva'];
-			$datos['servicio']=$anioPeriodo->rows[0]['servicio'];
-			$datos['total']=$anioPeriodo->rows[0]['total'];
-			$datos['adicional1']=$anioPeriodo->rows[0]['adicional1'];
-			$datos['adicional2']=$anioPeriodo->rows[0]['adicional2'];
-			$curso->getdetallefactura($anioPeriodo->rows[0]['descripcion']);
-			$alumnos->getdetallepago($anioPeriodo->rows[0]['descripcion']);
+			$datos['cliente']=array('ruc'=>$conta->rows[0]['ruc'],'cedula'=>$conta->rows[0]['cedula'],'razon_social'=>$conta->rows[0]['razonsocial'],'telefonos'=>$conta->rows[0]['telefono'],'direccion'=>$conta->rows[0]['direccion'],'tipo'=>$conta->rows[0]['tipo'],'email'=>$conta->rows[0]['email'],'es_extranjero'=>$conta->rows[0]['esextranjero']);
+			$datos['vendedor']=array('ruc'=>$conta->rows[0]['rucvendedor'],'cedula'=>$conta->rows[0]['cedulavendedor'],'razon_social'=>$conta->rows[0]['razonsocialvendedor'],'telefonos'=>$conta->rows[0]['telefonovendedor'],'direccion'=>$conta->rows[0]['direccionvendedor'],'tipo'=>$conta->rows[0]['tipovendedor'],'email'=>$conta->rows[0]['emailvendedor'],'es_extranjero'=>$conta->rows[0]['extranjerovendedor']);
+			$datos['descripcion']=$conta->rows[0]['descripcion'];
+			$datos['subtotal_0']=$conta->rows[0]['subtotal0'];
+			$datos['subtotal_12']=$conta->rows[0]['subtotaliva'];
+			$datos['iva']=$conta->rows[0]['iva'];
+			$datos['servicio']=$conta->rows[0]['servicio'];
+			$datos['total']=$conta->rows[0]['total'];
+			$datos['adicional1']=$conta->rows[0]['adicional1'];
+			$datos['adicional2']=$conta->rows[0]['adicional2'];
+			$curso->getdetallefactura($conta->rows[0]['descripcion']);
+			$alumnos->getdetallepago($conta->rows[0]['descripcion']);
 			
 			$aux_det = 0;
 			foreach ( $curso->rows as $detalle_rows )
@@ -144,7 +143,7 @@ function handler() {
 			for($b=0;$b<=count($alumnos->rows)-2;$b++){
 				$datos['cobros']=array(array('forma_cobro'=>$alumnos->rows[$b]['formapago'],'monto'=>$alumnos->rows[$b]['monto'],'numero_cheque'=>$alumnos->rows[$b]['chequenumero'],'tipo_ping'=>$alumnos->rows[$b]['tipoping']));
 			}
-			//var_dump($anioPeriodo->rows[0]['id']);
+			//var_dump($conta->rows[0]['id']);
 		    $data['datosdoc'] = $datos;
 			$jsondeudas= json_encode($data['datosdoc']);
 			$data = array('cantidaddeudas' => count($data['datosdoc']),'deudas'=> $jsondeudas,'codigodeuda'=> $datos['descripcion']);
@@ -167,33 +166,33 @@ function handler() {
 			retornar_formulario(VIEW_MIGRARDEUDAS, $data);
             break;
 		case MIGRARFACTURASACT:
-		    $anioPeriodo->getfacturacontifico( $user_data['peri_codi'] );
+		    $conta->getfacturacontifico( $user_data['peri_codi'], $user_data['mes'] );
 		    $datos1 =array();
 			$datos2 =array();
-			for($i=0;$i<=count($anioPeriodo->rows)-2;$i++){	
-				$datos1[$i]=$anioPeriodo->rows[$i]['idcontifico'];
-				$datos['id']=$anioPeriodo->rows[$i]['idcontifico'];
-				$datos['pos']=$anioPeriodo->rows[$i]['apitoken'];
-				$datos['fecha_emision']=$anioPeriodo->rows[$i]['fechacreacion'];
-				$datos['tipo_documento']=$anioPeriodo->rows[$i]['tipodocumento'];
-				$datos['documento']=$anioPeriodo->rows[$i]['id'];
+			for($i=0;$i<=count($conta->rows)-2;$i++){	
+				$datos1[$i]=$conta->rows[$i]['idcontifico'];
+				$datos['id']=$conta->rows[$i]['idcontifico'];
+				$datos['pos']=$conta->rows[$i]['apitoken'];
+				$datos['fecha_emision']=$conta->rows[$i]['fechacreacion'];
+				$datos['tipo_documento']=$conta->rows[$i]['tipodocumento'];
+				$datos['documento']=$conta->rows[$i]['id'];
 			
-				$datos['estado']=$anioPeriodo->rows[$i]['estado'];
-				$datos['autorizacion']='';
+				$datos['estado']=$conta->rows[$i]['estado'];
+				$datos['autorizacion']=$conta->rows[0]['numautorizacion'];
 				$datos['caja_id']='null';
-				$datos['cliente']=array('ruc'=>$anioPeriodo->rows[$i]['ruc'],'cedula'=>$anioPeriodo->rows[$i]['cedula'],'razon_social'=>$anioPeriodo->rows[$i]['razonsocial'],'telefonos'=>$anioPeriodo->rows[$i]['telefono'],'direccion'=>$anioPeriodo->rows[$i]['direccion'],'tipo'=>$anioPeriodo->rows[$i]['tipo'],'email'=>$anioPeriodo->rows[$i]['email'],'es_extranjero'=>$anioPeriodo->rows[$i]['esextranjero']);
-				$datos['vendedor']=array('ruc'=>$anioPeriodo->rows[$i]['rucvendedor'],'cedula'=>$anioPeriodo->rows[$i]['cedulavendedor'],'razon_social'=>$anioPeriodo->rows[$i]['razonsocialvendedor'],'telefonos'=>$anioPeriodo->rows[$i]['telefonovendedor'],'direccion'=>$anioPeriodo->rows[$i]['direccionvendedor'],'tipo'=>$anioPeriodo->rows[$i]['tipovendedor'],'email'=>$anioPeriodo->rows[$i]['emailvendedor'],'es_extranjero'=>$anioPeriodo->rows[$i]['extranjerovendedor']);
-				$datos['descripcion']=$anioPeriodo->rows[$i]['descripcion'];
-				$datos['subtotal_0']=$anioPeriodo->rows[$i]['subtotal0'];
-				$datos['subtotal_12']=$anioPeriodo->rows[$i]['subtotaliva'];
-				$datos['iva']=$anioPeriodo->rows[$i]['iva'];
-				$datos['servicio']=$anioPeriodo->rows[$i]['servicio'];
-				$datos['total']=$anioPeriodo->rows[$i]['total'];
-				$datos['adicional1']=$anioPeriodo->rows[$i]['adicional1'];
-				$datos['adicional2']=$anioPeriodo->rows[$i]['adicional2'];
+				$datos['cliente']=array('ruc'=>$conta->rows[$i]['ruc'],'cedula'=>$conta->rows[$i]['cedula'],'razon_social'=>$conta->rows[$i]['razonsocial'],'telefonos'=>$conta->rows[$i]['telefono'],'direccion'=>$conta->rows[$i]['direccion'],'tipo'=>$conta->rows[$i]['tipo'],'email'=>$conta->rows[$i]['email'],'es_extranjero'=>$conta->rows[$i]['esextranjero']);
+				$datos['vendedor']=array('ruc'=>$conta->rows[$i]['rucvendedor'],'cedula'=>$conta->rows[$i]['cedulavendedor'],'razon_social'=>$conta->rows[$i]['razonsocialvendedor'],'telefonos'=>$conta->rows[$i]['telefonovendedor'],'direccion'=>$conta->rows[$i]['direccionvendedor'],'tipo'=>$conta->rows[$i]['tipovendedor'],'email'=>$conta->rows[$i]['emailvendedor'],'es_extranjero'=>$conta->rows[$i]['extranjerovendedor']);
+				$datos['descripcion']=$conta->rows[$i]['descripcion'];
+				$datos['subtotal_0']=$conta->rows[$i]['subtotal0'];
+				$datos['subtotal_12']=$conta->rows[$i]['subtotaliva'];
+				$datos['iva']=$conta->rows[$i]['iva'];
+				$datos['servicio']=$conta->rows[$i]['servicio'];
+				$datos['total']=$conta->rows[$i]['total'];
+				$datos['adicional1']=$conta->rows[$i]['adicional1'];
+				$datos['adicional2']=$conta->rows[$i]['adicional2'];
 				
-				$curso->getdetallefactura($anioPeriodo->rows[$i]['descripcion']);
-				//$alumnos->getdetallepago($anioPeriodo->rows[$i]['descripcion']);
+				$curso->getdetallefactura($conta->rows[$i]['descripcion']);
+				//$alumnos->getdetallepago($conta->rows[$i]['descripcion']);
 			
 				$aux_det = 0;
 				foreach ( $curso->rows as $detalle_rows )
@@ -220,12 +219,12 @@ function handler() {
 		case UPDDEUDA:
 			$contifico =array();
 			$contifico=json_decode($user_data['doccontifico_codigo'], true);
-			$anioPeriodo->upddeudacontifico($user_data['codigo_documento'],$user_data['doccontifico_codigo'],$user_data['estado']);
+			$conta->upddeudacontifico($user_data['codigo_documento'],$user_data['doccontifico_codigo'],$user_data['estado']);
 			break;	
 		case UPDFACTURAS:
 			$contifico =array();
 			$contifico=json_decode($user_data['doccontifico_codigo'], true);
-			$anioPeriodo->updfacturacontifico($user_data['codigo_documento']);
+			$conta->updfacturacontifico($user_data['codigo_documento']);
 		break;	
 		case ADD:
 			$conta->getproducto($user_data['prod_codigo']);
@@ -360,12 +359,12 @@ function handler() {
 
 				$data['{tabla_paidDNAs}']= array("elemento"=>"tabla",
                                         "clase"=>"table table-bordered table-hover",
-                                        "id"=>"tablaPaidDNAs",
+                                        "id"=>"tabla_paidDNAs_main",
                                         "datos"=>$conta->rows,
                                         "encabezado" => array("Mes",
                                                           "Mes de Vencimiento",
                                                           "DNA's por actualizar",
-                                                          "Valor de facturas",
+                                                          "Valor Factura",
                                                           "Opciones"),
                                         "options"=>array($opcionesdeudas),
                                         "campo"=>"mes");

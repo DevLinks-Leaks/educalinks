@@ -65,7 +65,7 @@ include("core/rutas.php");?>
 		}
 	</style>
 </head>
-<body class="fixed collapsed-sidebar skin-black-light sidebar-mini">
+<body class="fixed collapsed-sidebar skin-blue sidebar-mini">
     <div class="wrapper">
 		{navbar}
 		{menu}

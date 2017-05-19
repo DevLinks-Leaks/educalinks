@@ -7,10 +7,11 @@ require_once('model.php');
 require_once('view.php');
 
 function handler()
-{   $item = get_mainObject('Item');
-	$permiso = get_mainObject('General');
-	$event = get_actualEvents(array(VIEW_GET_ALL, VIEW_SET), VIEW_GET_ALL);
-	$user_data = get_frontData();
+{   $item 		= get_mainObject('Item');
+	$permiso 	= get_mainObject('General');
+	$general 	= get_mainObject('General');
+	$event 		= get_actualEvents(array(VIEW_GET_ALL, VIEW_SET), VIEW_GET_ALL);
+	$user_data 	= get_frontData();
 	
 	if (!isset($_POST['busq'])){$user_data['busq'] = "";}else{$user_data['busq'] =$_POST['busq'];}
 	if (!isset($_POST['tabla'])){$tabla = "item_table";}else{$tabla =$_POST['tabla'];}
@@ -115,21 +116,25 @@ function handler()
             break;
         case VIEW_SET:
             $item->getCategorias_selectFormat("");
+			$general->get_prontopago();
             $data = array('{combo_categoria}' => array("elemento"  => "combo", 
                                                        "datos"     => $item->rows,
                                                        "options"   => array("name"=>"codigoCategoria_add","id"=>"codigoCategoria_add","class"=>"form-control","required"=>"required"),
-                                                       "selected"  => 0));
+                                                       "selected"  => 0),
+						  'prod_perIVA'=>$general->prepago);
             retornar_formulario(VIEW_SET, $data);
             break;
         case SET:
             $user_data['codigoUsuario'] = $_SESSION['usua_codigo'];
             $item->set($user_data);
+            print_r($item->mensaje);
             break;  
         case GET:
             $item->getCategorias_selectFormat("");
             $categorias = $item->rows;
             $item->get($user_data['codigo']);
-
+			$general->get_prontopago();
+			
             $data = array('item_codigo'=>$user_data['codigo'],
                           'item_nombre'=>$item->nombre,
                           'item_descripcion'=>$item->descripcion,
@@ -140,6 +145,7 @@ function handler()
 						  'item_liquidez'=> ($item->liquidez == 1)? 'checked':'',
 						  'item_prontopago'=> ($item->prontopago == 1)? 'checked':'',
                           'item_cuentaContable'=>$item->cuentaContable,
+						  'prod_perIVA'=>$item->prod_perIVA,
                           '{combo_categoria}' => array("elemento"  => "combo", 
                                                        "datos"     => $categorias,
                                                        "options"   => array("name"=>"codigoCategoria_mod","id"=>"codigoCategoria_mod","class"=>"form-control","required"=>"required"),

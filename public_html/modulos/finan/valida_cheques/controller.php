@@ -37,58 +37,17 @@ function handler() {
             break;
         case APROBAR:
             $validacheque->aprobar($validacheque_data);
-		   	$validacheque->get_all();
-			if(count($validacheque->rows)>0)
-			{	global $diccionario;
-                $opciones["Aprobado"] = "<button type='button' class='btn btn-default'   onclick='js_validacheques_aprobar(".'"{codigo}"'.",".'"resultado"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/valida_cheques/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_approve' id='{codigo}_aprobar' onmouseover='$(".'"#{codigo}_aprobar"'.").tooltip(".'"show"'.")' title='Aprobar' data-placement='left'><span style='color:green;' class='fa fa-check'></span></button>";
-				$opciones["Protestado"] = "<button type='button' class='btn btn-default' onclick='js_validacheques_protestar_add(".'"{codigo}"'.",".'"modal_edit_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/valida_cheques/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_edit' id='{codigo}_protestar' onmouseover='$(".'"#{codigo}_protestar"'.").tooltip(".'"show"'.")' title='Protestar' data-placement='top'><span style='color:red;' class='fa fa-times'></span></button>";
-				$data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
-                                        "id"=>$tabla,
-                                        "datos"=>$validacheque->rows,
-                                        "encabezado" => array("Ref.","Cod. Alumno","Alumno","No. Cheque","Banco","Girador","Fecha de Dep&oacute;sito","Monto","Opciones"),
-                                        "options"=>array($opciones),
-                                        "campo"=>"cheq_codigo");
-			}
-			else
-			{	$data = array('mensaje'=>$validacheque->mensaje.$validacheque->ErrorToString());
-			}
-            retornar_result($data);
+            echo $validacheque->mensaje;
             break;
         case PROTESTAR:
             $validacheque->protestar($validacheque_data);
-		   	$validacheque->get_all();
-			if(count($validacheque->rows)>0)
-			{	global $diccionario;
-				$opciones["Aprobado"] = "<button type='button' class='btn btn-default'   onclick='js_validacheques_aprobar(".'"{codigo}"'.",".'"resultado"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/valida_cheques/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_approve' id='{codigo}_aprobar' onmouseover='$(".'"#{codigo}_aprobar"'.").tooltip(".'"show"'.")' title='Aprobar' data-placement='left'><span style='color:green;' class='fa fa-check'></span></button>";
-				$opciones["Protestado"] = "<button type='button' class='btn btn-default' onclick='js_validacheques_protestar_add(".'"{codigo}"'.",".'"modal_edit_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/valida_cheques/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_edit' id='{codigo}_protestar' onmouseover='$(".'"#{codigo}_protestar"'.").tooltip(".'"show"'.")' title='Protestar' data-placement='top'><span style='color:red;' class='fa fa-times'></span></button>";
-				$data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
-                                        "id"=>$tabla,
-                                        "datos"=>$validacheque->rows,
-                                        "encabezado" => array("Ref.","Cod. Alumno","Alumno","No. Cheque","Banco","Girador","Fecha de Dep&oacute;sito","Monto","Opciones"),
-                                        "options"=>array($opciones),
-                                        "campo"=>"cheq_codigo");
-			}
-			else
-			{	$data = array('mensaje'=>$validacheque->mensaje.$validacheque->ErrorToString());
-			}
-            retornar_result($data);
+            echo $validacheque->mensaje;
             break;
 		case GET_ALL:
             $validacheque->get_all( $validacheque_data['filtro'] );
 			
 			if(count($validacheque->rows)>0)
 			{	global $diccionario;
-				$opciones["Aprobado"] = "<button type='button' class='btn btn-default'   onclick='js_validacheques_aprobar(".'"{codigo}"'.",".'"resultado"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/valida_cheques/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_approve' id='{codigo}_aprobar' onmouseover='$(".'"#{codigo}_aprobar"'.").tooltip(".'"show"'.")' title='Aprobar' data-placement='left'><span style='color:green;' class='fa fa-check'></span></button>";
-				$opciones["Protestado"] = "<button type='button' class='btn btn-default' onclick='js_validacheques_protestar_add(".'"{codigo}"'.",".'"modal_edit_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/valida_cheques/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_edit' id='{codigo}_protestar' onmouseover='$(".'"#{codigo}_protestar"'.").tooltip(".'"show"'.")' title='Protestar' data-placement='top'><span style='color:red;' class='fa fa-times'></span></button>";
-				/*$data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
-                                        "id"=>$tabla,
-                                        "datos"=>$validacheque->rows,
-                                        "encabezado" => array("Ref.","Cod. Alumno","Alumno","No. Cheque","Banco","Girador","Fecha de Dep&oacute;sito","Monto","Opciones"),
-                                        "options"=>array($opciones),
-                                        "campo"=>"cheq_codigo");*/
 				$html.= '<table class="table table-bordered table-hover" id="'.$tabla.'" name="'.$tabla.'">';
 					$html.= '	<thead><tr>';
 					$html.= '		<th>Ref.</th>';
@@ -104,7 +63,9 @@ function handler() {
 					$html.= '	</tr></thead>';
 					$html.= '<tbody>';
 					foreach ( $validacheque->rows as $row )
-					{	if ( !empty( $row ) )
+					{	$opciones["Aprobado"] = "<button type='button' class='btn btn-default'   onclick='js_validacheques_aprobar(".'"{codigo}"'.",".'"resultado"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/valida_cheques/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_approve' id='{codigo}_aprobar' onmouseover='$(".'"#{codigo}_aprobar"'.").tooltip(".'"show"'.")' title='Aprobar' data-placement='left'><span style='color:green;' class='fa fa-check'></span></button>";
+						$opciones["Protestado"] = "<button type='button' class='btn btn-default' onclick='js_validacheques_protestar_add(".'"{codigo}"'.",".'"modal_edit_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/valida_cheques/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_edit' id='{codigo}_protestar' onmouseover='$(".'"#{codigo}_protestar"'.").tooltip(".'"show"'.")' title='Protestar' data-placement='top'><span style='color:red;' class='fa fa-times'></span></button>";
+						if ( !empty( $row ) )
 						{	$html.= '	<tr>';
 							$c = 0;
 							$codigo = "";
@@ -146,15 +107,6 @@ function handler() {
 			
 			if(count($validacheque->rows)>0)
 			{	global $diccionario;
-				$opciones["Aprobado"] = "<button type='button' class='btn btn-default'   onclick='js_validacheques_aprobar(".'"{codigo}"'.",".'"resultado"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/valida_cheques/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_approve' id='{codigo}_aprobar' onmouseover='$(".'"#{codigo}_aprobar"'.").tooltip(".'"show"'.")' title='Aprobar' data-placement='left'><span style='color:green;' class='fa fa-check'></span></button>";
-				$opciones["Protestado"] = "<button type='button' class='btn btn-default' onclick='js_validacheques_protestar_add(".'"{codigo}"'.",".'"modal_edit_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/valida_cheques/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_edit' id='{codigo}_protestar' onmouseover='$(".'"#{codigo}_protestar"'.").tooltip(".'"show"'.")' title='Protestar' data-placement='top'><span style='color:red;' class='fa fa-times'></span></button>";
-				/*$data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
-                                        "id"=>$tabla,
-                                        "datos"=>$validacheque->rows,
-                                        "encabezado" => array("Ref.","Cod. Alumno","Alumno","No. Cheque","Banco","Girador","Fecha de Dep&oacute;sito","Monto","Opciones"),
-                                        "options"=>array($opciones),
-                                        "campo"=>"cheq_codigo");*/
 				$html.= '<table class="table table-bordered table-hover" id="'.$tabla.'" name="'.$tabla.'">';
 					$html.= '	<thead><tr>';
 					$html.= '		<th>Ref.</th>';
@@ -170,7 +122,11 @@ function handler() {
 					$html.= '	</tr></thead>';
 					$html.= '<tbody>';
 					foreach ( $validacheque->rows as $row )
-					{	if ( !empty( $row ) )
+					{	
+						$opciones["Aprobado"] = "<button type='button' class='btn btn-default'   onclick='js_validacheques_aprobar(".'"{codigo}"'.",".'"resultado"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/valida_cheques/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_approve' id='{codigo}_aprobar' onmouseover='$(".'"#{codigo}_aprobar"'.").tooltip(".'"show"'.")' title='Aprobar' data-placement='left'><span style='color:green;' class='fa fa-check'></span></button>";
+						$opciones["Protestado"] = "<button type='button' class='btn btn-default' onclick='js_validacheques_protestar_add(".'"{codigo}"'.",".'"modal_edit_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/valida_cheques/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_edit' id='{codigo}_protestar' onmouseover='$(".'"#{codigo}_protestar"'.").tooltip(".'"show"'.")' title='Protestar' data-placement='top'><span style='color:red;' class='fa fa-times'></span></button>";
+						
+						if ( !empty( $row ) )
 						{	$html.= '	<tr>';
 							$c = 0;
 							$codigo = "";

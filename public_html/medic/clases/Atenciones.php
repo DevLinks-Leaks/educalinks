@@ -1,9 +1,11 @@
 <?php
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 /**
  * Description of Estudiantes
  *
@@ -80,6 +82,16 @@ class Atenciones extends DB_Abstract{
             $this->mensaje="Se encontraron atenciones el día de hoy";
         }else{
             $this->mensaje="No se encontraron atenciones el día de hoy";
+        }
+    }
+	public function get_atenciones_search( $txt_fini, $txt_ffin )
+	{   $this->parametros = array( $txt_fini, $txt_ffin );        
+        $this->sp = "med_atenciones_search";
+        $this->executeSPConsulta();
+        if (count($this->rows)>0){
+            $this->mensaje="Se encontraron atenciones";
+        }else{
+            $this->mensaje="No se encontraron atenciones";
         }
     }
     public function get_atenciones_info($aten_codigo=""){

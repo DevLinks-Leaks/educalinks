@@ -73,6 +73,7 @@
 					</ul>
 				</li>
 				<li><a href="../help/EDUCALINKS_BIBLIOTECA.pdf" target='_blank'><i class="fa fa-info-circle"></i> <span>Manual de ayuda</span></a><li>
+				<li class="<? if ($Menu==800) echo 'active'; ?>"><a href="acerca.php"><i class="icon icon-logo"></i> <span>Acerca de Educalinks</span></a></li>
 			</ul>
         </section>
         <!-- /.sidebar -->

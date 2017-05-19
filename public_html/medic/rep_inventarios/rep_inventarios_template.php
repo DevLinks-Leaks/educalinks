@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <?php include("../template/head.php");?>
-	<body class="hold-transition skin-black-light sidebar-mini">
+	<body class="hold-transition skin-blue sidebar-mini">
 		<div class="wrapper">
 			<?php include("../template/navbar.php");?>
 			<?php $active="cons_estudiantes";include("../template/menu.php");?>

@@ -19,6 +19,11 @@
 			</a>
 			<div class="navbar-custom-menu">
 				<ul class="nav navbar-nav">
+					<!-- Tasks: style can be found in dropdown.less -->
+					<li title="Seleccionar período activo">
+						<a href="#" data-toggle="modal" data-target="#ModalPeriodoActivo"><i class="fa fa-calendar"></i>&nbsp;Período: {peri_deta}</a>
+					</li>
+					<!-- User Account: style can be found in dropdown.less -->
 					{select_alumno}
 					<li class="dropdown user user-menu">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">

@@ -14,25 +14,27 @@
 	</div>
 	<div class="panel-body">
 		<div class="row">
-			<div class="col-md-2 col-xs-12 col-sm-6 bottom_10">
+			<div class="col-md-3 col-xs-12 col-sm-6 bottom_10">
 				<input type="text" class="form-control" id="alum_codi" name="alum_codi" placeholder="Código alumno" aria-describedby="alum_codi_addon" readonly>
 			</div>
-			<div class="col-md-4 col-xs-12 col-sm-6 bottom_10">
+			<div class="col-md-5 col-xs-12 col-sm-6 bottom_10">
 				<input type="text" class="form-control" id="alum_nombre" name="alum_nombre" placeholder="Nombres" aria-describedby="alum_nombre_addon" readonly>
 			</div>
-			<div class="col-md-4 col-xs-12 col-sm-6 bottom_10">
+			<div class="col-md-4 col-md-offset-0 col-xs-12 col-xs-offset-0 col-sm-6 col-sm-offset-6 bottom_10">
 				<input type="text" class="form-control" id="alum_curso" name="alum_curso" placeholder="Curso" aria-describedby="alum_curso_addon" readonly>
 				<input type="hidden" class="form-control" id="curs_para_codi" name="curs_para_codi">
 			</div>
-			<div class="col-md-2 col-xs-12 col-sm-6 bottom_10">
-			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-4 col-xs-12 col-sm-6 bottom_10">
-				<input placeholder="Dirección" id="alum_domi" name="alum_domi" class="form-control" aria-describedby="alum_domi_addon" readonly>
-			</div>
 			<div class="col-md-3 col-xs-12 col-sm-6 bottom_10">
 				<input type="text" class="form-control" id="alum_telf" name="alum_telf" placeholder="Teléfono" aria-describedby="alum_telf_addon" readonly>
+			</div>
+			<div class="col-md-5 col-xs-12 col-sm-6 bottom_10">
+				<input placeholder="Dirección" id="alum_domi" name="alum_domi" class="form-control" aria-describedby="alum_domi_addon" readonly>
+			</div>
+			<?php $dev_visible = ""; if ($_SESSION['usua_codi'] != 'ADMIN' ){ $dev_visible = "style='display:none;'"; } ?>
+			<div class="col-md-4 col-md-offset-0 col-xs-12 col-xs-offset-0 col-sm-6 col-sm-offset-6 bottom_10" style='text-align:right;margin-top:2px;'>
+				<div style='vertical-align:middle;' id='client_options' <?php echo $dev_visible; ?>></div>
 			</div>
 		</div>
 		<div class="row">
@@ -212,6 +214,23 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="modal_ficha_medica" tabindex="-1" role="dialog" aria-labelledby="modal_busquedaLabel">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="modal_busquedaLabel"><i class="fa fa-clipboard"></i>&nbsp;Listado de fichas médicas del paciente</h4>
+			</div>
+			<div class="modal-body" id="modal_ficha_medica_body">
+				...
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Ocultar</button>
 			</div>
 		</div>
 	</div>

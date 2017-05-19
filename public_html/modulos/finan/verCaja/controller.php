@@ -100,6 +100,7 @@ function handler() {
 			
 			$caja_cier_codigo = $user_data["codigo"];
 			$hoy = getdate();
+
 			$cierre_caja->get_caja_cierre_items($caja_cier_codigo);
 			$tranx = $cierre_caja->rows;
 			$pdf->AddPage('L', 'A4');//P:Portrait, L=Landscape
@@ -112,6 +113,7 @@ function handler() {
 			$html .= '<h4>Usuario de caja: '.$tranx[0]['usua_codi'].'</h4>';
 			$html .= '<h4>Fecha de apertura caja: '.$fecha_h_result.'</h4>';
 			$html .= '<h5>Fecha de impresi&oacute;n de: '.$hoy['mon'].'/'.$hoy['mday'].'/'.$hoy['year'] .'. '.date('H:i').'. Usuario: '.$_SESSION['usua_codi'].'.</h5> ';
+
 			$html .= '<table border="0" cellspacing="0" cellpadding="0">';
 			$cabePago_total_gene=0;
 			$detaFact_totalbruto_gene=0;
@@ -256,6 +258,7 @@ function handler() {
 			
 			$caja_cier_codigo = $user_data["codigo"];
 			$hoy = getdate();
+
 			$cierre_caja->get_caja_cierre_fp($caja_cier_codigo);
 			$tranx = $cierre_caja->rows;
 			$pdf->AddPage('P', 'A4');//P:Portrait, L=Landscape

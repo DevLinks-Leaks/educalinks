@@ -173,6 +173,7 @@ function handler()
 			$html .= '<h5>Fecha de corte : '.$ffin.'.</h5>';
 			$html .='<table cellspacing="0" cellpadding="1" border="1">';
 			$col=0;
+			$maxcol = 0;
 			// Datos
 			$cursoactual="";
 			$contadorcabec=0;
@@ -191,15 +192,28 @@ function handler()
 					{	if( is_numeric( $valor ) )
 						{	$html .= "<td align=\"right\" style=\"font-size:x-small;\">$".number_format($valor,2,'.',',')."</td>";
 							$total_mensual[$col2] = $total_mensual[$col2] + $valor;
+							$total_mensual_aux[$col2] = $total_mensual_aux[$col2] + $valor;
 						}
 						else
 						{	$html .= "<td align=\"right\" style=\"font-size:x-small;\">".$valor."</td>";
 							$total_mensual[$col2] = 0 ;
+							$total_mensual_aux[$aux] = 0 ;
 						}
 					}
 					else
 					{	if($cursoactual!=$valor)
-						{	$contadorcabec= ( count($tranx[$i]) ); //Producto, prontopago, descuento, subtotal
+						{	if ( $i!=0 )
+							{   $html .='<td></td><td colspan="2" align="left"><b><small>TOTAL PENSIONES '.$valor.'</small></b></td>';
+								for($aux=4;$aux<($maxcol+1);$aux++)
+								{	if ($total_mensual_aux[$aux] != 0 )
+										$html .= '<td align="right" style="font-size:x-small;" ><b>$'.number_format($total_mensual_aux[$aux],2,'.',',').'</b></td>';
+									else
+										$html .= '<td align="right" style="font-size:x-small;" ><b>$0</b></td>';
+								}
+								$html .='</tr><tr>';
+								$total_mensual_aux[$col2] = 0;
+							}
+							$contadorcabec= ( count($tranx[$i]) ); //Producto, prontopago, descuento, subtotal
 							$html .= '<td style="font-size:12; "height="30" colspan="10"><b>'.$valor."</b></td></tr><tr>";
 							$col=0;
 							$html .='<td align="center" valign="center" style="font-size:x-small;">Código</td>';
@@ -216,11 +230,22 @@ function handler()
 							$cursoactual=$valor;
 						}
 					}
+					$maxcol = $col2;
 				}
 				$html .= "</tr>";
 			}
+			//Total último mes
+			$html .='<tr><td></td><td colspan="2" align="center"><b><small>TOTAL PENSIONES '.$cursoactual.'</small></b></td>';
+			for($aux=4;$aux<($maxcol+1);$aux++)
+			{	if ($total_mensual_aux[$aux] != 0 )
+					$html .= "<td align=\"right\"><font size=\"8\"><b>$".number_format($total_mensual_aux[$aux],2,'.',',')."</b></font></td>";
+				else
+					$html .= "<td align=\"right\"><font size=\"8\">$0</font></td>";
+			}
+			$html .='</tr>';
 			//Total por mes
-			$html .='<tr><td></td><td colspan="2" align="center"><b><small>TOTAL DEUDA</small></b></td>';
+			$html .='<tr><td></td><td colspan="2"></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>';
+			$html .='<tr><td></td><td colspan="2" align="center"><b><small>TOTAL DEUDAS</small></b></td>';
 			for($aux=4;$aux<($col2+1);$aux++)
 			{	if ($total_mensual[$aux] != 0 )
 					$html .= "<td align=\"right\"><font size=\"8\"><b>$".number_format($total_mensual[$aux],2,'.',',')."</b></font></td>";
@@ -325,6 +350,7 @@ function handler()
 			$objPHPExcel->getActiveSheet()->getColumnDimension( A )->setWidth(50);
 			
 			$column = 'A';
+			$maxcolumn = '';
 			
 			$objPHPExcel->getActiveSheet()->getStyle('A1:A3')->getFont()->setBold( true );
 			
@@ -333,6 +359,7 @@ function handler()
 			$i_deta_fila=4;
 			
 			$col=0;
+			$maxcol = 0;
 			// Datos
 			$cursoactual="";
 			$contadorcabec=0;
@@ -363,6 +390,7 @@ function handler()
 							$i_cabe=$i_cabe+1;
 							$column++;
 							$total_mensual[$col2] = $total_mensual[$col2] + $valor;
+							$total_mensual_aux[$col2] = $total_mensual_aux[$col2] + $valor;
 						}
 						else
 						{	$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow( $i_cabe, $i_deta_fila, $valor );
@@ -370,15 +398,43 @@ function handler()
 							$i_cabe=$i_cabe+1;
 							$column++;
 							$total_mensual[$col2] = 0 ;
+							$total_mensual_aux[$col2] = 0;
 						}
 					}
 					else
 					{	if($cursoactual!=$valor)
-						{	$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow( $i_cabe, $i_deta_fila, $valor );
+						{	if ( $i!=0 )
+							{   $i_cabe = 0;//Contador X
+								$column = 'A';
+								$column++;
+								$i_cabe=$i_cabe+1;
+								
+								$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow( $i_cabe, $i_deta_fila, "TOTAL PENSIONES " . $cursoactual );
+								$objPHPExcel->getActiveSheet()->getColumnDimension( $column )->setWidth(15);
+								$objPHPExcel->getActiveSheet()->getStyle('A'.$i_deta_fila.':I'.$i_deta_fila)->getFont()->setBold( true );
+								$i_cabe=$i_cabe+1;
+								$column++;
+								
+								for($aux=4;$aux<($maxcol+1);$aux++)
+								{	$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow( $i_cabe, $i_deta_fila, "$".$total_mensual_aux[$aux] );
+									$objPHPExcel->getActiveSheet()->getColumnDimension( $column )->setWidth(15);
+									$total_mensual_aux[$aux] = 0;
+									$i_cabe=$i_cabe+1;
+									$column++;
+								}
+								$i_deta_fila = $i_deta_fila + 2;
+							}
+							$maxcolumn = $column++;
+							$i_cabe = 0;//Contador X
+							$column = 'A';
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow( $i_cabe, $i_deta_fila, $valor );
 							$objPHPExcel->getActiveSheet()->getColumnDimension( $column )->setWidth(15);
+							$objPHPExcel->getActiveSheet()->getStyle('A'.$i_deta_fila.':I'.$i_deta_fila)->getFont()->setBold( true );
 							$i_deta_fila=$i_deta_fila+1;
 							
-							$col=0;
+							$col = 0;
+							$i_cabe = 0;//Contador X
+							$column = 'A';
 							
 							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow( $i_cabe, $i_deta_fila, "Código" );
 							$objPHPExcel->getActiveSheet()->getColumnDimension( $column )->setWidth(15);
@@ -415,6 +471,7 @@ function handler()
 							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow( $i_cabe, $i_deta_fila, "Total" );
 							$objPHPExcel->getActiveSheet()->getColumnDimension( $column )->setWidth(15);
 							$i_cabe=$i_cabe+1;
+							$objPHPExcel->getActiveSheet()->getStyle('A'.$i_deta_fila.':I'.$i_deta_fila)->getFont()->setBold( true );
 							$i_deta_fila = $i_deta_fila + 1;
 							$cursoactual=$valor;
 							
@@ -422,18 +479,40 @@ function handler()
 							$column = 'A';
 						}
 					}
+					$maxcol = $col2;
 				}
 				$i_deta_fila = $i_deta_fila + 1;
 			}
+			///Total del último curso
+			$i_cabe = 0;//Contador X
+			$column = 'A';
+			$column++;
+			$i_cabe=$i_cabe+1;
+			
+			$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow( $i_cabe, $i_deta_fila, "TOTAL PENSIONES " . $cursoactual );
+			$objPHPExcel->getActiveSheet()->getColumnDimension( $column )->setWidth(15);
+			$i_cabe=$i_cabe+1;
+			$column++;
+			
+			for($aux=4;$aux<($col2+1);$aux++)
+			{	$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow( $i_cabe, $i_deta_fila, "$".number_format($total_mensual_aux[$aux],2,'.',',') );
+				$objPHPExcel->getActiveSheet()->getColumnDimension( $column )->setWidth(15);
+				$i_cabe=$i_cabe+1;
+				$column++;
+			}
+			$objPHPExcel->getActiveSheet()->getStyle('A'.$i_deta_fila.':I'.$i_deta_fila)->getFont()->setBold( true );
+			$i_deta_fila = $i_deta_fila + 2;
+			
 			//Total por mes
 			
 			$i_cabe = 0;//Contador X
 			$column = 'A';
+			$column++;
+			$i_cabe=$i_cabe+1;
 			
 			$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow( $i_cabe, $i_deta_fila, "TOTAL DEUDA" );
 			$objPHPExcel->getActiveSheet()->getColumnDimension( $column )->setWidth(15);
-			$i_cabe=$i_cabe+2;
-			$column++;
+			$i_cabe=$i_cabe+1;
 			$column++;
 			
 			for($aux=4;$aux<($col2+1);$aux++)
@@ -442,11 +521,17 @@ function handler()
 				$i_cabe=$i_cabe+1;
 				$column++;
 			}
+			$objPHPExcel->getActiveSheet()->getStyle('A'.$i_deta_fila.':I'.$i_deta_fila)->getFont()->setBold( true );
 			$i_deta_fila = $i_deta_fila + 1;
 			
-			$objPHPExcel->getActiveSheet()->mergeCells('A1:'.$column.'1');
-			$objPHPExcel->getActiveSheet()->mergeCells('A2:'.$column.'2');
-			$objPHPExcel->getActiveSheet()->mergeCells('A3:'.$column.'3');
+			$objPHPExcel->getActiveSheet()->getStyle('C5:I'.$i_deta_fila)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
+			
+			$objPHPExcel->getActiveSheet()->getStyle('A5:A'.$i_deta_fila)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+			$objPHPExcel->getActiveSheet()->getColumnDimension('B')->setWidth(40);
+			
+			$objPHPExcel->getActiveSheet()->mergeCells('A1:I1');
+			$objPHPExcel->getActiveSheet()->mergeCells('A2:I2');
+			$objPHPExcel->getActiveSheet()->mergeCells('A3:I3');
 			
 			$objPHPExcel->getActiveSheet()->setTitle('Reporte de emisiones');
 			$objPHPExcel->setActiveSheetIndex(0);

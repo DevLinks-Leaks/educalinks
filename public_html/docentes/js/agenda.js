@@ -50,11 +50,12 @@ function agen_view(div,url,curs_para_mate_prof_codi,curs_para_mate_codi,tipo)
 			
 		var xhr = new XMLHttpRequest();
 		xhr.open('POST', url , true);
-		xhr.onreadystatechange=function(){
-			if (xhr.readyState==4 && xhr.status==200){
-				document.getElementById(div).innerHTML=xhr.responseText;
-			} 
-		}
+		xhr.onreadystatechange=function()
+		{   if (xhr.readyState==4 && xhr.status==200)
+			{   document.getElementById(div).innerHTML = xhr.responseText;
+				$("#tbl_agenda_main_view").DataTable();
+			}
+		};
 		xhr.send(data);
 		
 	

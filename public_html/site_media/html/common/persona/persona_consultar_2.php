@@ -13,7 +13,7 @@
 								<div class="form-group">
 									<div class="col-md-1 col-sm-3 hidden-sm" style='text-align:right'><label>Persona: </label></div>
 									<div class="col-md-3 col-sm-12">
-										<select id="cmb_per_consulta_tipo_persona" name="cmb_per_consulta_tipo_persona" class='form-control input-sm'>
+										<select id="cmb_per_consulta_tipo_persona" name="cmb_per_consulta_tipo_persona" class='form-control input-sm move'>
 											<!--<option value='0'>Sin especificar</option>-->
 											<option value='1'>Alumno</option>
 											<!--<option value='2'>Representante</option>-->
@@ -23,20 +23,20 @@
 									</div>
 									<div class="col-md-4 col-sm-12">
 										<div class="input-group">
-											<input type="text" class="form-control input-sm" name="numeroIdentificacion_busq" id="numeroIdentificacion_busq" 
+											<input type="text" class="move form-control input-sm" name="numeroIdentificacion_busq" id="numeroIdentificacion_busq" 
 												placeholder="Código interno" required="required" />
 												<span class="input-group-btn">
-													<button type="button" class="btn btn-danger btn-sm" name="btn_busq" id="btn_busq" 
+													<button type="button" class="move btn btn-danger btn-sm" name="btn_busq_persona_2_by_id" id="btn_busq_persona_2_by_id"
 													onclick="js_persona_select_user_searchlist_search(document.getElementById('cmb_per_consulta_tipo_persona').value, 'numeroIdentificacion','resultadoBusqueda','{ruta_html_common}/persona/controller.php')" /><span class="fa fa-search"></span>&nbsp;</button>
 												</span>
 										</div>
 									</div>
 									<div class="col-md-4 col-sm-12">
 										<div class="input-group">
-											<input type="text" class="form-control input-sm" name="nombre_busq" id="nombre_busq" 
+											<input type="text" class="move form-control input-sm" name="nombre_busq" id="nombre_busq" 
 												placeholder="Nombres y/o Apellidos" required="required" />
 												<span class="input-group-btn">
-													<button type="button" class="btn btn-primary btn-sm" name="btn_busq" id="btn_busq" 
+													<button type="button" class="move btn btn-primary btn-sm" name="btn_busq_persona_2_by_name" id="btn_busq_persona_2_by_name" 
 													onclick="js_persona_select_user_searchlist_search(document.getElementById('cmb_per_consulta_tipo_persona').value, 'nombres','resultadoBusqueda','{ruta_html_common}/persona/controller.php')" /><span class="fa fa-search"></span>&nbsp;</button>
 												</span>
 										</div>
@@ -58,8 +58,8 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-				<button type="button" class="btn btn-primary" data-dismiss="modal" 
+				<button type="button" class="btn btn-default move" data-dismiss="modal">Cerrar</button>
+				<button type="button" class="btn btn-primary move" data-dismiss="modal" 
 						onclick="{js}('{div_buttons}','{div_show_result}', document.getElementById('cmb_per_consulta_tipo_persona').value )"><span class='fa fa-hand-o-up'></span>&nbsp;Seleccionar</button>
 			</div>
 		</div>

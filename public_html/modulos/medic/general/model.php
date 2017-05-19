@@ -42,6 +42,16 @@ class General extends DBAbstractModel{
 		{	//$this->mensaje=$this->login_mensaje;
         }
     }
+    public function getChangelog_info( $usua_de, $usua_tipo )
+    {   $this->parametros = array( $usua_de, $usua_tipo, 'C');
+        $this->sp = "visi_usua_view";
+        $this->executeSPConsulta();
+        if (count($this->rows)>0){
+            $this->mensaje="¡Exito! Changelog encontrado.";
+        }else{
+            $this->mensaje="¡Error! Changelog no encontrados.";
+        }
+    }
 	public function getDatosInstitucion_info(){
         $this->parametros = array();
         $this->sp = "str_consultaDatosInstitucion_info";
@@ -528,28 +538,11 @@ require_once('../../../includes/common/tcpdf/tcpdf.php');
 class MYPDF extends TCPDF
 {	
 	public function Header() 
-	{	/*$logo_minis = '../'.$_SESSION['ruta_foto_logo_index'];
-		$this->Image($logo_minis, 12, 5, 40, 15, 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
-
-		if ($this->page == 1) {
-		$this->SetFont('helvetica', '', 6);
-		$this->Cell(0,10,'Código: R13-08 Versión: 4 ', 0, false, 'R', 0, '', 0, false, 'T', 'M');
-		$this->Cell(0,15,'Feb/2016', 0, false, 'R', 0, '', 0, false, 'T', 'M');
-		}elseif ($this->page==5){
-		$this->SetFont('helvetica', '', 6);
-		$this->Cell(0,10,'Código: R13-05 Versión: 2.0', 0, false, 'R', 0, '', 0, false, 'T', 'M');
-		$this->Cell(0,15,'Noviembre/2015', 0, false, 'R', 0, '', 0, false, 'T', 'M');
-		}*/
-
-		//FORMATO
-		// Image($file, $x='', $y='', $w=0, $h=0, $type='', $link='', $align='', $resize=false, $dpi=300, $palign='', $ismask=false, $imgmask=false, $border=0, $fitbox=false, $hidden=false, $fitonpage=false)
+	{	 
 	}
 
 	public function Footer() 
-	{
-		$this->SetY(-15);
-		$this->SetFont('helvetica', 'I', 8);
-		$this->Cell(0, 10, 'Página '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'R', 0, '', 0, false, 'T', 'M');
+	{ 
 	}
 }
 ?>

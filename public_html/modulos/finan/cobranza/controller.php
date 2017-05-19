@@ -65,17 +65,93 @@ function handler()
             $acercamientos->get_acercamientos($user_data['clie_codigo']);
 			$deuda_aux1 = explode(' ',$cobranza->deud_totalPendiente);
 			//$deuda_total = (int)$deuda_aux1[1];
-            $data = array(
-                'clie_codigo'=>$user_data['clie_codigo'],
-                'clie_nombres'=>$cobranza->clie_nombres,
-                'clie_correoElectronico'=>$cobranza->clie_correoElectronico,
-                'clie_direccion'=>$cobranza->clie_direccion,
-                'clie_telefono'=>$cobranza->clie_telefono,
-                'deud_totalInicial'=>$cobranza->deud_totalInicial,
-                'deud_totalPendiente'=>(int)$deuda_aux1[1],
-                'txt_deud_totalPendiente'=>$cobranza->deud_totalPendiente,
-                'deud_fechaVencimiento'=>$cobranza->deud_fechaVencimiento,
-                'acerca_fecha_seguimiento'=>$tomorrow->format('d/m/Y'),
+			
+			if ( $cobranza->repr_TIPOIDFACTURA == "CI" )
+			{ 	$selected[0]= "selected";
+			}
+			else if ( $cobranza->repr_TIPOIDFACTURA == "RUC" )
+			{ 	$selected[1]= "selected";
+			}
+			else if ( $cobranza->repr_TIPOIDFACTURA == "PAS" )
+			{ 	$selected[2]= "selected";
+			}
+			else if ( $cobranza->repr_TIPOIDFACTURA ==  "CF" )
+			{ 	$selected[3]= "selected";
+			}
+			else if ( $cobranza->repr_TIPOIDFACTURA == "IDE" )
+			{ 	$selected[4]= "selected";
+			}
+			else if ( $cobranza->repr_TIPOIDFACTURA == "PLC" )
+			{ 	$selected[5]= "selected";
+			}
+			else
+			{ 	$selected= "";
+			}
+			
+			if ( $cobranza->repr_TIPOIDFACTURA_acad == "CI" )
+			{ 	$selected_acad[0]= "selected";
+			}
+			else if ( $cobranza->repr_TIPOIDFACTURA_acad == "RUC" )
+			{ 	$selected_acad[1]= "selected";
+			}
+			else if ( $cobranza->repr_TIPOIDFACTURA_acad == "PAS" )
+			{ 	$selected_acad[2]= "selected";
+			}
+			else if ( $cobranza->repr_TIPOIDFACTURA_acad ==  "CF" )
+			{ 	$selected_acad[3]= "selected";
+			}
+			else if ( $cobranza->repr_TIPOIDFACTURA_acad == "IDE" )
+			{ 	$selected_acad[4]= "selected";
+			}
+			else if ( $cobranza->repr_TIPOIDFACTURA_acad == "PLC" )
+			{ 	$selected_acad[5]= "selected";
+			}
+			else
+			{ 	$selected_acad= "";
+			}
+												
+            $data=array("combo" => $select='<select  id="tipo_iden" name="tipo_iden" class="form-control">
+													<option '.$selected[0].' value="1">Cédula</option>
+													<option '.$selected[1].' value="2">RUC</option>
+													<option '.$selected[2].' value="3">Pasaporte</option>
+													<option '.$selected[3].' value="4">Consumidor final</option>
+													<option '.$selected[4].' value="5">Exterior</option>
+													<option '.$selected[5].' value="6">Placa</option>
+												</select>',
+						"combo_acad" => $select='<select  id="tipo_iden_acad" name="tipo_iden_acad" class="form-control">
+													<option '.$selected_acad[0].' value="1">Cédula</option>
+													<option '.$selected_acad[1].' value="2">RUC</option>
+													<option '.$selected_acad[2].' value="3">Pasaporte</option>
+													<option '.$selected_acad[3].' value="4">Consumidor final</option>
+													<option '.$selected_acad[4].' value="5">Exterior</option>
+													<option '.$selected_acad[5].' value="6">Placa</option>
+												</select>',
+						'clie_codigo'				=>$user_data['clie_codigo'],
+						'tipo_persona'				=>$cobranza->tipo_persona,
+						'clie_nombres'				=>$cobranza->clie_nombres,
+						'clie_correoElectronico'	=>$cobranza->clie_correoElectronico,
+						'clie_direccion'			=>$cobranza->clie_direccion,
+						'clie_telefono'				=>$cobranza->clie_telefono,
+						'deud_totalInicial'			=>$cobranza->deud_totalInicial,
+						'deud_totalPendiente'		=>(int)$deuda_aux1[1],
+						'txt_deud_totalPendiente'	=>$cobranza->deud_totalPendiente,
+						'deud_fechaVencimiento'		=>$cobranza->deud_fechaVencimiento,
+						'acerca_fecha_seguimiento'	=>$tomorrow->format('d/m/Y'),
+								
+						'repr_cedula'=>$cobranza->repr_cedula,
+						'repr_nomb'	 =>$cobranza->repr_nomb,
+						'repr_apel'	 =>$cobranza->repr_apel,
+						'repr_domi'	 =>$cobranza->repr_domi,
+						'repr_email' =>$cobranza->repr_email,
+						'repr_telf'	 =>$cobranza->repr_telf,
+
+						'repr_cedula_acad'=>$cobranza->repr_cedula_acad,
+						'repr_nomb_acad'  =>$cobranza->repr_nomb_acad,
+						'repr_apel_acad'  =>$cobranza->repr_apel_acad,
+						'repr_domi_acad'  =>$cobranza->repr_domi_acad,
+						'repr_email_acad' =>$cobranza->repr_email_acad,
+						'repr_telf_acad'  =>$cobranza->repr_telf_acad,
+				
                 '{combo_resultado}' => array("elemento"  => "combo", 
                                                 "datos"     => $resultado->rows, 
                                                 "options"   => array("name"=>"combo_resultado","id"=>"combo_resultado","class"=>"form-control","required"=>"required","onchange"=>"carga_detalle_resultado(this.value,'deta_crm_resul_div','".$diccionario['rutas_head']['ruta_html_finan'].'/cobranza/controller.php'."')"),
@@ -94,6 +170,12 @@ function handler()
 																			  "Resultado",
 																			  "Detalle",
 																			  "Observación")));
+			if ( $user_data['tipo_persona']!= '1' )
+				$data['disable_reg_titular'] = " disabled='disabled' ";
+			else
+				$data['disable_reg_titular'] = "";
+			
+			
             retornar_formulario(VIEW_ACERCA, $data);
             break;
         case LOAD_DETA_CRM:

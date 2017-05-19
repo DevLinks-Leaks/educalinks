@@ -33,12 +33,12 @@ class Factura extends DBAbstractModel{
 		$cod_titular = '', $id_titular = '', $cod_estudiante = '', $nombre_estudiante = '',
 		$nombre_titular = '', $ptvo_venta = '', $sucursal = '', $ref_factura = '', $prod_codigo = '', 
 		$estado = '', $tneto_ini = 0, $tneto_fin = 0, $periodo = 0, $grupoEconomico = 0, $nivelEconomico = 0, $curso = 0, $fechadeuda_ini = '', $fechadeuda_fin = '',
-		$fechaAut_ini = '', $fechaAut_fin = '' ){
+		$fechaAut_ini = '', $fechaAut_fin = '', $convenioPago = 0 ){
         $this->parametros = array($estadoElectronico, $fechaemision_ini, $fechaemision_fin,
 									$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
 									$nombre_titular, $ptvo_venta, $sucursal, $ref_factura, $prod_codigo, 
 									$estado, $tneto_ini, $tneto_fin, $periodo, $grupoEconomico, $nivelEconomico, $curso, $fechadeuda_ini, $fechadeuda_fin,
-									$fechaAut_ini, $fechaAut_fin );
+									$fechaAut_ini, $fechaAut_fin, $convenioPago );
         $this->sp = "str_consultaFacturas";
         $this->executeSPConsulta();
 
@@ -53,12 +53,12 @@ class Factura extends DBAbstractModel{
 		$cod_titular = '', $id_titular = '', $cod_estudiante = '', $nombre_estudiante = '',
 		$nombre_titular = '', $ptvo_venta = '', $sucursal = '', $ref_factura = '', $prod_codigo = '', 
 		$estado = '', $tneto_ini = 0, $tneto_fin = 0, $periodo = 0, $grupoEconomico = 0, $nivelEconomico = 0, $curso = 0, $fechadeuda_ini = '', $fechadeuda_fin = '',
-		$fechaAut_ini = '', $fechaAut_fin = '' ){
+		$fechaAut_ini = '', $fechaAut_fin = '', $convenioPago = 0 ){
         $this->parametros = array($estadoElectronico, $fechaemision_ini, $fechaemision_fin,
 									$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
 									$nombre_titular, $ptvo_venta, $sucursal, $ref_factura, $prod_codigo, 
 									$estado, $tneto_ini, $tneto_fin, $periodo, $grupoEconomico, $nivelEconomico, $curso, $fechadeuda_ini, $fechadeuda_fin,
-									$fechaAut_ini, $fechaAut_fin );
+									$fechaAut_ini, $fechaAut_fin, $convenioPago );
         $this->sp = "str_consultaFacturas_excel";
         $this->executeSPConsulta();
 
@@ -350,9 +350,21 @@ class Factura extends DBAbstractModel{
         }
         return $this->rows;
     }
-	public function get_menu_count_facturasPendienteToSRI(){
-        $this->parametros = array();
+	public function get_menu_count_facturasPendienteToSRI()
+	{   $this->parametros = array();
         $this->sp = "str_consultaMenu_FacturasPendientesSRI";
+        $this->executeSPConsulta();
+
+        if (count($this->rows)>0){
+            $this->mensaje="Facturas pendientes encontradas.";
+        }else{
+            $this->mensaje="Facturas pendientes no encontradas.";
+        }
+        return $this->rows;
+    }
+	public function get_menu_count_facturasPendienteConvenioPago()
+	{   $this->parametros = array();
+        $this->sp = "str_consultaMenu_FacturasPendientesConvenioPago";
         $this->executeSPConsulta();
 
         if (count($this->rows)>0){

@@ -1,31 +1,4 @@
-<!-- Modal Configuración Colecturía--> 
-<div class="modal fade" id="modal_configColecturia" tabindex="-1" role="dialog" aria-labelledby="modal_configColecturia" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="modal_configColecturia">Cambio de parámetros del sistema</h4>
-			</div>
-			<div class="modal-body" id="modal_configColecturia_body">
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-				<button type="button" class="btn btn-success" data-dismiss="modal" 
-					onclick="js_general_settings_change(document.getElementById('desc_pronto').value,document.getElementById('desc_prepago').value,document.getElementById('check_bloqueo').checked,'{ruta_html_finan}/general/controller.php')">
-						<span class='glyphicon glyphicon-floppy-disk'></span>&nbsp;Guardar Cambios</button>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- Modal Configuración Colecturía-->
-
 <aside class="control-sidebar control-sidebar-dark">
-	<!-- Create the tabs -->
-	<ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-	  <li class='active'><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-	  <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-wrench"></i></a></li>
-	</ul>
-	<!-- Tab panes -->
 	<div class="tab-content">
         <!-- Home tab content -->
         <div class="tab-pane active" id="control-sidebar-home-tab">
@@ -79,7 +52,7 @@
 						</li>';
 				
 			echo $acad;
-			echo $admisiones;
+			//echo $admisiones;
 			if($_SESSION['rol_finan']==1)
 				echo $finan;
 			if($_SESSION['rol_biblio']==1)

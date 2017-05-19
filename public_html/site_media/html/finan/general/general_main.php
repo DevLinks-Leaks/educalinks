@@ -17,11 +17,14 @@ include("core/rutas.php");?>
 	<link href="{ruta_includes_common}/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet">
 	<link href="{ruta_includes_common}/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet">
 	<link href="https://cdn.datatables.net/buttons/1.1.2/css/buttons.dataTables.min.css" rel="stylesheet">
-	
+
+    <!-- Slick Carousel -->
+    <link href="{ruta_includes_common}/slick/slick.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{ruta_includes_common}/slick/slick-theme.css"/>
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="{ruta_includes_common}/bootstrap/css/bootstrap.css">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
@@ -146,6 +149,8 @@ include("core/rutas.php");?>
 	<script src="{ruta_includes_common}/maskmoney/src/jquery.maskMoney.js" type="text/javascript"></script>
 	<script src="{ruta_includes_common}/bootstrap-validator-master/js/validator.js" type="text/javascript"></script>
     <script src="{ruta_includes_common}/plugins/jQuery/numeric.js"></script>
+	<script src="{ruta_includes_common}/shortcut.js"></script>
+  	<script type="text/javascript" src="{ruta_includes_common}/slick/slick.min.js"></script>
     
 	<script src="{ruta_js_finan}/general_solo.js"></script>
 	<!--<script src="{ruta_js_finan}/cobranza.js"></script-->

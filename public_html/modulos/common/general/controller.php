@@ -938,6 +938,19 @@ function handler() {
 		case CHANGE_PERIODO:
 			$_SESSION['peri_codi']=$user_data['peri_codi'];
 			$_SESSION['peri_deta']=$user_data['peri_deta'];
+			$periodo->get_all();
+			$cmb_sidebar_periodo = '<div class="btn-group-vertical" style="text-align:center;">';
+			for($i=0;$i<count($periodo->rows)-1;$i++)
+			{ 	$cmb_sidebar_periodo.= '<button type="button"
+					id="btn_header_peri_'.$periodo->rows[$i]['peri_codi'].'" 
+					name="btn_header_peri_'.$periodo->rows[$i]['peri_codi'].'" 
+					data-deta="'.$periodo->rows[$i]['peri_deta'].'"
+					class="'.( $periodo->rows[$i]['peri_codi'] == $_SESSION['peri_codi'] ? 'btn btn-primary': 'btn btn-default').'"
+					onClick="js_general_change_periodo(document.getElementById(\'ruta_html_common\').value + \'/general/controller.php\','.$periodo->rows[$i]['peri_codi'].')"
+					>ACTIVAR PERIODO LECTIVO '.$periodo->rows[$i]['peri_deta'].'</button>';
+			}
+			$cmb_sidebar_periodo.= '</div>';
+			$_SESSION['cmb_sidebar_periodo'] = $cmb_sidebar_periodo;
 			echo "¡Exito! Período activo cambiado correctamente.";
 			break;
 			/*NO BORRAR CHANGE_LOGO, NI CHANGE_STATUS_BAR*/

@@ -40,6 +40,17 @@ class Ficha_medica extends DBAbstractModel{
 		del_radiografia
 		get_radiografia
 	*/
+	public function get_ficha_medica_listado_individual( $fmex_codi='-1', $alum_codi='-1', $tipo_ficha='-1' )
+	{	$this->parametros =	array( $fmex_codi, $alum_codi, $tipo_ficha );
+        $this->sp = "str_medic_ficha_medica_list_cons";
+        $this->executeSPConsulta();
+        if (count($this->rows)>0)
+        {   $this->mensaje="¡Exito! Ficha(s) m&eacute;dica(s) encontrada(s).";
+        }
+        else
+        {    $this->mensaje="¡Error! Hubo un problema. Por favor, intente nuevamente luego de unos minutos.";
+        }
+    }
 	public function get_ficha_medica_listado( $fmex_codi='-1' )
 	{	$this->parametros =	array( $fmex_codi );
         $this->sp = "str_medic_ficha_medica_list_cons";

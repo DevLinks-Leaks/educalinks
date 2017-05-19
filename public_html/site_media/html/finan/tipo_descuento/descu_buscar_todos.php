@@ -11,8 +11,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-success" data-dismiss="modal" 
-			onclick="save_edited(document.getElementById('codigo_mod').value,'resultado','{ruta_html_finan}/tipo_descuento/controller.php')">
+        <button type="button" class="btn btn-success"
+			onclick="js_tipo_descuento_save_edited(document.getElementById('codigo_mod').value,'resultado','{ruta_html_finan}/tipo_descuento/controller.php')">
 			<span class='glyphicon glyphicon-floppy-disk'></span>&nbsp;Guardar Cambios</button>
       </div>
     </div>
@@ -32,7 +32,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-success" data-dismiss="modal" onclick="add('resultado','{ruta_html_finan}/tipo_descuento/controller.php')">
+        <button type="button" class="btn btn-success" onclick="js_tipo_descuento_add('resultado','{ruta_html_finan}/tipo_descuento/controller.php')">
 			<span class='glyphicon glyphicon-floppy-disk'></span>&nbsp;Guardar Cambios</button>
       </div>
     </div>
@@ -43,11 +43,23 @@
 	<div class="box-header with-border">
 		<h3 class="box-title">
 			<button class="btn btn-primary" type="button" aria-hidden='true' data-toggle='modal' data-target='#modal_add' 
-				onclick="carga_add('modal_add_body','{ruta_html_finan}/tipo_descuento/controller.php')" {disabled_agregar_descuento}>
-					<i class='fa fa-object-group'></i></span>&nbsp;<i class='fa fa-plus'></i></button>
+				onclick="js_tipo_descuento_carga_add('modal_add_body','{ruta_html_finan}/tipo_descuento/controller.php')" {disabled_agregar_descuento}>
+					<i class='fa fa-percent'></i></span>&nbsp;<i class='fa fa-plus'></i></button>
 		</h3>
 	</div>
 	<div class="box-body">
+		<div class="col-lg-4 col-sm-6 input-group input-group-sm">
+			<span id="span_balance_reason" name="span_balance_reason" class="input-group-addon">Ver</span>
+			<select id='cmb_mostrarDes' name='cmb_mostrarDes' class='form-control'>
+				<option value='zzz'>- Todos los descuentos -</option>
+				<option value='0' selected='selected'>- Descuentos del sistema -</option>
+				<option value='1' >- Descuento para convenio de pago -</option>
+			</select>
+			<span class="input-group-btn">
+				<button type="button" class="btn btn-info btn-flat" onClick='js_tipo_descuento_busca(document.getElementById("cmb_mostrarDes").value,"resultado");'><!--<span class="fa fa-search"></span>-->Ir</button>
+			</span>
+		</div>
+		<br>
 		<div id="resultado">
 			{tabla}
 		</div>

@@ -205,8 +205,8 @@
 								<div class="col-sm-4">
 									<input type="text" readonly class="form-control input-sm" id="nombresCliente" name="nombresCliente" placeholder="Nombres" />
 								</div>
-								<div class="col-sm-4" style='text-align:right;'>
-									<div style='vertical-align:middle;' id='client_options'>{opciones_cliente}</div>
+								<div class="col-sm-4" style='text-align:right;margin-top:2px;'>
+									<div style='vertical-align:top;' id='client_options'>{opciones_cliente}</div>
 								</div>
 							</div>
 							<div class="row">
@@ -304,7 +304,7 @@
 											<i class="fa fa-calendar"></i>
 										</div>
 										<input type="text" name="fechaInicio_add" id="fechaInicio_add" value='{txt_fecha_ini}'
-											class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask required="required">
+											class="form-control input-sm" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask required="required">
 									</div>
 								</div>
 								<div class="form-group">
@@ -316,7 +316,19 @@
 											<i class="fa fa-calendar"></i>
 										</div>
 										<input type="text" name="fechaFin_add" id="fechaFin_add" value='{txt_fecha_fin}'
-											class="form-control" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask required="required">
+											class="form-control input-sm" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask required="required">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-addon">
+											Días de prontopago
+										</div>
+										<!--<div class="input-group-addon">
+											<i class="fa fa-tachometer"></i>
+										</div>-->
+										<input type="text" name="dias_prontoPago_add" id="dias_prontoPago_add" value='0'
+											class="form-control input-sm" required="required">
 									</div>
 								</div>
 								<div class="form-group">

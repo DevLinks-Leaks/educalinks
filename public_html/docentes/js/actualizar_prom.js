@@ -10,7 +10,7 @@
 	var cellMensaje	= fila.insertCell(0);
 	var cellProgreso = fila.insertCell(1);
 	cellMensaje.innerHTML = mensaje;
-	cellProgreso.innerHTML = '<div id="prog_info_'+peri_dist_codi+'"><img src="../../imagenes/ajax-loader.gif"/></div>';
+	cellProgreso.innerHTML = '<div id="prog_info_'+peri_dist_codi+'"><br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div></div>';
     var data = new FormData();
     data.append("peri_dist_codi", peri_dist_codi);
 	var peri_dist_padr_previous = peri_dist_codi;

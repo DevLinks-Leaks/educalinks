@@ -38,18 +38,14 @@ switch ($option){
         echo 
         include("../tabla_atenciones_hoy.php");
         break;
-    case "agrega_atencion_personal":
-        include("../clases/Atenciones.php");
-        $atenciones = new Atenciones();
-        $atencion=json_decode($_POST['atencion_json'],true);
-        $atenciones->add_atencion_cabecera_personal($atencion['cabecera']['usua_codi'],$atencion['cabecera']['motivo_id'],$atencion['cabecera']['observaciones'],$atencion['cabecera']['motivo'],$atencion['cabecera']['usua_tipo']);
-        $aten_codigo=$atenciones->aten_codigo;
-        foreach($atencion['detalle'] as $detalle){
-            $atenciones->add_atencion_detalle($aten_codigo,$detalle['med_codigo'],$detalle['med_cantidad'],$_SESSION['usua_codi']);
-        }
-        
-        include("../tabla_atenciones_hoy.php");
+    case "pay_attention":
+        require_once("../clases/Atenciones.php");
+        $atenciones_search = new Atenciones();
+        $atenciones_search->get_atenciones_search( $_POST['fechavenc_ini'], $_POST['fechavenc_fin'] );
+		$atencion_detalles_hoy = new Atenciones();
+        include("../tabla_atenciones_search.php");
         break;
     default:
+	echo "resultado desconocido";
         break;
 }

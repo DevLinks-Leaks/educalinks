@@ -70,13 +70,20 @@ function js_cobranza_buscar( div, url )
 	{   if ( xhr.readyState === 4 && xhr.status === 200 )
 		{   document.getElementById(div).innerHTML=xhr.responseText;
 			var table = $('#cobr_table').DataTable({
+				dom: 'Bfrtip',
+				buttons: [ 
+					{ extend: 'copy', text: 'Copiar <i class="fa fa-copy"></i>' },
+					{ extend: 'csv', text: 'CSV <i style="color:green" class="fa fa-file-excel-o"></i>' },
+					{ extend: 'excel', text: 'Excel <i style="color:green" class="fa fa-file-excel-o"></i>' },
+					{ extend: 'pdf', text: 'PDF <i style="color:red" class="fa fa-file-pdf-o"></i>' },
+					{ extend: 'print', text: 'Imprimir <i style="color:#428bca" class="fa fa-print"></i>' },
+					],
 				"bPaginate": true,
 				"bStateSave": false,
 				"bAutoWidth": false,
 				"bScrollAutoCss": true,
 				"bProcessing": true,
 				"bRetrieve": true,
-				"sDom": '<"H"CTrf>t<"F"lip>',
 				"aLengthMenu": [[10,25, 50, 100, -1], [10,25, 50, 100, "Todos"]],
 				"sScrollXInner": "110%",
 				"fnInitComplete": function() {
@@ -235,20 +242,42 @@ function edit(codigo,div,url)
 	};
 	xhr.send(data);
 }
-function save_acerca( codigo, div, url )
+function js_cobranza_save_acerca( codigo, div, url )
 {   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'acercamiento');
-	data.append('clie_codigo', document.getElementById('clie_codigo').value);
-	data.append('clie_telefono', document.getElementById('clie_telefono').value);
-	data.append('clie_correoElectronico', document.getElementById('clie_correoElectronico').value);
-	data.append('clie_direccion', document.getElementById('clie_direccion').value);
-	data.append('combo_resultado', document.getElementById('combo_resultado').value);
-	data.append('combo_detalle_resultado', document.getElementById('combo_detalle_resultado').value);
-	data.append('observacion_resultado', document.getElementById('observacion_resultado').value);
-	data.append('acerca_fecha_seguimiento', document.getElementById('acerca_fecha_seguimiento').value);
-	data.append('deud_totalPendiente', document.getElementById('deud_totalPendiente').value);
 	
+	//Alumno
+	
+	data.append('clie_codigo', 				document.getElementById('clie_codigo').value);
+	data.append('tipo_persona', 			document.getElementById('tipo_persona').value);
+	data.append('clie_telefono', 			document.getElementById('clie_telefono').value);
+	data.append('clie_correoElectronico', 	document.getElementById('clie_correoElectronico').value);
+	data.append('clie_direccion', 			document.getElementById('clie_direccion').value);
+	data.append('combo_resultado', 			document.getElementById('combo_resultado').value);
+	data.append('combo_detalle_resultado', 	document.getElementById('combo_detalle_resultado').value);
+	data.append('observacion_resultado', 	document.getElementById('observacion_resultado').value);
+	data.append('acerca_fecha_seguimiento', document.getElementById('acerca_fecha_seguimiento').value);
+	data.append('deud_totalPendiente', 		document.getElementById('deud_totalPendiente').value);
+	
+	//Representante económico
+	
+	data.append('tipo_iden'	 , document.getElementById('tipo_iden').value);
+	data.append('repr_cedula', document.getElementById('repr_cedula').value);
+	data.append('repr_nomb'	 , document.getElementById('repr_nomb').value);
+	data.append('repr_apel'	 , document.getElementById('repr_apel').value);
+	data.append('repr_domi'	 , document.getElementById('repr_domi').value);
+	data.append('repr_email' , document.getElementById('repr_email').value);
+	data.append('repr_telf'	 , document.getElementById('repr_telf').value);
+
+	//Representante legal
+	data.append('tipo_iden_acad'  ,	document.getElementById('tipo_iden_acad').value);
+	data.append('repr_cedula_acad', document.getElementById('repr_cedula_acad').value);
+	data.append('repr_nomb_acad'  , document.getElementById('repr_nomb_acad').value);
+	data.append('repr_apel_acad'  , document.getElementById('repr_apel_acad').value);
+	data.append('repr_domi_acad'  , document.getElementById('repr_domi_acad').value);
+	data.append('repr_email_acad' , document.getElementById('repr_email_acad').value);
+	data.append('repr_telf_acad'  , document.getElementById('repr_telf_acad').value);	
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', url , true);
 	xhr.onreadystatechange=function()

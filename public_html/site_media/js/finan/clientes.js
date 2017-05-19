@@ -44,6 +44,7 @@ $(document).ready(function(){
 	$('#modal_showDebtState').on('shown.bs.modal', function () {
 	}); 
 });
+shortcut.add("Enter", function() {$('#btn_search').trigger("click");});
 // Consulta filtrada
 function js_clientes_buscar( div, url )
 {   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
@@ -399,7 +400,23 @@ function print_pdf(ruta){
 
 	window.open(ruta+"?event=print_report&codigoAlumno="+codigoAlumno+"&codigoPeriodo="+codigoPeriodo+"&fechaInicio="+fechaInicio+"&fechaFin="+fechaFin);
 }
+function print_cert_pdf(ruta){
+	var doit = 'yes';
+    if ( ( document.getElementById('combo_periodo').value == -1 ) || ( document.getElementById('combo_periodo').value == 0 ) )
+    {   $.growl.warning({ title: "Educalinks informa", message: "¡Debe seleccionar un período para poder descargar el Certificado financiero!" });
+        doit = 'no';
+    }
+	console.log(doit);
+    if( doit === 'yes' )
+    {
+		var codigoAlumno = $("#codigoEstudiante").val();
+		var codigoPeriodo = ( document.getElementById("chk_periodo").checked==true ? $("#combo_periodo option:selected").val() : "");
+		var fechaInicio = ( document.getElementById("chk_fecha").checked==true ? $("#txt_fecha_ini").val() : "");
+		var fechaFin = ( document.getElementById("chk_fecha").checked==true ? $("#txt_fecha_fin").val() : "");
 
+		window.open( ruta+"?event=print_cert_report&codigoAlumno="+codigoAlumno+"&codigoPeriodo="+codigoPeriodo );
+	}
+}
 /* Valida el bloqueo o desbloque de un filtro de búsqueda del reporte estado de cuenta */
 function validaFiltros(control, div, url){
 	if(control.checked == true)

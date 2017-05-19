@@ -10,7 +10,7 @@ $(document).ready(function(){
 	}*/
 });
 var spanish="//cdn.datatables.net/plug-ins/f2c75b7247b/i18n/Spanish.json";
-var myVar=setInterval(function () {"use strict"; actualiza_badge_gest_fact();}, 120000);
+//var myVar=setInterval(function () {"use strict"; actualiza_badge_gest_fact();}, 120000);
 var gest=0;
 function go_home(url){
     "use strict";
@@ -44,6 +44,7 @@ function js_general_settings_get()
 		{   document.getElementById( 'modal_configColecturia_body' ).innerHTML = xhr.responseText;
 			$("#desc_pronto").numeric({ decimal : ".",  negative : false, scale: 2, precision: 5 });
 			$("#desc_prepago").numeric({ decimal : ".",  negative : false, scale: 2, precision: 5 });
+			$('[data-toggle="popover"]').popover({html:true});
         }
     };
     xhr.send(data);
@@ -57,7 +58,7 @@ function js_general_check_usa_pp_dv()
 		document.getElementById( 'desc_pronto' ).value = '0.00';
 	}
 }
-function js_general_settings_change(usa_pp_dv,prontopago,iva,enviar_fac_sri_en_cobro,enviar_cheque_a_bandeja,bloqueo,apikey,apikeytoken,gdm,bmpd,bgmpm,bbppp,url)
+function js_general_settings_change(usa_pp_dv,prontopago,iva,enviar_fac_sri_en_cobro,enviar_cheque_a_bandeja,quitar_limite_dias_validez,bloqueo,apikey,apikeytoken,gdm,bmpd,bgmpm,bbppp,url)
 {   "use strict";
     var data = new FormData();
 	data.append('usa_pp_dv', usa_pp_dv);
@@ -65,6 +66,7 @@ function js_general_settings_change(usa_pp_dv,prontopago,iva,enviar_fac_sri_en_c
     data.append('iva', iva);
 	data.append('enviar_fac_sri_en_cobro', enviar_fac_sri_en_cobro);
 	data.append('enviar_cheque_a_bandeja', enviar_cheque_a_bandeja);
+	data.append('quitar_limite_dias_validez', quitar_limite_dias_validez);
 	if ( document.querySelector('input[id="rdb_metodo_descuento"]:checked') )
 		data.append( 'rdb_metodo_descuento' , document.querySelector('input[id="rdb_metodo_descuento"]:checked').value );
     data.append('bloqueo', bloqueo);
@@ -286,9 +288,10 @@ function actualiza_badge_gest_notascredito(badge_total)
 			if( document.getElementById('badge_gest_nc_in_header2') )
 				document.getElementById('badge_gest_nc_in_header2').innerHTML = xhrbadgenc.responseText;
 			$('#pb_nc').removeClass().addClass(get_progress_bar_badge_class(xhrbadgenc.responseText));
-			document.getElementById('pb_nc').style.width = xhrbadgenc.responseText + '%';
+			if( document.getElementById('pb_nc') )
+				document.getElementById('pb_nc').style.width = xhrbadgenc.responseText + '%';
 			//actualiza_badge_gest_notasdebito(gestsuma);
-			actualiza_badge_gest_deudas(gestsuma);
+			actualiza_badge_gest_convenio_pago(gestsuma);
         }
     };
     xhrbadgenc.send(data);
@@ -319,10 +322,42 @@ function actualiza_badge_gest_notasdebito(badge_total)
 			$('#pb_nd').removeClass().addClass(get_progress_bar_badge_class(xhrbadgend.responseText));
 			if( document.getElementById('pb_nd') )
 				document.getElementById('pb_nd').style.width = xhrbadgend.responseText + '%';
+			//actualiza_badge_gest_convenio_pago(gestsuma);
 			actualiza_badge_gest_deudas(gestsuma);
         }
     };
     xhrbadgend.send(data);
+}
+function actualiza_badge_gest_convenio_pago(badge_total)
+{   "use strict";
+    var url=document.getElementById('ruta_html_finan').value+'/convenio_pago/controller.php';
+    var data = new FormData();
+    data.append('event', 'badge_gest_cp');
+    var xhrbadgecp = new XMLHttpRequest();
+    xhrbadgecp.open('POST', url , true);
+    xhrbadgecp.onreadystatechange=function(){
+        if (xhrbadgecp.readyState === 4 && xhrbadgecp.status === 200){
+            var gestnc=0;
+            var gestsuma=0;
+            if(xhrbadgecp.responseText === ""){
+                gestnc=0;
+            }else{
+                gestnc=xhrbadgecp.responseText;
+            }
+            gestsuma=parseInt(badge_total)+parseInt(gestnc);
+            if( document.getElementById('badge_gest_cp_in') )
+				document.getElementById('badge_gest_cp_in').innerHTML = '<span class="' + get_badge_class(xhrbadgecp.responseText) + '">' + xhrbadgecp.responseText + '</span>';
+			if( document.getElementById('badge_gest_cp_in_header1') )
+				document.getElementById('badge_gest_cp_in_header1').innerHTML = xhrbadgecp.responseText;
+			if( document.getElementById('badge_gest_cp_in_header2') )
+				document.getElementById('badge_gest_cp_in_header2').innerHTML = xhrbadgecp.responseText;
+			$('#pb_cp').removeClass().addClass(get_progress_bar_badge_class(xhrbadgecp.responseText));
+			if( document.getElementById('pb_cp') )
+				document.getElementById('pb_cp').style.width = xhrbadgecp.responseText + '%';
+			actualiza_badge_gest_deudas(gestsuma);
+        }
+    };
+    xhrbadgecp.send(data);
 }
 function actualiza_badge_gest_deudas(badge_total)
 {   "use strict";
@@ -411,7 +446,7 @@ function actualiza_badge_gest_cheques(badge_total)
     xhrbadgecheque.open('POST', url , true);
     xhrbadgecheque.onreadystatechange=function(){
         if (xhrbadgecheque.readyState === 4 && xhrbadgecheque.status === 200){
-            var gestdeudas=0;
+			var gestdeudas=0;
             var gestsuma=0;
             if(xhrbadgecheque.responseText === ""){
                 gestdeudas=0;
@@ -419,6 +454,7 @@ function actualiza_badge_gest_cheques(badge_total)
                 gestdeudas=xhrbadgecheque.responseText;
             }
             gestsuma=parseInt(badge_total)+parseInt(gestdeudas);
+			console.log( gestsuma );
             if(gestsuma === 0){
                 if( document.getElementById('badge_gest_fac') )
 					document.getElementById('badge_gest_fac').innerHTML = "";
@@ -429,10 +465,11 @@ function actualiza_badge_gest_cheques(badge_total)
 				$('#span_badge_gest_fac_header1').removeClass();
 				$('#cash_angle').removeClass().addClass('fa fa-angle-left pull-right');
             }else{
+				if(document.getElementById('badge_gest_fac'))
+					document.getElementById('badge_gest_fac').innerHTML = '<span class="' + get_badge_class(gestsuma) + '">' + gestsuma + '</span>';
 				if( document.getElementById('badge_gest_fac_header1') )
 				{   if(document.getElementById('badge_gest_fac_header1').innerHTML != gestsuma)
-					{   document.getElementById('badge_gest_fac').innerHTML = '<span class="' + get_badge_class(gestsuma) + '">' + gestsuma + '</span>';
-						if( document.getElementById('badge_gest_fac_header1') )
+					{   if( document.getElementById('badge_gest_fac_header1') )
 							document.getElementById('badge_gest_fac_header1').innerHTML=gestsuma;
 						if( document.getElementById('badge_gest_fac_header2') )
 							document.getElementById('badge_gest_fac_header2').innerHTML=gestsuma;
@@ -458,7 +495,8 @@ function actualiza_badge_gest_cheques(badge_total)
 function aumenta_porc(porc){
     "use strict";
     var div='prog_bar_deudas';
-    var val_now= parseInt(document.getElementById(div).getAttribute('aria-valuenow'))+porc;
+    //var val_now= parseInt(document.getElementById(div).getAttribute('aria-valuenow'))+porc;
+	var val_now = porc;
 	if(val_now<=100){
 		document.getElementById(div).setAttribute('aria-valuenow',val_now);
 		document.getElementById(div).style.width=String(val_now)+'%';

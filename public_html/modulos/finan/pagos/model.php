@@ -31,7 +31,7 @@ class Pagos extends DBAbstractModel{
         }
         return $this->rows;
     }
-	public function get_formaPagoSelectFormat($busq='')
+	public function get_formaPagoSelectFormat_caja($busq='')
 	{   $this->parametros = array($busq);
         $this->sp = "str_consultaFormaPago_busq";
         $this->executeSPConsulta();
@@ -57,6 +57,35 @@ class Pagos extends DBAbstractModel{
             unset($bypass);
         }
     }
+	public function get_formaPagoSelectFormat($busq='')
+	{   $this->parametros = array($busq);
+        $this->sp = "str_consultaFormaPago_busq";
+        $this->executeSPConsulta();
+        if (count($this->rows)<=0)
+		{   $this->mensaje="No existen formas depago en la BD.";
+            array_pop($bypass);
+            array_push($bypass, array(0 => '', 
+                                   1 => '- Seleccione forma de pago -',
+                                   3 => ''));
+            $this->rows = $bypass;
+            unset($bypass);
+        }
+		else
+		{   $bypass = array();
+            array_pop($bypass);
+            array_push($bypass, array(0 => '', 
+                                   1 => '- Seleccione forma de pago -',
+                                   3 => ''));
+			array_push($bypass, array(0 => '8', 1 => 'DEBITO BANCARIO', 3 => ''));
+			array_push($bypass, array(0 => '10', 1 => 'CONVENIO DE PAGO', 3 => ''));
+			array_push($bypass, array(0 => '11', 1 => 'PAGO POR VENTANILLA', 3 => ''));
+            foreach($this->rows as $formasPago)
+			{   array_push($bypass, array_values($formasPago));
+            }
+            $this->rows = $bypass;
+            unset($bypass);
+        }
+    }
 	public function revertir_factura( $codigo )
 	{   $this->parametros = array( $codigo, $_SESSION['usua_codi'] );
 		$this->sp = "str_factura_revertirPago";
@@ -64,6 +93,18 @@ class Pagos extends DBAbstractModel{
         if (count($this->rows)>0)
 		{   if ( $this->rows[0]['Estado'] == 'OK' )
 				$this->mensaje="¡Exito! Pago eliminado. Deuda reviertida a Estado: 'Por cobrar'.";
+			else if ( $this->rows[0]['Estado'] == 'NO OK' )
+				$this->mensaje="¡Advertencia!".
+					"<b>El sistema ha detectado que la(s) factura(s) relacionada(s) a este pago tienen uno de los siguientes estados
+					   electrónico: ERROR, NO AUTORIZADO, AUTORIZADO, DEVUELTA, EN PROCESO;<br>
+					   <br>
+					   por lo que puede que su factura ya esté registrada en el sistema del SRI, por lo que el sistema de Educalinks
+					   no puede completar con el proceso de reverso de pago normalmente.<br>
+					   <br>
+					   Si desea, puede continuar con el proceso de pago, pero la información referente a facturación electrónica (incluyendo el número secuencial
+					   de factura) no serán reseteados.<br>
+					   <br>
+					   ¿Desea continuar?";
 			else
 				$this->mensaje="¡Error! <b>No se pudo eliminar el pago.</b><br>Puede que la factura haya sido autorizada. Los pagos de facturas autorizadas no se pueden revertir.";
         }

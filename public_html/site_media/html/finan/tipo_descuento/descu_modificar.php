@@ -11,16 +11,21 @@
           <span class="input-group-addon" id="basic-addon2">%</span>
         </div>
     </div>
-      <div class="form-group"> 
+	<div class="form-group">
+    	<label for="porcentaje_add">Tipo de descuento
+			<div id='EducaLinksHelperCliente' style='display:inline;font-size:small;text-align:left;vertical-align:middle;'>
+				<a tabindex="0" data-toggle="popover" data-placement='right' title="Tipo de descuento" data-content="<div style='font-size:x-small'>Una vez creado el descuento, el tipo de descuento no se puede modificar. Por favor, elimínelo y créelo nuevamente.</div>" data-placement='bottom'><span class='fa fa-info-circle'></span></a>
+			</div>
+		</label>
+        <select id='cmb_tipo_descuento' name='cmb_tipo_descuento' class='form-control' disabled='disabled' >
+			<option value='0' {tipo0}>Descuento del sistema</option>
+			<option value='1' {tipo1}>Descuento para Convenio de pago</option>
+		</select>
+    </div>
+    <div class="form-group">
     	<label for="aplicaprontopago_mod" class="checkbox-inline">
     		<input type="checkbox" id="aplicaprontopago_mod" name="aplicaprontopago_mod" {desc_aplicaprontopago}/>	
             Aplica Prontopago
-    	</label>
-	</div>
-    <div class="form-group"> 
-    	<label for="aplicaprepago_mod" class="checkbox-inline">
-    		<input type="checkbox" id="aplicaprepago_mod" name="aplicaprepago_mod" {desc_aplicaprepago} />	
-            Aplica Prepago
     	</label>
 	</div>
 </div>

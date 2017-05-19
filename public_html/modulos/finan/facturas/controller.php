@@ -258,6 +258,7 @@ function handler() {
             $esquemaXML .=    'tN="'.$datosFactura['cabecera']['totalNeto'].'" ';
             $esquemaXML .=    'fIni="'.$datosFactura['cabecera']['fechaInicio_cobro'].'" ';
             $esquemaXML .=    'fFin="'.$datosFactura['cabecera']['fechaVencimiento'].'" ';
+			$esquemaXML .=    'aPP="'.$datosFactura['cabecera']['dias_prontoPago'].'" ';
 			$esquemaXML .=    'gfce="'.$datosFactura['cabecera']['generaFactura'].'" '; //Generar Factura comprobante electrónico
             $esquemaXML .=    'u="'.$_SESSION['usua_codigo'].'" ';
             $esquemaXML .=    'pV="'.$_SESSION['puntVent_codigo'].'" ';

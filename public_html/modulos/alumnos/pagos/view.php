@@ -42,16 +42,8 @@ function retornar_vista_general($vista, $data=array()) {
     }
     $html = str_replace('{subtitulo}', $diccionario['subtitle'][$vista], $html);
     $html = str_replace('{formulario}', get_main($vista), $html);
-	if ( $vista==VIEW_DEBT_ANS )
-	{   /*$html = str_replace('{navbar}', get_navbar_debt_ans_view_repr_pagos(), $html);
-		$html = str_replace('{menu}', get_menu_debt_ans_view_repr_pagos(), $html);*/
-		$html = str_replace('{navbar}', get_navbar_alumnos(), $html);
-		$html = str_replace('{menu}', get_menu(), $html);
-	}
-	else
-	{   $html = str_replace('{navbar}', get_navbar_alumnos(), $html);
-		$html = str_replace('{menu}', get_menu(), $html);
-	}
+    $html = str_replace('{navbar}', get_navbar_alumnos(), $html);
+	$html = str_replace('{menu}', get_menu(), $html);
 	$html = str_replace('{footer}', get_footer(), $html);
     $html = render_dinamic_content($html, $diccionario['form_actions']);
     $html = render_dinamic_content($html, $diccionario['rutas_head']);
@@ -88,30 +80,5 @@ function retornar_vista_general($vista, $data=array()) {
 
     print $html;
 }
-function get_menu_debt_ans_view_repr_pagos(){
-    $file='../../../site_media/html/alumnos/menu_web.php';
-    $menu = file_get_contents($file);
-	$menu = str_replace('{dominio}', $_SESSION['dominio_debt_ans'], $navbar);
-    return $menu;
-}
-function get_navbar_debt_ans_view_repr_pagos()
-{   $file='../../../site_media/html/alumnos/navbar_web.php';
-	$navbar=file_get_contents($file);
-	
-	$print_foto="";
-	
-	$file_exi = '../../'.$_SESSION['ruta_foto_usuario'].'admin.jpg';
-	
-	if ( file_exists( $file_exi ) )
-	{   $print_foto = '../'.$_SESSION["ruta_foto_usuario"].'admin.jpg';
-	}
-	else
-	{	$print_foto = '../'.$_SESSION["ruta_foto_usuario"].'admin.jpg';
-	}
-	
-	$navbar = str_replace('{ruta_foto_header}', $_SESSION['ruta_foto_usuario'], $navbar);
-	$navbar = str_replace('{navbar_logo_educalinks}', '../..'.$ruta_logo_educalinks_long_white, $navbar);
-	$navbar = str_replace('{navbar_logo_educalinks_small}', '../..'.$diccionario['rutas_head'].$ruta_logo_educalinks_long_white_sm , $navbar);
-	return $navbar;
-}
+
 ?>

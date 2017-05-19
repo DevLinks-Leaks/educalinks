@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
     <?php include("../template/head.php");?>
-    <body class="hold-transition skin-black-light sidebar-mini">
+    <body class="hold-transition skin-blue sidebar-mini">
 		<div class="wrapper">
 			<?php include("../template/navbar.php");?>
 			<?php $active="cons_estudiantes";include("../template/menu.php");?>
@@ -61,8 +61,12 @@
 					$("#prof_codi").val("");
 					$("#prof_nomb").val("");
 					carga_alergias('alum_alergias_div','../ajax_script/atenciones.php',alum_codigo_new);
+					document.getElementById("client_options").innerHTML = "<button type='button'  class='btn btn-sm btn-warning' " +
+						"onclick='carga_ficha_medica(\"" + alum_codigo_new + "\","+'"modal_ficha_medica_body"'+",\"../ajax_script/Ficha_medica.php\")' aria-hidden='true' data-toggle='modal' data-target='#modal_ficha_medica'  "+
+						"id='" + alum_codigo_new + "_verFichaMedica' onmouseover='$(this).tooltip("+'"show"'+")' " +
+						" title='Ver fichas médicas' data-placement='left'><i class='fa fa-clipboard'></i>&nbsp;Fichas médicas</button>";
 				}
-			});        
+			});
 			
 			var $input = $('#motivo');
 			$.get('../enfermedades_json.php', function(data){

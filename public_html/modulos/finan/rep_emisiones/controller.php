@@ -66,19 +66,14 @@ function handler()
 
 			
 			$item->get_item_selectFormat('');
-			$select = "	<div class='input-group'>
-							<select id=\"cmb_producto\" name=\"cmb_producto\" class='form-control input-sm' data-placeholder='- Seleccione producto -' >";
+			$select = "<select multiple='multiple' id=\"cmb_producto\" name=\"cmb_producto\" class='form-control input-sm' data-placeholder='- Seleccione producto -' >";
 			
 			foreach( $item->rows as $options )
 			{   if (!empty($options))
 				{   $select .= "<option value='".$options[0]."' >".$options[1]."</option>";
 				}
 			}
-			$select.= "		</select>
-							<span class='input-group-btn'>
-								<button class='glyphicon glyphicon-plus btn btn-primary btn-sm' type='button' id='btn_add_field' name='btn_add_field' onclick=\"js_rep_emisiones_add_field(document.getElementById('cmb_producto'),'div_campos','".$diccionario['rutas_head']['ruta_html_finan']."/rep_emisiones/controller.php',this);\"></button>
-							</span>
-						</div>";
+			$select.= "</select>";
 			
 			$data['cmb_producto'] = $select;
 			retornar_vista(VIEW_GET_ALL, $data);
@@ -320,12 +315,13 @@ function handler()
 			$i_deta_fila=4;
 			
 			$col=0;
+			$maxcol = 0;
 			// Datos
 			$cursoactual="";
 			$contadorcabec=0;
 			for($i=0;$i<count($tranx)-1;$i++)
 			{	$col2=0;
-				
+				//$total_mensual_aux[0] = 123;
 				$i_cabe = 0;//Contador X
 				$column = 'A';
 					
@@ -350,6 +346,7 @@ function handler()
 							$i_cabe=$i_cabe+1;
 							$column++;
 							$total_mensual[$col2] = $total_mensual[$col2] + $valor;
+							$total_mensual_aux[$col2] = $total_mensual_aux[$col2] + $valor;
 						}
 						else
 						{	$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow( $i_cabe, $i_deta_fila, $valor );
@@ -357,15 +354,47 @@ function handler()
 							$i_cabe=$i_cabe+1;
 							$column++;
 							$total_mensual[$col2] = 0 ;
+							$total_mensual_aux[$col2] = 0;
 						}
 					}
 					else
 					{	if($cursoactual!=$valor)
-						{	$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow( $i_cabe, $i_deta_fila, $valor );
+						{	if ( $i != 0 )
+							{   $i_cabe = 0;//Contador X
+								$column = 'A';
+								
+								$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow( $i_cabe, $i_deta_fila, "TOTAL PENSIONES ".$cursoactual );
+								$objPHPExcel->getActiveSheet()->getColumnDimension( $column )->setWidth(15);
+								$i_cabe=$i_cabe+2;
+								$column++;
+								$column++;
+								
+								for($aux=4;$aux<($maxcol+1);$aux++)
+								{	if ($total_mensual_aux[$aux] != 0 )
+									{   $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow( $i_cabe, $i_deta_fila, "$".number_format($total_mensual_aux[$aux],2,'.',',') );
+										$objPHPExcel->getActiveSheet()->getColumnDimension( $column )->setWidth(15);
+										$i_cabe=$i_cabe+1;
+										$column++;
+									}
+									else
+									{	$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow( $i_cabe, $i_deta_fila, "" );
+										$objPHPExcel->getActiveSheet()->getColumnDimension( $column )->setWidth(15);
+										$i_cabe=$i_cabe+1;
+										$column++;
+									}
+								}
+								$i_deta_fila = $i_deta_fila + 2;
+							}
+							$maxcolumn = $column++;
+							$i_cabe = 0;//Contador X
+							$column = 'A';
+							$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow( $i_cabe, $i_deta_fila, $valor );
 							$objPHPExcel->getActiveSheet()->getColumnDimension( $column )->setWidth(15);
 							$i_deta_fila=$i_deta_fila+1;
 							
-							$col=0;
+							$col = 0;
+							$i_cabe = 0;//Contador X
+							$column = 'A';
 							foreach($test as $campocabe)
 							{   
 								$col=$col+1;
@@ -418,11 +447,37 @@ function handler()
 							$column = 'A';
 						}
 					}
+					$maxcol = $col2;
 				}
 				$i_deta_fila = $i_deta_fila + 1;
 			}
-			//Total por mes
+			//Total del último curso
+			$i_cabe = 0;//Contador X
+			$column = 'A';
 			
+			$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow( $i_cabe, $i_deta_fila, "TOTAL PENSIONES " . $cursoactual );
+			$objPHPExcel->getActiveSheet()->getColumnDimension( $column )->setWidth(15);
+			$i_cabe=$i_cabe+2;
+			$column++;
+			$column++;
+			
+			for($aux=4;$aux<($col2+1);$aux++)
+			{	if ($total_mensual_aux[$i] != 0 )
+				{   $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow( $i_cabe, $i_deta_fila, "$".number_format($total_mensual_aux[$i],2,'.',',') );
+					$objPHPExcel->getActiveSheet()->getColumnDimension( $column )->setWidth(15);
+					$i_cabe=$i_cabe+1;
+					$column++;
+				}
+				else
+				{	$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow( $i_cabe, $i_deta_fila, "" );
+					$objPHPExcel->getActiveSheet()->getColumnDimension( $column )->setWidth(15);
+					$i_cabe=$i_cabe+1;
+					$column++;
+				}
+			}
+			$i_deta_fila = $i_deta_fila + 2;
+			
+			//TOTAL GLOBAL
 			$i_cabe = 0;//Contador X
 			$column = 'A';
 			

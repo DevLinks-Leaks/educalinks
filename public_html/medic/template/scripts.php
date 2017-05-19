@@ -28,6 +28,8 @@
     <!-- Morris.js charts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="../../includes/common/plugins/morris/morris.min.js"></script>
+	<!-- JSPDF para PDF-->
+	<script src="http://mrrio.github.io/jsPDF/dist/jspdf.debug.js"></script>
     <!-- Sparkline -->
     <script src="../../includes/common/plugins/sparkline/jquery.sparkline.min.js"></script>
     <!-- jvectormap -->

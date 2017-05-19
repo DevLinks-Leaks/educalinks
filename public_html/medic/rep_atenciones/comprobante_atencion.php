@@ -11,6 +11,7 @@ else
 	{	$aten_codigo="0";
 	}
 }
+
 require('../../core/rutas.php');
 global $diccionario;
 
@@ -68,8 +69,6 @@ $pdf->SetFont('Helvetica', '', 9, '', 'false');
 
 $pdf->AddPage('L', 'A6');//P:Portrait, L=Landscape
 $pdf->setJPEGQuality(75);
-$pdf_atenciones = new Atenciones();
-$pdf_atenciones->get_atenciones_info($aten_codigo);
 
 foreach($pdf_atenciones->rows as $pdf_atencion)
 {   $fecha_atencion	  = $pdf_atencion['aten_fechaCreacion_string'];

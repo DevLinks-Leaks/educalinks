@@ -42,6 +42,16 @@ class General extends DBAbstractModel{
 		{	//$this->mensaje=$this->login_mensaje;
         }
     }
+    public function getChangelog_info( $usua_de, $usua_tipo )
+    {   $this->parametros = array( $usua_de, $usua_tipo, 'C');
+        $this->sp = "visi_usua_view";
+        $this->executeSPConsulta();
+        if (count($this->rows)>0){
+            $this->mensaje="¡Exito! Changelog encontrado.";
+        }else{
+            $this->mensaje="¡Error! Changelog no encontrados.";
+        }
+    }
 	public function getDatosInstitucion_info(){
         $this->parametros = array();
         $this->sp = "str_consultaDatosInstitucion_info";
@@ -49,7 +59,7 @@ class General extends DBAbstractModel{
         if (count($this->rows)>0){
             $this->mensaje="¡Exito! Datos de la institución encontrados.";
         }else{
-            $this->mensaje="¡Exito! Datos no encontrados.";
+            $this->mensaje="¡Error! Datos no encontrados.";
         }
     }
 	public function apertura_caja($codigo="")

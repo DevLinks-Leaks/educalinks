@@ -105,10 +105,10 @@ function handler()
 				$nombre_estudiante = '';
 			else 
 				$nombre_estudiante = $user_data['nombre_estudiante'];
-			if(!isset($user_data['nombre_repr']))
+			if(!isset($user_data['nombre_titular']))
 				$nombre_repr = '';
 			else 
-				$nombre_repr = $user_data['nombre_repr'];
+				$nombre_repr = $user_data['nombre_titular'];
 			if(!isset($user_data['estado']))
 				$estado = 'A';
 			else 
@@ -149,7 +149,7 @@ function handler()
 							<th style='text-align:center;font-size:small;'>Teléfono</th>
 							<th style='text-align:center;font-size:small;'>F. Nacimiento</th>
 							<th style='text-align:center;font-size:small;'>Curso</th>
-							<th style='text-align:center;font-size:small;'>Opciones</th>
+							<th style='text-align:center;font-size:small;'></th>
 						</thead>";
 				$body.="<tbody>";
 				$c=0;
@@ -669,6 +669,99 @@ function handler()
 			$pdf->Output('estado_cuenta.pdf', 'I');
 
 			break;
+        case PRINT_CERT_REPORT:
+			header("Content-type:application/pdf");
+			header("Content-Disposition:attachment;filename='certificado_financiero.pdf'");
+
+			$pdf = new MYPDF_noheadfoot(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+			$pdf->SetCreator("Sistema académico Educalinks");
+			$pdf->SetAuthor("Sistema académico Educalinks");
+			$pdf->SetTitle("Estado de cuenta");
+			$pdf->SetSubject("Estado de cuenta");
+			$pdf->SetMargins(30, PDF_MARGIN_TOP, 30);
+			$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+			$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+			$pdf->AddPage();
+			
+			$codigoAlumno = $user_data["codigoAlumno"];
+			$codigoPeriodo = $user_data["codigoPeriodo"];
+			$fechaInicio = substr($user_data["fechaInicio"], 6, 4).substr($user_data["fechaInicio"], 3, 2).substr($user_data["fechaInicio"], 0, 2) ;
+			$fechaFin = substr($user_data["fechaFin"], 6, 4).substr($user_data["fechaFin"], 3, 2).substr($user_data["fechaFin"], 0, 2) ;
+			
+			$pensiones = new Cliente();
+			$pensiones->get_alumPensiones_valore_reales( $user_data["codigoAlumno"], $user_data["codigoPeriodo"] );
+			$Representante = $pensiones->rows[0]["Representante"];
+			if((strlen($user_data["fechaInicio"]) == 10) && (strlen($user_data["fechaFin"]) == 10))
+				$desc_periodo = 'PERIODO del '.$user_data["fechaInicio"].' a '.$user_data["fechaFin"].'.';
+			else
+			{
+				if (strlen($user_data["codigoPeriodo"]) > 0 )
+					$desc_periodo = 'PERIODO '.$periodoInicial.'.';
+				else
+					$desc_periodo = 'REPORTE HISTORIAL COMPLETO.';
+			}
+			$datosInst->getDatosInstitucion_info();
+			
+			$html = '<br>'.
+					'<br>'.
+					'<br>'.
+					'<div align="left" style="align:left;">'.get_fecha_ciudad('false', 'true' ).'</div>'.
+					'<br>'.
+					'<br>'.
+					'<h2 align="center" style="align:center;">'.
+						'<b>C&nbsp;&nbsp;E&nbsp;&nbsp;R&nbsp;&nbsp;T&nbsp;&nbsp;I&nbsp;&nbsp;F&nbsp;&nbsp;I&nbsp;&nbsp;C&nbsp;&nbsp;A&nbsp;&nbsp;D&nbsp;&nbsp;O</b></h2>'.
+					'<br>'.
+					'<br>'.
+					'<br>'.
+					'<div style="text-align:justify;">Yo, <b>'.$datosInst->rows[0]['empr_representanteLegal_nomb'].'</b> con C.I. Nº. '.$datosInst->rows[0]['empr_representanteLegal_id'].','.
+						'Representante Legal de <b>'.$datosInst->rows[0]['empr_razonSocial'].'</b>, con RUC. Nº '.$datosInst->rows[0]['empr_ruc'].
+						', certificó que el/la <b>Sr./Sra. '.$Representante.'</b>,  a la fecha adeuda los siguientes valores por pensiones'.
+						'correspondientes al periodo lectivo '.$_SESSION['peri_deta'].':</div>'; //print_usua_info es llamado desde funciones.php.
+			
+			$html .='<br>'.
+					'.<table><tr><td width="20%"></td><td width="60%">'.
+					'<table style="margin:0px auto" border="1" align="center">';
+			$total_pensiones = 0.00;
+			if( count($pensiones->rows) == 0 )
+			{   $html .= '<tr class="detallePago" >
+							<td colspan="2">- Sin deudas pendientes -</td>
+						  </tr>';
+			}
+			else
+			{   foreach ($pensiones->rows as $pension)
+				{   if ( !empty( $pension ) )
+					{	$html .= '<tr class="detallePago" >
+								<td>'.$pension["descripcionDeuda"].'</td>
+								<td>$'.$pension["totalPendiente"].'</td>
+							  </tr>';
+						$total_pensiones = $total_pensiones + $pension["totalPendiente"];
+					}
+				}
+				$html .= '<tr class="detallePago" >
+							<td><b>Total</b></td>
+							<td><b>$'.$total_pensiones.'</b></td>
+						 </tr>';
+			}
+			$html .= '</table></td><td width="20%"></td></tr></table>
+			<br>
+			<br>
+			<br>
+			<div style="text-align:justify;">Así constan en los registros financieros del plantel a los que me remito en caso necesario.</div>
+			<br>
+			<br>
+			<br>
+			<br>
+			Atentamente,
+			<br>
+			<br>
+			<br>
+			<b>'.$datosInst->rows[0]['empr_representanteLegal_nomb'].'</b>
+			<br>
+			<b>Representante Legal</b>'; 
+			//echo $html;
+			$pdf->writeHTML($html, true, false, true, false, '');
+			$pdf->Output('certificado_financiero.pdf', 'I');
+			break;
         default :
 			break;
     }
@@ -815,8 +908,8 @@ function tabla_deudas( $tablacliente )
 				}
 				if ( $x == 9 )
 				{   $codigoAlumno = $column;
-					if ( $row['estado'] == 'PAGADA' || $row['fact_estado'] == 'AUTORIZADO' )
-						$data.="<td><div style='font-size:x-small;'>".$column." <br>[<a href='/documentos/autorizados/".$_SESSION['directorio']."/".$titularID."/FAC".$numeroFactura.".PDF' target='_blank' onmouseover='$(this).tooltip(".'"show"'.")' title='FAC. AUTORIZADA ".$numeroFactura."' data-placement='left'>FACTURA</a>]</div></td>";
+					if ( !empty( $row['numeroFactura'] ) )
+						$data.="<td><div style='font-size:x-small;'>".$column." <br>[<a href='/documentos/autorizados/".$_SESSION['directorio']."/".$titularID."/FAC".$numeroFactura.".PDF' target='_blank' onmouseover='$(this).tooltip(".'"show"'.")' title='FAC ".$numeroFactura."' data-placement='left'>A</a>]</div></td>";
 					else
 						$data.="<td><div style='font-size:x-small;'>".$column."</div></td>";
 				}
@@ -833,5 +926,17 @@ function tabla_deudas( $tablacliente )
 	}
 	$data.="</tbody></table>";
 	return $data;
+}
+function get_fecha_ciudad($print_time='true', $print_day='false')
+{
+	$dias = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
+	$meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+	
+	$fecha_det = get_ciudad_institucion() . ', '; //funcion en funciones.php
+	if ($print_day=='true') 
+		$fecha_det .= $dias[date('w')] . " ";
+	$fecha_det .= date('d') . " de " . $meses[date('n')-1] . " del " . date('Y') . '.' ;
+	if ($print_time=='true') $fecha_det .= ' '. date('H:i:s') . '.' ;
+	return $fecha_det;
 }
 ?>

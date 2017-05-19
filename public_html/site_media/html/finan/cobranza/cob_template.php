@@ -18,7 +18,7 @@
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="{ruta_includes_common}/bootstrap/css/bootstrap.css">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
@@ -100,7 +100,7 @@
     <script src="{ruta_includes_common}/bootstrap/js/bootstrap.min.js"></script>
     <script src="{ruta_includes_common}/plugins/select2/select2.full.min.js"></script>
 	<!-- DataTables -->
-	<script src="{ruta_includes_common}/plugins/datatables/jquery.dataTables.js"></script>
+	<script src="{ruta_includes_common}/plugins/datatables/jquery.dataTables.min.js"></script>
 	<script src="{ruta_includes_common}/plugins/datatables/dataTables.bootstrap.min.js"></script>
     <!-- InputMask -->
     <script src="{ruta_includes_common}/plugins/input-mask/jquery.inputmask.js"></script>
@@ -147,8 +147,9 @@
 	<script src="{ruta_includes_common}/maskmoney/src/jquery.maskMoney.js" type="text/javascript"></script>
 	<script src="{ruta_includes_common}/bootstrap-validator-master/js/validator.js" type="text/javascript"></script>
     <script src="{ruta_includes_common}/plugins/jQuery/numeric.js"></script>
+	<script src="{ruta_includes_common}/shortcut.js"></script>
     
-	<script src="{ruta_js_finan}/cobranza.js"></script>
+	<script src="{ruta_js_finan}/cobranza.js?i=ash"></script>
 	<script src="{ruta_js_finan}/general.js"></script>
 	<script src="{ruta_js_common}/general.js"></script>
 	<script src="{ruta_js_common}/mensajeria.js"></script>

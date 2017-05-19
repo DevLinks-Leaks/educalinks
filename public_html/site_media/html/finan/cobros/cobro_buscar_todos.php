@@ -285,8 +285,8 @@
 								<input type="text" readonly class="form-control" id="nombresCliente" name="nombresCliente" placeholder="Nombres" />
 								<input type="hidden" class="form-control" id="hd_prontopago" name="hd_prontopago" value='{hd_prontopago}' />
 							</div>
-							<div class="col-sm-4" style='text-align:right;'>
-								<div style='vertical-align:middle;' id='client_options'>{opciones_cliente}</div>
+							<div class="col-sm-4" style='text-align:right;margin-top:2px;'>
+								<div style='vertical-align:top;' id='client_options'>{opciones_cliente}</div>
 							</div>
 						</div>
 						<div class="row">

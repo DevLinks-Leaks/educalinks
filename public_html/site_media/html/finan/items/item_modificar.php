@@ -16,7 +16,7 @@
         <textarea class="form-control" rows="3" name="descripcion_mod" id="descripcion_mod" value="" placeholder="Breve descripcion" required="required">{item_descripcion}</textarea>
     </div>
     <div class="form-group"> 
-        <label for="cuentaContable_mod">Cuenta contable</label>
+        <label for="cuentaContable_mod" style='display:none;'>Cuenta contable</label>
         <input type="text" class="form-control" name="cuentaContable_mod" id="cuentaContable_mod" value="{item_cuentaContable}" placeholder="Codigo de la cuenta contable" required="required">
     </div>
   <div class="form-group"> 
@@ -31,29 +31,32 @@
             IVA 
         </label>
     </div>
-    <div class="form-group"> 
+    <div class="form-group" style='display:none;'> 
         <label for="aplicaICE_mod" class="checkbox-inline">
             <input type="checkbox" id="aplicaICE_mod" name="aplicaICE_mod" {item_aplicaICE} />   
             ICE
         </label>
     </div>
-
     <div class="form-group"> 
         <label for="precioGeneral_mod" class="checkbox-inline">
             <input type="checkbox" id="precioGeneral_mod" name="precioGeneral_mod" {item_precioGeneral} />   
             Precio General
         </label>
     </div>
-     <div class="form-group"> 
+    <div class="form-group"> 
         <label for="liquidez_mod" class="checkbox-inline">
             <input type="checkbox" id="liquidez_mod" name="liquidez_mod" {item_liquidez}/>   
             Reporte Liquidez
         </label>
     </div>
-      <div class="form-group"> 
+    <div class="form-group"> 
         <label for="prontopago_mod" class="checkbox-inline">
             <input type="checkbox" id="prontopago_mod" name="prontopago_mod" {item_prontopago}/>   
             Aplica Prontopago
         </label>
+    </div>
+    <div class="form-group"> 
+    	<label for="perIva_mod">% IVA</label>
+    	<input type="text" class="form-control" name="perIva_mod" id="perIva_mod" placeholder="% de IVA" required="required" value='{prod_perIVA}' disabled='disabled'>
     </div>
 </div>

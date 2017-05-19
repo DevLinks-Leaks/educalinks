@@ -12,6 +12,11 @@
         <nav class="navbar navbar-static-top" role="navigation">
 			<div class="navbar-custom-menu">
 				<ul class="nav navbar-nav">
+					<!-- Tasks: style can be found in dropdown.less -->
+					<li title="Seleccionar período activo">
+						<a href="#" data-toggle="modal" data-target="#ModalPeriodoActivo"><i class="fa fa-calendar"></i>&nbsp;Período: {peri_deta}</a>
+					</li>
+					<!-- User Account: style can be found in dropdown.less -->
 					<li title='Nombre del alumno'>
 						<a class="dropdown-toggle" data-toggle="dropdown">
 							<span class="hidden-xs">Ficha médica de {cmb_sons}</span>

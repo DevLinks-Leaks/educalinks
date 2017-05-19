@@ -49,7 +49,7 @@ class Rep_saldosafavor extends DBAbstractModel{
             $this->mensaje="Bancos no encontradas";
         }
     }
-	  public function get_reportesaldosafavor($peri_codi=10,$niveEcon_codigo=0,$curs_para_codi=0){
+	public function get_reportesaldosafavor($peri_codi=10,$niveEcon_codigo=0,$curs_para_codi=0){
         $this->parametros = array($peri_codi,$niveEcon_codigo,$curs_para_codi);
         $this->sp = "str_consultarpt_saldos_a_favor";
         $this->executeSPConsulta();

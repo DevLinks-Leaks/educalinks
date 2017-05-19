@@ -6,6 +6,7 @@ class Cobranzas extends DBAbstractModel{
     #propiedades
     protected $clie_codigo;
     public $clie_nombres;
+	public $tipo_persona;
     public $clie_correoElectronico;
     public $clie_direccion;
     public $clie_telefono;
@@ -17,6 +18,22 @@ class Cobranzas extends DBAbstractModel{
     public $deta_crm_resul_codigo;
     public $deta_crm_resul_descripcion;
     public $acerca_fecha_seguimiento;
+	
+	public $repr_TIPOIDFACTURA;
+    public $repr_cedula;
+    public $repr_nomb;
+    public $repr_apel;
+    public $repr_domi;
+    public $repr_email;
+    public $repr_telf;
+	
+	public $repr_TIPOIDFACTURA_acad;
+    public $repr_cedula_acad;
+    public $repr_nomb_acad;
+    public $repr_apel_acad;
+    public $repr_domi_acad;
+    public $repr_email_acad;
+    public $repr_telf_acad;
 
     public function get_all_deud_deta($codigo=""){
         $this->parametros = array($codigo);
@@ -132,12 +149,19 @@ class Cobranzas extends DBAbstractModel{
         }
     }
 
-    public function guarda_acerca($data=array()) {
-        foreach ($data as $campo=>$valor) {
-            $$campo = $valor;
+    public function guarda_acerca($data=array())
+	{   foreach ($data as $campo=>$valor)
+		{   $$campo = $valor;
         }
         
-        $this->parametros = array($clie_codigo, $clie_telefono, $clie_correoElectronico, $clie_direccion, $combo_resultado ,$combo_detalle_resultado,$observacion_resultado,$acerca_fecha_seguimiento,$deud_totalPendiente,$_SESSION['usua_codigo']);
+        $this->parametros = array(	$clie_codigo, 			$clie_telefono, 			$clie_correoElectronico,$clie_direccion,
+									$combo_resultado,		$combo_detalle_resultado,	$observacion_resultado,	$acerca_fecha_seguimiento,
+									$deud_totalPendiente,	
+									$tipo_iden, 			$repr_cedula, 				trim($repr_nomb), 		trim($repr_apel),
+									trim($repr_domi), 		trim($repr_email), 			$repr_telf,
+									$tipo_iden_acad, 		$repr_cedula_acad, 			trim($repr_nomb_acad), 	trim($repr_apel_acad),
+									trim($repr_domi_acad), 	trim($repr_email_acad), 	$repr_telf_acad, 
+									$ckb_docPendientes,		$tipo_persona,				$_SESSION['usua_codigo'] );
         //print_r($this->parametros);
         $this->sp = "str_consultaAcerca_add";
         $this->executeSPAccion();
@@ -148,7 +172,26 @@ class Cobranzas extends DBAbstractModel{
         }
         print_r($this->parametros);
     }
-
+	
+	public function edit_datos_representante($data=array())
+	{   foreach ($data as $campo=>$valor)
+		{   $$campo = $valor;
+        }
+       
+        $this->parametros = array(	$tipoid, 				$numeroid, 				trim($repr_nomb), 		trim($repr_apel),
+									trim($repr_domi), 		trim($repr_email), 		$repr_telf, 
+									$tipoid_acad, 			$numeroid_acad, 		trim($repr_nomb_acad), 	trim($repr_apel_acad),
+									trim($repr_domi_acad), 	trim($repr_email_acad), $repr_telf_acad, 
+									$codigoAlumno, 			$ckb_docPendientes);
+        $this->sp = "str_common_datos_representantes_alumno_upd";
+        $this->executeSPAccion();
+        if($this->filasAfectadas>0){
+            $this->mensaje="¡Exito! Datos de representantes guardados.";
+        }else{
+            $this->mensaje="¡Error! No se han guardado los datos.";
+        }
+		return $this;
+    }
 
     # Método constructor
     function __construct() {

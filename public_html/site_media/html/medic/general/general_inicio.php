@@ -1,3 +1,25 @@
+<input type='hidden' id='hd_chan_flag' name='hd_chan_flag' value="{hd_changelog}" />
+<!-- Modal CHANGELOG -->
+<div class="modal fade" id="modal_changelog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Cambios en Educalinks</h4>
+            </div>
+            <div class="modal-body">
+                {modal_changelog_body}
+            </div>
+
+            <div class="modal-footer">
+                <label style="padding-right: 5%;" for="chk_mostrar">
+                <input type="checkbox" id="chk_mostrar" name="chk_mostrar" /> <strong>No, volver a mostrar esto</strong>
+                </label>
+                <button id="btn_aceptar" type="button" class="btn btn-success" onclick="cerrar_changelog();">Entendido!</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="row">
         	<div class="col-md-12 bottom_10">
                 <div class="panel panel-default">

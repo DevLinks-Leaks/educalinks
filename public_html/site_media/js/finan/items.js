@@ -160,6 +160,7 @@ function add(div,url){
 	data.append('descuento', document.getElementById('descuento_add').checked);
 	data.append('liquidez', document.getElementById('liquidez_add').checked);
 	data.append('prontopago', document.getElementById('prontopago_add').checked);
+	data.append('prod_perIVA', document.getElementById('perIva_add').checked);
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', url , true);
 	xhr.onreadystatechange=function()

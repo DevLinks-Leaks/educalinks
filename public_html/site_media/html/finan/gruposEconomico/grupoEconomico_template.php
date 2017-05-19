@@ -1,6 +1,3 @@
-<?php 
-session_start();
-?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es">
 <head>
@@ -20,7 +17,7 @@ session_start();
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="{ruta_includes_common}/bootstrap/css/bootstrap.css">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
@@ -68,32 +65,27 @@ session_start();
 <body class="hold-transition skin-blue sidebar-mini {sidebar_status}">
     <div class="wrapper">
 	{navbar}
-	
-      <!-- MENU-->
-	  {menu}
-	  <!-- Left side column. contains the logo and sidebar -->
-      <!-- /.MENU-->
-	   <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">
+	{menu}
+	<div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-          <h1>
-            {subtitulo}
-            <small>{mensaje}</small>
-          </h1>
-          <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-home"></i> Mantenimiento</a></li>
-            <li class="active">{subtitulo}</li>
-          </ol>
+			<h1>
+				{subtitulo}
+				<small>{mensaje}</small>
+			</h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-home"></i> Mantenimiento</a></li>
+				<li class="active">{subtitulo}</li>
+			</ol>
         </section>
         <section class="content" id="formulario">
 			{formulario}
         </section>
 		{menu_sidebar}
-      </div><!-- /.content-wrapper -->
+    </div><!-- /.content-wrapper -->
 	<form id="frm_rutas" name="frm_rutas" enctype="multipart/form-data" method="post">
-            {rutas_all}
-            <input type="hidden" id="index" name="index" value="{tipoid}" />
+		{rutas_all}
+		<input type="hidden" id="index" name="index" value="{tipoid}" />
 	</form>
 	{footer}
 	</div><!-- ./wrapper -->
@@ -144,6 +136,7 @@ session_start();
 	<script src="{ruta_includes_common}/maskmoney/src/jquery.maskMoney.js" type="text/javascript"></script>
 	<script src="{ruta_includes_common}/bootstrap-validator-master/js/validator.js" type="text/javascript"></script>
     <script src="{ruta_includes_common}/plugins/jQuery/numeric.js"></script>
+	<script src="{ruta_includes_common}/shortcut.js"></script>
 
 	<script src="{ruta_js_finan}/general.js"></script>
 	<script src="{ruta_js_finan}/gruposEconomico.js"></script>

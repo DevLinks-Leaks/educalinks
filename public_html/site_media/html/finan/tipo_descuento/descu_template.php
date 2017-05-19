@@ -1,6 +1,3 @@
-<?php 
-session_start();
-?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es">
 <head>
@@ -16,11 +13,13 @@ session_start();
 	<link rel="shortcut icon" href="{ruta_imagenes_common}/favicon.png" />
 	<link href="{ruta_includes_common}/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet">
 	<link href="{ruta_includes_common}/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet">
+	<link href="https://cdn.datatables.net/buttons/1.1.2/css/buttons.dataTables.min.css" rel="stylesheet">
 	
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="{ruta_includes_common}/bootstrap/css/bootstrap.css">
+	<link rel="stylesheet" href="{ruta_includes_common}/bootstrap/css/bootstrap_custom_buttons.css">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
@@ -98,6 +97,14 @@ session_start();
 	<!-- DataTables -->
 	<script src="{ruta_includes_common}/plugins/datatables/jquery.dataTables.min.js"></script>
 	<script src="{ruta_includes_common}/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<!-- Buttons -->
+	<script src="https://cdn.datatables.net/buttons/1.1.2/js/dataTables.buttons.min.js"></script>
+	<script src="//cdn.datatables.net/buttons/1.1.2/js/buttons.flash.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+	<script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+	<script src="//cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+	<script src="//cdn.datatables.net/buttons/1.1.2/js/buttons.html5.min.js"></script>
+	<script src="//cdn.datatables.net/buttons/1.1.2/js/buttons.print.min.js"></script>
     <!-- Morris.js charts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="{ruta_includes_common}/plugins/morris/morris.min.js"></script>
@@ -131,6 +138,7 @@ session_start();
 	<script src="{ruta_includes_common}/maskmoney/src/jquery.maskMoney.js" type="text/javascript"></script>
 	<script src="{ruta_includes_common}/bootstrap-validator-master/js/validator.js" type="text/javascript"></script>
     <script src="{ruta_includes_common}/plugins/jQuery/numeric.js"></script>
+	<script src="{ruta_includes_common}/shortcut.js"></script>
     
 	<script src="{ruta_js_finan}/descuentos.js"></script>
 	<script src="{ruta_js_finan}/general.js"></script>

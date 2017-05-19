@@ -4,11 +4,11 @@
 			<!-- Sidebar user panel -->
 			<div class="user-panel">
 				<div class="pull-left image">
-					<img src="<?php echo "../".$_SESSION['ruta_foto_usuario'].'admin.jpg'; ?>" class="img-circle" alt="User Image">
+					<img src="<?= '../../'.$_SESSION['dir_logo_cliente_bg'] ;?>" class="img-circle" alt="User Image">
 				</div>
-				<div class="pull-left info">
-					<p><?= $_SESSION['usua_nomb']; ?> <?= $_SESSION['usua_apel']; ?></p>
-					<a href="#"><i class="fa fa-circle text-success"></i> En línea</a>
+				<div class="pull-left info" style='font-size:x-small;'>
+					<p>Unidad Educativa<br>
+					<?php echo $_SESSION['menu_institucion']; ?></p>
 				</div>
 			</div>
 			<!-- search form 
@@ -80,7 +80,7 @@
 						<li><a href="../../medic/rep_atenciones"><i class="fa fa-circle"></i>Atenciones</a></li>
 					</ul>
 				</li>
-				<li><a href="../../../manuales/Manual_Educalinks_medico_2016_04_27_v1.2.docx" target='_blank'><i class="fa fa-info-circle"></i> <span>Manual de ayuda</span></a><li><!-- {menu001} -->
+				<li><a href="../../../manuales/Manual_Educalinks_medico_2017_01_27_v1.2.1.pdf" target='_blank'><i class="fa fa-info-circle"></i> <span>Manual de ayuda</span></a><li><!-- {menu001} -->
 				<li class="{open7}"><a href="../../common/acerca/"><i class="icon icon-logo"></i> <span>Acerca de Educalinks</span></a></li>
 			</ul>
         </section>
