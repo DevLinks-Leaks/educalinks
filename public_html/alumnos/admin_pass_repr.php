@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
     <?php include("template/head.php");?>
-    <?php include("template/scripts.php");?>
+    
     <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
       <?php include ('template/header.php');?>
+      <?php include("template/scripts.php");?>
       <?php $active="cons_estudiantes";include("template/menu.php");?>
       <div class="content-wrapper">
         <section class="content-header">

@@ -5,9 +5,26 @@ function tipo_view(tipo)
     else
         document.getElementById('mesn_curs_para_codi').style.display='block';
 }
-
+function js_funciones_mensajes_read_from_navbar( div, url, data )
+{
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	if ( window.XMLHttpRequest )
+		xmlhttp=new XMLHttpRequest();	// code for IE7+, Firefox, Chrome, Opera, Safari
+	else
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP"); // code for IE6, IE5
+	
+	xmlhttp.onreadystatechange=function()
+	{   if ( xmlhttp.readyState === 4 && xmlhttp.status === 200 )
+		{   document.getElementById(div).innerHTML=xmlhttp.responseText;
+			mens_alert_upda();
+		}
+	};
+	xmlhttp.open("POST",url,true);
+	xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+	xmlhttp.send(data);	
+}
 function mens_alert_upda()
-{   var div='mens_alert';     
+{   var div='li_navbar_sms';     
     var url='../framework/funciones_mensajes_script_new.php';
     var data='';    
     
@@ -19,7 +36,8 @@ function mens_alert_upda()
     xml_mensaje.onreadystatechange=function()
     {
         if ( xml_mensaje.readyState === 4 && xml_mensaje.status === 200 )
-		{   document.getElementById(div).innerHTML=xml_mensaje.responseText;    
+		{   //console.log(xml_mensaje.responseText);
+			document.getElementById(div).innerHTML=xml_mensaje.responseText;    
         }
     };
     xml_mensaje.open("POST",url,true);
@@ -232,7 +250,7 @@ function elimina_mensaje_followed( )
 	xhr.onreadystatechange=function()
 	{   if (xhr.readyState==4 && xhr.status==200)
 		{   $.growl.notice({ title: "Educalinks informa ",message: "Mensaje eliminado"});
-			$('#modal_del_sms').modal("hide");
+			$('.modal').modal('hide');
 			mensaje_view( document.getElementById('hd_op').value );
 		}
 	};

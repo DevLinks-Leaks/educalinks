@@ -130,21 +130,24 @@
 		</div>
 	</div>
 </div>
-<aside class="control-sidebar control-sidebar-dark">
-	<div class="tab-content">
-        <!-- Home tab content -->
-        <div class="tab-pane active" id="control-sidebar-home-tab">
-            <h3 class="control-sidebar-heading">Módulos del sistema</h3>
-            <ul class="control-sidebar-menu">
-				{sidebar_modulo_acad}
-				{sidebar_modulo_admisiones}
-				{sidebar_modulo_finan}
-				{sidebar_modulo_biblio}
-				{sidebar_modulo_medico}
-            </ul>
-        </div><!-- /.tab-pane -->
-    </div>
-</aside><!-- /.control-sidebar -->
-<!-- Add the sidebar's background. This div must be placed
-    immediately after the control sidebar -->
-<div class="control-sidebar-bg"></div>
+<!-- Modal Módulos-->
+<div class="modal fade" id="ModalEducalinksMoludos" tabindex="-1" role="dialog" aria-labelledby="modal_configBoton" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header" style='background-color:#E55A2F'>
+				<h4 class="modal-title" id="ModalEducalinksMoludos_head" style='color:white;text-align:center;'>
+					<i style="font-size:large;color:white;" class="fa fa-briefcase"></i>&nbsp;Módulos del sistema</h4>
+			</div>
+			<div class="modal-body" id="ModalEducalinksMoludos_body" style='background-color:#F5F5F5;'>
+				<div class="row">
+					<div class="col-xs-12">
+					{mod}
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer" style='background-color:#F5F5F5;text-align:center'>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Ocultar</button>
+			</div>
+		</div>
+	</div>
+</div>

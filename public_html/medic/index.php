@@ -2,7 +2,7 @@
 <html lang="es">
     <?php include("template/head.php");?>
     <body role="document">
-    <?php $active="inicio";include("template/navbar.php");?>
+    <?php $Menu=000; include("template/navbar.php");?>
     <div class="container-fluid theme-showcase" role="main">
         <!-- region de edicion -->
         <div class="row">

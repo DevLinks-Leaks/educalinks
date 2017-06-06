@@ -21,11 +21,64 @@ include ('../framework/funciones.php');
 	{	$curs_para_codi = $_POST["curs_para_codi"];
 	}
 	else
-	{	$curs_para_codi = "0";
+	{	$curs_para_codi = "-1";
+	}
+	
+	if (isset($_POST["grupo_economico"]))
+	{	$grupo_economico = $_POST["grupo_economico"];
+	}
+	else
+	{	$grupo_economico = "-1";
+	}
+	if (isset($_POST["nivel"]))
+	{	$nivel = $_POST["nivel"];
+	}
+	else
+	{	$nivel = "-1";
+	}
+	if (isset($_POST["alum_id"]))
+	{	$alum_id = $_POST["alum_id"];
+	}
+	else
+	{	$alum_id = "";
+	}
+	if (isset($_POST["fechanac_ini"]))
+	{	$fechanac_ini = $_POST["fechanac_ini"];
+	}
+	else
+	{	$fechanac_ini = "";
+	}
+	if (isset($_POST["fechanac_fin"]))
+	{	$fechanac_fin = $_POST["fechanac_fin"];
+	}
+	else
+	{	$fechanac_fin = "";
+	}
+	if (isset($_POST["fechamatri_ini"]))
+	{	$fechamatri_ini = $_POST["fechamatri_ini"];
+	}
+	else
+	{	$fechamatri_ini = "";
+	}
+	if (isset($_POST["fechamatri_fin"]))
+	{	$fechamatri_fin = $_POST["fechamatri_fin"];
+	}
+	else
+	{	$fechamatri_fin = "";
+	}
+	if (isset($_POST["alum_estado"]))
+	{	$alum_estado = $_POST["alum_estado"];
+	}
+	else
+	{	$alum_estado = "-1";
 	}
   
-	$params = array($alum_codi,$alum_apel,$curs_para_codi,$_SESSION['peri_codi']);
-	$sql="{call alumnos_main_lista2(?,?,?,?)}";
+	$params = array(
+		$alum_codi,			$alum_apel,			$_SESSION['peri_codi'],
+		$alum_id,			$grupo_economico,	$nivel,
+		$fechanac_ini,		$fechanac_fin,		$fechamatri_ini,
+		$fechamatri_fin,	$curs_para_codi,	$alum_estado);
+	$sql="{call alumnos_main_lista2(?,?,?,?,?,?,?,?,?,?,?,?)}";
 	$alum_busq = sqlsrv_query($conn, $sql, $params);  
 	$cc = 0; 
 ?>
@@ -67,21 +120,22 @@ include ('../framework/funciones.php');
 	.rTableBody {
 		display: table-row-group;
 	}
+	a {
+		/*color: #424242;*/
+	}
 	a,
 	a label {
 		cursor: pointer;
 		text-decoration: none !important;
 	}
+	a:hover {
+		color: #4285F4;
+	}
 </style>
-
-<table class="table_striped" id="alum_table">
- <thead>
+<table class="table table-striped table-hover" id="alum_table">
+ <thead style='background-color:rgba(1, 126, 186, 0.1) !important;'>
   <tr>
-    <th width="5%" class="sort"><span class="icon-sort icon"></span>&nbsp;Código </th>
-    <th width="25%" class="sort"><span class="icon-sort icon"></span>&nbsp;Nombre</th>
-    <th width="20%" class="sort"><span class="icon-sort icon"></span>&nbsp;Curso</th>
-    <th width="15%" class="sort"><span class="icon-sort icon"></span>&nbsp;Estado</th>
-    <th width="35%" class="center"><span class="icon-cog icon"></span>&nbsp;Opciones</th>
+    <th style="text-align:left">&nbsp;Alumnos </th>
   </tr>
  </thead>
  
@@ -124,119 +178,134 @@ include ('../framework/funciones.php');
 		// $alum_est_view= sqlsrv_fetch_array($stmt_estado);
 		$nombre_completo = validarTildeHTML($row_alum_busq["alum_apel"])." ".validarTildeHTML($row_alum_busq["alum_nomb"]);
 		$cc +=1; ?>
-		<tr>
-			<td><?php echo $row_alum_busq["alum_codi"]; ?></td>
-			<td><?php echo $nombre_completo; ?></td>
-			<td><?php echo $row_alum_busq["curs_deta"]." - ".$row_alum_busq["para_deta"]; ?></td>
-			<td><?php echo $row_alum_busq["esta_deta"]; ?></td>
-			<td >
-				<?php 
-				unset($opciones);
-				$tabla = "";
-				$opciones = array();
-				if ($perm_22=='A')
-				{   $opciones[]="<div class='rTableCell'>
-						<!-- <a 
-							class='option'
-							data-toggle='modal'
-							data-target='#ModalMatri'
-							onclick=\"
-							document.getElementById('ModalMatri_title').innerHTML='".PrimeraMayuscula($nombre_completo)."';
-							document.getElementById('div_cambiar_estado').innerHTML='';
-							document.getElementById('div_blacklist_view').innerHTML='';
-							document.getElementById('alum_codi').value='".$row_alum_busq['alum_codi']."';
-							document.getElementById('adm_est_alum_est_codi').value='".$alum_est_view['alum_est_peri_codi']."';
-							document.getElementById('adm_est_alum_est_det').value='".PrimeraMayuscula($alum_est_view['alum_est_det'])."';
-							document.getElementById('div_adm_est_alum_curs_para_codi').innerHTML='".PrimeraMayuscula($alum_est_view['alum_est_det'])."';
-							document.getElementById('adm_est_curs_para_codi').value='".$row_alum_busq['curs_para_codi']."';
-							document.getElementById('adm_est_alum_curs_para_codi').value='".$row_alum_busq['alum_curs_para_codi']."';
-							document.getElementById('peri_0').onchange();document.getElementById('div_bloqueos_view').innerHTML=''\" >
-							<span class='icon-signup icon' style='margin-right:3px;'></span>&nbsp;Estado</a> -->
-							<a 
-							class='option' 
-							data-toggle='modal' 
-							data-target='#ModalEstado' 
-							onclick=\"load_ajax('modal_estado_content','modal_estado_view.php','alum_codi=". $row_alum_busq['alum_codi']."');\" >
-							<span class='icon-signup icon' style='margin-right:3px;'></span>&nbsp;Estado</a>
-					</div>";
-				}
-				if ($perm_81=='A')
-				{
-					$opciones[]="
-					<div class='rTableCell'>
-						<a 
-							class='option'
-							data-toggle='modal' 
-							data-target='#ModalDocumentos'
-							onclick=\"document.getElementById('alum_curs_para_codi').value=".$row_alum_busq['alum_curs_para_codi'].";document.getElementById('alum_codi').value=".$row_alum_busq['alum_codi'].";\">
-								<span class='icon-print icon' style='margin-right:3px;'></span>&nbsp;Documentos
-						</a>
-					 </div>";
-				}
-				if ($perm_23=='A')
-				{	$opciones[]="
-					<div class='rTableCell'>
-						<a 
-							class='option'
-							onclick=\"window.location='alumnos_add.php?alum_codi='+".$row_alum_busq["alum_codi"] .";\" >
-							<span class='icon-pencil2 icon' style='margin-right:3px;'></span>&nbsp;Editar
-						</a>
-					</div>";
-				}
-				if ($perm_24=='A')
-				{	$opciones[]="
-					<div class='rTableCell'>
-						<a 
-							class='option' 
-							onclick=\"load_ajax_del_alum('opc=alum_delete&alum_codi=". $row_alum_busq['alum_codi'] ."')\" >
-							<span class='icon-remove icon' style='margin-right:3px;'></span>&nbsp;Eliminar</a>
-					</div>";
-				}
-				if ($perm_515=='A')
-				{	$opciones[]="
-					<div class='rTableCell'>
-						<a 
-							class='option'
-							data-target='#ModalAlumBloqAdd'
-							data-toggle='modal'
-							onclick=\"show_edit_bloqueo('div_bloqueos',". $row_alum_busq["alum_codi"] .",'alum_moti_bloq_opci_view');\">
-							<span class='icon-lock icon' style='margin-right:3px;'></span>&nbsp;Bloquear</a>
-					</div>";
-				}
-				if (permiso_activo(22)){
-					if ($row_alum_busq["alum_curs_para_codi"]!="")
-					{	$opciones[]="
-						<div class='rTableCell'>
-						<a 
-							class='option'
-							data-target='#ModalCambiarCurso'
-							data-toggle='modal'
-							onclick=\"alum_curs_para_info(". $row_alum_busq["alum_curs_para_codi"] .");document.getElementById('alum_curs_para_codi').value=". $row_alum_busq["alum_curs_para_codi"].";\">
-							<span class='icon-cog icon' style='margin-right:3px;'></span><span style='font-size:x-small'> &nbsp;Cambiar Curso</span></a>
-						</div>";
-					}
-				}
-				if (permiso_activo(528))
-				{	$opciones[]="
-					<div class='rTableCell'>
-						<a 
-							class='option'
-							data-target='#ModalBlacklistAdd'
-							data-toggle='modal'
-							onclick=\"load_ajax('modal_main_blacklist','script_alumnos_blacklist.php','bl_alum_codi=".$row_alum_busq["alum_codi"]."&opc=edit_view_new');\">
-							<span class='icon-lock icon' style='margin-right:3px;'></span>&nbsp;Blacklist</a>
-					</div>";
-				}
-				$opciones[]="
-				<div class='rTableCell'>
-					<a class='option'
-						onclick=\"window.location='representantes_add.php?alum_codi='+".$row_alum_busq["alum_codi"] .";\">
-						<span class='icon-users icon' style='margin-right:3px;'></span>&nbsp;Familiares</a>
-				</div>";
-				$tabla=alumnos_main_genera_tabla_por_columnas($opciones, 3, 0,'100%','left');// función está en funciones.php
-				echo $tabla;
-				
-			?>
+		<tr><td>
+				<div class='form-horizontal'>
+					<div class='row'>
+						<div class='col-lg-6 col-md-6 col-sm-12 col-sm-12' style="text-align:left">
+							<b style='color:#2d3c4a;'><?php echo $nombre_completo; ?></b><br>
+							<small><b style='color:#2d3c4a;'>Código:</b>&nbsp;<?php echo $row_alum_busq["alum_codi"]; ?></small><br>
+							<small><b style='color:#2d3c4a;'>Estado:</b>&nbsp;
+								<?php 
+									if ( $row_alum_busq["esta_deta"] == 'MATRICULADO') echo '<span style="color:#17ca34">'.$row_alum_busq["esta_deta"].'</span>'; 
+									else if ( $row_alum_busq["esta_deta"] == 'RETIRADO') echo '<span style="color:#e24b4b">'.$row_alum_busq["esta_deta"].'</span>'; 
+									else echo $row_alum_busq["esta_deta"]; ?></small> |&nbsp;
+							<small><b style='color:#2d3c4a;'>Curso:</b>&nbsp;
+							<?php
+							if(permiso_activo(10))
+								echo "<a href='cursos_paralelo_main.php?curs_para_codi=".$row_alum_busq['curs_para_codi']."'
+										title='Ver información del curso ".$row_alum_busq["curs_deta"]." - ".$row_alum_busq["para_deta"]."'>".$row_alum_busq["curs_deta"]." - ".$row_alum_busq["para_deta"]."</a>";
+							else
+								echo $row_alum_busq["curs_deta"]." - ".$row_alum_busq["para_deta"];
+							?></small>
+						</div>
+						<div class='col-lg-6 col-md-6 col-sm-12 col-sm-12' style="text-align:center">
+							<?php 
+							unset($opciones);
+							$tabla = "";
+							$opciones = array();
+							if ($perm_22=='A' and $row_alum_busq["alum_estado"]=='A')
+							{   $opciones[]="<div class='rTableCell'>
+										<a 
+										class='option' 
+										data-toggle='modal' 
+										data-target='#ModalEstado' 
+										onclick=\"load_ajax('modal_estado_content','modal_estado_view.php','alum_codi=". $row_alum_busq['alum_codi']."');\" >
+										<span class='fa fa-clipboard' style='margin-right:3px;'></span>Estado</a>
+								</div>";
+							}
+							if ($perm_81=='A')
+							{
+								$opciones[]="
+								<div class='rTableCell'>
+									<a 
+										class='option'
+										data-toggle='modal' 
+										data-target='#ModalDocumentos'
+										onclick=\"load_ajax('div_document','modal_documentos_view.php','alum_codi=". $row_alum_busq['alum_codi']."&alum_curs_para_codi=". $row_alum_busq['alum_curs_para_codi']."');\">
+											<span class='fa fa-print' style='margin-right:3px;'></span><span>&nbsp;Documentos</span>
+									</a>
+								 </div>";
+							}
+							if ($perm_23=='A')
+							{	$opciones[]="
+								<div class='rTableCell'>
+									<a 
+										class='option btn_opc_lista_editar'
+										onclick=\"window.location='alumnos_add.php?alum_codi=".$row_alum_busq["alum_codi"]."';\" >
+										<span class='fa fa-pencil' style='margin-right:3px;'></span>&nbsp;Editar
+									</a>
+								</div>";
+							}
+							if ($perm_24=='A')
+							{	$opciones[]="
+								<div class='rTableCell'>
+									<a 
+										class='option' 
+										onclick=\"load_ajax_del_alum('opc=alum_delete&alum_codi=". $row_alum_busq['alum_codi'] ."')\" >
+										<span class='fa fa-trash' style='margin-right:3px;'></span>&nbsp;Eliminar</a>
+								</div>";
+							}
+							if ($perm_515=='A')
+							{	$opciones[]="
+								<div class='rTableCell'>
+									<a 
+										class='option'
+										data-target='#ModalAlumBloqAdd'
+										data-toggle='modal'
+										onclick=\"show_edit_bloqueo('div_bloqueos',". $row_alum_busq["alum_codi"] .",'alum_moti_bloq_opci_view');\">
+										<span class='fa fa-ban' style='margin-right:3px;'></span>&nbsp;Bloquear</a>
+								</div>";
+							}
+							if (permiso_activo(535)){
+								if ($row_alum_busq["alum_curs_para_codi"]!="")
+								{	$opciones[]="
+									<div class='rTableCell'>
+									<a 
+										class='option'
+										data-target='#ModalCambiarCurso'
+										data-toggle='modal'
+										onclick=\"alum_curs_para_info(". $row_alum_busq["alum_curs_para_codi"] .");document.getElementById('cb_alum_curs_para_codi').value=". $row_alum_busq["alum_curs_para_codi"].";\">
+										<span class='fa fa-cog' style='margin-right:3px;'></span><span>&nbsp;Cambiar Curso</span></a>
+									</div>";
+								}
+							}
+							if (permiso_activo(222)){
+								if ($row_alum_busq["alum_curs_para_codi"]!="")
+								{	$opciones[]="
+									<div class='rTableCell'>
+									<a 
+										class='option'
+										data-target='#ModalCambioParalelo'
+										data-toggle='modal'
+										onclick=\"curs_para_cambiar_load('cambiar_paralelo_content','modal_cambio_paralelo_view.php','curs_para_codi=". $row_alum_busq["curs_para_codi"] ."&alum_codi=". $row_alum_busq["alum_codi"] ."',". $row_alum_busq["alum_curs_para_codi"] .", ". $row_alum_busq["alum_codi"] .")\";>
+										<span class='fa fa-circle' style='margin-right:3px;'></span><span>&nbsp;Cambiar Paralelo</span></a>
+									</div>";
+								}
+							}
+							if (permiso_activo(528))
+							{	$opciones[]="
+								<div class='rTableCell'>
+									<a 
+										class='option'
+										data-target='#ModalBlacklistAdd'
+										data-toggle='modal'
+										onclick=\"load_ajax('modal_main_blacklist','script_alumnos_blacklist.php','bl_alum_codi=".$row_alum_busq["alum_codi"]."&opc=edit_view_new');\">
+										<span class='fa fa-ban' style='margin-right:3px;'></span>&nbsp;Blacklist</a>
+								</div>";
+							}
+							$opciones[]="
+							<div class='rTableCell'>
+								<a class='option'
+									onclick=\"window.location='representantes_add.php?alum_codi='+".$row_alum_busq["alum_codi"] .";\">
+									<span class='fa fa-heart-o' style='margin-right:3px;'></span>&nbsp;Familiares</a>
+							</div>";
+							$tabla=alumnos_main_genera_tabla_por_columnas($opciones, 3, 0,'100%','left');// función está en funciones.php
+							echo $tabla;
+							
+						?>
+						</div>
+					</div>
+				</div>
 			</td>
 		</tr>
 	<?php  
@@ -244,12 +313,6 @@ include ('../framework/funciones.php');
 	}
 	?>
 	</tbody>
-	<tfoot>
-		<tr class="pager_table" >
-			<td colspan="2"><span class="icon-users icon"></span> Total de Alumnos ( <?php echo $cc; ?> )</td>
-			<td colspan="2" class="right"><div class="paging"></div></td>
-		</tr>
-	</tfoot>
 </table>
 </div>
 <?php

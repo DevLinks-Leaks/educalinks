@@ -1,94 +1,53 @@
 <!DOCTYPE html>
-<html><!-- InstanceBegin template="/Templates/admin.dwt" codeOutsideHTMLIsLocked="false" -->
-
-<?php include ('head.php');?>
-        
-      <!-- Nuevos Css Js -->
-	
-      <!-- Fin -->
-	</head> 
-	<body class="general admin"> 
-								<!-- InstanceBeginEditable name="EditRegion3" --><?php  $Menu=201;    ?><!-- InstanceEndEditable -->
-		<div class="pageContainer"> 
-
-		  <?php include ('menu.php');?>
-
-			<div id="mainPanel" class="section_main">
-            
-        			<?php include ('header.php');?>
-        
-				<div class="main sectionBorder">
+<html lang="es">
+    <?php include("template/head.php");?>
+    <body class="hold-transition skin-blue sidebar-mini <?php echo $_SESSION['sidebar_status']; ?>">
+		<div class="wrapper">
+			<?php include ('template/header.php');?>
+			<?php $Menu=201;include("template/menu.php");?>
+			<div class="content-wrapper">
+				<section class="content-header">
+					<h1>Libretas Alumnos</h1>
+					<ol class="breadcrumb">
+						<li><a href="#"><i class="fa fa-books"></i></a></li>
+						<li class="active">Libretas Alumnos</li>
+					</ol>
+				</section>
+				<section class="content" id="mainPanel">
 					<div id="information">
-          
-          <div class="titleBar">
-          <!-- InstanceBeginEditable name="Titulo Top" -->
-
-<div class="title">
-  	<h3>
-  		<span class="icon-books icon"></span>
-        Libretas Alumnos
-	</h3>
-</div>
-          <!-- InstanceEndEditable -->
-          </div>
-          
-                        <!-- InstanceBeginEditable name="information" --> 
-                        <div  id="tab_libr">
-							 <?php 	include('cursos_paralelo_notas_alum_main_view.php'); ?>
+						<div class="box box-default">
+							<div class="box-header with-border">
+								<h3 class="box-title">
+									<a class="btn btn-warning" href="cursos_paralelo_main.php" title=""><span class="fa fa-chevron-left"></span> Volver</a>
+								</h3>
+							</div><!-- /.box-header -->
+							<div class="box-body">
+								<script type="text/javascript" src="js/funciones_usua.js"></script> 
+								<div id="tab_libr">
+									<?php include('cursos_paralelo_notas_alum_main_view.php'); ?>
+								</div>
+							</div>
 						</div>
-                        <!-- InstanceEndEditable -->
-                    </div>
-				</div>
+		            </div>
+				</section>
+				<?php include("template/menu_sidebar.php");?>
 			</div>
-
-	
-	</div>
-    
-    
-    <input name="mens_de"  		type="hidden" id="mens_de" 		value='<?php echo $_SESSION['USUA_DE'];  ?>'    />
- 	<input name="mens_de_tipo"  type="hidden" id="mens_de_tipo" value='<?php echo $_SESSION['USUA_TIPO']; ?>'    />
-    
-    <!-- Modal SELECCION DE PERIODO -->
-    <div class="modal fade" id="ModalPeriodoActivo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title" id="myModalLabel">SELECCION DE PERIODO ACTIVO</h4>
-          </div>
-          <div class="modal-body">
-           
-                <table>
-                    <tr>
-                        <td>PERIODOS</td>                        
-                        
-                    </tr>
-                            
-                     <? 	
-						$params = array();
-						$sql="{call peri_view()}";
-						$peri_view = sqlsrv_query($conn, $sql, $params);  
-                    ?>
-                    
-                     <? while($row_peri_view = sqlsrv_fetch_array($peri_view)){ ?>
-                     <tr>    
-     					<td height="50"><button type="button" class="btn btn-primary" style="width:100%;" onClick="periodo_cambio(<?= $row_peri_view["peri_codi"]; ?>);">ACTIVAR PERIODO LECTIVO <?= $row_peri_view["peri_deta"]; ?></button></td>
-                    </tr>
-                    <?php  } ?>
-
-
-                     
-                   
-                </table>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-            
-          </div>
-        </div>
-      </div>
-    </div>
-    
-<!-- InstanceBeginEditable name="EditRegion4" --><!-- InstanceEndEditable -->
-</body>
-<!-- InstanceEnd --></html>
+			<form id="frm_actu" name="frm_actu" method="post" action="" enctype="multipart/form-data">
+				<?php include("template/rutas.php");?>
+			</form>
+			<?php include("template/footer.php");?>
+		</div>
+		<!-- =============================== -->
+		<input name="mens_de"  		type="hidden" id="mens_de" 		value='<?php echo $_SESSION['USUA_DE'];  ?>'    />
+		<input name="mens_de_tipo"  type="hidden" id="mens_de_tipo" value='<?php echo $_SESSION['USUA_TIPO']; ?>'    />
+		<?php include("template/scripts.php");?>
+		<script type="text/javascript" charset="utf-8">
+			$(document).ready(function() {
+				$('#rol_table').DataTable({
+					language: {url: '//cdn.datatables.net/plug-ins/1.10.8/i18n/Spanish.json'},
+				 	"bSort": false 
+				}) ;
+			} );
+		</script>
+	</body>
+</html>

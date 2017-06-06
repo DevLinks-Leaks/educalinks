@@ -53,83 +53,59 @@
 	
 	
 ?> 
-<table width="100%"   class="table_striped">
- <thead>
-  <tr>
-    <th width="40%"><strong>Listado de periodo</strong></th>
-    <th colspan="2"><strong>Opciones</strong></th>
-  </tr>
-  </thead>
-
-
-  <tbody>
- <?php  while ($row_peri_view = sqlsrv_fetch_array($peri_view)) { $cc +=1; ?>
-  <tr >
-    <td height="29">  <?= $row_peri_view["peri_deta"]; ?> 
-     - Año : <?= $row_peri_view["peri_ano"]; ?></td>
-    <td width="60%">
-    
-			<div class="menu_options" style="text-align:left;">
-			  <ul>
-
+<table width="100%"   class="table table-striped">
+	<thead>
+		<tr>
+			<th width="40%"><strong>Listado de periodos</strong></th>
+			<th colspan="2"><strong>Opciones</strong></th>
+		</tr>
+	</thead>
+	<tbody>
+	 <?php while ($row_peri_view = sqlsrv_fetch_array($peri_view)) { $cc +=1; ?>
+		<tr>
+			<td height="29">  <?= $row_peri_view["peri_deta"]; ?> 
+			 - Año : <?= $row_peri_view["peri_ano"]; ?></td>
+			<td width="60%">
 			<?php if (permiso_activo(55)){?>
-			    <li>
-				    <a class="option" href="admin_periodos_etapas.php?peri_codi=<?= $row_peri_view["peri_codi"]; ?>">
-				    <span class="icon-users icon"></span> Etapas
+			    <a class="btn btn-default" href="admin_periodos_etapas.php?peri_codi=<?= $row_peri_view["peri_codi"]; ?>">
+				    <span class="fa fa-arrows-h btn_opc_lista_print"></span> Etapas
 				    </a>
-			    </li>
-                 <?php }?>
+			    <?php }?>
                  
                  <?php if (permiso_activo(55)){?>
-			    <li>
-				    <a class="option" href="admin_periodos_distribucion.php?peri_codi=<?= $row_peri_view["peri_codi"]; ?>">
-				    <span class="icon-users icon"></span>Distribuciones</a>
-			    </li>
-                 <?php }?>
+			    <a class="btn btn-default" href="admin_periodos_distribucion.php?peri_codi=<?= $row_peri_view["peri_codi"]; ?>">
+				    <span class="fa fa-columns btn_opc_lista_print"></span> Distribuciones de notas</a>
+			    <?php }?>
                  <?php if (para_sist(406)=='1'){?>
 	                 <?php if (permiso_activo(531)){?>
-				    <li>
-					    <a class="option" href="admin_periodos_promociones.php?peri_codi=<?= $row_peri_view["peri_codi"]; ?>">
-					    <span class="icon-users icon"></span>Promociones</a>
-				    </li>
+					    <a class="btn btn-default" href="admin_periodos_promociones.php?peri_codi=<?= $row_peri_view["peri_codi"]; ?>">
+					    <span class="fa fa-columns btn_opc_lista_print"></span> Promociones</a>
 	                 <?php }?>
                  <?php }?>
                  
                  <?php if (permiso_activo(53)){?>
-			    <li>
-				    <a class="option"   onclick="peri_edi(<?= $row_peri_view["peri_codi"]; ?>,'<?= $row_peri_view["peri_deta"]; ?>',<?= $row_peri_view["peri_ano"]; ?>)" data-toggle="modal" data-target="#peri_nuev" >
-				    <span class="icon-users icon"></span> Editar
+			    <a class="btn btn-default" onclick="peri_edi(<?= $row_peri_view["peri_codi"]; ?>,'<?= $row_peri_view["peri_deta"]; ?>',<?= $row_peri_view["peri_ano"]; ?>)" data-toggle="modal" data-target="#peri_nuev" >
+				    <span class="fa fa-edit btn_opc_lista_editar"></span> Editar
 				    </a>
-			    </li>
-                 <?php }?>
+			    <?php }?>
                  
                  
                  <?php if (permiso_activo(54)){?>
-			    <li>
-				    <a class="option" onclick="peri_del(<?= $row_peri_view["peri_codi"]; ?>)">
-				    <span class="icon-users icon"></span>Eliminar
+			    <a class="btn btn-default" onclick="peri_del(<?= $row_peri_view["peri_codi"]; ?>)">
+				    <span class="fa fa-trash btn_opc_lista_eliminar"></span> Eliminar
 				    </a>
-			    </li>
-                 <?php }?>
-                </ul>
-                </div>
-
-	 
-    </td>
-    </tr>
- 
+			    <?php }?>
+			</td>
+		</tr>
  <?php  }?>
-
-</tbody>
-
- <tfoot>
- 	<tr class="pager_table">
-            <td colspan="3">
-            <span class="icon-calendar icon"></span> Total de Periodos ( <?php echo $cc;?> )
-            </td>
-            
-        </tr>
- </tfoot>
+	</tbody>
+	<tfoot>
+		<tr class="pager_table">
+			<td colspan="3">
+			<span class="icon-calendar icon"></span> Total de Periodos ( <?php echo $cc;?> )
+			</td>
+		</tr>
+	</tfoot>
 </table>
 
  

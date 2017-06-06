@@ -28,5 +28,5 @@ function js_paciente_consulta( )
 }
 function js_ficha_med_consulta( )
 {   var url = '../../medic/ficha_nuevo/';
-	js_paciente_submit( url, 'get_ficha_med_listado', '{menuPaciente02}');
+	js_paciente_submit( url, 'get_ficha_med_listado', '{menuFicha02}');
 }

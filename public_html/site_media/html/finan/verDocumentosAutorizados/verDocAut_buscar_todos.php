@@ -344,8 +344,8 @@
 										title='Estado electr&oacute;nico de la factura'
 										onmouseover='$(this).tooltip("show")'>
 									<select class='form-control input-sm' id='cmb_estadoElectronico' name='cmb_estadoElectronico'>
-										<option value='' selected='selected'>Todos en gestión (DNA's)</option>
-										<option value='AUTORIZADO'>Autorizado</option>
+										<option value=''>Todos en gestión (DNA's)</option>
+										<option value='AUTORIZADO' selected='selected'>Autorizado</option>
 										<option value='NO AUTORIZADO'>No Autorizado</option>
 										<option value='NO ENVIADO'>No Enviado</option>
 										<option value='PROCESANDOSE'>Procesándose</option>

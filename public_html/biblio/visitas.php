@@ -2,7 +2,7 @@
 <html lang="es">
     <?php include("Templates/head.php");?>
 	<?php session_activa(); ?>
-	<body class="hold-transition skin-blue sidebar-mini">
+	<body class="hold-transition skin-blue sidebar-mini <?php echo $_SESSION['sidebar_status']; ?>">
 		<div class="wrapper">
 			<?php include("Templates/navbar.php");?>
 			<?php include("Templates/menu.php");?>

@@ -32,6 +32,10 @@ function get_menu(){
 					
 					$menu=str_replace($campo,'<a href="'.$valor['href'].'"title="'.$array[1].'"><span class="submenu">'.$valor['texto'].' </span><span id="badge_gest_nd_in"></span></a>',$menu);
 				}
+				elseif($valor['href']=='../../finan/convenio_pago/'){
+					
+					$menu=str_replace($campo,'<a href="'.$valor['href'].'"title="'.$array[1].'"><span class="submenu">'.$valor['texto'].' </span><span id="badge_gest_cp_in"></span></a>',$menu);
+				}
 				elseif($valor['href']=='../../finan/gestionContifico/'){
 					
 					$menu=str_replace($campo,'<a href="'.$valor['href'].'"title="'.$array[1].'"><span class="submenu">'.$valor['texto'].' </span><span id="badge_gest_contifico"></span></a>',$menu);
@@ -62,10 +66,14 @@ function get_menu(){
 	{	$print_foto = '../'.$_SESSION["ruta_foto_usuario"].'admin.jpg';
 	}
 	$menu = str_replace('{fotoUsuario}', $print_foto, $menu);
-	$menu = str_replace('{logo_institucion}',   '../../'.$_SESSION['print_dir_logo_cliente_bg'],  $menu);
+	$menu = str_replace('{logo_institucion}',   '../../'.$_SESSION['dir_logo_cliente_bg'],  $menu);
 	$menu = str_replace('{nombre_institucion}', $_SESSION['menu_institucion'],$menu);
 	$menu = str_replace('{nombre_del_modulo}',  $_SESSION['nombre_del_modulo'], $menu);
 	
+	if ( $_SESSION["modulo"] == 'alumnos' )
+	{   if( !$_SESSION['cita_medica'] )
+			$menu = str_replace('{citas_display}', " style='display:none;' ",$menu);
+	}
 	
 	//$_SESSION['print_dir_logo_cliente'];
 	//$_SESSION['print_dir_logo_cliente_bg'];
@@ -129,6 +137,12 @@ function get_navbar(){
 	$navbar = str_replace('{fotoUsuario}', $print_foto, $navbar);
 	$navbar = str_replace('{navbar_logo_educalinks}', '../..'.$_SESSION['dir_logo_educalinks_long'] , $navbar);
 	$navbar = str_replace('{navbar_logo_educalinks_small}', '../..'.$diccionario['rutas_head'].$_SESSION['dir_logo_educalinks_long_small'] , $navbar);
+	$navbar = str_replace('{navbar_logo_educalinks}', '../..'.$_SESSION['dir_logo_educalinks_long'] , $navbar);
+	$navbar = str_replace('{navbar_logo_educalinks_small}', '../..'.$diccionario['rutas_head'].$_SESSION['dir_logo_educalinks_long_small'] , $navbar);
+	$navbar = str_replace('{cmb_sidebar_periodo}', $_SESSION['cmb_sidebar_periodo'], $navbar );
+	$navbar = str_replace('{peri_deta}', $_SESSION['peri_deta'], $navbar );
+	$navbar = str_replace('{SMS_USUA_DE}', $_SESSION['USUA_DE'], $navbar );
+	$navbar = str_replace('{SMS_USUA_TIPO}', $_SESSION['USUA_TIPO'], $navbar );
 	return $navbar;
 }
 function get_navbar_alumnos()
@@ -140,108 +154,43 @@ function get_navbar_alumnos()
 	$file_exi = '../../'.$_SESSION['ruta_foto_usuario'].$_SESSION['usua_codi'].'.jpg';
 	
 	if ( file_exists( $file_exi ) )
-	{   $print_foto = '../'.$_SESSION["ruta_foto_usuario"].$_SESSION["usua_codi"].'.jpg';
+	{   $print_foto = '../../'.$_SESSION["ruta_foto_usuario"].$_SESSION["usua_codi"].'.jpg';
 	}
 	else
-	{	$print_foto = '../'.$_SESSION["ruta_foto_usuario"].'admin.jpg';
+	{	$print_foto = '../../'.$_SESSION["ruta_foto_usuario"].'admin.jpg';
 	}
-	
-	$navbar = str_replace('{select_alumno}', $_SESSION['cmb_alum_sel'], $navbar);
+	$combo = str_replace('../fotos', '../../fotos', $_SESSION['cmb_alum_sel'] );
+	$navbar = str_replace('{select_alumno}', $combo, $navbar);
 	$navbar = str_replace('{ruta_foto_header}', $_SESSION['ruta_foto_header'], $navbar);
 	$navbar = str_replace('{navbar_logo_educalinks}', '../..'.$_SESSION['dir_logo_educalinks_long'] , $navbar);
 	$navbar = str_replace('{navbar_logo_educalinks_small}', '../..'.$diccionario['rutas_head'].$_SESSION['dir_logo_educalinks_long_small'] , $navbar);
+	$navbar = str_replace('{peri_deta}', $_SESSION['peri_deta'], $navbar );
 	return $navbar;
 }
 function get_menu_sidebar(){
 	$file='../../../site_media/html/'.$_SESSION['modulo'].'/menu_sidebar.php';
 	$sidebar=file_get_contents($file);
 	$cmb = str_replace("value='".$_SESSION['peri_codi']."'", "value='".$_SESSION['peri_codi']."' selected='selected' " , $_SESSION['cmb_sidebar_periodo'] );
-	$boton_de_pago = '<div class="form-group">
-					<label class="control-sidebar-subheading">
-						Botón de pagos
-						<button type="button" class="pull-right btn btn-default btn-xs fa fa-edit" onclick="js_general_config_bdp();"></button>
-					</label>
-					<p>
-						Configuración de botón de pagos.
-					</p>
-				</div>';
-	$sidebar = str_replace('{cmb_sidebar_periodo}', $cmb, $sidebar );
-
-	$acad = '	<li>
-					<a href="../../../admin/index.php" title="Ir al módulo académico">
-						<i class="menu-icon fa fa-graduation-cap bg-yellow"></i>
-						<div class="menu-info">
-							<h4 class="control-sidebar-subheading">Académico</h4>
-							<p>Notas, tutoría, clase virtual</p>
-						</div>
-					</a>
-				</li>';
-	$admisiones = '<li>
-					<a href="../../../main_admisiones.php" title="Ir al módulo de admisiones">
-						<i class="menu-icon fa fa-child bg-purple"></i>
-						<div class="menu-info">
-							<h4 class="control-sidebar-subheading">Admisiones</h4>
-							<p>Módulo de Pre-selección</p>
-						</div>
-					</a>
-				</li>';
-	$admisiones = '';
-	$finan = '<li>
-					<a href="../../../main_finan.php" title="Ir al módulo financiero">
-						<i class="menu-icon fa fa-usd bg-green"></i>
-						<div class="menu-info">
-							<h4 class="control-sidebar-subheading">Financiero</h4>
-							<p>Colecturía, cobranza y facturación electrónica</p>
-						</div>
-					</a>
-				</li>';
-	$biblio = '<li>
-					<a href="../../../biblio/index.php" title="Ir al módulo biblioteca">
-					  <i class="menu-icon fa fa-book bg-light-blue"></i>
-					  <div class="menu-info">
-						<h4 class="control-sidebar-subheading">Biblioteca</h4>
-						<p>Mantenimiento de inventario de biblioteca</p>
-					  </div>
-					</a>
-				</li>';
-	$medico = '<li>
-					<a href="../../../main_medic.php" title="Ir al módulo médico">
-					  <i class="menu-icon fa fa-medkit bg-red"></i>
-					  <div class="menu-info">
-						<h4 class="control-sidebar-subheading">Médico</h4>
-						<p>Inventario médico y ficha médica ocupacional</p>
-					  </div>
-					</a>
-				</li>';
-	$encuesta = '<li>
-					<a href="../../../main_encuestas.php" title="Ir al módulo de encuestas">
-						<i class="menu-icon fa fa-book bg-orange"></i>
-						<div class="menu-info">
-							<h4 class="control-sidebar-subheading">Encuestas</h4>
-							<p>Creación de cuestionarios y estadísticas</p>
-						</div>
-					</a>
-				</li>';
-				
-	$sidebar = str_replace('{sidebar_modulo_acad}', $acad, $sidebar );
-	$sidebar = str_replace('{sidebar_modulo_admisiones}', $admisiones, $sidebar );
-	if($_SESSION['rol_finan']==1)
-		$sidebar = str_replace('{sidebar_modulo_finan}', $finan, $sidebar );
-	else
-		$sidebar = str_replace('{sidebar_modulo_finan}', "", $sidebar );
-	if($_SESSION['rol_biblio']==1)
-		$sidebar = str_replace('{sidebar_modulo_biblio}', $biblio, $sidebar );
-	else
-		$sidebar = str_replace('{sidebar_modulo_biblio}', "", $sidebar );
-	if($_SESSION['rol_medico']==1)
-		$sidebar = str_replace('{sidebar_modulo_medico}', $medico, $sidebar );
-	else
-		$sidebar = str_replace('{sidebar_modulo_medico}', "", $sidebar );
 	
-	if ($_SESSION['rol_pagoweb']==1)
-		$sidebar = str_replace('{bdp}', $boton_de_pago, $sidebar );
-	else
-		$sidebar = str_replace('{bdp}', '', $sidebar );
+	$mod = "";
+	
+	if($_SESSION['certus_acad']){
+		$mod.= "<a href='../../../admin/index.php' title=-Ir al módulo académico- style='width:100%' class='btn btn-warning'>
+			<i class='fa fa-graduation-cap'></i>&nbsp;Académico
+		</a><br><br>";}
+	if($_SESSION['certus_finan']){ if($_SESSION['rol_finan']==1){
+		$mod.= "<a href='../../../main_finan.php' title=-Ir al módulo financiero- style='width:100%' class='btn btn-success'>
+			<i class='fa fa-dollar'></i>&nbsp;Financiero
+		</a><br><br>";}}
+	if($_SESSION['certus_biblio']){ if($_SESSION['rol_biblio']==1){
+		$mod.= "<a href='../../../biblio/index.php' title=-Ir al módulo biblioteca- style='width:100%' class='btn btn-primary'>
+			<i class='fa fa-book'></i>&nbsp;Biblioteca
+		</a><br><br>";}}
+	if($_SESSION['certus_medic']){ if($_SESSION['rol_medico']==1){
+		$mod.= "<a href='../../../main_medic.php' title=-Ir al módulo médico- style='width:100%' class='btn btn-danger'>
+		<i class='fa fa-medkit'></i>&nbsp;Médico
+		</a><br><br>";}}
+	$sidebar = str_replace('{mod}', $mod, $sidebar );
 	return $sidebar;
 }
 function get_footer(){
@@ -347,7 +296,7 @@ function add_rutas( $this )
 }
 function activa_menu($vista,$html){
 	global $diccionario;
-    $html = str_replace($diccionario['active_menu']['mainmenu'] , 'in', $html);
+    $html = str_replace($diccionario['active_menu']['mainmenu'] , 'active', $html);
     $html = str_replace($diccionario['active_menu']['submenu'] , 'active', $html);
 	$html = str_replace($diccionario['active_menu']['open'] , 'active', $html);
 	return $html;

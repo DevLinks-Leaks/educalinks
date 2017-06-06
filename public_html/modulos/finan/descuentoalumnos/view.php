@@ -14,8 +14,8 @@ $diccionario = array(
 	'rutas_head'=>array(),
     'active_menu'=>array(
         'submenu'  => '{menu315}',
-		'open'  => '{open3}', 
-        'mainmenu' => '{menu3}' 
+		'open'  => '{open6}', 
+        'mainmenu' => '{menu6}' 
                         ),
 	'usua_datos'=>array(
         'usua_nombres'  => $_SESSION['usua_nombres'], 

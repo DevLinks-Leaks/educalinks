@@ -49,8 +49,8 @@
   <script src="../../includes/common/plugins/slimScroll/jquery.slimscroll.min.js"></script>
   <!-- FastClick -->
   <script src="../../includes/common/plugins/fastclick/fastclick.min.js"></script>
-  <!-- AdminLTE App -->
-  <script src="../../includes/common/dist/js/app.min.js"></script>
+  <!-- AdminLTE App aquí está la función que guarda el estado del menu-sidebar en una variable de sesión. Tiene que ser app.js y no app.min.js-->
+  <script src="../../includes/common/dist/js/app.js"></script>
   <!-- iCheck -->
   <script src="../../includes/common/plugins/iCheck/icheck.min.js"></script>
   <!-- AdminLTE for demo purposes -->
@@ -70,6 +70,8 @@
   <link  href="../../includes/common/growl/jquery.growl.css" rel="stylesheet" type="text/css" />
   <script src="../../includes/common/maskmoney/src/jquery.maskMoney.js" type="text/javascript"></script>
   <script src="../../includes/common/bootstrap-validator-master/js/validator.js" type="text/javascript"></script>
+  <script type="text/javascript" src="../includes/common/shortcut.js"></script>
+  <script type="text/javascript" src="../includes/common/enquire.js"></script>
 
   <script type="text/javascript" src="js/funciones_categorias.js?<?= $rand?>"></script> 
   <script type="text/javascript" src="js/funciones_descriptores.js?<?= $rand?>"></script>

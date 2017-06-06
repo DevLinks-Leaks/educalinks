@@ -16,41 +16,69 @@
 	
 	sqlsrv_next_result($mens_view_para_new);
 	
-?>
- 
-<?php if ($row_mens_view_para_new = sqlsrv_fetch_array($mens_view_para_new)) {?>
-	<a  id="link_mens" class="button" href="#" data-toggle="dropdown">
-		<img src="../theme/images/icons/ico_notifications.png" border="0" title="Mensajes">
-		<div  id="mens_counter" class="button_counter"><?= $row_count; ?></div>
-	</a>
-	<ul class="dropdown-menu" role="menu" aria-labelledby="notificaciones">
-    
-     <?php  do { $cc +=1; ?> 
-		<?php if ($cc  <= 5) {?>
-            <li> 
-                <a data-toggle="modal" 
-                          data-target="#modal_leer_ext" onclick="load_ajax('modal_main_ext','mensajes_info.php','mens_codi=<?= $row_mens_view_para_new['mens_codi'];?>&op=2');mens_alert_upda();" > 
-                    <div class="message_container">
-                        <div class="icon">
-                            <img src="../theme/images/flag.png" alt="icon_message">
-                        </div>
-                        <div class="message">
-                            <h5><?= $row_mens_view_para_new['mens_titu'];?></h5>
-                            <h6>Enviado por: <?=  $row_mens_view_para_new['mens_para_nomb'];?></h6>
-                        </div>
-                    </div> 
-                </a>
-            </li>
-         <?php  }?>
- 	<?php  }while ($row_mens_view_para_new = sqlsrv_fetch_array($mens_view_para_new))?>
-     
-    
-<?php  }else{?> 
-	<a  id="link_mens" class="button" href="mensajes.php" >
-		<img src="../theme/images/icons/ico_notifications.png">
-		<div  id="mens_counter" class="button_counter" style="display:none;">0</div>
-	</a>
-<ul class="dropdown-menu" role="menu" aria-labelledby="notificaciones">
-<?php  }?>										  
-	<li  class="btn_more_message" ><a href="mensajes.php">Ver mas ..</a></li>
-</ul>
+	if ($row_mens_view_para_new = sqlsrv_fetch_array($mens_view_para_new))
+	{   echo '	<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+				  &nbsp;<i class="fa fa-envelope-o"></i>
+				  <span id="span_badge_sms_header1" class="label label-success">'.$row_count.'</span>
+				</a>
+				<ul class="dropdown-menu">
+					<li class="header" id="badge_sms_header2" >Tienes '.$row_count.' mensaje(s)</li>
+					<li>
+						<!-- inner menu: contains the actual data -->
+						<ul id="badge_sms_detail" name="badge_sms_detail" class="menu">';
+		do{ $cc +=1;
+			if ($cc <= 5)
+			{   
+				switch ($row_mens_view_para_new['mens_de_tipo']){
+					case 'A':
+						$ruta=$_SESSION['ruta_foto_alumno'];
+					break;
+					case 'R':
+						$ruta=$_SESSION['ruta_foto_repre'];
+					break;
+					case 'D':
+						$ruta=$_SESSION['ruta_foto_docente'];
+					break;
+					case 'K':
+						$ruta=$_SESSION['ruta_foto_admin'];
+					break;
+				}
+				$imagen_user = $ruta.$row_mens_view_para_new['mens_de'].'.jpg';
+				if (file_exists($imagen_user))
+					$imagen_user = $ruta.$row_mens_view_para_new['mens_de'].'.jpg';
+				else
+					$imagen_user = $_SESSION['foto_default'];
+				echo "
+					<li>
+						<a data-toggle='modal' style=\"cursor: pointer;\"
+                          data-target='#modal_leer_ext' onclick=\"js_funciones_mensajes_read_from_navbar('modal_main_ext','mensajes_info.php','mens_codi=".$row_mens_view_para_new['mens_codi']."&op=2');\">
+							<div class=\"pull-left\">
+								<img src=\"".$imagen_user."?".$rand."\" class=\"img-circle\" alt=\"User Image\">
+							</div>
+							<h4>
+								".$row_mens_view_para_new['mens_titu']."
+								<small><i class='fa fa-clock-o'></i>".date_format($row_mens_view_para_new['mens_fech_envi'],'d/m/Y')."</small>
+							</h4>
+							<p>".$row_mens_view_para_new['mens_para_nomb']."</p>
+						</a>
+					</li>";
+			}
+		}while ($row_mens_view_para_new = sqlsrv_fetch_array($mens_view_para_new) );
+		echo 			'</ul>
+					</li>
+					<li class="footer"><a href="mensajes.php">Ver todos los mensajes</a></li>
+				</ul>';
+	}
+	else
+	{   echo '
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+				  &nbsp;<i class="fa fa-envelope-o"></i>
+				  <span id="span_badge_sms_header1" class="label"><span id="badge_sms_header1"></span></span>
+				</a>
+				<ul class="dropdown-menu">
+					<li class="header" id="badge_sms_header2" >No tienes mensajes nuevos</li>
+					<li>
+					</li>
+					<li class="footer"><a href="mensajes.php">Ver todos los mensajes</a></li>
+				</ul>';
+	}

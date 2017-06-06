@@ -4,8 +4,8 @@ require_once("../../../core/viewBase.php");
 
 $diccionario = array(
     'subtitle'=>array(
-        VIEW_GET_ALL=>'Consultar todos los cursos por nivel económico',
-        VIEW_EDIT=>'Modificar curso por nivel económico'
+        VIEW_GET_ALL=>'Niveles económicos',
+        VIEW_EDIT=>'Modificar Niveles económicos'
                      ),
 	'rutas_head'=>array(),
     'active_menu'=>array(

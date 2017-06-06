@@ -1,7 +1,6 @@
 <?php 
 
 	include ('../framework/dbconf.php');
-  include ('../framework/funciones.php');
 	session_start();
 	
 	if(isset($_POST['OP'])){
@@ -72,7 +71,7 @@
                       <tr>
                         <td style="width:20px; text-align:center;"> <input    type="checkbox" value='<?= $row_alum_curs_para_view["alum_codi"]; ?>' id="ch_<?= $OP; ?>_<?php echo $cc; ?>" name="ch_<?= $OP; ?>_<?php echo $cc; ?>"   /></td>
                         <td style="width:45px;"><img src="<?php echo $pp; ?>" style="width:40px; height:40px;"  /></td>
-                        <td style="width:205px;"><?= mb_strtoupper($row_alum_curs_para_view["alum_apel"]); ?> <?= mb_strtoupper($row_alum_curs_para_view["alum_nomb"]); ?></td>
+                        <td style="width:205px;"><?php echo mb_strtoupper($row_alum_curs_para_view["alum_apel"]); ?> <?php echo mb_strtoupper($row_alum_curs_para_view["alum_nomb"]); ?></td>
                       </tr>
                     </table>
    
@@ -115,7 +114,7 @@
                       <tr>
                         <td style="width:20px; text-align:center;"> <input  type="checkbox" data-alum-codi='<?= $row_alum_curs_para_view["alum_codi"] ?>' value='<?= $row_alum_curs_para_view["repr_codi"]; ?>' id="ch_<?= $OP; ?>_<?php echo $cc; ?>" name="ch_<?= $OP; ?>_<?php echo $cc; ?>"   /></td>
                         <td style="width:45px;"><img src="<?php echo $pp; ?>" style="width:40px; height:40px;"  /></td>
-                        <td style="width:205px;"><?= mb_strtoupper($row_alum_curs_para_view["alum_apel"]); ?> <?= mb_strtoupper($row_alum_curs_para_view["alum_nomb"]); ?></td>
+                        <td style="width:205px;"><?php echo mb_strtoupper($row_alum_curs_para_view["alum_apel"]); ?> <?php echo mb_strtoupper($row_alum_curs_para_view["alum_nomb"]); ?></td>
                       </tr>
                     </table>
       

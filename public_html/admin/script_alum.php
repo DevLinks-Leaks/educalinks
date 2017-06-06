@@ -22,24 +22,12 @@ switch($opc){
 		
 	break;
 	case 'add':
-		$alum_resp_form_banc_tarj_nume = $_POST['alum_resp_form_banc_tarj_nume'];
-		if($alum_resp_form_banc_tarj_nume==''){
-			$alum_resp_form_banc_tarj_nume_encrypt='';
-		
-		}else{
-			/*Codigo de encriptado de Número de tarjeta de crédito*/
-			$iv = base64_decode($_SESSION['clie_iv']);
-			$alum_resp_form_banc_tarj_nume_encrypt = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $_SESSION['clie_key'], $alum_resp_form_banc_tarj_nume, MCRYPT_MODE_CBC, $iv);
-			$alum_resp_form_banc_tarj_nume_encrypt =base64_encode($alum_resp_form_banc_tarj_nume_encrypt);
-			/*FIN*/
-		}
 		$alum_tiene_seguro = ($_POST['alum_tiene_seguro']=='true'?1:0);
 		$alum_condicionado = ($_POST['alum_condicionado']=='true'?1:0);
 		$alum_tiene_discapacidad = ($_POST['alum_tiene_discapacidad']=='true'?1:0);
 		$alum_genero = ($_POST['alum_genero']=='Hombre'?1:0);
 		$alum_fech_naci=substr($_POST['alum_fech_naci'],6,4)."".substr($_POST['alum_fech_naci'],3,2)."".substr($_POST['alum_fech_naci'],0,2);
-		$alum_fech_vcto=substr($_POST['alum_resp_form_fech_vcto'],6,4)."".substr($_POST['alum_resp_form_fech_vcto'],3,2)."".substr($_POST['alum_resp_form_fech_vcto'],0,2);
-		$sql_opc = "{call alum_add(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+		$sql_opc = "{call alum_add(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 		$params_opc= array($alum_fech_naci,
 							$_POST['alum_apel'],
 							$_POST['alum_nomb'],
@@ -66,27 +54,16 @@ switch($opc){
 							$_POST['alum_ultimo_anio'], 
 							$_POST['alum_nacionalidad'], 
 							$_POST['alum_motivo_condicion'], 
-							$_POST['alum_resp_form_pago'], 
-							$_POST['alum_resp_form_banc_tarj'], 
-							$alum_resp_form_banc_tarj_nume_encrypt, 
-							$_POST['alum_resp_form_banc_tipo'], 
-							$_POST['alum_resp_form_cedu'], 
-							$_POST['alum_resp_form_tipo_iden'],
-							$_POST['alum_resp_form_nomb'],
-							//$_POST['alum_desc_porcentaje'],
-							//$_POST['alum_desc_tipo'],
 							$_SESSION['usua_codi'],
 							$_SESSION['peri_codi'],
 							'A',
 							$_POST['alum_grup_econ'],
-							$alum_fech_vcto,
 							$_POST['idreligion'],
 							$_POST['idparentescovivecon'],
 							$_POST['idestadocivilpadres'],
 							$_POST['alum_activ_deportiva'],
 							$_POST['alum_activ_artistica'],
 							$_POST['alum_enfermedades'],
-							$_POST['alum_banc_emisor'],
 							$_POST['alum_parentesco_emerg'],
 							$_POST['alum_pers_emerg'],
 							$_POST['alum_tipo_sangre'],
@@ -129,18 +106,6 @@ switch($opc){
 			$detalle.=" Teléfono emergencia: ".$_POST['alum_telf_emerg'];
 			$detalle.=" Plantel anterior: ".$_POST['alum_ex_plantel'];
 			$detalle.=" Usuario: ".$_POST['alum_usua'];
-			$detalle.=" Forma Pago: ".$_POST['alum_resp_form_pago'];
-			$detalle.=" Banco/Tarjeta: ".$_POST['alum_resp_form_banc_tarj'];
-			// iNFO NUMERO CUENTA
-			if(strpos($alum_resp_form_banc_tarj_nume, 'X') ===true)
-				$detalle.=" # Banco/Tarjeta: ".$_POST['alum_resp_form_banc_tarj_nume'];
-			else{ 
-				if (is_numeric($_POST['alum_resp_form_banc_tarj_nume']))
-					$detalle.=" # Banco/Tarjeta: ".$alum_resp_form_banc_tarj_nume_encrypt;
-				else
-					$detalle.=" # Banco/Tarjeta: ".$_POST['alum_resp_form_banc_tarj_nume'];
-			}
-			$detalle.=" Tipo Cuenta: ".($_POST['alum_resp_form_banc_tipo']=='C'?'Corriente':'Ahorro');
 			$detalle.=" Responsable económico: ".$_POST['alum_resp_form_cedu'].' '.$_POST['alum_resp_form_nomb'];
 			//$detalle.=" Descuento tipo: ".$_POST['alum_desc_tipo'];
 			//$detalle.=" Descuento %: ".$_POST['alum_desc_porcentaje'];
@@ -261,28 +226,12 @@ switch($opc){
 		echo $alum_resp_form_banc_tarj_nume;
 	break;
 	case 'edi':
-		$alum_resp_form_banc_tarj_nume = $_POST['alum_resp_form_banc_tarj_nume'];
-		if($alum_resp_form_banc_tarj_nume==''){
-			$alum_resp_form_banc_tarj_nume_encrypt='';
-		
-		}else{
-			 if(strpos($alum_resp_form_banc_tarj_nume, 'X') ===false){
-				/*Codigo de encriptado de Número de tarjeta de crédito*/
-				$iv = base64_decode($_SESSION['clie_iv']);
-				$alum_resp_form_banc_tarj_nume_encrypt = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $_SESSION['clie_key'], $alum_resp_form_banc_tarj_nume, MCRYPT_MODE_CBC, $iv);
-				$alum_resp_form_banc_tarj_nume_encrypt =base64_encode($alum_resp_form_banc_tarj_nume_encrypt);
-				/*FIN*/
-			}else{
-				$alum_resp_form_banc_tarj_nume_encrypt=null;
-			}
-		}
 		$alum_tiene_seguro = ($_POST['alum_tiene_seguro']=='true'?1:0);
 		$alum_tiene_discapacidad = ($_POST['alum_tiene_discapacidad']=='true'?1:0);
 		$alum_condicionado = ($_POST['alum_condicionado']=='true'?1:0);
 		$alum_genero = ($_POST['alum_genero']=='Hombre'?1:0);
 		$alum_fech_naci=substr($_POST['alum_fech_naci'],6,4)."".substr($_POST['alum_fech_naci'],3,2)."".substr($_POST['alum_fech_naci'],0,2);
-		$alum_fech_vcto=substr($_POST['alum_resp_form_fech_vcto'],6,4)."".substr($_POST['alum_resp_form_fech_vcto'],3,2)."".substr($_POST['alum_resp_form_fech_vcto'],0,2);
-		$sql_opc = "{call alum_upd(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+		$sql_opc = "{call alum_upd(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 		$params_opc= array( $_POST['alum_codi'],
 							$alum_fech_naci,
 							$_POST['alum_apel'],
@@ -310,27 +259,16 @@ switch($opc){
 							$_POST['alum_ultimo_anio'], 
 							$_POST['alum_nacionalidad'], 
 							$_POST['alum_motivo_condicion'], 
-							$_POST['alum_resp_form_pago'], 
-							$_POST['alum_resp_form_banc_tarj'], 
-							$alum_resp_form_banc_tarj_nume_encrypt, 
-							$_POST['alum_resp_form_banc_tipo'], 
-							$_POST['alum_resp_form_cedu'],
-							$_POST['alum_resp_form_tipo_iden'],  
-							$_POST['alum_resp_form_nomb'],
-							//$_POST['alum_desc_porcentaje'],
-							//$_POST['alum_desc_tipo'],
 							$_SESSION['usua_codi'],
 							$_SESSION['peri_codi'],
 							'A',
 							$_POST['alum_grup_econ'],
-							$alum_fech_vcto,
 							$_POST['idreligion'],
 							$_POST['idparentescovivecon'],
 							$_POST['idestadocivilpadres'],
 							$_POST['alum_activ_deportiva'],
 							$_POST['alum_activ_artistica'],
 							$_POST['alum_enfermedades'],
-							$_POST['alum_banc_emisor'],
 							$_POST['alum_parentesco_emerg'],
 							$_POST['alum_pers_emerg'],
 							$_POST['alum_tipo_sangre'],
@@ -795,6 +733,37 @@ switch($opc){
 		else
 		{	$result = array ("state"=>"error",
 							 "mensaje"=>"Ocurrió un error al cambiar curso.");
+		}
+		echo json_encode($result);
+	break;
+	case 'get_curso_by_nivel':
+		$params		= array( $_SESSION['peri_codi'], $_POST['cmb_nivel'] );
+		$sql		= "{call curs_para_view_by_nivel(?,?)}";
+		$stmt	 	= sqlsrv_query( $conn, $sql, $params);
+		if( $stmt === false )
+		{	
+			$result = array ("state"=>"error",
+							 "mensaje"=>"Ocurrió un error al cambiar el nivel.");
+		}
+		if (sqlsrv_has_rows($stmt))
+		{	
+			$cmb= '<select class="form-control"  id="curso" name="cursos">
+					<option value="-1">- Todos -</option>';
+			while ($row = sqlsrv_fetch_array($stmt))
+			{   $cmb.= '<option value="'. $row["curs_para_codi"].'">'.$row["curs_deta"].' ('.$row["para_deta"].')</option>';
+			}
+			$cmb.= '</select>';
+			$result = array ("cmb_curso"=> $cmb,
+							 "state" 	=> "success",
+							 "mensaje" 	=> "Curso cargado");
+		}
+		else
+		{	$cmb= '<select class="form-control"  id="curso" name="cursos">
+					<option value="-1">- Todos -</option>';
+			$cmb.= '</select>';
+			$result = array ("cmb_curso"=> $cmb,
+							 "state" 	=> "success",
+							 "mensaje" 	=> "Curso cargado");
 		}
 		echo json_encode($result);
 	break;

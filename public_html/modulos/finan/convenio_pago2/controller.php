@@ -7,7 +7,7 @@ require_once('../../finan/gruposEconomico/model.php');
 require_once('../../finan/general/model.php');
 require_once('../../finan/items/model.php');
 require_once('../../finan/facturas/model.php');
-require_once('../../finan/convenio_pago/model.php');
+require_once('../../finan/convenio_pago2/model.php');
 require_once('constants.php');
 require_once('view.php');
 

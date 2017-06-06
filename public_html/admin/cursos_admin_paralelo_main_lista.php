@@ -43,7 +43,7 @@
 ?> 
 
 <div class="cursos_admin_paralelo_main_lista">
-<table   class="table_striped">
+<table class="table table-striped">
  <thead>
   <tr>
     <th width="77%"><strong>Listado de paralelos </strong></td>
@@ -58,53 +58,46 @@
      </td>
     <td>
       <?php if (permiso_activo(44)){?>
-  <button id="bt_para_edit_<?= $row_para_view["para_codi"]; ?>" type="button"  class="btn btn-primary" onclick="para_upd(<?= $row_para_view["para_codi"]; ?>)"  >Editar</button>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <button id="bt_para_edit_<?= $row_para_view["para_codi"]; ?>" type="button"  class="btn btn-default" 
+	onclick="para_upd(<?= $row_para_view["para_codi"]; ?>)"  ><span class="fa fa-pencil btn_opc_lista_editar"></span> Editar</button>
   <?php }if (permiso_activo(45)){?>
-  <button id="bt_para_dele_<?= $row_para_view["para_codi"]; ?>" type="button"  class="btn btn-primary" onclick="para_del(<?= $row_para_view["para_codi"]; ?>)" >Eliminar</button>
+  <button id="bt_para_dele_<?= $row_para_view["para_codi"]; ?>" type="button"  class="btn btn-default" 
+	onclick="para_del(<?= $row_para_view["para_codi"]; ?>)" ><span class="fa fa-trash btn_opc_lista_eliminar"></span> Eliminar</button>
       <?php }?>
       <script>
-      	function para_upd(para_codi){
-			if (document.getElementById('bt_para_edit_' + para_codi).innerHTML == 'Editar'){
-				document.getElementById('para_deta_' + para_codi).disabled = '';
+      	function para_upd(para_codi)
+		{   if (document.getElementById('bt_para_edit_' + para_codi).innerHTML == '<span class="fa fa-pencil btn_opc_lista_editar"></span> Editar')
+			{   document.getElementById('para_deta_' + para_codi).disabled = '';
 				document.getElementById('para_deta_' + para_codi).style = 'width:100%; height=100%; border:none; background:#CADBF4;';
-				document.getElementById('bt_para_edit_' + para_codi).innerHTML = 'Actualizar';
+				document.getElementById('bt_para_edit_' + para_codi).innerHTML = '<span class="fa fa-floppy-o"></span> Actualizar';
 				document.getElementById('bt_para_dele_' + para_codi).innerHTML = 'Cancelar'; 
 				document.getElementById('para_deta_' + para_codi).select();
 				document.getElementById('para_deta_' + para_codi).focus();
-					
-			}else{
-					 
-				load_ajax('para_'+ para_codi,'script_para.php','para_codi=' + para_codi + '&para_deta=' + document.getElementById('para_deta_' + para_codi).value + '&upd_para=Y'); 
-				document.getElementById('bt_para_edit_' + para_codi).innerHTML = 'Editar';
-				document.getElementById('bt_para_dele_' + para_codi).innerHTML = 'Eliminar';
-				 
+				$('#bt_para_edit_' + para_codi).toggleClass('btn-default btn-success');
+			}
+			else
+			{   load_ajax('para_'+ para_codi,'script_para.php','para_codi=' + para_codi + '&para_deta=' + document.getElementById('para_deta_' + para_codi).value + '&upd_para=Y'); 
+				document.getElementById('bt_para_edit_' + para_codi).innerHTML = '<span class="fa fa-pencil btn_opc_lista_editar"></span> Editar';
+				document.getElementById('bt_para_dele_' + para_codi).innerHTML = '<span class="fa fa-trash btn_opc_lista_eliminar"></span> Eliminar';
+				$('#bt_para_edit_' + para_codi).toggleClass('btn-default btn-success');
 			}
 			
 		}
 		
-		function para_del(para_codi){
-			
-			if (document.getElementById('bt_para_dele_' + para_codi).innerHTML == 'Eliminar'){
-				if (confirm("Esta seguro que desea Eliminar")) {					 
-					load_ajax('curs_para_main','cursos_admin_paralelo_main_lista.php','para_codi=' + para_codi + '&del_para=Y'); 					
+		function para_del(para_codi)
+		{   if (document.getElementById('bt_para_dele_' + para_codi).innerHTML == '<span class="fa fa-trash btn_opc_lista_eliminar"></span> Eliminar')
+			{   if (confirm("Esta seguro que desea Eliminar"))
+				{   load_ajax('curs_para_main','cursos_admin_paralelo_main_lista.php','para_codi=' + para_codi + '&del_para=Y'); 					
 				}				
-			}else{
-				
-				load_ajax('para_'+ para_codi,'script_para.php','para_codi=' + para_codi );			 
-				document.getElementById('bt_para_edit_' + para_codi).innerHTML = 'Editar';
-				document.getElementById('bt_para_dele_' + para_codi).innerHTML = 'Eliminar';
-			
-				
 			}
-
+			else
+			{   load_ajax('para_'+ para_codi,'script_para.php','para_codi=' + para_codi );			 
+				document.getElementById('bt_para_edit_' + para_codi).innerHTML = '<span class="fa fa-pencil btn_opc_lista_editar"></span> Editar';
+				document.getElementById('bt_para_dele_' + para_codi).innerHTML = '<span class="fa fa-trash btn_opc_lista_eliminar"></span> Eliminar';
+				$('#bt_para_edit_' + para_codi).toggleClass('btn-default btn-success');
+			}
 		}
- 
-      
       </script>
-      
-      
-      
     </td>
   </tr>
  

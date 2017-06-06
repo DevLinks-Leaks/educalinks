@@ -10,6 +10,11 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 })();
 
 $(document).ready(function(){
+	// run test on initial page load
+	checkSize();
+	// run test on resize of the window
+	$(window).resize(checkSize);
+	
 	var toggle = $('#ss_toggle');
 	var menu = $('#ss_menu');
 	var rot;
@@ -58,6 +63,14 @@ $(document).ready(function(){
 var spanish="//cdn.datatables.net/plug-ins/f2c75b7247b/i18n/Spanish.json";
 var var_actualiza_badge = setInterval(function () {"use strict"; actualiza_badge_sms();}, 120000);
 var gest=0;
+function checkSize()
+{
+	if (window.matchMedia('(max-width:960px)').matches)
+		$('body').addClass("fixed");
+
+	if (window.matchMedia('(min-width:961px)').matches)
+		$('body').removeClass("fixed");
+}
 function set_skin(logo, cls)
 {   var data = new FormData();
     data.append( 'event', 'change_logo');
@@ -136,6 +149,133 @@ function leer_mensaje(url, mens_codi, box, div)
     };
     xhr.send(data);
 }
+function elimina_mensaje( mens_codi )
+{   document.getElementById('hd_del_mes_codi').value = mens_codi;
+	$('#modal_del_sms').modal("show");
+}
+function elimina_mensaje_followed( )
+{   url='../../../admin/mensajes_nuevo_script_envio.php';
+	var data = new FormData();
+	data.append('mens_codi', document.getElementById('hd_del_mes_codi').value );
+	data.append('op', document.getElementById('hd_op').value );
+	data.append('DO', 'DEL' );
+	
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', url , true);
+	xhr.onload = function ()
+	{   //console.log(this.responseText);
+	};
+	xhr.onreadystatechange=function()
+	{   if (xhr.readyState==4 && xhr.status==200)
+		{   $.growl.notice({ title: "Educalinks informa ",message: "Mensaje eliminado"});
+			$('.modal').modal('hide');
+			mensaje_view( document.getElementById('hd_op').value );
+		}
+	};
+	xhr.send(data);
+}
+
+function validar_envio()
+{   tipo = document.getElementById('mens_tipo').value;
+    cc = document.getElementById('mens_cc_usua').value;
+    
+    if ( document.getElementById('mens_titu').value === '' )
+    {   alert('Debe existir un Titulo en el mensaje');
+        return false;
+    }
+    
+    mm=0;
+    i=1;
+    
+    while (i<=cc)
+    {   if (document.getElementById('ch_'+ tipo + '_' + i) != null)
+        {   if (document.getElementById('ch_'+ tipo + '_' + i).checked)
+            {   mm+=1;             
+            }
+        } 
+        i+=1;
+    }
+    if (mm==0)
+    {    alert('No hay Usuarios seleccionado');
+        return false;
+    }
+ 
+    if (CKEDITOR.instances.mens_deta.getData()==''){
+        if (confirm("No hay texto en el detalle del mensaje, ¿desea enviar de todas formas?")==false)  {
+            $('#responder_mensaje').button('reset');
+			return false;
+        }
+    }
+    return true;   
+}
+function validar_envio_respuesta()
+{   if (document.getElementById('mens_titu').value=='')
+    {   alert('Debe existir un Titulo en el mensaje');
+        return false;
+    }
+    if (CKEDITOR.instances.mens_deta.getData()=='')
+    {   if (confirm("No hay texto en el detalle del mensaje, ¿desea enviar de todas formas?")==false)  {
+            $('#responder_mensaje').button('reset');
+			return false;
+        }
+    }
+    return true;
+}
+function envio_mensaje_resp(mens_para,mens_para_tipo)
+{   $('#responder_mensaje').button('loading');
+	if (validar_envio_respuesta())
+	{   url='../../../admin/mensajes_nuevo_script_envio.php';
+	
+		var data = new FormData();
+		data.append('mens_de', document.getElementById('mens_de').value );
+		data.append('mens_de_tipo', document.getElementById('mens_de_tipo').value);
+		data.append('mens_para', mens_para);
+		data.append('mens_para_tipo', mens_para_tipo);
+		data.append('mens_titu', document.getElementById('mens_titu').value);
+		data.append('mens_deta', CKEDITOR.instances.mens_deta.getData());
+		data.append('DO','RESP');
+	
+		var xhr_mensaje = new XMLHttpRequest();
+		xhr_mensaje.open('POST', url , true);
+		//xhr_mensaje.setRequestHeader("Content-Type", "application/json");
+		xhr_mensaje.onload = function () {
+			// do something to response
+			console.log(this.responseText);
+		};
+		xhr_mensaje.onreadystatechange=function(){
+			if (xhr_mensaje.readyState==4 && xhr_mensaje.status==200)
+			{   obj = JSON.parse(xhr_mensaje.responseText);
+				if (obj.tipo == "error")
+				{	$.growl.error({ title: "Error: ",message: obj.mensaje });
+					$('#responder_mensaje').button('reset');
+				}
+				else //if(obj.tipo == "warning")
+				{	
+					var repr="";
+					obj.forEach(function(entry){
+						if (entry.tipo=="warning") {
+							repr=repr+"</br>"+entry.repr+", ";
+						}
+					});
+					if(repr=="")
+					{   $.growl.notice({ title: "Información: ",message: "Mensajes enviados con éxito" });
+						$('#responder_mensaje').button('reset');
+						$('#mens_responder').modal('hide');	
+					}
+					else
+					{   $.growl.warning({ title: "Advertencia: "
+							,duration: 5600
+							,message: "Mail no enviado al representante: <b>"+repr+"</b></br>verificiar formato de e-mail." });
+						$('#responder_mensaje').button('reset');
+						$('#mens_responder').modal('hide');
+					}
+				}
+						 
+			}
+		};
+		xhr_mensaje.send(data);
+	}
+}
 function get_box(box, url, div)
 {   var data = new FormData();
     data.append('event', 'get_box');
@@ -194,8 +334,49 @@ function get_progress_bar_badge_class(num)
         bg_class = 'progress-bar progress-bar-red';
     return bg_class;
 }
+function js_general_mensajes_read_from_navbar( div, url, data )
+{
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	if ( window.XMLHttpRequest )
+		xmlhttp=new XMLHttpRequest();	// code for IE7+, Firefox, Chrome, Opera, Safari
+	else
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP"); // code for IE6, IE5
+	
+	xmlhttp.onreadystatechange=function()
+	{   if ( xmlhttp.readyState === 4 && xmlhttp.status === 200 )
+		{   document.getElementById(div).innerHTML=xmlhttp.responseText;
+			actualiza_badge_sms();
+		}
+	};
+	xmlhttp.open("POST",url,true);
+	xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+	xmlhttp.send(data);	
+}
+function load_ajax_mens_responder(div,url,mens_codi){
+	//document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='';
+	if (window.XMLHttpRequest)
+	{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	var data = new FormData();
+	data.append('mens_codi', mens_codi );
+	xmlhttp.onreadystatechange=function()
+	{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200){
+			document.getElementById(div).innerHTML=xmlhttp.responseText;	
+			CKEDITOR.replace( 'mens_deta' );
+		}
+	}
+	xmlhttp.open("POST", '../../../admin/' + url ,true);
+	xmlhttp.send(data);	
+}
 function actualiza_badge_sms()
-{   "use strict";console.log("viene");
+{   "use strict";
     var url='../../../modulos/common/mensajeria/controller.php';
     var data = new FormData();
     data.append('event', 'view_badge_sms');
@@ -214,11 +395,12 @@ function actualiza_badge_sms()
                 {   if(document.getElementById('badge_sms_header1').innerHTML !== xhrbadge_sms.responseText)
                     {   document.getElementById('badge_sms_header1').innerHTML=xhrbadge_sms.responseText;
                         document.getElementById('badge_sms_header2').innerHTML="Tienes " + xhrbadge_sms.responseText + " mensaje(s)";
-                        $('#span_badge_sms_header1').removeClass().addClass(get_menu_span_badge_class(xhrbadge_sms.responseText));
+                        //$('#span_badge_sms_header1').removeClass().addClass(get_menu_span_badge_class(xhrbadge_sms.responseText));
+						$('#span_badge_sms_header1').removeClass().addClass( 'label label-success' );
 						
                     }
                 }
-            }console.log(get_menu_span_badge_class(xhrbadge_sms.responseText));
+            }
 			
             //document.getElementById('badge_gest_fac').innerHTML=gest;
             //desbloquear si se hace sms en MENU//document.getElementById('badge_sms').innerHTML='<span class="' + get_badge_class(xhrbadge_sms.responseText) + '">' + xhrbadge_sms.responseText + '</span>';

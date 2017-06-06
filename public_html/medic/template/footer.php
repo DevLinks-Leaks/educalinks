@@ -10,6 +10,11 @@
     </div>
   </div>
 </div>-->
+<?php
+if( !isset( $_SESSION['sidebar_status'] ) )
+  $_SESSION['sidebar_status'] = 'sidebar-collapse';
+?>
+<input type='hidden' id='hd_status_bar' name='hd_status_bar' value='<?php echo $_SESSION['sidebar_status']; ?>'></input>
 <footer class="main-footer" style='font-size:small;text-align:center;'>
 	<strong>Desarrollado por <a href="http://www.redlinks.com.ec">Redlinks</a>. Copyright &copy; 2014-2017</strong> Todos los derechos reservados.<br>
 	<div class="hidden-xs">

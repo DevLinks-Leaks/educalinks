@@ -1,10 +1,7 @@
 <?php 
 	session_start();	 
 	include ('../framework/dbconf.php');
-	include ('../framework/funciones.php');
-
-  
-?>  
+	include ('../framework/funciones.php');?>  
 <div class="main_lista">
 <?php 
 	if(isset($_POST['texto'])) $texto=$_POST['texto'];		

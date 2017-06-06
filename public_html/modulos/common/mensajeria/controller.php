@@ -125,19 +125,38 @@ function valida_get_menu_detail_smsPendienteLeer()
 {   global $diccionario;
 	$mensaje = new Mensaje();
 	$mensaje->get_menu_detail_smsPendienteLeer($_SESSION['USUA_DE'],$_SESSION['USUA_TIPO'] );
-	$html='';
+	$html=''; //data-placement='top' onmouseover=\"$(this).tooltip('show');\" 
 	if(count($mensaje->rows)-1>0)
 	{	for($c=0;$c<(count($mensaje->rows)-1);$c++)
-		{   $html.="<li>
-				<a href='#' onclick=\"leer_mensaje('".$diccionario['rutas_head']['ruta_html_common']."/mensajeria/controller.php','".$mensaje->rows[$c]['mens_codi']."','active_in','formulario')\">
+		{   switch ($mensaje->rows[$c]['mens_de_tipo']){
+					case 'A':
+						$ruta=$_SESSION['ruta_foto_alumno'];
+					break;
+					case 'R':
+						$ruta=$_SESSION['ruta_foto_repre'];
+					break;
+					case 'D':
+						$ruta=$_SESSION['ruta_foto_docente'];
+					break;
+					case 'K':
+						$ruta=$_SESSION['ruta_foto_admin'];
+					break;
+				}
+				$imagen_user = $ruta.$mensaje->rows[$c]['mens_de'].'.jpg';
+				if (file_exists($imagen_user))
+					$imagen_user = $ruta.$mensaje->rows[$c]['mens_de'].'.jpg';
+				else
+			$html.="<li>
+				<a title ='DE: ".$mensaje->rows[$c]['mens_de_nomb_complete'].". TEMA: ".$mensaje->rows[$c]['menu_titu_complete']."' data-toggle='modal' style=\"cursor: pointer;\" 
+					 data-target='#modal_leer_ext' onclick=\"js_general_mensajes_read_from_navbar('modal_main_ext','../../../admin/mensajes_info.php','mens_codi=".$mensaje->rows[$c]['mens_codi']."&op=2');\">
 				  <div class'pull-left'
 					<img src=\"../".$_SESSION['ruta_foto_usuario']."admin.jpg\" class=\"img-circle\" alt=\"User Image\">
 				  </div>
 				  <h4>
-					".$mensaje->rows[$c]['mens_de_nomb']."
-					<small><i class='fa fa-clock-o'></i> ".$mensaje->rows[$c]['mens_fech_envi']."</small>
+					".$mensaje->rows[$c]['mens_titu']."
+					<small><i class='fa fa-clock-o'></i> ".$mensaje->rows[$c]['mens_fech_envi2']."</small>
 				  </h4>
-				  <p>".$mensaje->rows[$c]['mens_titu']."</p>
+				  <p>".$mensaje->rows[$c]['mens_de_nomb']."</p>
 				</a>
 			  </li>";
 		}

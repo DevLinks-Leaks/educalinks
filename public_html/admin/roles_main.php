@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
     <?php include("template/head.php");?>
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body class="hold-transition skin-blue sidebar-mini <?php echo $_SESSION['sidebar_status']; ?>">
 		<div class="wrapper">
 			<?php include ('template/header.php');?>
-			<?php $Menu=401;include("template/menu.php");?>
+			<?php $Menu=501;include("template/menu.php");?>
 			<div class="content-wrapper">
 				<section class="content-header">
 					<?php
@@ -87,15 +87,15 @@
 											 <input type="hidden" id="rol_estado" name="rol_estado" value="A">
 										</td>
 									</tr>
-									<tr <?php ($_SESSION['certus_finan'] == 1 ? '' : 'style="display:none;"'); ?> >
+									<tr <?php echo ($_SESSION['certus_finan'] == 1 ? '' : 'style="display:none;"'); ?> >
 										<td style='text-align:left'><label class='control-label'> Acceso a módulo financiero: </label></td>
 										<td> <input id="rol_finan" type="checkbox" style="margin-top: 10px;"></td>
 									</tr>
-									<tr <?php ($_SESSION['certus_biblio'] == 1 ? '' : 'style="display:none;"'); ?> >
+									<tr <?php echo ($_SESSION['certus_biblio'] == 1 ? '' : 'style="display:none;"'); ?> >
 										<td style='text-align:left'><label class='control-label'> Acceso a módulo biblioteca: </label></td>
 										<td><input id="rol_biblio" type="checkbox" style="margin-top: 10px;"></td>
 									</tr>
-									<tr <?php ($_SESSION['certus_medic'] == 1 ? '' : 'style="display:none;"'); ?> >
+									<tr <?php echo ($_SESSION['certus_medic'] == 1 ? '' : 'style="display:none;"'); ?> >
 										<td style='text-align:left'><label class='control-label'> Acceso a módulo médico: </label></td>
 										<td> <input id="rol_medic" type="checkbox" style="margin-top: 10px;"></td>
 									</tr>

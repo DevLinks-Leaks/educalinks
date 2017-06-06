@@ -38,26 +38,6 @@
 			</form>
 			<?php include("template/footer.php");?>
 		</div>
-		 <!-- Modal CHANGELOG -->
-	    <div class="modal fade" id="modal_changelog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	      <div class="modal-dialog">
-	        <div class="modal-content">
-	            <div class="modal-header">
-	                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-	                <h4 class="modal-title" id="myModalLabel">Cambios en Educalinks</h4>
-	            </div>
-	            <div class="modal-body">
-	                <?php include('modal_changelog.php');?>
-	                <div>&nbsp;
-	                </div>
-	            </div>
-
-	            <div class="modal-footer">
-	                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-	            </div>
-	        </div>
-	      </div>
-	    </div>
 		<!-- Modal -->
 		<div class="modal fade" id="pop_up_repr" tabindex="-1" role="dialog" aria-labelledby="pop_up_repr">
 			<div class="modal-dialog" role="document">
@@ -87,10 +67,10 @@
 		<input name="mens_de"  		type="hidden" id="mens_de" 		value='<?php echo $_SESSION['USUA_DE'];  ?>'    />
 		<input name="mens_de_tipo"  type="hidden" id="mens_de_tipo" value='<?php echo $_SESSION['USUA_TIPO']; ?>'    />
 		<?php include("template/scripts.php");?>
-		<script type="text/javascript" src="../includes/common/flexslider/jquery.flexslider-min.js"></script>
+		<? if($_SESSION['encu_deta']!=null and $row_visi_usua_view['chan_codi']==null){ ?>
 		<script type="text/javascript">
 		$(window).load(function(){
-			// //if('<?= $_SESSION['usa_app'];?>'=='1'){
+			//if('<?= $_SESSION['usa_app'];?>'=='1'){
 			// 	if('<?= $_SESSION['pop_up_repr_flag'];?>'== '1' ){
 			// 		if('<?= $_SESSION['USUA_TIPO'];?>'=='A'){ //es de tipo alumno
 			// 			if('<?= $_SESSION['alum_app'];?>'=='0')
@@ -100,18 +80,15 @@
 			// 				$('#pop_up_repr').modal('show');
 			// 		}
 			// 	}
-			// //}
-			<? if($_SESSION['encu_deta']!=null and $row_visi_usua_view['chan_codi']==null){ ?>
-				$('#modal_encu').modal({backdrop: 'static', keyboard: false});
-				$('#modal_encu').modal('show');
-			<?} ?>
-			// $('#modal_changelog').modal('show');
-	        // $('.carousel').slick();
-	        // $('.carousel').carousel()
-	        // $('.flexslider').flexslider({
-			  //   animation: "slide"
-		  	// });
+			//}
+			$('#modal_encu').modal({backdrop: 'static', keyboard: false});
+			$('#modal_encu').modal('show');
 		});
 		</script>
+		<?}else{ ?>
+		<!-- ===================== -->
+		<?php include('modal_changelog.php');?>
+		<!-- =============================== -->
+		<?}?>
 	</body>
 </html>

@@ -23,7 +23,16 @@
 		}
 	}	 
 	/*End Class*/
-
+	/*Creación de objeto TCPDF*/
+	$pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+	$pdf->SetCreator($cliente);
+	$pdf->SetAuthor($cliente);
+	$pdf->SetTitle($cliente);
+	$pdf->SetSubject($cliente);
+	$pdf->SetMargins(PDF_MARGIN_LEFT, 60, PDF_MARGIN_RIGHT);
+	$pdf->SetAutoPageBreak(TRUE, 10);
+	$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+	
 	/*Existe un get con alum_codi?*/
 	if (isset($_GET['alum_curs_para_codi']))
 		$alum_curs_para_codi=$_GET['alum_curs_para_codi'];
@@ -72,85 +81,73 @@
 	$sexo_secretaria=para_sist(52);
 	$nombre_legal=pasarMayusculas(para_sist(53));
 
-	// if($sexo_rector =='F')
-	// {	$sexo_rector_art='la';
-	// 	$senor='Señora';
-	// }
-	// else
-	// {	$sexo_rector_art='el';
-	// 	$senor='Señor';
-	// }
-	// if($sexo_secretaria =='F'){$sexo_secretaria_art='la';}else{$sexo_secretaria_art='el';}
+	$params = array($alum_codi);
+	$sql="{call alum_cuentas_view(?)}";
+	$stmt = sqlsrv_query($conn, $sql, $params);
+	
+	while ($row_alum_cuentas_view= sqlsrv_fetch_array($stmt)){
 
-	/*descencriptar numero tarjeta*/
-	if($row['alum_resp_form_banc_tarj_nume']!=null and !is_numeric($row['alum_resp_form_banc_tarj_nume']) ){
-		$alum_resp_form_banc_tarj_nume_dec=base64_decode($row['alum_resp_form_banc_tarj_nume']);
-		$iv = base64_decode($_SESSION['clie_iv']);
-		$alum_resp_form_banc_tarj_nume=mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $_SESSION['clie_key'], $alum_resp_form_banc_tarj_nume_dec, MCRYPT_MODE_CBC, $iv );
-		$alum_resp_form_banc_tarj_nume=preg_replace('/[^A-Za-z0-9\-]/', '', $alum_resp_form_banc_tarj_nume);
-	}else{
-		$alum_resp_form_banc_tarj_nume=$row['alum_resp_form_banc_tarj_nume'];
-	}
-	/*FIN*/
-	/*Creación de bloque de información de pago*/
-	$info_credito='';
-	if($row['alum_resp_form_pago']==22){ 
-		/*Forma de pago Banco*/
-		$info_credito.='<table class="letras_normales tabla" >';
-		$info_credito.='<tr><td width="50%">Institución Financiera</td>
-							<td width="50%">Número de Cuenta Bancaria</td>
-						</tr>';
-			$info_credito.='<tr><td width="50%">'.$row["alum_resp_form_banc_tarj"].'</td>
-							<td width="50%">'.$alum_resp_form_banc_tarj_nume.'</td>
-						</tr>';
-		$info_credito.='<tr><td class="centrar" width="33%">Cta. Ahorros</td>
-							<td class="centrar" width="33%">Cta. Corriente</td>
-							<td class="centrar" width="33%">Fecha de Débito</td>
-						</tr>';
-		$info_credito.='<tr><td class="centrar" width="33%">'.($row["alum_resp_form_banc_tipo"]=='A'?'X':'').'</td>
-							<td class="centrar" width="33%">'.($row["alum_resp_form_banc_tipo"]=='C'?'X':'').'</td>
-							<td  class="centrar" width="33%"> 10 DE CADA MES</td>
-						</tr>';
-		$info_credito.='</table>';
-	} elseif($row['alum_resp_form_pago']==23){
-		/*Forma de pago Tarjeta de Credito*/
-		// $alum_resp_form_banc_tarj_nume =  creditCardMask($alum_resp_form_banc_tarj_nume,4,8);
-		$info_credito.='<table class="letras_normales tabla" >';
-		$info_credito.='<tr><td>TARJETA DE CREDITO:</td><td> '.$row["alum_resp_form_banc_tarj"].'</td>
-						</tr>';
-		$info_credito.='<tr><td width="50%">#: '.$alum_resp_form_banc_tarj_nume.'</td>
-							<td width="50%">Fecha de Caducidad: '.date_format($row["alum_resp_form_fech_vcto"],'m/Y').'</td>
-						</tr>';
-		$info_credito.='<tr><td width="50%">Banco Emisor: '.$row["alum_resp_tarj_banco_emisor"].'</td>
-							<td width="50%">Fecha de Débito: 10 DE CADA MES</td>
-						</tr>';
-		$info_credito.='';
-		$info_credito.='</table>';
-	}
-	$jornada = para_sist(35);
-	if ($_SESSION['directorio']=='delfos' or $_SESSION['directorio']=='delfosvesp')
-	{	$jornada_lbl  = "<h5>Jornada ".$jornada."</h5><br/>";
-	}
-	else
-	{	$jornada_lbl = "";
-	}
-	if ($_SESSION['directorio']=='moderna')
-	{	$codigo  = "<h4>Cod. Alumno: ".$alum_codi."</h4><br/><br/>";
-	}
-	else
-	{	$codigo = "";
-	}
-	/*Creación de objeto TCPDF*/
-	$pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-	$pdf->SetCreator($cliente);
-	$pdf->SetAuthor($cliente);
-	$pdf->SetTitle($cliente);
-	$pdf->SetSubject($cliente);
-	$pdf->SetMargins(PDF_MARGIN_LEFT, 60, PDF_MARGIN_RIGHT);
-	$pdf->SetAutoPageBreak(TRUE, 10);
-	$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
-	/*Añadir nueva página*/
-	$pdf->AddPage();
+		$pdf->AddPage();
+		/*Descencriptar numero tarjeta*/
+		if($row_alum_cuentas_view['alum_cuen_nume']!=null and !is_numeric($row_alum_cuentas_view['alum_cuen_nume'])){
+			$alum_cuen_nume_dec=base64_decode($row_alum_cuentas_view['alum_cuen_nume']);
+			$iv = base64_decode($_SESSION['clie_iv']);
+			$alum_cuen_nume = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $_SESSION['clie_key'], $alum_cuen_nume_dec, MCRYPT_MODE_CBC, $iv );
+			// $alum_cuen_nume=rtrim($alum_cuen_nume,"\0");
+			$alum_cuen_nume=preg_replace('/[^A-Za-z0-9\-]/', '',$alum_cuen_nume);
+		}else{
+			$alum_cuen_nume=$row_alum_cuentas_view['alum_cuen_nume'];
+		}
+		/*Fin*/ 
+		/*Creación de bloque de información de pago*/
+		$info_credito='';
+		if($row_alum_cuentas_view['alum_cuen_form_pago']==22){ 
+			/*Forma de pago Banco*/
+			$info_credito.='<table class="letras_normales tabla" >';
+			$info_credito.='<tr><td width="50%">Institución Financiera</td>
+								<td width="50%">Número de Cuenta Bancaria</td>
+							</tr>';
+				$info_credito.='<tr><td width="50%">'.$row_alum_cuentas_view["banc_tarj"].'</td>
+								<td width="50%">'.$alum_cuen_nume.'</td>
+							</tr>';
+			$info_credito.='<tr><td class="centrar" width="33%">Cta. Ahorros</td>
+								<td class="centrar" width="33%">Cta. Corriente</td>
+								<td class="centrar" width="33%">Fecha de Débito</td>
+							</tr>';
+			$info_credito.='<tr><td class="centrar" width="33%">'.($row_alum_cuentas_view["alum_cuen_tipo"]=='A'?'X':'').'</td>
+								<td class="centrar" width="33%">'.($row_alum_cuentas_view["alum_cuen_tipo"]=='C'?'X':'').'</td>
+								<td  class="centrar" width="33%"> 10 DE CADA MES</td>
+							</tr>';
+			$info_credito.='</table>';
+		} elseif($row_alum_cuentas_view['alum_cuen_form_pago']==23){
+			/*Forma de pago Tarjeta de Credito*/
+			// $alum_resp_form_banc_tarj_nume =  creditCardMask($alum_resp_form_banc_tarj_nume,4,8);
+			$info_credito.='<table class="letras_normales tabla" >';
+			$info_credito.='<tr><td>TARJETA DE CREDITO:</td><td> '.$row_alum_cuentas_view["banc_tarj"].'</td>
+							</tr>';
+			$info_credito.='<tr><td width="50%">#: '.$alum_cuen_nume.'</td>
+								<td width="50%">Fecha de Caducidad: '.date_format($row_alum_cuentas_view["alum_cuen_fech_venc"],'m/Y').'</td>
+							</tr>';
+			$info_credito.='<tr><td width="50%">Banco Emisor: '.$row_alum_cuentas_view["banc_emis"].'</td>
+								<td width="50%">Fecha de Débito: 10 DE CADA MES</td>
+							</tr>';
+			$info_credito.='';
+			$info_credito.='</table>';
+		}
+		$jornada = para_sist(35);
+		if ($_SESSION['directorio']=='delfos' or $_SESSION['directorio']=='delfosvesp')
+		{	$jornada_lbl  = "<h5>Jornada ".$jornada."</h5><br/>";
+		}
+		else
+		{	$jornada_lbl = "";
+		}
+		if ($_SESSION['directorio']=='moderna')
+		{	$codigo  = "<h4>Cod. Alumno: ".$alum_codi."</h4><br/><br/>";
+		}
+		else
+		{	$codigo = "";
+		}
+		
 	$html=<<<EOF
 	<style>
 	h4
@@ -197,7 +194,7 @@
 	Ciudad.- {$ciudad}
 	</p>
 	<p class="letras_normales">
-	Yo {$row["alum_resp_form_nomb"]} (Representante) del estudiante {$row["alum_nomb"]} {$row["alum_apel"]}<br/>
+	Yo {$row_alum_cuentas_view["alum_cuen_nomb"]} (Representante) del estudiante {$row["alum_nomb"]} {$row["alum_apel"]}<br/>
 	Que está cursando el nivel {$row["curs_deta"]} de {$row["nive_deta"]}; titular de la siguiente cuenta o tarjeta de Crédito, que mantengo con la Institución Financiera:
 	</p>
 	<br/>
@@ -219,7 +216,7 @@
 	</tr>
 	<tr>
 	<td>
-	C.I. {$row["alum_resp_form_cedu"]}
+	C.I. {$row_alum_cuentas_view["alum_cuen_cedu"]}
 	</td>
 	<td>
 	Fecha del Acuerdo: {$ciudad}, {$fecha_hoy}
@@ -227,7 +224,8 @@
 	</tr>
 	</table>
 EOF;
-$pdf->writeHTML($html, true, false, false, false, '');
+		$pdf->writeHTML($html, true, false, false, false, '');
+	}
 $pdf->Output('autorizacion_debito.pdf', 'I');
 header("Content-type:application/pdf");
 header("Content-Disposition:attachment;filename='autorizacion_debito.pdf'");

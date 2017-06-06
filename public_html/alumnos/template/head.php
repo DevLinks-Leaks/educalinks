@@ -19,7 +19,9 @@
         
     //     // session_activa(3);
     // }
-
+    // if ($ActualizacionDatos!=1){
+    //     session_activa(3);
+    // }
     licencia_activa();
     $rand = rand().rand();
 ?>
@@ -59,6 +61,9 @@
     <link rel="stylesheet" href="../../includes/common/dist/css/skins/_all-skins.min.css?<?= $rand?>">
     <!-- iCheck -->
     <link rel="stylesheet" href="../../includes/common/plugins/iCheck/flat/blue.css">
+    <!-- Slick Carousel -->
+    <link href="../includes/common/slick/slick.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="../includes/common/slick/slick-theme.css"/>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

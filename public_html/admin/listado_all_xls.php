@@ -25,15 +25,98 @@
 	if(isset($_SESSION['peri_codi']))
 	{	$peri_codi=$_SESSION['peri_codi'];
 	}
-	$params	= array($peri_codi);
-	$sql	= "{call alum_peri_view_all(?)}";
+	
+	/* ------------------------------------------------------------------------
+		El nombre de las variables post están basadas en el valor del atributo 
+		name de los controles del panel de búsqueda en alumnos_main.php
+	   ------------------------------------------------------------------------*/
+	   
+	if (isset($_POST["alum_codi_in"]))
+	{	$alum_codi = $_POST["alum_codi_in"];
+	}
+	else
+	{	$alum_codi = "";
+	}
+	
+	if (isset($_POST["alum_apel_in"]))
+	{	$alum_apel = $_POST["alum_apel_in"];
+	}
+	else
+	{	$alum_apel = "";
+	}
+	
+	if (isset($_POST["cursos"]))
+	{	$curs_para_codi = $_POST["cursos"];
+	}
+	else
+	{	$curs_para_codi = "-1";
+	}
+	
+	if (isset($_POST["cmb_grupo_economico"]))
+	{	if ( $_POST["cmb_grupo_economico"] == "0" )
+			$grupo_economico = "-1";
+		else
+			$grupo_economico = $_POST["cmb_grupo_economico"];
+	}
+	else
+	{	$grupo_economico = "-1";
+	}
+	if (isset($_POST["cmb_nivel"]))
+	{	$nivel = $_POST["cmb_nivel"];
+	}
+	else
+	{	$nivel = "-1";
+	}
+	if (isset($_POST["txt_alum_id"]))
+	{	$alum_id = $_POST["txt_alum_id"];
+	}
+	else
+	{	$alum_id = "";
+	}
+	if (isset($_POST["txt_fecha_nac_ini"]))
+	{	$fechanac_ini = $_POST["txt_fecha_nac_ini"];
+	}
+	else
+	{	$fechanac_ini = "";
+	}
+	if (isset($_POST["txt_fecha_nac_fin"]))
+	{	$fechanac_fin = $_POST["txt_fecha_nac_fin"];
+	}
+	else
+	{	$fechanac_fin = "";
+	}
+	if (isset($_POST["txt_fecha_matri_ini"]))
+	{	$fechamatri_ini = $_POST["txt_fecha_matri_ini"];
+	}
+	else
+	{	$fechamatri_ini = "";
+	}
+	if (isset($_POST["txt_fecha_matri_fin"]))
+	{	$fechamatri_fin = $_POST["txt_fecha_matri_fin"];
+	}
+	else
+	{	$fechamatri_fin = "";
+	}
+	if (isset($_POST["cmb_alum_estado"]))
+	{	$alum_estado = $_POST["cmb_alum_estado"];
+	}
+	else
+	{	$alum_estado = "-1";
+	}
+	
+	$params	= array(
+		$peri_codi,			$alum_codi,			$alum_apel,
+		$alum_id,			$grupo_economico,	$nivel,
+		$fechanac_ini,		$fechanac_fin,		$fechamatri_ini,
+		$fechamatri_fin,	$curs_para_codi,	$alum_estado);
+	$sql	= "{call alum_peri_view_all(?,?,?,?,?,?,?,?,?,?,?,?)}";
 	$stmt	= sqlsrv_query($conn, $sql, $params);  
-	$cc = 1; 
+	$cc = 1;
 		
 	/*Cabecera del reporte*/
-	$objPHPExcel->getActiveSheet()->getStyle("A1:BM1")->applyFromArray($style_cabecera);
+	$objPHPExcel->getActiveSheet()->getStyle("A1:BP1")->applyFromArray($style_cabecera);
 	$objPHPExcel->getActiveSheet()->getRowDimension(1)->setRowHeight(40);
-	$objPHPExcel->getActiveSheet()->getStyle("A2:BM2")->applyFromArray($style_cabecera);
+	$objPHPExcel->getActiveSheet()->getStyle("A2:BP2")->applyFromArray($style_cabecera);
 	$objPHPExcel->getActiveSheet()->getRowDimension(2)->setRowHeight(40);
 	
 	$objPHPExcel->setActiveSheetIndex(0)->mergeCells('A1:T1');
@@ -48,7 +131,7 @@
 	$objPHPExcel->setActiveSheetIndex(0)->mergeCells('AZ1:BK1');
 	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('AZ1','REPRESENTANTE FINANCIERO');
 
-	$objPHPExcel->setActiveSheetIndex(0)->mergeCells('BL1:BM1');
+	$objPHPExcel->setActiveSheetIndex(0)->mergeCells('BL1:BP1');
 	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('BL1','INFORMACION EXTRA');
 	/*Datos del estudiante*/
 	$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, 2, 'Nº');
@@ -251,9 +334,17 @@
 	$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(64, 2, 'PERIODO REGISTRO');
 	$objPHPExcel->getActiveSheet()->getColumnDimension(PHPExcel_Cell::stringFromColumnIndex(64))->setWidth(40);
 	
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(65, 2, 'FECHA DE MATRICULA');
+	$objPHPExcel->getActiveSheet()->getColumnDimension(PHPExcel_Cell::stringFromColumnIndex(65))->setWidth(40);
+
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(66, 2, 'ETNIA DEL ALUMNO');
+	$objPHPExcel->getActiveSheet()->getColumnDimension(PHPExcel_Cell::stringFromColumnIndex(66))->setWidth(40);
+
+	$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(67, 2, 'GRUPO ECONÓMICO');
+	$objPHPExcel->getActiveSheet()->getColumnDimension(PHPExcel_Cell::stringFromColumnIndex(67))->setWidth(40);
 	/*Detalle del reporte*/
 	while ($row = sqlsrv_fetch_array($stmt))
-	{	$objPHPExcel->getActiveSheet()->getStyle("A".($cc+2).":BL".($cc+2))->applyFromArray($style_detalle);
+	{	$objPHPExcel->getActiveSheet()->getStyle("A".($cc+2).":BN".($cc+2))->applyFromArray($style_detalle);
 		/*Datos del estudiante*/
 		$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(0, $cc+2, $cc);
 		$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(1, $cc+2, $row['alum_codi']);
@@ -325,7 +416,9 @@
 
 		$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(63, $cc+2, $row['esta_deta']);
 		$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(64, $cc+2, $row['alum_peri_regi']);
-
+		$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(65, $cc+2, $row['acpe_fecha_reg']);
+		$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(66, $cc+2, $row['alum_etnia']);
+		$objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow(67, $cc+2, $row['alum_grupo_econ']);
 		$cc++;
 	}
 	

@@ -9,7 +9,7 @@ $diccionario = array(
     'active_menu'=>array(
         'submenu'  	=> '{menu412}',
 		'open'  	=> '{open4}', 
-        'mainmenu' 	=> '{menu4}'
+        'mainmenu' 	=> '{menu41}'
                         ),
 	'usua_datos'=>array(
         'usua_nombres'  => $_SESSION['usua_nombres'], 

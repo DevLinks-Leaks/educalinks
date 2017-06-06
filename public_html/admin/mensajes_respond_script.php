@@ -30,7 +30,7 @@
 
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-primary" id="responder_mensaje" data-loading-text="Enviando..."   onClick="envio_mensaje_resp('<?= $row_mens_info['mens_de'] ?>','<?= $row_mens_info['mens_de_tipo'] ?>');">
+  <button type="button" class="btn btn-primary"  id="responder_mensaje" data-loading-text="Enviando..."  onClick="envio_mensaje_resp('<?= $row_mens_info['mens_de'] ?>','<?= $row_mens_info['mens_de_tipo'] ?>');">
     Enviar
   </button>
 

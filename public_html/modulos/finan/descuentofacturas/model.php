@@ -163,7 +163,7 @@ class Descuentofacturas extends DBAbstractModel{
             $this->mensaje="Deuda no encontrada";
         }
     }
-	public function getDescuentos_factura($codigo="")
+	public function getDescuentos_factura($codigo="zzz")
 	{   
 		$this->parametros = array($codigo);
         $this->sp = "str_consultaFacturaDescto";

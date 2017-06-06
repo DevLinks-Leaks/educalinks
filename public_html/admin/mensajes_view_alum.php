@@ -22,6 +22,9 @@
 <style>
 .alum_option
 {
+	
+	
+	
 	background: #FFFFFF;
 	font-size: 10px;
 	vertical-align:middle;
@@ -36,6 +39,8 @@
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
+	
+	
 }
 
 </style>
@@ -45,7 +50,7 @@
 		$cc +=1; ?> 
       <div   id=""  class="alum_option"  >  
           <?php
-              $file_exi=$_SESSION['ruta_foto_alumno'] . $row_alum_curs_para_view["alum_codi"] . '.jpg';
+              $file_exi=$_SESSION['ruta_foto_alumno'].$row_alum_curs_para_view["alum_codi"].'.jpg';
       
               if (file_exists($file_exi)) {
                   $pp=$file_exi;

@@ -2,6 +2,11 @@
 session_start();
 require_once("../../../core/viewBase.php");
 
+if( !empty ( $_POST['submenu'] ) )
+	$submenu = $_POST['submenu'];
+else
+	$submenu = '{menuFicha01}';
+
 $diccionario = array(
     'subtitle'=>array(	
         VIEW_SET=>'Crear una nueva ficha médica',
@@ -14,8 +19,8 @@ $diccionario = array(
     ),
     'rutas_head'=>array(),
     'active_menu'=>array(
-        'submenu'  => '{menu603}',
-        'open'  => '{open6}',
+        'submenu'  => $submenu,
+        'open'  => '{openFichaMedic}',
         'mainmenu' => '{menu6}'
     ),
     'usua_datos'=>array(

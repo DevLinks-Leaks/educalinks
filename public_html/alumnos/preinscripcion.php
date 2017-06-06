@@ -49,6 +49,14 @@
 	</div>
 </div>
 <!-- FIN MODAL -->
+<!-- Modal metodo pago-->
+<div class="modal fade" id="modal_metodo_pago" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content" id="modal_body_metodo_pago">
+			
+		</div>
+	</div>
+</div>
 <!-- Modal para instrucciones-->
 <!-- Modal -->
 <div class="modal fade" id="myModalPre" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

@@ -1,14 +1,15 @@
-<?php
+<?php 
+
 	session_start();	 
 	include ('../framework/dbconf.php');
 	include ('../framework/funciones.php');
-?>
+?>	
 <!DOCTYPE html>
 <html>
 <head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>Educalinks | <?php echo para_sist(2); ?></title> 
-        <link rel="SHORTCUT ICON" href="../imagenes/logo_icon.png"/>
+        <link rel="SHORTCUT ICON" href="http://108.179.196.99/educalinks/imagenes/logo_icon.png"/>
         <link href="../theme/css/main.css" rel="stylesheet" type="text/css"> 
     <link href="../theme/css/print.css" media="print" rel="stylesheet" type="text/css">
 	  
@@ -24,17 +25,20 @@
 	</style> 
 </head>
 <body>
+
+
+
 <page>
 	<div  class="lista" >
 	<div class="header_institution">
         <div class="institution">
           <div class="image">
-            <img src="<?= $_SESSION['ruta_foto_logo_libreta']?>" width="90" height="107">
+            <img src="<?=$_SESSION['ruta_foto_logo_web']?>" width="75" height="90">
           </div>
           <div class="name">
-                  <h4> <strong> UNIDAD EDUCATIVA <?= para_sist(3); ?> </strong></h4>
-                  <h4>LISTADO DE CITAS CON PADRES DE FAMILIA</h4>
-                  <h5>Ano Lectivo <?= $_SESSION['peri_deta']; ?></h5>
+              <h4> <strong> UNIDAD EDUCATIVA <?= $_SESSION['cliente']; ?></strong></h4>
+              <h4>LISTADO DE CITAS CON PADRES DE FAMILIA</h4>
+              <h5>Año Lectivo <?= $_SESSION['peri_deta']; ?></h5>
           </div>
         </div>
     </div>
@@ -71,8 +75,8 @@
 			{
 				$fecha= date('Ymd');
 			}
-			$params = array($fecha);
-			$sql="{call hora_aten_repr_view(?)}";
+			$params = array($fecha, $_SESSION['prof_codi'],$_SESSION['peri_codi']);
+			$sql="{call hora_aten_repr_view_prof(?,?,?)}";
 			$hora_aten_repr_view = sqlsrv_query($conn, $sql, $params); 
 			$bandera=false;
 			$cont=0;

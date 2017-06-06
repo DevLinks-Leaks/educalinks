@@ -10,6 +10,7 @@ require_once('view.php');
 function handler() {
 	$descuentoalumnos = get_mainObject('descuentoalumnos');
 	$permiso = get_mainObject('General');
+	$periodo = get_mainObject('General');
 	$event = get_actualEvents(array(VIEW_GET_ALL, VIEW_SET), VIEW_GET_ALL);
 	$user_data = get_frontData();
 
@@ -21,7 +22,17 @@ function handler() {
 		case VIEW_GET_ALL:
 			if($_SESSION['IN']!="OK"){$_SESSION['IN']="KO";$_SESSION['ERROR_MSG']="Por favor inicie sesión";header("Location:".$domain);}
             
-            $descuentoalumnos->get_all($user_data['busq']);
+			$periodo->get_all_periodos();
+			$data = array(
+            '{combo_periodo}' => array(	"elemento"  => "combo", 
+										"datos"     => $periodo->rows, 
+										"options"   =>array("name"		=>"periodos",
+															"id"		=>"periodos",
+                                                            "class"		=>"form-control",
+															"onChange"	=>""),
+										"selected"	=> $_SESSION['peri_codi'] ));
+															
+            $descuentoalumnos->get_all( $_SESSION['peri_codi'] );
       		if(count($descuentoalumnos->rows)>0)
 			{	global $diccionario;
 				$permiso->permiso_activo($_SESSION['usua_codigo'], 142);
@@ -53,7 +64,7 @@ function handler() {
 														"Inactivar"),
 								  "options"=>array($opciones),
 								  "campo"=>"codigo");
-				$data['mensaje'] = "Listado de estudiantes con descuento otorgado";
+				$data['mensaje'] = "Listado de Alumnos con descuento";
 			
       		}else{
       			$data = array('mensaje'=>$descuentoalumnos->mensaje.$descuentoalumnos->ErrorToString());
@@ -61,7 +72,7 @@ function handler() {
       		retornar_vista(VIEW_GET_ALL, $data);
             break;
         case GET_ALL_DATA:
-            $descuentoalumnos->get_all($user_data['busq']);
+            $descuentoalumnos->get_all( $user_data['peri_codi'] );
             if(count($descuentoalumnos->rows)>0)
 			{	global $diccionario;
                 $permiso->permiso_activo($_SESSION['usua_codigo'], 142);

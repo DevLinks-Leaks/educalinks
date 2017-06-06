@@ -125,6 +125,11 @@ $diccionario_menu=array(
 					'texto'=>'<span class=\'fa fa-folder\'></span>&nbsp;Cerrar caja',
 					'permiso'=>'170',
 				),
+'{Convenio_pago}'	=>	array(
+					'href'=>'../../finan/convenio_pago/',
+					'texto'=>'<span class=\'fa fa-handshake-o\'></span>&nbsp;Convenio Pago',
+					'permiso'=>'170',
+				),
 '{Contabilidad}'	=>	array(
 					'href'=>'../../finan/contabilidad/',
 					'texto'=>'<span class=\'icon icon-ctfco\'></span>&nbsp;Contabilidad',
@@ -139,6 +144,10 @@ $diccionario_menu=array(
 '{VerDocumentosAutorizados}'	=>	array(
 					'href'=>'../../finan/VerDocumentosAutorizados/',
 					'texto'=>'<span class=\'fa fa-barcode\'></span>&nbsp;Doc. autorizados',
+					'permiso'=>'227',),
+'{VerDeudasSinFacturas}'	=>	array(
+					'href'=>'../../finan/VerDeudasSinFacturas/',
+					'texto'=>'<span class=\'fa fa-barcode\'></span>&nbsp;Deudas sin facturas',
 					'permiso'=>'227',),
 '{VerPagos}'	=>	array(
 					'href'=>'../../finan/pagos/',
@@ -155,7 +164,7 @@ $diccionario_menu=array(
 				),
 '{Categorias}'	=>	array(
 					'href'=>'../../finan/categorias/',
-					'texto'=>'<span class=\'fa fa-tags\'></span>&nbsp;Categorías',
+					'texto'=>'<span class=\'fa fa-tags\'></span>&nbsp;Categoría Items',
 					'permiso'=>'136',
 				),
 '{Items}'	=>	array(
@@ -185,7 +194,7 @@ $diccionario_menu=array(
 				),
 '{Clientes}'	=>	array(
 					'href'=>'../../finan/clientes/',
-					'texto'=>'<span class=\'fa fa-graduation-cap\'></span>&nbsp;Clientes',
+					'texto'=>'<span class=\'fa fa-graduation-cap\'></span>&nbsp;Alumnos',
 					'permiso'=>'103',
 				),
 '{Clientes_externos}'
@@ -216,7 +225,7 @@ $diccionario_menu=array(
 				),
 '{TiposdeDescuentos}'	=>	array(
 					'href'=>'../../finan/tipo_descuento/',
-					'texto'=>'<span class=\'fa fa-wrench\'></span>&nbsp;Tipos de descuentos',
+					'texto'=>'<span class=\'fa fa-percent\'></span>&nbsp;Tipos de dsctos.',
 					'permiso'=>'115',
 				),
 '{PeriodosAnuales}'	=>	array(
@@ -226,7 +235,7 @@ $diccionario_menu=array(
 				),
 '{Liquidez}'	=>	array(
 					'href'=>'../../finan/liquidez/',
-					'texto'=>'<span class=\'fa fa-bookmark-o\'></span>&nbsp;Reporte de liquidez',
+					'texto'=>'<span class=\'fa fa-bookmark-o\'></span>&nbsp;R. Liquidez',
 					'permiso'=>'192',
 				),
 '{Cobranza}'	=>	array(
@@ -276,7 +285,7 @@ $diccionario_menu=array(
 				),
 '{RepDescuentos}'	=> 	array(
 						'href'=>'../../finan/rep_descuentos/',
-						'texto'=>'<span class=\'fa fa-bookmark-o\'></span>&nbsp;Descuentos otorgados',
+						'texto'=>'<span class=\'fa fa-bookmark-o\'></span>&nbsp;Dsctos. otorgados',
 						'permiso'=>'203'
 				),
 '{RepSaldosAFavor}'	=> 	array(
@@ -291,7 +300,12 @@ $diccionario_menu=array(
 				),
 '{RepEmisiones}'=> 	array(
 						'href'=>'../../finan/rep_emisiones/',
-						'texto'=>'<span class=\'fa fa-bookmark-o\'></span>&nbsp;Reporte Emisiones',
+						'texto'=>'<span class=\'fa fa-bookmark-o\'></span>&nbsp;R. Emisiones',
+						'permiso'=>'202'
+				),
+'{RepDebito}'=> 	array(
+						'href'=>'../../finan/rep_debito/',
+						'texto'=>'<span class=\'fa fa-bookmark-o\'></span>&nbsp;R. debito bancario',
 						'permiso'=>'202'
 				),
 '{RepAntiguedad}'=> 	array(
@@ -301,7 +315,7 @@ $diccionario_menu=array(
 				),
 '{RepMediacion}'=> 	array(
 						'href'=>'../../finan/rep_mediacion/',
-						'texto'=>'<span class=\'fa fa-bookmark-o\'></span>&nbsp;Reporte mediación',
+						'texto'=>'<span class=\'fa fa-bookmark-o\'></span>&nbsp;R. Mediación',
 						'permiso'=>'202'
 				),
 '{RepFacturas}'	=> 	array(
@@ -316,7 +330,7 @@ $diccionario_menu=array(
 				),
 '{DescuentoAlumnos}'	=> 	array(
 						'href'=>'../../finan/descuentoalumnos/',
-						'texto'=>'<span class=\'fa fa-graduation-cap\'></span>&nbsp;Descuento por alumno',
+						'texto'=>'<span class=\'fa fa-graduation-cap\'></span>&nbsp;Alumnos con dscto.',
 						'permiso'=>'208'
 				),
 /*MEDICO*/

@@ -53,16 +53,16 @@ function handler() {
               $data['disabled_agregar_nivel_economico']="disabled='disabled'";
             }
     				$data['{tabla}']= array("elemento"=>"tabla",
-                                    "clase"=>"table table-bordered table-hover",
+                                    "clase"=>"table table-striped table-hover",
                                     "id"=>$tabla,
                                     "datos"=>$nivelEconomico->rows,
                                     "encabezado" => array("Codigo",
-                                                          "Nombre",
-                                                          "Descripción",
-                                                          "Opciones"),
+														  "<div style='text-align:left;'>Nombre</div>",
+														  "<div style='text-align:left;'>Descripcion</div>",
+                                                          ""),
                                                           "options"=>array($opciones),
                                                           "campo"=>"codigo");
-            $data['mensaje'] = "Listado de niveles económicos:";
+            $data['mensaje'] = "Listado de niveles económicos";
     			}else{
     				$data = array('mensaje'=>$nivelEconomico->mensaje.$nivelEconomico->ErrorToString());
     			}
@@ -101,13 +101,13 @@ function handler() {
                 $data['disabled_agregar_nivel_economico']="disabled='disabled'";
               }
               $data['{tabla}'] = array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$nivelEconomico->rows,
                                         "encabezado" => array("Codigo",
-                                                              "Nombre",
-                                                              "Descripción",
-                                                              "Opciones"),
+                                                              "<div style='text-align:left;'>Nombre</div>",
+															  "<div style='text-align:left;'>Descripcion</div>",
+                                                              ""),
                                                               "options"=>array($opciones),
                                                               "campo"=>"codigo");
               //$data['mensaje'] = "Listado de niveles económicos:";

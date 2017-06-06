@@ -61,7 +61,7 @@
 	
 ?>
 
-<table class="table_striped" id="curs_table">
+<table class="table table-striped" id="curs_table">
  <thead>
   <tr>
     <th colspan="2">Listado de Cursos </td>
@@ -78,33 +78,25 @@
 		<?= $row_curs_view["nive_deta"]; ?>
     </td>
    <td>
-<div class="menu_options">
-	<ul>
      <?php if (permiso_activo(35)){?>
-		<li>
-			<a id="bt_curs_edit_<?= $row_curs_view["curs_codi"]; ?>"  class="option" data-toggle="modal" data-target="#curs_nuev" 
+			<a id="bt_curs_edit_<?= $row_curs_view["curs_codi"]; ?>"  class="btn btn-default" data-toggle="modal" data-target="#curs_nuev" 
             	onclick="curs_upda_dial(<?= $row_curs_view["curs_codi"]; ?>,'<?= $row_curs_view["curs_deta"]; ?>',<?= $row_curs_view["nive_codi"]; ?>)"  >
-			 <span class="icon-pencil2 icon"></span> Editar
+			 <span class="fa fa-pencil btn_opc_lista_editar"></span> Editar
 			</a>
-		</li>
      <?php }if (permiso_activo(36)){?>
-		<li>
-			<a id="bt_curs_dele_<?= $row_curs_view["curs_codi"]; ?>" class="option" 
+			<a id="bt_curs_dele_<?= $row_curs_view["curs_codi"]; ?>" class="btn btn-default" 
             	onclick="curs_del(<?= $row_curs_view["curs_codi"]; ?>)" >
-			<span class="icon-close icon"></span>Eliminar
+			<span class="fa fa-trash btn_opc_lista_eliminar"></span> Eliminar
 			
 		</a>
-		</li>
      <?php }?>
-	</ul>
-</div>
    </td>
   </tr>
  
  <?php  }?>
    <tr class="pager_table">
     <td colspan="2">
-    	<span class="icon-users icon"> </span> Total de Cursos ( <?php echo $cc;?> )
+    	<span class="fa fa-users"> </span> Total de Cursos ( <?php echo $cc;?> )
     </td>
   </tr>
 </tbody>

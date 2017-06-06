@@ -454,7 +454,7 @@ function actualiza_badge_gest_cheques(badge_total)
                 gestdeudas=xhrbadgecheque.responseText;
             }
             gestsuma=parseInt(badge_total)+parseInt(gestdeudas);
-			console.log( gestsuma );
+			//console.log( gestsuma );
             if(gestsuma === 0){
                 if( document.getElementById('badge_gest_fac') )
 					document.getElementById('badge_gest_fac').innerHTML = "";

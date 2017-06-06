@@ -17,11 +17,15 @@ class Cliente extends DBAbstractModel{
     public $estado;
 
 	public function get_cliente_alumnos_general($cod_estudiante, 		$nombre_estudiante,		$fechanac_ini, 		$fechanac_fin,
+												$fechamatri_ini,		$fechamatri_fin,
 												$id_titular,			$nombre_repr,			$id_cliente,		$periodos,
-												$curso,					$grupoEconomico,		$nivelEconomico,	$estado)
+												$curso,					$grupoEconomico,		$nivelEconomico,	$estado_reg,
+												$estado)
 	{   $this->parametros = array(	$cod_estudiante, 		$nombre_estudiante,		$fechanac_ini, 		$fechanac_fin,
+									$fechamatri_ini,		$fechamatri_fin,
 									$id_titular,			$nombre_repr,			$id_cliente,		$periodos,
-									$curso,					$grupoEconomico,		$nivelEconomico,	$estado);
+									$curso,					$grupoEconomico,		$nivelEconomico,	$estado_reg,
+									$estado);
         $this->sp = "str_consultaCliente_busq";
         $this->executeSPConsulta();
 
@@ -146,8 +150,9 @@ class Cliente extends DBAbstractModel{
     }
 
 
-    public function getDscto_selectFormat( $busq = "zzz" )
-	{   $this->parametros = array( $busq );
+    public function getDscto_selectFormat($busq="zzz"){
+        $busq="zzz";
+        $this->parametros = array($busq);
         $this->sp = "str_consultaDescuento_busq";
         $this->executeSPConsulta();
 
@@ -282,17 +287,17 @@ class Cliente extends DBAbstractModel{
         }
     }
 
-    public function setGrupoEconomico( $codigoEstudiante = "", $codigoGrupoEconomico = "" )
-	{   if($codigoEstudiante!="" && $codigoGrupoEconomico!="")
-		{   $this->parametros = array($codigoEstudiante, $codigoGrupoEconomico);
+    public function setGrupoEconomico( $codigoEstudiante = "", $codigoGrupoEconomico = "", $ingresoFamiliar = "-1" )
+	{   if($codigoEstudiante!="" && $codigoGrupoEconomico!="" && $ingresoFamiliar != "" )
+		{   $this->parametros = array($codigoEstudiante, $codigoGrupoEconomico, $ingresoFamiliar );
             $this->sp = "str_consultaCliente_addGrupoEconomico";
             $this->executeSPAccion();
         }
         if($this->filasAfectadas>0)
-		{   $this->mensaje="¡Exito! Grupo economico modificado.";
+		{   $this->mensaje="¡Exito! Grupo economico modificado";
         }
 		else
-		{   $this->mensaje="¡Error! Actualización no se pudo realizar.";
+		{   $this->mensaje="¡Error! No se pudo completar la solicitud al sistema";
         }
 		return $this;
     }

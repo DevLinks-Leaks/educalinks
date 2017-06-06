@@ -49,13 +49,13 @@ function handler()
 				{   $data['disabled_agregar_grupo']="disabled='disabled'";
 				}
 				$data['{tabla}']= array("elemento"=>"tabla",
-								  "clase"=>"table table-bordered table-hover",
+								  "clase"=>"table table-striped table-hover",
 								  "id"=>$tabla,
 								  "datos"=>$grupoEconomico->rows,
 								  "encabezado" => array("Codigo",
-														"Nombre",
-														"Descripcion",
-														"Opciones"),
+														"<div style='text-align:left;'>Nombre</div>",
+														"<div style='text-align:left;'>Descripcion</div>",
+														""),
 								  "options"=>array($opciones),
 								  "campo"=>"codigo");
 				$data['mensaje'] = "Listado de grupos económicos:";
@@ -92,13 +92,13 @@ function handler()
                 {   $data['disabled_agregar_grupo']="disabled='disabled'";
                 }
                 $data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$grupoEconomico->rows,
-                                        "encabezado" => array("Codigo",
-                                                              "Nombre",
-                                                              "Descripcion",
-                                                              "Opciones"),
+										"encabezado" => array(	"Codigo",
+																"<div style='text-align:left;'>Nombre</div>",
+																"<div style='text-align:left;'>Descripcion</div>",
+																""),
                                         "options"=>array($opciones),
                                         "campo"=>"codigo");
             }

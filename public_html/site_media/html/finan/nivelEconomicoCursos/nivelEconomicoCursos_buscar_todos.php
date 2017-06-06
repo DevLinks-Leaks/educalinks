@@ -39,17 +39,40 @@
   </div>
 </div>
 <!-- Modal Agregar-->
-<div class="box box-default">
-	<div class="box-header with-border">
-		<h3 class="box-title">
-			<button class="btn btn-primary" type="button" aria-hidden='true' data-toggle='modal' data-target='#modal_add' 
-				onclick="carga_add('modal_add_body','{ruta_html_finan}/nivelEconomicoCursos/controller.php')" {disabled_agrupar_curso}>
-					<i class='fa fa-object-group'></i></span>&nbsp;<i class='fa fa-plus'></i></button>
-		</h3>
-	</div>
-	<div class="box-body">
-		<div id="resultado">
-			{tabla}
+<div class="form-horizontal">
+	<div class="form-group">
+		<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+			<div class="box box-solid">
+				<div class="box-header with-border">
+					<h3 class="box-title">Config. Nivel económico</h3>
+					<div class="box-tools">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+						</button>
+					</div>
+				</div>
+				<div class="box-body no-padding">
+					<ul class="nav nav-pills nav-stacked">
+						<li id="nav_aniosPeriodo_1"><a href="../../finan/nivelEconomico/">1. Crear nivel económico
+						<li id="nav_aniosPeriodo_2" class="active"><a  href="../../finan/nivelEconomicoCursos/">2. Agrupar cursos por nivel económico</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+			<div class="box box-default">
+				<div class="box-header with-border">
+					<h3 class="box-title">
+						<button class="btn btn-primary" type="button" aria-hidden='true' data-toggle='modal' data-target='#modal_add' 
+							onclick="carga_add('modal_add_body','{ruta_html_finan}/nivelEconomicoCursos/controller.php')" {disabled_agrupar_curso}>
+								<i class='fa fa-object-group'></i></span>&nbsp;<i class='fa fa-plus'></i></button>
+					</h3>
+				</div>
+				<div class="box-body">
+					<div id="resultado">
+						{tabla}
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

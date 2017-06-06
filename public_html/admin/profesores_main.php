@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
     <?php include("template/head.php");?>
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body class="hold-transition skin-blue sidebar-mini <?php echo $_SESSION['sidebar_status']; ?>">
 		<div class="wrapper">
 			<?php include ('template/header.php');?>
-			<?php $Menu=207;include("template/menu.php");?>
+			<?php $Menu=901;include("template/menu.php");?>
 			<div class="content-wrapper">
 				<section class="content-header">
 					<h1>Profesores</h1>
@@ -21,6 +21,10 @@
 									<?php if (permiso_activo(43)){?>
 									<a  class="btn btn-primary" onclick="document.getElementById('usua_nombre').focus();" data-toggle="modal" data-target="#ModalUsuaAdd" >
 										<span class="fa fa-plus"></span> Agregar Nuevo Profesor
+									</a><?php }?>
+									<?php if (permiso_activo(11)){?>
+									<a  class="btn btn-info" href="cursos_notas_permisos_main.php" title='Ver y agregar permisos de ingresos de notas a docentes.'>
+										<span class='fa fa-list-alt'></span> Permisos ingreso notas</a> 
 									</a><?php }?>
 								</h3>
 							</div><!-- /.box-header -->

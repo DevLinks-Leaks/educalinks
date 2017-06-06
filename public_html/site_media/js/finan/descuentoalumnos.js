@@ -33,16 +33,16 @@ $(document).ready(function() {
 	})
 });
 // Consulta filtrada
-function busca( busq, div, url )
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+function js_descuentoalumnos_busca( )
+{   document.getElementById( 'resultado' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'get_all_data');
-	data.append('busq', busq);	
+	data.append('peri_codi', document.getElementById( 'periodos' ).value );	
 	var xhr = new XMLHttpRequest();
-	xhr.open('POST', url , true);
+	xhr.open('POST', document.getElementById( 'ruta_html_finan' ).value + '/descuentoalumnos/controller.php' , true);
 	xhr.onreadystatechange=function(){
 		if (xhr.readyState==4 && xhr.status==200){
-			document.getElementById(div).innerHTML=xhr.responseText;
+			document.getElementById( 'resultado' ).innerHTML=xhr.responseText;
 			$('#descfacturas_table').addClass( 'nowrap' ).DataTable({
 				dom: 'Bfrtip',
 				buttons: [ 
@@ -126,7 +126,7 @@ function edit(rol_codigo,div,url){
 		xhr.open('POST', url , true);
 		xhr.onreadystatechange=function(){
 			if (xhr.readyState==4 && xhr.status==200){
-				busca("",div,url)
+				js_descuentoalumnos_busca("",div,url)
 			} 
 		}
 		xhr.send(data);
@@ -151,7 +151,7 @@ function add(div,url){
 	xhr.open('POST', url , true);
 	xhr.onreadystatechange=function()
 	{   if (xhr.readyState==4 && xhr.status==200)
-		{   busca("",div,url);
+		{   js_descuentoalumnos_busca("",div,url);
 		}
 	};
 	xhr.send(data);
@@ -167,7 +167,7 @@ function js_descuento_alumno_delete ( codigo, div, url )
 		xhr.open('POST', url , true);
 		xhr.onreadystatechange=function()
 		{   if (xhr.readyState==4 && xhr.status==200)
-			{   busca("",div,url);
+			{   js_descuentoalumnos_busca("",div,url);
 			} 
 		};
 		xhr.send(data);

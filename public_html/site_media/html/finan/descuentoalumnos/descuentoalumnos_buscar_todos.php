@@ -36,16 +36,18 @@
   </div>
 </div>
 <!-- Modal Agregar-->
-<!-- <div class="form-medium">
-    <div class="form-group">
-    <input type="text" class="form-control" id="busq" name="busq" placeholder="buscar..." onkeyup="busca(this.value,'resultado','{ruta_html_finan}/descuentoalumnos/controller.php')" />
-    </div>
-   
-</div>-->
 <div class="box box-default">
 	<div class="box-header">
-		<h3 class="box-title"></h3>
-	</div><!-- /.box-header -->
+		<h3 class="box-title">			
+			<div class="col-lg-4 col-sm-6 input-group input-group-sm">
+				<span id="span_balance_reason" name="span_balance_reason" class="input-group-addon">Ver descuentos del período</span>
+				{combo_periodo}
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-info btn-flat" onClick='js_descuentoalumnos_busca();'>Ir</button>
+				</span>
+			</div>
+		</h3>
+	</div>
 	<div class="box-body">
 		<div id="resultado">
 			{tabla}

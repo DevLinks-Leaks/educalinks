@@ -482,7 +482,7 @@ function handler() {
 		case VIEW_GENERA_DEUDAS:
 			$anioPeriodo->get_deudas_anuales($_SESSION['peri_codi']);
 			$curso->get_all_cursos( $_SESSION['peri_codi'] );
-			$periodo->get_all_periodos();	
+			$periodo->get_all_periodos();
             global $diccionario;
 			
 			$i=0;

@@ -8,7 +8,7 @@ switch($opc){
 		$repr_ex_alum = ($_POST['repr_ex_alum']=='true' ? 1 : 0 );
 		$repr_fech_promoc = substr($_POST['repr_fech_promoc'],6,4)."".substr($_POST['repr_fech_promoc'],3,2)."".substr($_POST['repr_fech_promoc'],0,2);
 		$repr_fech_naci = substr($_POST['repr_fech_naci'],6,4)."".substr($_POST['repr_fech_naci'],3,2)."".substr($_POST['repr_fech_naci'],0,2);
-		$sql	= "{call preins_repr(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+		$sql	= "{call preins_repr(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 		$params	= array($_POST['repr_codi'],
 						$_POST['repr_nomb'],
 						$_POST['repr_apel'],
@@ -33,7 +33,10 @@ switch($opc){
 						$repr_fech_naci,
 						$_POST['repr_pais_naci'],
 						$_POST['repr_prov_naci'],
-						$_POST['repr_ciud_naci']);
+						$_POST['repr_ciud_naci'],
+						$_POST['identificacion_niv_1'],
+                        $_POST['identificacion_niv_2'],
+                        $_POST['identificacion_niv_3']);
 		$stmt_rep	= sqlsrv_query($conn,$sql,$params);
 		if ($stmt_rep===false){
 			$result= json_encode(array ('state'=>'error',
@@ -121,6 +124,108 @@ switch($opc){
 		}else{
 			$result= json_encode(array ('state'=>'success',
 						'result'=>'Reservación de cupo realizada con éxito.' ));
+		}
+		echo $result;
+	break;
+	case 'cargar_idenficacion_nivel_2':
+        $data = array(); $res = ""; $msj = "";
+        $sql = "{call identificaciones_niv2_view(?)}";
+        $params = array($_POST['id']);
+        $stmt = sqlsrv_query( $conn, $sql,$params);
+        if( $stmt === false ){
+            $res = "error";
+            $msj = "Error en la conexión";
+        }
+        else{
+            $res = "success";
+            $msj = "Todo Ok";
+            while ($row = sqlsrv_fetch_array($stmt))
+                array_push($data,array("id"=>$row["id"], "nombre"=>$row["nombre"]));
+        }
+        print json_encode(array("res"=>$res, "msj"=>$msj, "data"=>$data));
+    break;
+    case 'cargar_idenficacion_nivel_3':
+        $data = array(); $res = ""; $msj = "";
+        $sql = "{call identificaciones_niv3_view(?)}";
+        $params = array($_POST['id']);
+        $stmt = sqlsrv_query( $conn, $sql,$params);
+        if( $stmt === false ){
+            $res = "error";
+            $msj = "Error en la conexión";
+        }
+        else{
+            $res = "success";
+            $msj = "Todo Ok";
+            while ($row = sqlsrv_fetch_array($stmt))
+                array_push($data,array("id"=>$row["id"], "nombre"=>$row["nombre"]));
+        }
+        print json_encode(array("res"=>$res, "msj"=>$msj, "data"=>$data));
+    break;
+    case 'repr_info_search':
+		$sql_opc = "{call repr_info_search(?)}";
+		$params_opc= array($_POST['repr_cedu']);
+		$stmt_opc = sqlsrv_query( $conn, $sql_opc,$params_opc);
+		if ($stmt_opc===false){
+			$result= json_encode(array ('state'=>'error',
+						'result'=>'Error al consultar datos del representante.',
+						'console'=> sqlsrv_errors() ));
+		}else{
+			$result= json_encode(array ('state'=>'success',
+						'result'=>'Se encontraron coincidencias con el número de identificación.' ));
+		}
+		$row_repr_view=sqlsrv_fetch_array($stmt_opc);
+		
+	break;
+	case 'alum_cuen_add':
+		$alum_cuen_nume = $_POST['alum_cuen_nume'];
+		if($alum_cuen_nume==''){
+			$alum_cuen_nume_encrypt='';
+		
+		}else{
+			/*Codigo de encriptado de Número de tarjeta de crédito*/
+			$iv = base64_decode($_SESSION['clie_iv']);
+			$alum_cuen_nume_encrypt = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $_SESSION['clie_key'], $alum_cuen_nume, MCRYPT_MODE_CBC, $iv);
+			$alum_cuen_nume_encrypt =base64_encode($alum_cuen_nume_encrypt);
+			/*FIN*/
+		}
+		$alum_cuen_banc_emis = ($_POST['alum_cuen_banc_emis']==0 ? null : $_POST['alum_cuen_banc_emis']);
+		$alum_codi = ($_POST['alum_codi']==0 ? null : $_POST['alum_codi']);
+		$alum_cuen_fech_venc = ($_POST['alum_cuen_fech_venc']=='' ? null : substr($_POST['alum_cuen_fech_venc'],6,4)."".substr($_POST['alum_cuen_fech_venc'],3,2)."".substr($_POST['alum_cuen_fech_venc'],0,2) );
+		$sql_opc = "{call alum_cuentas_add(?,?,?,?,?,?,?,?,?,?,?)}";
+		$params_opc= array($alum_codi,
+							$_POST['alum_cuen_form_pago'],
+							$_POST['alum_cuen_banc_tarj'],
+							$alum_cuen_banc_emis,
+							$alum_cuen_fech_venc,
+							$alum_cuen_nume_encrypt,
+							$_POST['alum_cuen_tipo'],
+							$_POST['alum_cuen_nomb'],
+							$_POST['alum_cuen_cedu'],
+							$_POST['alum_cuen_tipo_iden'],
+							'P'); //Estado por aprobar.
+		$stmt_opc = sqlsrv_query( $conn, $sql_opc,$params_opc);
+		if( $stmt_opc === false ){
+			$result= json_encode(array ('state'=>'error',
+						'result'=>'Error al agregar la cuenta de pago.',
+						'console'=> sqlsrv_errors() ));
+		}else{
+			//Para auditoría
+			$detalle="Código alumno: ".$_POST['alum_codi'];
+			$detalle.=" Banco/Tarjeta: ".$_POST['alum_cuen_banc_tarj'];
+			$detalle.=" alum_cuen_codi: ".$_POST['alum_cuen_codi'];
+			// iNFO NUMERO CUENTA
+			if(strpos($alum_cuen_nume, 'X') ===true)
+				$detalle.=" # Banco/Tarjeta: ".$_POST['alum_cuen_nume'];
+			else{ 
+				if (is_numeric($_POST['alum_cuen_nume']))
+					$detalle.=" # Banco/Tarjeta: ".$alum_cuen_nume_encrypt;
+				else
+					$detalle.=" # Banco/Tarjeta: ".$_POST['alum_cuen_nume'];
+			}
+			$detalle.=" Proceso: Preinscripción";
+			registrar_auditoria (121, $detalle);
+			$result= json_encode(array ('state'=>'success',
+					'result'=>'Cuenta de pago agregada con éxito.' ));
 		}
 		echo $result;
 	break;

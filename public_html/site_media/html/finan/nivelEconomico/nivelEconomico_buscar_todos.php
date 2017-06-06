@@ -38,21 +38,40 @@
     </div>
   </div>
 </div>
-<!-- Modal Agregar-->
-    <!-- <div class="form-group">
-    <input type="text" class="form-control" id="busq" name="busq" placeholder="buscar..." onkeyup="busca(this.value,'resultado','{ruta_html_finan}/nivelEconomico/controller.php')" />
-    </div>-->
-<div class="box box-default">
-	<div class="box-header with-border">
-		<h3 class="box-title">
-			<button class="btn btn-primary" type="button" aria-hidden='true' data-toggle='modal' data-target='#modal_add' 
-				onclick="carga_add('modal_add_body','{ruta_html_finan}/nivelEconomico/controller.php')" {disabled_agregar_nivel_economico}>
-				<i class='fa fa-diamond'></i></span>&nbsp;<i class='fa fa-plus'></i></button>
-		</h3>
-	</div>
-	<div class="box-body">
-		<div id="resultado">
-			{tabla}
+<div class="form-horizontal">
+	<div class="form-group">
+		<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+			<div class="box box-solid">
+				<div class="box-header with-border">
+					<h3 class="box-title">Config. Nivel económico</h3>
+					<div class="box-tools">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+						</button>
+					</div>
+				</div>
+				<div class="box-body no-padding">
+					<ul class="nav nav-pills nav-stacked">
+						<li id="nav_aniosPeriodo_1" class="active"><a href="../../finan/nivelEconomico/">1. Crear nivel económico
+						<li id="nav_aniosPeriodo_2"><a  href="../../finan/nivelEconomicoCursos/">2. Agrupar cursos por nivel económico</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+			<div class="box box-default">
+				<div class="box-header with-border">
+					<h3 class="box-title">
+						<button class="btn btn-primary" type="button" aria-hidden='true' data-toggle='modal' data-target='#modal_add' 
+							onclick="carga_add('modal_add_body','{ruta_html_finan}/nivelEconomico/controller.php')" {disabled_agregar_nivel_economico}>
+							<i class='fa fa-diamond'></i></span>&nbsp;<i class='fa fa-plus'></i></button>
+					</h3>
+				</div>
+				<div class="box-body">
+					<div id="resultado">
+						{tabla}
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

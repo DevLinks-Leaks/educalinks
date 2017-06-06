@@ -72,9 +72,7 @@ function handler()
 			//$opciones = array("Seleccionar" => "<span onclick='js_descuentofactura_carga_asignacion(".'"{codigo}"'.",".'"modal_asign_body_descuentofactura"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/descuentofacturas/controller.php"'.")' class='btn_opc_lista_credit_card glyphicon glyphicon-credit-card cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_asign_descuentofactura'  id='{codigo}_asignar'onmouseover='$(".'"#{codigo}_asignar"'.").tooltip(".'"show"'.")' title='Asignar Descuentos' data-placement='left'></span>");
             $opciones['Seleccionar'] = "<button type='button' class='btn btn-default' 
 											onclick='js_descuentofactura_carga_asignacion(\"{codigo}\",\"resultado\",\"".$diccionario['rutas_head']['ruta_html_finan']."/descuentofacturas/controller.php\")'
-											id='{codigo}_asignar'
-											onmouseover='$(this).tooltip(\"show\")' 
-											title='Editar configuracion'><span class='btn_opc_lista_credit_card fa fa-edit'></span></button>";
+											id='{codigo}_asignar'><span class='btn_opc_lista_credit_card fa fa-edit'></span></button>";
 			
             $descuentofacturas->codigoCliente = $user_data['codigoCliente'];
 			$descuentofacturas->tipo_persona = $user_data['tipo_persona'];
@@ -140,7 +138,7 @@ function handler()
             break;
 		case VIEW_SET_DISCOUNT:
 		  	 global $diccionario;
-            $cliente->getDscto_selectFormat();
+            $cliente->getDscto_selectFormat('zzz');
             $dscto = $cliente->rows;
 			
 			/*TABLA DETALLE FACTURA*/

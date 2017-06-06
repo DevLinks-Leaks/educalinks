@@ -29,32 +29,12 @@
 						<ul id="badge_sms_detail" name="badge_sms_detail" class="menu">';
 		do{ $cc +=1;
 			if ($cc <= 5)
-			{   
-				switch ($row_mens_view_para_new['mens_de_tipo']){
-					case 'A':
-						$ruta=$_SESSION['ruta_foto_alumno'];
-					break;
-					case 'R':
-						$ruta=$_SESSION['ruta_foto_repre'];
-					break;
-					case 'D':
-						$ruta=$_SESSION['ruta_foto_docente'];
-					break;
-					case 'K':
-						$ruta=$_SESSION['ruta_foto_admin'];
-					break;
-				}
-				$imagen_user = $ruta.$row_mens_view_para_new['mens_de'].'.jpg';
-				if (file_exists($imagen_user))
-					$imagen_user = $ruta.$row_mens_view_para_new['mens_de'].'.jpg';
-				else
-					$imagen_user = $_SESSION['foto_default'];
-				echo "
+			{   echo "
 					<li>
-						<a data-toggle='modal' style=\"cursor: pointer;\"
+						<a data-toggle='modal' 
                           data-target='#modal_leer_ext' onclick='load_ajax('modal_main_ext','mensajes_info.php','mens_codi=".$row_mens_view_para_new['mens_codi']."&op=2');mens_alert_upda();' >
-							<div class=\"pull-left\">
-								<img src=\"".$imagen_user."?".$rand."\" class=\"img-circle\" alt=\"User Image\">
+							<div class'pull-left'
+								<img src=\"".$_SESSION['ruta_foto_logo_web']."\" class=\"img-circle\" alt=\"User Image\">
 							</div>
 							<h4>
 								".$row_mens_view_para_new['mens_titu']."

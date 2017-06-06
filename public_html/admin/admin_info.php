@@ -1,122 +1,143 @@
 <!DOCTYPE html>
-<html><!-- InstanceBegin template="/Templates/admin.dwt" codeOutsideHTMLIsLocked="false" -->
-
-<?php include ('head.php');?>
-        
-      <!-- Nuevos Css Js -->
-	
-      <!-- Fin -->
-	</head> 
-	<body class="general admin"> 
-								<!-- InstanceBeginEditable name="EditRegion3" --><?php  $Menu2=303;    ?><!-- InstanceEndEditable -->
-		<div class="pageContainer"> 
-
-		  <?php include ('menu.php');?>
-
-			<div id="mainPanel" class="section_main">
-            
-        			<?php include ('header.php');?>
-        
-				<div class="main sectionBorder">
+<html lang="es">
+    <?php include("template/head.php");?>
+    <body class="hold-transition skin-blue sidebar-mini">
+		<div class="wrapper">
+			<?php include ('template/header.php');?>
+			<?php $Menu=0;include("template/menu.php");?>
+			<div class="content-wrapper">
+				<section class="content-header">
+					<?php  
+						session_start();
+                        include ('../framework/dbconf.php');
+						?>
+					<h1>Perfil</h1>
+					<ol class="breadcrumb">
+						<li><a href="#"><i class="fa fa-user"></i></a></li>
+						<li class="active">Perfil</li>
+					</ol>
+				</section>
+				<section class="content" id="mainPanel">
 					<div id="information">
-          
-          <div class="titleBar">
-          <!-- InstanceBeginEditable name="Titulo Top" -->
- <div class="title">
-              <h3><span class="icon-user icon"></span>Informaci&oacute;n de usuario</h3>
-          </div> 
-          <!-- InstanceEndEditable -->
-          </div>
-          
-                        <!-- InstanceBeginEditable name="information" -->
-                        
-                        <form name="frm_adm" id="frm_adm" action="" enctype="multipart/form-data" method="post">
-                        <?php
-							if(isset($_POST['usua_mail'])){
-								$usua_mail=$_POST['usua_mail'];
-								$_SESSION['usua_mail']=$usua_mail;
-								$usua_codi=$_SESSION['usua_codi'];
-								$params = array($_SESSION['usua_codi'],$_SESSION['usua_nomb'],$_SESSION['usua_apel'],$usua_mail,$_SESSION['rol_codi']);
-								$sql="{call usua_upd(?,?,?,?,?)}";
-								$prof_info = sqlsrv_query($conn, $sql, $params);
-								if( $conn === false){echo "Error in connection.\n";die( print_r( sqlsrv_errors(), true));}
-							}
-                        ?>
-                        	<div style="width:100%; padding-left:20px; padding-top:20px;">
+						<div class="box box-default">
+							<div class="box-header with-border">
+								<h3 class="box-title">Informaci&oacute;n de usuario
+								</h3>
+							</div><!-- /.box-header -->
+							<div class="box-body">
+								<!-- InstanceBeginEditable name="information" -->
+								<form name="frm_prof" id="frm_prof" action="" enctype="multipart/form-data" method="post">
 								<?php
-								$ruta=$_SESSION['ruta_foto_usuario'].$_SESSION['prof_codi'].".jpg";
-								$file_exi=$ruta;
-								if (file_exists($file_exi)) {
-									$pp=$file_exi;
-								} else {
-									$pp=$_SESSION['foto_default'];
-								}
+									if(isset($_POST['prof_cedu'])){
+										$prof_cedu=$_POST['prof_cedu'];
+										$prof_mail=$_POST['prof_mail'];
+										$_SESSION['prof_mail']=$prof_mail;
+										$_SESSION['prof_cedu']=$prof_cedu;
+										$prof_codi=$_SESSION['prof_codi'];
+										$params = array($_SESSION['prof_usua'],$_SESSION['prof_nomb'],$_SESSION['prof_apel'],$prof_mail,$_SESSION['prof_dire'],$_SESSION['prof_telf'],$prof_cedu,$prof_codi);
+										$sql="{call prof_upd(?,?,?,?,?,?,?,?)}";
+										$prof_info = sqlsrv_query($conn, $sql, $params);
+										if( $conn === false){echo "Error in connection.\n";die( print_r( sqlsrv_errors(), true));}
+									}
 								?>
-								<div class="photo">
-								<img src="<?php echo $pp;?>" style="height:200px; width:200px;" class="img-polaroid" />
-								</div>
-                                <p><h4>Nombre: </h4><?= $_SESSION['usua_nomb']; ?> <?= $_SESSION['usua_apel']; ?></p>
-                                <p><h4>Email: </h4><input type="text" id="usua_mail" name="usua_mail" value="<?= $_SESSION['usua_mail']; ?>"/></p>
-                                <p><h4>Usuario: </h4><?= $_SESSION['usua_codi']; ?></p>
-                                <p><button type="submit" class="btn btn-primary">Grabar</button></p>
-                            </div> 
-                    	</form> 
-                    		 
-                    
-                    
-                        <!-- InstanceEndEditable -->
-                    </div>
-				</div>
+									<div style="width:100%; padding-left:20px; padding-top:20px;">
+										<?php
+										$ruta=$_SESSION['ruta_foto_usuario'].$_SESSION['prof_codi'].".jpg";
+										$file_exi=$ruta;
+										if (file_exists($file_exi)) {
+											$pp=$file_exi;
+										} else {
+											$pp=$_SESSION['foto_default'];
+										}
+										?>
+										<div class='form-horizontal'>
+											<div class='form-group'>
+												<div class="col-sm-4">
+													<div class="box">
+														<div class="box-header">
+															<h3 class="box-title"></h3>
+														</div>
+														<div class="box-body">
+															<div class="selector" style="text-align:center;">
+																<div class="photo">
+																	<img src="<?php echo $pp;?>" style="height:200px; width:200px;" class="img-polaroid" />
+																</div>
+															</div>															
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-8">
+													<div class="box">
+														<div class="box-header">
+															<h3 class="box-title"></h3>
+														</div>
+														<div class="box-body">
+															<div class='form-horizontal'>
+																<div class='form-group'>
+																	<div class="col-sm-2"><label for="current_pass">Nombre:</label></div>
+																	<div class="col-sm-4">
+																		<?= $_SESSION['prof_nomb']; ?> <?= $_SESSION['prof_apel']; ?>
+																	</div>
+																</div>
+																<div class='form-group'>
+																	<div class="col-sm-2"><label for="prof_mail">Email:</label></div>
+																	<div class="col-sm-4">
+																		<input class="form-control input-sm" type="text" id="prof_mail" name="prof_mail" value="<?= $_SESSION['prof_mail']; ?>"/>
+																	</div>
+																</div>
+																<div class='form-group'>
+																	<div class="col-sm-2"><label>Usuario:</label></div>
+																	<div class="col-sm-4">
+																		<?= $_SESSION['prof_usua']; ?>
+																	</div>
+																</div>
+																<div class='form-group'>
+																	<div class="col-sm-2"><label>Domicilio:</label></div>
+																	<div class="col-sm-4">
+																		<?= $_SESSION['prof_dire']; ?>
+																	</div>
+																</div>
+																<div class='form-group'>
+																	<div class="col-sm-2"><label>Tel&eacute;fono:</label></div>
+																	<div class="col-sm-4">
+																		<?= $_SESSION['prof_telf']; ?>
+																	</div>
+																</div>
+																<div class='form-group'>
+																	<div class="col-sm-2"><label>C&eacute;dula:</label></div>
+																	<div class="col-sm-4">
+																		<input class="form-control input-sm" type="text" id="prof_cedu" name="prof_cedu" value="<?= $_SESSION['prof_cedu']; ?>"/>
+																	</div>
+																</div>
+																<div class='form-group'>
+																	<div class="col-sm-6" style='text-align:center;'>
+																		<button class='btn btn-success' type="submit" class="btn btn-primary"><span class='fa fa-floppy-o'></span> Grabar</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div> 
+								</form> 
+							</div>
+						</div>
+		            </div>
+				</section>
+				<?php include("template/menu_sidebar.php");?>
 			</div>
-
-	
-	</div>
-    
-    
-    <input name="mens_de"  		type="hidden" id="mens_de" 		value='<?php echo $_SESSION['USUA_DE'];  ?>'    />
- 	<input name="mens_de_tipo"  type="hidden" id="mens_de_tipo" value='<?php echo $_SESSION['USUA_TIPO']; ?>'    />
-    
-    <!-- Modal SELECCION DE PERIODO -->
-    <div class="modal fade" id="ModalPeriodoActivo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title" id="myModalLabel">SELECCION DE PERIODO ACTIVO</h4>
-          </div>
-          <div class="modal-body">
-           
-                <table>
-                    <tr>
-                        <td>PERIODOS</td>                        
-                        
-                    </tr>
-                            
-                     <? 	
-						$params = array();
-						$sql="{call peri_view()}";
-						$peri_view = sqlsrv_query($conn, $sql, $params);  
-                    ?>
-                    
-                     <? while($row_peri_view = sqlsrv_fetch_array($peri_view)){ ?>
-                     <tr>    
-     					<td height="50"><button type="button" class="btn btn-primary" style="width:100%;" onClick="periodo_cambio(<?= $row_peri_view["peri_codi"]; ?>);">ACTIVAR PERIODO LECTIVO <?= $row_peri_view["peri_deta"]; ?></button></td>
-                    </tr>
-                    <?php  } ?>
-
-
-                     
-                   
-                </table>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-            
-          </div>
-        </div>
-      </div>
-    </div>
-    
-<!-- InstanceBeginEditable name="EditRegion4" --><!-- InstanceEndEditable -->
-</body>
-<!-- InstanceEnd --></html>
+			<form id="frm_actu" name="frm_actu" method="post" action="" enctype="multipart/form-data">
+				<?php include("template/rutas.php");?>
+			</form>
+			<?php include("template/footer.php");?>
+		</div>
+		<!-- =============================== -->
+		<input class="form-control input-sm"name="mens_de"  		type="hidden" id="mens_de" 		value='<?php echo $_SESSION['USUA_DE'];  ?>'    />
+		<input class="form-control input-sm"name="mens_de_tipo"  type="hidden" id="mens_de_tipo" value='<?php echo $_SESSION['USUA_TIPO']; ?>'    />
+		<?php include("template/scripts.php");?>
+		<script type="text/javascript" charset="utf-8">
+		</script>
+	</body>
+</html>

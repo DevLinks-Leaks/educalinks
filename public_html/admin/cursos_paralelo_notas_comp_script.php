@@ -1,14 +1,10 @@
 <?php
-
 	session_start();	 
 	include ('../framework/dbconf.php');
 	include ('../framework/funciones.php');
 		 
- 
-
 	if(isset($_POST['add_nota']))
 	{
-		
 		$col=$_POST['col'];
 		$fil=$_POST['fil'];
 		$peri_dist_codi=$_POST['peri_dist_codi'];
@@ -30,7 +26,7 @@
 				$sql="{call nota_comp_add(?,?,?)}";
 				$nota_add = sqlsrv_query($conn, $sql, $params);  
 					
-				/// INGRESO DE OBSERVACIONES
+				// INGRESO DE OBSERVACIONES
 				$params = array($peri_dist_codi, $alum_codi, $observacion);
 				$sql="{call nota_obse_add(?,?,?)}";
 				sqlsrv_query($conn, $sql, $params); 
@@ -38,10 +34,6 @@
 				$j++;
 			}
 			$i++;
-		}
-		 
+		}	 
 	}
-	
- 
-	 	
 ?>

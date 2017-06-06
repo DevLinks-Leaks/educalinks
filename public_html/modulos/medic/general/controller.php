@@ -83,7 +83,7 @@ function handler() {
 				$_SESSION['IN']="OK";
 				if( empty( $_SESSION['sidebar_status'] ) )
 					$_SESSION['sidebar_status']='sidebar-collapse';
-				$_SESSION['ui_skin']='skin-purple-light';
+				$_SESSION['ui_skin']='skin-blue';
 				$_SESSION['toggle_fullscreen']='false';
 				$_SESSION['apikey']=$apikey->rows[0]['apikey'];
 				$_SESSION['usua_codigo']=$data['usua_codigo'];

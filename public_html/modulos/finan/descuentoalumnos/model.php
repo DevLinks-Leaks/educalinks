@@ -12,8 +12,8 @@ class descuentoalumnos extends DBAbstractModel{
     public $aplicaICE;
 	public $estado;
 
-	public function get_all($busq=""){
-        $this->parametros = array($busq);
+	public function get_all( $peri_codi = -1 ){
+        $this->parametros = array( $peri_codi );
         $this->sp = "str_consultaDescuentoalumnos_busq";
         $this->executeSPConsulta();
 		

@@ -7,15 +7,15 @@ $diccionario = array(
         VIEW_SET=>'Crear un nuevo cliente',
 		VIEW_SET_GET_ALL=>'Crear y mostrar los clientes',
         VIEW_GET=>'Buscar cliente',
-        VIEW_GET_ALL=>'Consultar todos los clientes',					  
+        VIEW_GET_ALL=>'Lista de alumnos',					  
         VIEW_DELETE=>'Eliminar un cliente',
         VIEW_EDIT=>'Modificar cliente'
                      ),
 	'rutas_head'=>array(),
     'active_menu'=>array(
         'submenu'  => '{menu304}',
-		'open'  => '{open3}', 
-        'mainmenu' => '{menu3}' 
+		'open'  => '{open6}', 
+        'mainmenu' => '{menu6}' 
                         ),
 	'usua_datos'=>array(
         'usua_nombres'  => $_SESSION['usua_nombres'], 

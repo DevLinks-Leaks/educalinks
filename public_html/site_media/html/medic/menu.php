@@ -21,8 +21,8 @@
 			<!-- sidebar menu: : style can be found in sidebar.less -->
 			<ul class="sidebar-menu">
 				<li class="header">MÓDULO MÉDICO</li>
-				<li><a href="../../medic/general/"><i class="fa fa-home"> </i> <span>Inicio</span></li></a>
-				<li class="{openSoliInfo} treeview">
+				<li class="{open0}"><a href="../../medic/general/"><i class="fa fa-home"> </i> <span>Inicio</span></li></a>
+				<li class="{openVisitas} treeview">
 					<a href="#">
 						<i class="glyphicon glyphicon-plus-sign"></i>
 						<span>Atenciones</span>
@@ -44,18 +44,18 @@
 						<!--<li class="{menuPaciente02}"><a href="#" onclick="js_ficha_med_consulta();"><i class="fa fa-circle"></i>Bandeja</small></a></li>-->
 					</ul>
 				</li>
-				<li class="{openSoliInfo} treeview">
+				<li class="{openFichaMedic} treeview">
 					<a href="#">
 						<i class="glyphicon glyphicon-scale"></i>
 						<span>Fichas</span>
 						<i class="fa fa-angle-left pull-right"></i>
 					</a>
 					<ul class="treeview-menu">
-						<li><a href="../../medic/ficha_nuevo/"><i class="fa fa-circle"></i>Nuevo</small></a></li>
-						<li><a href="#" onclick="js_ficha_med_consulta();"><i class="fa fa-circle"></i>Bandeja</small></a></li>
+						<li class="{menuFicha01}"><a href="../../medic/ficha_nuevo/"><i class="fa fa-circle"></i>Nuevo</small></a></li>
+						<li class="{menuFicha02}"><a href="#" onclick="js_ficha_med_consulta();"><i class="fa fa-circle"></i>Bandeja</small></a></li>
 					</ul>
 				</li>
-				<li class="{openSoliInfo} treeview">
+				<li class="{openMedicinas} treeview">
 					<a href="#">
 						<i class="glyphicon glyphicon-erase"></i>
 						<span>Medicinas</span>
@@ -66,7 +66,7 @@
 						<li><a href="../../medic/medi_presentaciones"><i class="fa fa-circle"></i>Presentaciones</small></a></li>
 					</ul>
 				</li>
-				<li class="{openSoliConfigUsua} treeview">
+				<li class="{openReportes} treeview">
 					<a href="#">
 						<i class="glyphicon glyphicon-duplicate"></i>
 						<span>Reportes</span>
@@ -77,6 +77,7 @@
 						<li><a href="../../medic/rep_atenciones"><i class="fa fa-circle"></i>Atenciones</a></li>
 					</ul>
 				</li>
+				<li><a href="../../admin/mensajes.php"><i class="fa fa-envelope"></i> <span>Mensajes</span></a></li>
 				<li><a href="../../../manuales/Manual_Educalinks_medico_2016_04_27_v1.2.docx" target='_blank'><i class="fa fa-info-circle"></i> <span>Manual de ayuda</span></a><li>
 				<li class="{open7}"><a href="../../common/acerca/"><i class="icon icon-logo"></i> <span>Acerca de Educalinks</span></a></li>
 			</ul>

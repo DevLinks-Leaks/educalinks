@@ -1,103 +1,96 @@
 <!DOCTYPE html>
-<html><!-- InstanceBegin template="/Templates/admin.dwt" codeOutsideHTMLIsLocked="false" -->
-
-<?php include ('head.php');?>
-        
-      <!-- Nuevos Css Js -->
-	
-      <!-- Fin -->
-	</head> 
-	<body class="general admin"> 
-								<!-- InstanceBeginEditable name="EditRegion3" --><?php  $Menu=103;    ?><!-- InstanceEndEditable -->
-		<div class="pageContainer"> 
-
-		  <?php include ('menu.php');?>
-
-			<div id="mainPanel" class="section_main">
-            
-        			<?php include ('header.php');?>
-        
-				<div class="main sectionBorder">
+<html lang="es">
+    <?php include("template/head.php");?>
+    <body class="hold-transition skin-blue sidebar-mini <?php echo $_SESSION['sidebar_status']; ?>">
+		<div class="wrapper">
+			<?php include ('template/header.php');?>
+			<?php $Menu=103;include("template/menu.php");?>
+			<div class="content-wrapper">
+				<section class="content-header">
+					<?php
+						$params = array($_SESSION['curs_para_codi']);
+						$sql="{call curs_para_info(?)}";
+						$curs_para_info = sqlsrv_query($conn, $sql, $params);  
+						$row_curs_para_info = sqlsrv_fetch_array($curs_para_info);
+				  	?>
+					<h1>Representantes</h1>
+					<ol class="breadcrumb">
+						<li><a href="#"><i class="fa fa-heart-o"></i></a></li>
+						<li class="active">Representantes</li>
+					</ol>
+				</section>
+				<section class="content" id="mainPanel">
 					<div id="information">
-          
-          <div class="titleBar">
-          <!-- InstanceBeginEditable name="Titulo Top" -->
-              <div class="title">
-                <h3><span class="icon-user icon"></span>Representantes</h3>
-              </div> 
-          <!-- InstanceEndEditable -->
-          </div>
-          
-                        <!-- InstanceBeginEditable name="information" -->
-                        <script type="text/javascript" src="js/funciones_repre.js"></script>      
-                        <div id="repr_main" >
-                             <?php include ('alumnos_repre_main_lista.php'); ?>
-                        </div>
-                        <!-- InstanceEndEditable -->
-                    </div>
-				</div>
+						<div class='panel panel-info dismissible' id='panel_search' name='panel_search'>
+							<div class="panel-heading">
+								<h3 class="panel-title"><span class="fa fa-search"></span>&nbsp;Búsqueda
+									<div class="pull-right">
+										<a href="#/"  id="boton_busqueda" name="boton_busqueda" style='text-decoration:none;'><span class='fa fa-minus'></span></a>
+										<!--<a href="#/" data-target="#panel_search" data-dismiss="alert" aria-hidden="true"><span class='fa fa-times'></span></a>-->
+									</div>
+								</h3>
+							</div>
+							<div class="panel-body" id="desplegable_busqueda" name="desplegable_busqueda">
+								<div id="tbl_search" class="form-horizontal" role="form">
+									<div class='col-md-11 col-sm-12'>
+										<div class='form-group'>
+											<label class="col-md-2 col-sm-4 control-label" style='text-align: right;' for='alum_codi_in'>No. id.:</label>
+											<div class="col-md-4 col-sm-8">
+												<input type="text" class="form-control input-sm" name="alum_codi_in" id="alum_codi_in" >
+											</div>
+											<label class="col-md-2 col-sm-4 control-label" style='text-align: right;' for='alum_apel_in'>Apellidos:</label>
+											<div class="col-md-4 col-sm-8"
+													data-placement="bottom"
+													title='Apellidos del representante'
+													onmouseover='$(this).tooltip("show")'>
+												<input type="text" class="form-control input-sm" name="alum_apel_in" id="alum_apel_in" >
+											</div>
+										</div>
+									</div>
+									<div class='col-md-1 col-sm-12'>
+										<button id='btn_buscar_representantes' name='btn_buscar_representantes' class="btn btn-primary"
+												title="Presione [Enter] para buscar alumno(s)"
+												onclick="js_alumnos_repr_main_search(document.getElementById('alum_codi_in').value,document.getElementById('alum_apel_in').value);">
+													<span class="fa fa-search"></span></button></td>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="representantes_main_lista">
+							<div class="box box-default">
+								<div class="box-header with-border">
+									<h3 class="box-title">Listado de representantes</h3>
+								</div><!-- /.box-header -->
+								<div class="box-body">
+									<div id="repr_main">
+									</div>
+								</div>
+							</div>
+						</div>
+		            </div>
+				</section>
+				<?php include("template/menu_sidebar.php");?>
 			</div>
-
-	
-	</div>
-    
-    
-    <input name="mens_de"  		type="hidden" id="mens_de" 		value='<?php echo $_SESSION['USUA_DE'];  ?>'    />
- 	<input name="mens_de_tipo"  type="hidden" id="mens_de_tipo" value='<?php echo $_SESSION['USUA_TIPO']; ?>'    />
-    
-    <!-- Modal SELECCION DE PERIODO -->
-    <div class="modal fade" id="ModalPeriodoActivo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title" id="myModalLabel">SELECCION DE PERIODO ACTIVO</h4>
-          </div>
-          <div class="modal-body">
-           
-                <table>
-                    <tr>
-                        <td>PERIODOS</td>                        
-                        
-                    </tr>
-                            
-                     <? 	
-						$params = array();
-						$sql="{call peri_view()}";
-						$peri_view = sqlsrv_query($conn, $sql, $params);  
-                    ?>
-                    
-                     <? while($row_peri_view = sqlsrv_fetch_array($peri_view)){ ?>
-                     <tr>    
-     					<td height="50"><button type="button" class="btn btn-primary" style="width:100%;" onClick="periodo_cambio(<?= $row_peri_view["peri_codi"]; ?>);">ACTIVAR PERIODO LECTIVO <?= $row_peri_view["peri_deta"]; ?></button></td>
-                    </tr>
-                    <?php  } ?>
-
-
-                     
-                   
-                </table>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-            
-          </div>
-        </div>
-      </div>
-    </div>
-    
-<!-- InstanceBeginEditable name="EditRegion4" -->
-<script type="text/javascript" charset="utf-8">
-	$(document).ready(function() {
-			$('#repre_table').datatable({
-				pageSize: 10,
-				sort: [true,true, false],
-				filters: [true,true, false],
-				filterText: 'Buscar... '
-			}) ;
-	} );
-</script>
-
-<!-- InstanceEndEditable -->
-</body>
-<!-- InstanceEnd --></html>
+			<form id="frm_actu" name="frm_actu" method="post" action="" enctype="multipart/form-data">
+				<?php include("template/rutas.php");?>
+			</form>
+			<?php include("template/footer.php");?>
+		</div>
+		<!-- =============================== -->
+		<input name="mens_de"  		type="hidden" id="mens_de" 		value='<?php echo $_SESSION['USUA_DE'];  ?>' />
+		<input name="mens_de_tipo"  type="hidden" id="mens_de_tipo" value='<?php echo $_SESSION['USUA_TIPO']; ?>'/>
+		<?php include("template/scripts.php");?>
+		<script type="text/javascript" charset="utf-8">
+			shortcut.add("Enter", function() {
+				$('#btn_buscar_representantes').trigger("click");
+			},{'target':document.getElementById('tbl_search')});
+			
+			$(document).ready(function() {
+                $("#boton_busqueda").click(function(){
+					$("#desplegable_busqueda").slideToggle(200);
+				});
+				$("#desplegable_busqueda").show();
+			} );
+		</script>
+	</body>
+</html>

@@ -1,7 +1,7 @@
 <div id="alta_usuario" class="form-medium" >
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs" role="tablist">
-		<li role="presentation" class="active"><a href="#valores_general" aria-controls="Reporte Deudores" role="tab" data-toggle="tab">General</a></li>
+		<li role="presentation" class="active"><a href="#valores_general" aria-controls="valores_general" role="tab" data-toggle="tab">General</a></li>
 		<li {cliente_contifico} role="presentation"><a href="#interaccion_contifico" aria-controls="interaccion_contifico" role="tab" data-toggle="tab">Contífico</a></li>
 		<li role="presentation"><a href="#interaccion_sistema" aria-controls="interaccion_sistema" role="tab" data-toggle="tab">Interacción entre módulos del sistema</a></li>
 	</ul>

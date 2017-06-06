@@ -85,14 +85,14 @@
 			<!-- small box -->
 			<div class="small-box bg-yellow">
 				<div class="inner">
-				<h3>Clientes</h3>
+				<h3>Alumnos</h3>
 
 				<p>Listado de estudiantes</p>
 				</div>
 				<div class="icon">
 					<i class="fa fa-user"></i>
 				</div>
-				<a href="../clientes/" class="small-box-footer">Ir a Clientes <i class="fa fa-arrow-circle-right"></i></a>
+				<a href="../clientes/" class="small-box-footer">Ir a Alumnos <i class="fa fa-arrow-circle-right"></i></a>
 			</div>
 		</div>
 		
@@ -174,33 +174,14 @@
 								<div class="panel-body"  id="desplegable_busqueda" name="desplegable_busqueda">
 									<div class="form-horizontal" role="form">
 										<div class="form-group">
-											<div class="col-md-4 col-sm-12">
-												<button 
-													type="button"
-													class="btn btn-primary fa fa-search btn-sm"
-													onclick="js_general_cargaDeudores('deudas_tablas','{ruta_html_finan}/general/controller.php')"></button>
-												<!--<button 
-													type="button"
-													class="btn btn-default"
-													onclick="js_general_to_excel_carga_reports_deudores('print_excel_all_data','completo')">
-														<span style="color:green;" class="fa fa-file-excel-o"></span></button>
-												<div id='busqueda_result_label' style='display:inline;color:darkred;font-size:large;'></div>-->
-												<button 
-													type="button"
-													class="btn btn-default"
-													onclick="carga_reports_deudores('modal-deudoresbody','{ruta_html_finan}/general/controller.php','print_deudores')">
-														<span style="color:red;" class="fa fa-file-pdf-o"></span></button>
-											</div>
-											<div class="col-md-6 col-sm-10">
+											<label class="col-md-2 col-sm-3 control-label" >F. vencimiento</label>
+											<div class="col-md-4 col-sm-5">
 												<div class="input-group" id="div_fini" name="div_fini" data-placement="top"
 													 title='Fecha de vencimiento, desde, hasta.'
 													 onmouseover='$(this).tooltip("show")'>
 													<span class="input-group-addon">
 														<input type="checkbox" id='chk_fecha' name='chk_fecha' onclick='check_fecha();'>
 													</span>
-													<span class="input-group-addon">
-														<span style="text-align:left;font-size:small;font-weight:bold;">F. vencimiento</span>
-													</span>				
 													<span class="input-group-addon">
 														<small>Inicio</small></span>
 													<input type="text" class="form-control input-sm" name="txt_fecha_ini" id="txt_fecha_ini" 
@@ -212,8 +193,25 @@
 																value="" placeholder="dd/mm/yyyy" disabled='disabled'>
 												</div>
 											</div>
+											<div class="col-md-4 col-sm-4" style='text-align:right;'>
+												<button 
+													type="button"
+													class="btn btn-primary btn-sm"
+													onclick="js_general_cargaDeudores('deudas_tablas','{ruta_html_finan}/general/controller.php')"
+													><span class="fa fa-search"></span></button>
+												<!--<button 
+													type="button"
+													class="btn btn-default"
+													onclick="js_general_to_excel_carga_reports_deudores('print_excel_all_data','completo')">
+														<span style="color:green;" class="fa fa-file-excel-o"></span></button>
+												<div id='busqueda_result_label' style='display:inline;color:darkred;font-size:large;'></div>-->
+												<button 
+													type="button"
+													class="btn btn-default btn-sm"
+													onclick="carga_reports_deudores('modal-deudoresbody','{ruta_html_finan}/general/controller.php','print_deudores')"
+													><span style="color:red;" class="fa fa-file-pdf-o"></span></button>
+											</div>
 										</div>
-										<hr>
 										<div class="form-group">
 											<label class="col-md-2 col-sm-3 control-label" style='text-align: right;'>Per&iacute;odo:</label>
 											<div class="col-md-4 col-sm-5">
@@ -246,9 +244,9 @@
 											<label class="col-md-2 col-sm-3 control-label" for="rdb_quienes" style='text-align: right;'>Deudas:</label>
 											<div class="col-md-4 col-sm-5">
 												<div id="resultadoCursos" class='checkbox'>							
-													<input type="radio" id="rdb_quienes" name="rdb_quienes" value="PC"> Por cobrar/Abonadas
-													<input type="radio" id="rdb_quienes" name="rdb_quienes" value="P" > Pagadas
-													<input type="radio" id="rdb_quienes" name="rdb_quienes" value="A" > Anuladas
+													<input type="radio" id="rdb_quienes" name="rdb_quienes" value="PC"> Por cobrar/Abonadas<br>
+													<input type="radio" id="rdb_quienes" name="rdb_quienes" value="P" > Pagadas<br>
+													<input type="radio" id="rdb_quienes" name="rdb_quienes" value="A" > Anuladas<br>
 													<input type="radio" id="rdb_quienes" name="rdb_quienes" value="T" checked> Todas
 												</div>
 											</div>

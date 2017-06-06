@@ -1,7 +1,7 @@
 <?php
 const API="/educalinks/";
 const MODULO = 'modulos/finan/convenio_pago2/';
-const HTML_FILES="finan/convenio_pago/convenio_pago2_";
+const HTML_FILES="finan/convenio_pago2/convenio_pago2_";
 # controladores
 const RESEND_TO_SRI = 'resend_to_sri';
 const SET_PAGO = 'set_pago';

@@ -1,4 +1,3 @@
-    ================================================== -->
 <!-- Latest compiled and minified JQuery 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
 
@@ -53,7 +52,9 @@
     <script src="../../includes/common/plugins/iCheck/icheck.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="../../includes/common/dist/js/demo.js"></script>
-    
+    <!-- Slick Carousel -->
+    <script type="text/javascript" src="../includes/common/slick/slick.min.js"></script>
+        
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
     <script src="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
     <script src="../../framework/js/bootstrap3-typeahead.js"></script>

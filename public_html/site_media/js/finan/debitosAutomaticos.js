@@ -414,7 +414,7 @@ function js_debitosAutomaticos_genera_file_ajax ()
 }
 function js_debtAuto_subirarchivo( )
 {   if ( document.getElementById('hd_caja_abierta').value ==  'false' )
-    {   document.getElementById('procesar').innerHTML='<button type="button" class"=btn btn-warning" onclick="js_debitosAutomaticos_genera_file_ajax();"><li class="fa fa-chevron-left"></li> Volver</button>'+
+    {   document.getElementById('procesar').innerHTML='<button type="button" class="btn btn-warning" onclick="js_debitosAutomaticos_genera_file_ajax();"><li class="fa fa-chevron-left"></li> Volver</button><br><br>'+
 					'<div class="callout callout-info">'+
                         '<h4><strong><li class="fa fa-exclamation"></li> Carga de archivo de débito bancario</strong></h4>'+
                         ' Usuario debe estar <b>asignado a una caja</b> y/o'+

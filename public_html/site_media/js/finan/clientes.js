@@ -6,65 +6,81 @@ $(document).ready(function(){
 		'tooltipClass': 'detalleTooltip'
     });
 	$("#txt_fecha_nac_ini").datepicker();
-    $("#txt_fecha_nac_fin").datepicker();
+    $("#txt_fecha_nac_fin").datepicker();	
+	$("#txt_fecha_matri_ini").datepicker({ format: 'yyyy-mm-dd' });
+	$("#txt_fecha_matri_fin").datepicker({ format: 'yyyy-mm-dd' });
+	
 	$("#txt_fecha_nac_ini").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
 	$("#txt_fecha_nac_fin").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+		
+	$("#txt_fecha_matri_ini").inputmask({
+		mask: "y-1-2", 
+		placeholder: "yyyy-mm-dd", 
+		leapday: "-02-29", 
+		separator: "-", 
+		alias: "yyyy/mm/dd"
+	});
+	$("#txt_fecha_matri_fin").inputmask({
+		mask: "y-1-2", 
+		placeholder: "yyyy-mm-dd", 
+		leapday: "-02-29", 
+		separator: "-", 
+		alias: "yyyy/mm/dd"
+	});
+				
 	$("#boton_busqueda").click(function(){
 		$("#desplegable_busqueda").slideToggle(200);
 	});
 	$("#desplegable_busqueda").show();
-	$('#cliente_table').addClass( 'nowrap' ).DataTable({
-		dom: 'Bfrtip',
-        buttons: [ 
-			{ extend: 'copy', text: 'Copiar <i class="fa fa-copy"></i>' },
-			{ extend: 'csv', text: 'CSV <i style="color:green" class="fa fa-file-excel-o"></i>' },
-			{ extend: 'excel', text: 'Excel <i style="color:green" class="fa fa-file-excel-o"></i>' },
-			{ extend: 'pdf', text: 'PDF <i style="color:red" class="fa fa-file-pdf-o"></i>' },
-			{ extend: 'print', text: 'Imprimir <i style="color:#428bca" class="fa fa-print"></i>' },
-			],
-		"bPaginate": true,
-		"bStateSave": false,
-		"bAutoWidth": false,
-		"bScrollAutoCss": true,
-		"bProcessing": true,
-		"bRetrieve": true,
-		"aLengthMenu": [[10,25, 50, 100, -1], [10,25, 50, 100, "Todos"]],
-		"sScrollXInner": "110%",
-		"fnInitComplete": function() {
-			this.css("visibility", "visible");
-		},
-		paging: true,
-		lengthChange: true,
-		searching: true,
-		language: {url: '//cdn.datatables.net/plug-ins/1.10.8/i18n/Spanish.json'},
-			"columnDefs": [
-				{className: "dt-body-center" , "targets": [2]}
-			]
-	});
 	$('#modal_showDebtState').on('shown.bs.modal', function () {
 	}); 
 });
 shortcut.add("Enter", function() {$('#btn_search').trigger("click");});
 // Consulta filtrada
-function js_clientes_buscar( div, url )
+function js_clientes_go_to_courses(url)
+{
+	document.getElementById( 'hd_url_acad' ).value = url;
+}
+function js_clientes_check_opc_avanzadas()
+{   var ckb_opc_adv = document.getElementById("ckb_opc_adv").checked;
+	if(ckb_opc_adv)
+	{   $("#div_opc_adv").collapse(200).collapse('show');
+	}
+	else
+	{   $("#div_opc_adv").collapse(200).collapse('hide');
+	}
+}
+function js_clientes_buscar( div, url, view )
 {   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'get_all_data');
+	data.append('cod_estudiante', document.getElementById("alum_codi_in").value);
+	data.append('id_cliente', document.getElementById("txt_alum_id").value);
+	data.append('nombre_estudiante', document.getElementById("alum_apel_in").value);
+	
 	data.append('id_titular', document.getElementById("txt_id_titular").value);
-	data.append('cod_estudiante', document.getElementById("txt_cod_cliente").value);
-	data.append('id_cliente', document.getElementById("txt_id_estudiante").value);
-	data.append('nombre_estudiante', document.getElementById("txt_nom_cliente").value);
 	data.append('nombre_titular', document.getElementById("txt_nom_titular").value);
-	data.append('estado', document.getElementById("cmb_estado").value);
+	
+	data.append('estado', document.getElementById("cmb_alum_estado").value);
+	data.append('estado_reg', document.getElementById("cmb_estado").value);
+	
 	var chk_fecha_nac = document.getElementById("chk_fecha_nac").checked;
 	if( chk_fecha_nac )
 	{   data.append('fechanac_ini', document.getElementById("txt_fecha_nac_ini").value);
 		data.append('fechanac_fin', document.getElementById("txt_fecha_nac_fin").value);
 	}
+	var chk_fecha_matri = document.getElementById("chk_fecha_matri").checked;
+	if( chk_fecha_matri )
+	{   data.append('fechanac_ini', document.getElementById("txt_fecha_nac_ini").value);
+		data.append('fechanac_fin', document.getElementById("txt_fecha_nac_fin").value);
+	}
+	
 	data.append('periodo', document.getElementById("periodos").value);
-	data.append('grupoEconomico', document.getElementById("cmb_grupoEconomico").value);
+	data.append('grupoEconomico', document.getElementById("cmb_grupo_economico").value);
 	data.append('nivelEconomico', document.getElementById("cmb_nivelesEconomicos").value);
 	data.append('curso', document.getElementById("curso").value);
+	
+	data.append('view', view );
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', url , true);
 	xhr.onreadystatechange=function(){
@@ -742,4 +758,8 @@ function js_clientes_check_fecha_nac()
 		document.getElementById("txt_fecha_nac_ini").value = "";
         document.getElementById("txt_fecha_nac_fin").value = "";
     }
+}
+function js_alumnos_lista_general()
+{	document.getElementById( 'file_form' ).action = '../../../admin/listado_all_xls.php';
+	document.getElementById( 'file_form' ).submit();
 }

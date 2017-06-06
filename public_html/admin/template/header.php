@@ -1,39 +1,4 @@
-<!-- Modal SELECCION DE PERIODO -->
-<div class="modal fade" id="ModalPeriodoActivo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-				<h4 class="modal-title" id="myModalLabel"><span class='fa fa-calendar'></span>&nbsp;Seleccione un período</h4>
-			</div>
-			<div class="modal-body" style='text-align:center;'>
-				<div class="btn-group-vertical" style='text-align:center;'>
-                    <? 	
-						$i=0;
-						//$color = "bg-orange,bg-olive,bg-purple,bg-navy,bg-maroon";
-						//$color = "btn-warning,btn-danger,btn-info,btn-olive,btn-primary,btn-default,btn-success";
-						//$colors = explode(",", $color);
-						
-						$params = array();
-						$sql="{call peri_view()}";
-						$peri_view = sqlsrv_query($conn, $sql, $params);  
-                    
-						while($row_peri_view = sqlsrv_fetch_array($peri_view))
-						{ ?>
-							<button type="button" class="btn <?php echo ( $row_peri_view["peri_codi"] == $_SESSION['peri_codi'] ? 'btn btn-primary': 'btn btn-default'); ?>" style="width:100%;" onClick="periodo_cambio(<?= $row_peri_view["peri_codi"]; ?>);">ACTIVAR PERIODO LECTIVO <?= $row_peri_view["peri_deta"]; ?></button>
-							<?php
-							$i++;
-						} ?>
-				</div>
-			</div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
 <form name="frm_menu" id="frm_menu" action="../general/" enctype="multipart/form-data" method="post">
-	<input type="hidden" name="event" id="event" value="" />
 	<header class="main-header">
         <a href="·" class="logo" id='a_nav_main' name='a_nav_main' data-toggle="offcanvas" role="button">
 			<span class="logo-mini"><div style="" id='div_nav_logo_small' name='div_nav_logo_small'><img src="../../includes/common/logos/LOGO_EDUCALINKS_white_small.png" alt="EL"></div></span>
@@ -49,15 +14,15 @@
 				<span class="icon-bar"></span>
 			</a>
 			<?php
-			$nombre = $_SESSION['usua_nomb'] . ' ' . $_SESSION['usua_apel'];
-			$usua = $_SESSION['usua_codi'];
+			$nombre = $_SESSION['prof_nomb'] . ' ' . $_SESSION['prof_apel'];
+			$usua = $_SESSION['prof_codi'];
 			
-			$file_exi=$_SESSION['ruta_foto_usuario'].$_SESSION['usua_codi'].'.jpg';
+			$file_exi=$_SESSION['ruta_foto_usuario'].$_SESSION['prof_codi'].'.jpg';
 			$foto_ruta = "";
 			if (file_exists($file_exi))
-				$foto_ruta = $_SESSION['ruta_foto_usuario'].$_SESSION['usua_codi'].'.jpg';
+				$foto_ruta = $_SESSION['ruta_foto_usuario'].$_SESSION['prof_codi'].'.jpg';
 			else
-				$foto_ruta = $_SESSION['ruta_foto_usuario'].'admin.jpg';
+				$foto_ruta = $_SESSION['foto_default'];
 											
 			$_SESSION['ruta_foto_header'] = $foto_ruta;
 			?>
@@ -65,7 +30,7 @@
 				<ul class="nav navbar-nav">
 					<!-- Messages: style can be found in dropdown.less-->
 					<li title="Seleccionar período activo">
-						<a href="#" data-toggle="modal" data-target="#ModalPeriodoActivo"><i class="fa fa-calendar"></i>&nbsp;Período: <?= $_SESSION['peri_deta']; ?></a>
+						<a href="#" ><i class="fa fa-calendar"></i>&nbsp;Período: <?= $_SESSION['peri_deta']; ?></a>
 					</li>
 					<li class="dropdown user user-menu">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -96,11 +61,8 @@
 						</ul>
 					</li>
 					<?php include ('script_mens_view.php');?>
-					<!--<li title="Expandir">
-						<a href="#" onclick="toggleFullScreen();"><i class="fa fa-television"></i>&nbsp;</a>-
-					</li>-->
-					<li title='Ver módulos del sistema' >
-						<a onmouseover='$(this).tooltip("show");' href="#" data-toggle="control-sidebar"><i class="fa fa-briefcase"></i>&nbsp;</a>
+					<li title="Expandir">
+						<a href="#" onclick="toggleFullScreen();"><i class="fa fa-television"></i>&nbsp;</a>
 					</li>
 				</ul>
 			</div>

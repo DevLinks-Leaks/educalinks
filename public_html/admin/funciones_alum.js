@@ -13,8 +13,8 @@ function BuscarAlumnos(alum_codi,alum_apel,curs_para_codi)
 			$(document).ready(function() {
 			$('#alum_table').datatable({
 				pageSize: 30,
-				sort: [true,true, true, true,false],
-				filters: [false,false, false, false, false],
+				sort: [true,true, true, false],
+				filters: [false,false, false, false],
 				filterText: 'Buscar... '
 			}) ;
 			} ); 

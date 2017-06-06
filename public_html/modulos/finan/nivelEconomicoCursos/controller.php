@@ -47,16 +47,16 @@ function handler() {
 				{	$data['disabled_agrupar_curso']="disabled='disabled'";
 				}
 						$data['{tabla}']= array("elemento"=>"tabla",
-										"clase"=>"table table-bordered table-hover",
+										"clase"=>"table table-striped table-hover",
 										"id"=>$tabla,
 										"datos"=>$nivelEconomicoCursos->rows,
 										"encabezado" => array("Codigo",
-															  "Curso",
-															  "Nivel Económico",
-															  "Opciones"),
+															  "<div style='text-align:left;'>Curso</div>",
+															  "<div style='text-align:center;'>Nivel Económico</div>",
+															  ""),
 															  "options"=>array($opciones),
 															  "campo"=>"codigo");
-				$data['mensaje'] = "Listado de Cursos agrupados por nivel econ&oacute;mico";
+				$data['mensaje'] = "Cursos agrupados por nivel econ&oacute;mico";
     		}
 			else
 			{	$data = array('mensaje'=>$nivelEconomicoCursos->mensaje.$nivelEconomicoCursos->ErrorToString());
@@ -89,13 +89,13 @@ function handler() {
 				{   $data['disabled_agrupar_curso']="disabled='disabled'";
 				}
 				$data['{tabla}'] = array(	"elemento"=>"tabla",
-											"clase"=>"table table-bordered table-hover",
+											"clase"=>"table table-striped table-hover",
 											"id"=>$tabla,
 											"datos"=>$nivelEconomicoCursos->rows,
 											"encabezado" => array("Codigo",
-																  "Curso",
-																  "Nivel Económico",
-																  "Opciones"),
+																  "<div style='text-align:left;'>Curso</div>",
+															      "<div style='text-align:center;'>Nivel Económico</div>",
+																  ""),
 																  "options"=>array($opciones),
 																  "campo"=>"codigo");
 				$data['mensaje'] = "Listado:";

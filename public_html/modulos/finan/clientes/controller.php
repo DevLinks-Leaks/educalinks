@@ -42,7 +42,7 @@ function handler()
 			$grupEcon->getCategorias_selectFormat_with_all('');
 			$data['{cmb_grupoEconomico}'] = array("elemento"  => "combo", 
 											"datos"     => $grupEcon->rows, 
-                                            "options"   => array("name"=>"cmb_grupoEconomico","id"=>"cmb_grupoEconomico", "class"=>"form-control input-sm"),
+                                            "options"   => array("name"=>"cmb_grupo_economico","id"=>"cmb_grupo_economico", "class"=>"form-control input-sm"),
 											"selected"  => 0);
 			$niveles = new General();
 			$niveles->get_all_niveles_economicos();
@@ -56,10 +56,10 @@ function handler()
 																"onChange"	=>	"cargaCursosPorNivelEconomico('resultadoCursos','".$diccionario['rutas_head']['ruta_html_finan']."/general/controller.php')"));
 			$data['{cmb_curso}']=array("elemento"  => "combo", 
 										"datos"     => array(0 => array(0 => -1, 
-																		1 => '- Seleccione curso -',
+																		1 => '- Seleccione un curso -',
 																		3 => ''), 
                                                                         2=> array()),
-															"options"   => array("name"=>"curso","id"=>"curso","required"=>"required","class"=>"form-control input-sm"),
+															"options"   => array("name"=>"cursos","id"=>"curso","required"=>"required","class"=>"form-control input-sm"),
 										"selected"  => -1);
 										
             $data['tabla'] = "<span style='font-size:small'>Haga clic en buscar para realizar una consulta.</span>";
@@ -89,6 +89,17 @@ function handler()
 				$fechanac_fin = '';
 			else 
 				$fechanac_fin = $user_data['fechanac_fin'];
+			
+			if(!isset($user_data['fechamatri_ini']))
+				$fechamatri_ini = '';
+			else 
+				$fechamatri_ini = $user_data['fechamatri_ini'];
+			
+			if(!isset($user_data['fechamatri_fin']))
+				$fechamatri_fin = '';
+			else 
+				$fechamatri_fin = $user_data['fechamatri_fin'];
+			
 			if(!isset($user_data['id_titular']))
 				$id_titular = '';
 			else 
@@ -109,10 +120,17 @@ function handler()
 				$nombre_repr = '';
 			else 
 				$nombre_repr = $user_data['nombre_titular'];
+			
 			if(!isset($user_data['estado']))
 				$estado = 'A';
 			else 
 				$estado = $user_data['estado'];
+			
+			if(!isset($user_data['estado_reg']))
+				$estado_reg = 'A';
+			else 
+				$estado_reg = $user_data['estado_reg'];
+			
 			if(!isset($user_data['periodo']))
 				$periodos = '-1';
 			else 
@@ -130,72 +148,153 @@ function handler()
 			else 
 				$curso = $user_data['curso'];
             $cliente->get_cliente_alumnos_general(  $cod_estudiante, 		$nombre_estudiante,		$fechanac_ini, 		$fechanac_fin,
+													$fechamatri_ini,		$fechamatri_fin,
 													$id_titular,			$nombre_repr,			$id_cliente,		$periodos,
-													$curso,					$grupoEconomico,		$nivelEconomico,	$estado);
-            if(count($cliente->rows)>0)
-			{	global $diccionario;
-				$permiso_179 = new General();
-				$permiso_181 = new General();
-				$permiso_179->permiso_activo($_SESSION['usua_codigo'], 179);
-				$permiso_181->permiso_activo($_SESSION['usua_codigo'], 181);
-				$permiso->permiso_activo($_SESSION['usua_codigo'], 180);
-				
-				$body= "<table id='".$tabla."' class='table table-bordered table-hover'>";
-				$body.= "<thead>
-							<th style='text-align:center;font-size:small;'>Código</th>
-							<th style='text-align:center;font-size:small;'>Identificaci&oacute;n</th>
-							<th style='text-align:center;font-size:small;'>Nombre</th>
-							<th style='text-align:center;font-size:small;'>Dirección</th>
-							<th style='text-align:center;font-size:small;'>Teléfono</th>
-							<th style='text-align:center;font-size:small;'>F. Nacimiento</th>
-							<th style='text-align:center;font-size:small;'>Curso</th>
-							<th style='text-align:center;font-size:small;'></th>
-						</thead>";
-				$body.="<tbody>";
-				$c=0;
-				$aux=0;
-				foreach($cliente->rows as $row)
-				{	$aux++;
-				}
-				foreach($cliente->rows as $row)
-				{	if($c<($aux-1))
-					{	$body.="<tr>";
-						$x=0;
-						$codigo="";
-						$nombre="";
-						foreach($row as $column)
-						{	if($x==0) $codigo = $column;
-							if($x==2) $nombre = $column;
-							else if($x==3)
-							{
-								$body.="<td style='text-align:center;font-size:x-small;'>".$column." ".$nombre."</td>";
-							}
-							else if($x==4)
-							{
-								$body.= "<td style='text-align:center;font-size:small;'><span style='color:#133361;'; class='detalle' id='".$codigo."_cliente_direccion' onmouseover='$(this).tooltip(".'"show"'.")' title='".$column."' data-placement='bottom'><span class='glyphicon glyphicon-home'></span></span></td>";
-							}
-							else
-							{
-								$body.="<td style='text-align:center;font-size:small;'>".$column."</td>";
-							}
-							$x++;
-						}
-						$opciones_print["EstadoCuenta"]=str_replace('{codigo}',$codigo,$opciones["EstadoCuenta"]);
-						$body.="<td style='text-align:center'>".$opciones_print["EstadoCuenta"].' '.get_cliente_opciones($permiso, $codigo, 'button',
-																					 $permiso_179->rows[0]['veri'],
-																					 $permiso->rows[0]['veri'],
-																					 $permiso_181->rows[0]['veri'] )."</td>";
+													$curso,					$grupoEconomico,		$nivelEconomico,	$estado_reg,
+													$estado);
+            
+			if ( ( $user_data['view'] == 1 ) )
+			{
+				if(count($cliente->rows)>0)
+				{	global $diccionario;
+					$permiso_179 = new General();
+					$permiso_181 = new General();
+					$permiso_10 = new General();
+					$permiso_179->permiso_activo($_SESSION['usua_codigo'], 179);
+					$permiso_181->permiso_activo($_SESSION['usua_codigo'], 181);
+					$permiso_10->permiso_activo($_SESSION['usua_codigo'], 10);
+					$permiso->permiso_activo($_SESSION['usua_codigo'], 180);
+					
+					$body= "<table id='".$tabla."' class='table table-bordered table-hover table-striped'>";
+					$body.= "<thead>
+								<tr><th style='text-align:center;font-size:small;'>Alumnos</th></tr>
+							</thead>
+							<tbody>";
+					$c=0;
+					$aux=0;
+					foreach($cliente->rows as $row)
+					{	$aux++;
 					}
-					$body.="</tr>";
-					$c++;
+					foreach($cliente->rows as $row)
+					{	if($c<($aux-1))
+						{
+							$body.="
+								<tr>
+									<td>
+										<div class='form-horizontal'>
+											<div class='row'>
+												<div class='col-lg-6 col-md-6 col-sm-12 col-sm-12' style='text-align:left'>
+													<b style='color:#2d3c4a;'>".$row["nombres"]." ".$row["apellidos"]."</b><br>
+													<small><b style='color:#2d3c4a;'>Código:</b>&nbsp;".$row["codigo"]."</small><br>
+													<small><b style='color:#2d3c4a;'>Estado:</b>&nbsp;";
+														if ( $row["esta_deta"] == 'MATRICULADO' ) 
+															$body.= '<span style=\'color:#17ca34\'>'.$row["esta_deta"].'</span>'; 
+														else if ( $row["esta_deta"] == 'RETIRADO') 
+															$body.= '<span style=\'color:#e24b4b\'>'.$row["esta_deta"].'</span>'; 
+														else
+															$body.= $row["esta_deta"];
+													$body.="</small> |&nbsp<small><b style='color:#2d3c4a;'>Curso:</b>&nbsp;";
+													if( $permiso_10->rows[0]['veri'] )
+														$body.= "<a href='#' onclick='js_clientes_go_to_courses(\"../../../admin/cursos_paralelo_main.php?curs_para_codi=".$row['curs_para_codi']."\");' title='Ver información del curso ".$row["curso"]."'>".$row["curso"]."</a>";
+													else
+														$body.= $row["curs_deta"]." - ".$row["para_deta"];
+													$body.="</small>
+												</div>
+												<div class='col-lg-6 col-md-6 col-sm-12 col-sm-12' style='text-align:center'>".
+													$opciones_print["EstadoCuenta"].' '.get_cliente_opciones($permiso, $codigo, 'button',
+																											 $permiso_179->rows[0]['veri'],
+																											 $permiso->rows[0]['veri'],
+																											 $permiso_181->rows[0]['veri'] )
+											  ."</div>
+											</div>
+										</div>
+									</td>
+								</tr>";
+							$c++;
+						}
+					}
+					$body.="</tbody>";
+					$body.="</table>";
+					$data['tabla'] = $body;
+					$data['mensaje'] = "Bandeja de estudiantes";
+				}else{
+				  $data = array('mensaje'=>$usuario->mensaje.$usuario->ErrorToString());
 				}
-				$body.="</tbody>";
-				$body.="</table>";
-				$data['tabla'] = $body;
-                $data['mensaje'] = "Bandeja de estudiantes";
-            }else{
-              $data = array('mensaje'=>$usuario->mensaje.$usuario->ErrorToString());
-            }
+			}
+			if ( ( $user_data['view'] == 2 ) || ( $user_data['view'] == 3 )  )
+			{
+				if(count($cliente->rows)>0)
+				{	global $diccionario;
+					$permiso_179 = new General();
+					$permiso_181 = new General();
+					$permiso_179->permiso_activo($_SESSION['usua_codigo'], 179);
+					$permiso_181->permiso_activo($_SESSION['usua_codigo'], 181);
+					$permiso->permiso_activo($_SESSION['usua_codigo'], 180);
+					
+					$body= "<table id='".$tabla."' class='table table-bordered table-hover table-striped'>";
+					$body.= "<thead>
+								<tr>
+									<th style='text-align:center;font-size:small;'>Código</th>
+									<th style='text-align:center;font-size:small;'>Identificaci&oacute;n</th>
+									<th style='text-align:center;font-size:small;'>Nombre</th>
+									<th style='text-align:center;font-size:small;'>Dirección</th>
+									<th style='text-align:center;font-size:small;'>Teléfono</th>
+									<th style='text-align:center;font-size:small;'>F. Nacimiento</th>
+									<th style='text-align:center;font-size:small;'>Curso</th>
+									". ( $user_data['view'] == 2 ? "<th style='text-align:center;font-size:small;'></th>" : "" )."
+								</tr>
+							</thead>";
+					$body.="<tbody>";
+					$c=0;
+					$aux=0;
+					foreach($cliente->rows as $row)
+					{	$aux++;
+					}
+					foreach($cliente->rows as $row)
+					{	if($c<($aux-1))
+						{	$body.="<tr>";
+							$x=0;
+							$codigo="";
+							$nombre="";
+							foreach($row as $column)
+							{	if($x==0) $codigo = $column;
+								if($x==2) $nombre = $column;
+								else if($x==3)
+								{
+									$body.="<td style='text-align:center;font-size:x-small;'>".$column." ".$nombre."</td>";
+								}
+								else if($x==4)
+								{
+									$body.= "<td style='text-align:center;font-size:small;'><span style='color:#133361;'; class='detalle' id='".$codigo."_cliente_direccion' onmouseover='$(this).tooltip(".'"show"'.")' title='".$column."' data-placement='bottom'><span class='glyphicon glyphicon-home'></span></span></td>";
+								}
+								else if( $x==8 || $x==9 )
+								{
+									// do nothing;
+								}
+								else
+								{
+									$body.="<td style='text-align:center;font-size:small;'>".$column."</td>";
+								}
+								$x++;
+							}
+							$opciones_print["EstadoCuenta"]=str_replace('{codigo}',$codigo,$opciones["EstadoCuenta"]);
+							if ( $user_data['view'] == 2 )
+								$body.="<td style='text-align:center'>".$opciones_print["EstadoCuenta"].' '.get_cliente_opciones($permiso, $codigo, 'button',
+																																 $permiso_179->rows[0]['veri'],
+																																 $permiso->rows[0]['veri'],
+																																 $permiso_181->rows[0]['veri'] )."</td>";
+						}
+						$body.="</tr>";
+						$c++;
+					}
+					$body.="</tbody>";
+					$body.="</table>";
+					$data['tabla'] = $body;
+					$data['mensaje'] = "Bandeja de estudiantes";
+				}else{
+				  $data = array('mensaje'=>$usuario->mensaje.$usuario->ErrorToString());
+				}
+			}
             retornar_result($data);
             break;
         case VIEW_SET:

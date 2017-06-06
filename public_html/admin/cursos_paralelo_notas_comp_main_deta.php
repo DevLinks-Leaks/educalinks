@@ -27,7 +27,7 @@
         <tbody>
         <?php
 		$params = array($_GET['curs_para_codi'], $row_indi_valo_parc_view['indi_parc_codi']);
-		
+				
 		$sql="{call alum_curs_para_comp_view(?,?)}";
 		$alum_curs_para_view = sqlsrv_query($conn, $sql, $params);  
 		$cc2 = 0;
@@ -38,7 +38,7 @@
             <tr>
             	<td class="center" width="5%"><?= $cc2; ?></td>
                 <td class="left" width="35%">
-					<?= $row_alum_curs_para_view['alum_ape'].' '.$row_alum_curs_para_view['alum_apel']; ?>
+					<?= $row_alum_curs_para_view['alum_codi'].'-'.$row_alum_curs_para_view['alum_apel'].' '.$row_alum_curs_para_view['alum_nomb']; ?>
                     <input id="alum_<?= $cc; ?>_<?= $cc2; ?>" value="<?= $row_alum_curs_para_view['alum_curs_para_codi']; ?>" data-alum_codi="<?= $row_alum_curs_para_view['alum_codi'] ?>" type="hidden"/>
                 </td>
                 <td class="left" width="30%">
@@ -56,7 +56,6 @@
 					{
 						echo " selected";
 					}
-						
 					?>
                     
                     ><?= $row_nota_peri_cual_tipo_view['nota_peri_cual_deta'];?></option>
@@ -74,7 +73,7 @@
 	} ?>
     </tbody>
     <tr>
-    	<td colspan="3"><div></div></td>
+    	<td colspan="4"><div></div></td>
     </tr>
 </table>
 <input id="indi_cont" value="<?= $cc; ?>" type="hidden"/>
@@ -83,14 +82,13 @@
 <table width="100%" border="0" cellpadding="0" cellspacing="0"   style="float:right;">
   <tr>
     <td width="75%" height="120" align="right" valign="middle">
-    	<button class="btn btn-primary" onclick="curs_para_nota_comp_save(<?= $_GET['peri_dist_codi'] ?>);">&nbsp;&nbsp;&nbsp;Grabar&nbsp;&nbsp;&nbsp;</button>
+    	<button class="btn btn-primary" onclick="curs_para_nota_comp_save(<?= $_GET['nota_perm_codi'] ?>, <?= $_GET['peri_dist_codi'] ?>);">&nbsp;&nbsp;&nbsp;Grabar&nbsp;&nbsp;&nbsp;</button>
     </td>
     <td height="120" align="right" valign="middle">
     	<button class="btn btn-primary" 
         onclick="document.location='cursos_paralelo_notas_mate_main.php?peri_codi=<?= $_SESSION['peri_codi'] ?>&curs_para_codi=<?= $_GET['curs_para_codi'] ?>'">
         Cancelar
-        </button>
-	</td>
+        </button></td>
   </tr>
 </table>
 </div>

@@ -902,6 +902,26 @@ function handler() {
 			{
 				$resultado = "Error:" . $error;
 				return;
+				 $general->set_operacion_auditoria(
+												$pluginr->getAuthorizationCode(), $pluginr->getAuthorizationState(),
+												$_POST['ERRORCODE'],  $error,
+												'', '',
+												$pluginr->getTransacctionID(), $pluginr->getTransacctionValue(),
+												'' );
+				$general->set_operacion_respuesta(
+												$pluginr->getAuthorizationCode(), $pluginr->getAuthorizationState(),
+												$_POST['ERRORCODE'],  $error,
+												'', '',
+												$pluginr->getTransacctionID(), $pluginr->getTransacctionValue(),
+												'');
+				$data['datos_deuda'] = "Error durante el proceso de interpretación de la respuesta. "
+					."Verificar los componentes de seguridad: Vector Hexadecimal y Llaves.";
+				
+				$data['frm_pago_sbmt'] = "
+				<div class='bs-callout bs-callout-danger'>
+					<h4>Error</h4>
+					Verificar los componentes de seguridad.
+				</div>";
 			}
 			$cadeEnc = $_POST["XMLRESPONSE"];
 			$firmaCorrecta = $pluginr->XMLProcess($cadeEnc, $_POST["XMLDIGITALSIGN"]);
@@ -1042,9 +1062,9 @@ function handler() {
 				}
             }
 			else
-			{  
+			{ $data['datos_deuda'] =  'Error al recibir respuesta del servico web de pagos Diners Club. Por favor, intente de nuevo.';
             }
-			$_SESSION['dominio_debt_ans'] = $'';
+			//$_SESSION['dominio_debt_ans'] = '';
 			retornar_vista_general(VIEW_DEBT_ANS, $data);
 			break;
 		case GET_DEBT_ANS:

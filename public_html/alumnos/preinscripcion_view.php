@@ -139,11 +139,12 @@ if($_SESSION['peri_codi_dest']!=null){
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="alum_pais">País de nacimiento:</label>
-											<select onchange="CargarProvincias('alum_prov_naci',this.value);" class="form-control" id="alum_pais" name="alum_pais">
+											<select onchange="CargarProvincias('alum_prov_naci',this.value);CargarCiudades('alum_ciud_naci',this.value);CargarParroquias('alum_parr_naci',this.value);" class="form-control" id="alum_pais" name="alum_pais">
 											<?php 
 											$params = array();
 											$sql="{call cata_pais_cons()}";
 											$stmt = sqlsrv_query($conn, $sql, $params);
+											echo '<option value="">Seleccione</option>';
 											while($pais_view= sqlsrv_fetch_array($stmt))
 											{
 												$seleccionado="";
@@ -158,12 +159,12 @@ if($_SESSION['peri_codi_dest']!=null){
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="alum_prov_naci">Provincia de nacimiento:</label>
-											<select onchange="CargarCiudades('alum_ciud_naci',this.value);" class='form-control' id='alum_prov_naci' name='alum_prov_naci'>
+											<select onchange="CargarCiudades('alum_ciud_naci',this.value);CargarParroquias('alum_parr_naci',this.value);" class='form-control' id='alum_prov_naci' name='alum_prov_naci'>
 											<?php 
 											$params = array(null,($alum_view["alum_pais"]==null ? 'Ecuador' : $alum_view["alum_pais"]));
 											$sql="{call cata_provincia_cons(?,?)}";
 											$stmt = sqlsrv_query($conn, $sql, $params);
-									
+											echo '<option value="">Seleccione</option>';
 											while($ciudad_view= sqlsrv_fetch_array($stmt))
 											{
 												$seleccionado="";
@@ -183,6 +184,7 @@ if($_SESSION['peri_codi_dest']!=null){
 											$params = array(null,$alum_view["alum_prov_naci"]);
 											$sql="{call cata_ciudad_cons(?,?)}";
 											$stmt = sqlsrv_query($conn, $sql, $params);
+											echo '<option value="">Seleccione</option>';
 											while($ciudad_view= sqlsrv_fetch_array($stmt))
 											{
 												$seleccionado="";
@@ -202,7 +204,7 @@ if($_SESSION['peri_codi_dest']!=null){
 											$params = array(null,$alum_view["alum_ciud_naci"]);
 											$sql="{call cata_parroquia_cons(?,?)}";
 											$stmt = sqlsrv_query($conn, $sql, $params);
-
+											echo '<option value="">Seleccione</option>';
 											while($parroquia_view= sqlsrv_fetch_array($stmt))
 											{
 												$seleccionado="";
@@ -296,7 +298,7 @@ if($_SESSION['peri_codi_dest']!=null){
 									<div class="col-md-6">
 										<div class="form-group">
 											<label for="alum_prov">Provincia:</label>
-											<select onchange="CargarCiudades('alum_ciud',this.value);" class='form-control' id='alum_prov' name='alum_prov'>
+											<select onchange="CargarCiudades('alum_ciud',this.value);CargarParroquias('alum_parroquia',this.value);" class='form-control' id='alum_prov' name='alum_prov'>
 											<?php 
 											$params = array('ECU',null);
 											$sql="{call cata_provincia_cons(?,?)}";
@@ -422,6 +424,30 @@ if($_SESSION['peri_codi_dest']!=null){
 												echo '</select>';
 											?> 
 										</div>
+									</div>
+									<div class="form-group col-md-6">
+										<label for="alum_etnia">Etnia:</label>
+										<?php 
+											include ('../framework/dbconf.php');		
+											$params = array(409);
+											$sql="{call cata_hijo_view(?)}";
+											$stmt = sqlsrv_query($conn, $sql, $params);
+									
+											if( $stmt === false )
+											{
+												echo "Error in executing statement .\n";
+												die( print_r( sqlsrv_errors(), true));
+											}
+											echo '<select class="form-control" id="alum_etnia" name="alum_etnia">';
+											while($religion_view= sqlsrv_fetch_array($stmt))
+											{
+												$seleccionado="";
+												if ($religion_view["codigo"]==$alum_view["alum_etnia"])
+													$seleccionado="selected";
+												echo '<option value="'.$religion_view["codigo"].'" '.$seleccionado.'>'.$religion_view["descripcion"].'</option>';
+											}
+											echo '</select>';
+										?>
 									</div>
 									<div class="col-md-6">
 										<div class="form-group">
@@ -574,119 +600,16 @@ if($_SESSION['peri_codi_dest']!=null){
 						</div>
 						<div class="tab-pane" id="tab3">
 							<div class="row">
-								<div class="col-md-6">
-									<div class="form-group">
-						                <label for="alum_resp_form_pago">Forma de Pago:</label>
-						                <select class="form-control" id="alum_resp_form_pago" name="alum_resp_form_pago" onchange="CargarBancosTarjetas(this.value);" >
-						                	<option value="0">SELECCIONE</option>
-						                <?php	
-						                    $params = array(21);
-						                    $sql="{call cata_hijo_view(?)}";
-						                    $stmt = sqlsrv_query($conn, $sql, $params);
-						                    while($form_pago_view= sqlsrv_fetch_array($stmt))
-						                    {	$seleccionado="";
-						                		if ($form_pago_view["codigo"]==$alum_view["alum_resp_form_pago"])
-						                			$seleccionado="selected";
-						            	?>
-					                        <option value="<?=$form_pago_view["codigo"];?>" <?=$seleccionado;?> ><?=$form_pago_view["descripcion"];?></option>
-						                <?	}	?> 
-						                </select>
-						            </div>
-					            </div>
-					            <div class="col-md-6">
-						            <div id="div_banco_tarjeta" class="form-group">
-						                <label for="alum_resp_form_banc_tarj" id="lbl_banco_tarjeta">Banco/Tarjeta:</label>
-										<?php 
-					                    $params = array($alum_view['alum_resp_form_pago']);
-					                    $sql="{call cata_hijo_view(?)}";
-					                    $stmt = sqlsrv_query($conn, $sql, $params);
-					            
-					                    $seleccionado="";
-					                    $deshabilitado="";
-					                    if (!isset($alum_view['alum_resp_form_banc_tarj']))
-					                        $deshabilitado="disabled";
-					                   	?>
-					                    <select class="form-control" id="alum_resp_form_banc_tarj" name="alum_resp_form_banc_tarj" <?=$deshabilitado?> >
-					                    	<option value="0">SELECCIONE</option>
-					                    <?php	while($banc_tarj_view= sqlsrv_fetch_array($stmt)){
-					                        if($banc_tarj_view["codigo"]==$alum_view['alum_resp_form_banc_tarj'])
-					                        {$seleccionado="selected";}else{$seleccionado="";}
-					                    ?>
-					                       	<option <?=$seleccionado;?> value="<?=$banc_tarj_view['codigo']?>" ><?=$banc_tarj_view["descripcion"];?></option>
-					                    <?}?>
-					                    </select>
-						            </div>
-					            </div>
-					            <div class="col-md-6">
-									<div class="form-group">
-						                <label for="alum_resp_tarj_banco_emisor">Banco emisor: (en caso de tarj. de crédito)</label>
-						                <select class="form-control" id="alum_resp_tarj_banco_emisor" name="alum_resp_tarj_banco_emisor" <?=($alum_view["alum_resp_form_pago"]==22) ? 'disabled' : '';?> >
-											<option value="0">SELECCIONE</option>
-						                	<?php 
-						                    $params = array(22);
-						                    $sql="{call cata_hijo_view(?)}";
-						                    $stmt = sqlsrv_query($conn, $sql, $params);
-						                    $seleccionado="";
-						                    while($row= sqlsrv_fetch_array($stmt)){	
-						                    	if($row["codigo"]==$alum_view['alum_resp_tarj_banco_emisor'])
-						                        {$seleccionado="selected";}else{$seleccionado="";}
-						                    ?>
-						                     <option <?=$seleccionado?> value="<?=$row['codigo']?>"> <?=$row["descripcion"]?></option>
-						                    <?}?>
-						                    </select>
-						            </div>
-						        </div>
-						        <div class="col-md-6"> 
-									<div class="form-group">
-						                <label for="alum_resp_form_banc_tarj_nume"><?=(para_sist(404)=='1'?'(*)':'')?>Número Cuenta o Tarjeta</label>
-						                <input class="form-control <?=(para_sist(404)=='1'?'required':'')?>" id="alum_resp_form_banc_tarj_nume" name="alum_resp_form_banc_tarj_nume" type="text" placeholder="Ingrese numero de Cuenta o Tarjeta..." value="<?=$alum_resp_form_banc_tarj_nume;?>">
-						            </div>
-						        </div>
-						        <div class="col-md-6"> 
-									<div class="form-group">
-										<label for="alum_resp_form_fech_vcto">Fecha de Vencimiento de Tarjeta:</label>
-										<input class="form-control" id="alum_resp_form_fech_vcto" name="alum_resp_form_fech_vcto" type="text" placeholder="Ingrese la fecha de vencimiento de la tarjeta..." value="<?=date_format($alum_view['alum_resp_form_fech_vcto'],"d/m/Y");?>">
-									</div>
+								<div class="col-md-12">
+									<h6 class="page-header">Métodos de Pago
+										<div class="pull-right">
+											<a class="btn btn-success" data-toggle="modal" onmouseover="$(this).tooltip('show')" title="Añadir Método de Pago" data-target="#modal_metodo_pago" onclick="load_modal_cuentas('modal_body_metodo_pago','preinscripcion_cuentas_modal.php','alum_cuen_codi=0&alum_codi=<?=$alum_codi?>');"><span class="fa fa-plus"></span> Añadir</a>
+										</div>
+									</h6>
 								</div>
-								<div class="col-md-6"> 
-									<div class="form-group">
-						            	
-						                <label for="lbl_tipo">Tipo de Cuenta:<br/>
-						                <br/>
-						                    <input id="cta_corriente" type="radio" class="alum_resp_form_banc_tipo" name="tipo_cuenta" value="CORRIENTE" <?=($alum_view['alum_resp_form_banc_tipo']=="C"?"checked":"")?> />CUENTA CORRIENTE 
-						                    <input id="cta_ahorro" type="radio" class="alum_resp_form_banc_tipo" name="tipo_cuenta" value="AHORROS" <?=($alum_view['alum_resp_form_banc_tipo']=="A"?"checked":"")?> />CUENTA DE AHORROS
-						                </label>
-						            </div>
-					            </div>
-					            <div class="col-md-6">
-									<div class="form-group">
-						                <label for="alum_resp_form_cedu">Número de Idetificación del Propietario de la  Cuenta:</label>
-						                <input class="form-control" id="alum_resp_form_cedu" name="alum_resp_form_cedu" type="text" placeholder="Ingrese cédula..." value="<?=$alum_view['alum_resp_form_cedu'];?>">
-						            </div>
-						        </div>
-						        <div class="col-md-6">
-									<div class="form-group">
-								        <label for="alum_resp_form_tipo_iden">Tipo de Identificación del Propietario de la Cuenta:</label>
-								        <select class="form-control" id='alum_resp_form_tipo_iden' name='alum_resp_form_tipo_iden' >
-								        <?php 
-								            $sql="select tipo_iden_codi, tipo_iden_deta from Tipo_Identificacion where tipo_iden_estado='A' and tipo_iden_show_acad ='Y'";
-								            $stmt = sqlsrv_query($conn, $sql);
-								            while($tipo_iden_result= sqlsrv_fetch_array($stmt)){
-								                $seleccionado="";
-								                if ($tipo_iden_result["tipo_iden_codi"]==$alum_view['alum_resp_form_tipo_iden'])
-								                            $seleccionado="selected";
-								        ?>
-											<option value="<?=$tipo_iden_result["tipo_iden_codi"]?>" <?=$seleccionado?> ><?=$tipo_iden_result["tipo_iden_deta"]?></option>
-								        <? } ?>
-							            </select>
-								    </div>
-							    </div>
-							    <div class="col-md-6">
-									<div class="form-group">
-						                <label for="alum_resp_form_nomb">Nombres del Propietario de la  Cuenta:</label>
-						                <input class="form-control" id="alum_resp_form_nomb" name="alum_resp_form_nomb" type="text" placeholder="Ingrese nombres y apellidos ..." value="<?=$alum_view['alum_resp_form_nomb'];?>">
-						            </div>
-					            </div>
+								<div id="opcion82" class="row" >
+									<?php include('preinscripcion_add_cuentas.php');?>
+								</div>
 							</div>
 						</div>
 						<div class="tab-pane" id="tab4">

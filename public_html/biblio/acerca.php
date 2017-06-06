@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
     <?php include("Templates/head.php");?>
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body class="hold-transition skin-blue sidebar-mini <?php echo $_SESSION['sidebar_status']; ?>">
 		<div class="wrapper">
 			<?php include ('Templates/navbar.php');?>
 			<?php $Menu=800;include("Templates/menu.php");?>

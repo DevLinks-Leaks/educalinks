@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    actualiza_badge_gest_fact();
     $("#txt_fecha_ini").datepicker();
     $("#txt_fecha_fin").datepicker();
 	$("#txt_fecha_deuda_ini").datepicker();
@@ -51,7 +50,7 @@ function tipoDocumentoAutorizado_onChange(obj)
 		document.getElementById("cmb_estado").innerHTML = "<select class='form-control' id='cmb_estado' name='cmb_estado'>"+
 							"<option value=''>Seleccione...</option>"+
 							"<option value='A' selected='selected'>Activo</option>"+
-							"<option value='I'>Inactivo</option>";
+							"<option value='I'>Inactivo</option>"+
 						"</select>";
 	}
 }
