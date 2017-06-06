@@ -60,7 +60,7 @@
              <? } ?>
             </li>
             <li>
-            	<a href="<?= $url_impr; ?>" class="option"> 
+            	<a href="<?= $url_impr; ?>" target="_blank" class="option"> 
                   <span class="icon-print icon"> </span>Imprimir  Notas
              	</a>
             </li>

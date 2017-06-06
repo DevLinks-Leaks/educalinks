@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
     <?php include("template/head.php");?>
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body class="hold-transition skin-blue sidebar-mini <?php echo $_SESSION['sidebar_status']; ?>">
 		<?php include ('template/header.php');?>
-		<?php $Menu=5;include("template/menu.php");?>
+		<?php $Menu=604;include("template/menu.php");?>
 		<div class="content-wrapper">
 			<section class="content-header">
+				<?php
+					$params = array($_SESSION['curs_para_codi']);
+					$sql="{call curs_para_info(?)}";
+					$curs_para_info = sqlsrv_query($conn, $sql, $params);  
+					$row_curs_para_info = sqlsrv_fetch_array($curs_para_info);
+				?>
 				<h1>Lista de citas</h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-users"></i></a></li>
+					<li><a href="#"><i class="fa fa-bookmark"></i></a></li>
 					<li class="active">Lista de citas</li>
 				</ol>
 			</section>
@@ -37,6 +43,7 @@
 					</div>
 				</div>
 			</section>
+			<?php include("template/menu_sidebar.php");?>
 			<form id="frm_actu" name="frm_actu" method="post" action="" enctype="multipart/form-data">
 				<?php include("template/rutas.php");?>
 			</form>
@@ -46,7 +53,7 @@
 		<input name="mens_de"  		type="hidden" id="mens_de" 		value='<?php echo $_SESSION['USUA_DE'];  ?>'    />
 		<input name="mens_de_tipo"  type="hidden" id="mens_de_tipo" value='<?php echo $_SESSION['USUA_TIPO']; ?>'    />
 		<?php include("template/scripts.php");?>
-		<script type="text/javascript"> 
+		<script type="text/javascript">
 			$("#hora_aten_repr_fecha").datepicker({
 				onSelect: function(date){
 					MostrarCitas (date);

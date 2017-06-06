@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/educalinksprod.iml" filepath="$PROJECT_DIR$/.idea/educalinksprod.iml" />
+      <module fileurl="file://U:\.idea\educalinksprod.iml" filepath="U:\.idea\educalinksprod.iml" />
+      <module fileurl="file://C:\xampp\htdocs\practica\.idea\practica.iml" filepath="C:\xampp\htdocs\practica\.idea\practica.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/public_html.iml" filepath="$PROJECT_DIR$/.idea/public_html.iml" />
     </modules>
   </component>
 </project>

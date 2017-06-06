@@ -231,7 +231,8 @@ while ($alumno = sqlsrv_fetch_array($alumnos_view))
 			$calificaciones.='<td class="cabecera_notas centrar" width="6%">CUAL.</td>';
 			$calificaciones.='</tr>';
 			while ($row_alum_nota_peri_dist_view= sqlsrv_fetch_array($alum_nota_peri_dist_view)) 
-			{ 	$cc +=1;
+			{ 	if ($row_alum_nota_peri_dist_view["mate_padr"]<0)
+				{$cc +=1;
 					$calificaciones.='<tr><td class="cuerpo_notas centrar">';
 					if ($row_alum_nota_peri_dist_view["mate_prom"] =='A')
 						$calificaciones.='*';
@@ -285,7 +286,7 @@ while ($alumno = sqlsrv_fetch_array($alumnos_view))
 					}
 					$calificaciones.='<td class="cuerpo_notas centrar" width="6%">'.$row_alum_nota_peri_dist_view['nota_peri_cual_refe'].'</td>';
 					$calificaciones.='</tr>';
-				
+				}
 			}
 			/*Promedios en columna*/
 			$calificaciones.='<tr><td class="cuerpo_notas"></td>';

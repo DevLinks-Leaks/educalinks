@@ -55,41 +55,50 @@ function save ($json)
 	include ('../framework/funciones.php');
 	$obj_json = json_decode($json,true);
 	/*Creación de XML*/
-	$xml_aspirante = new DOMDocument("1.0","UTF-8");
+	$xml_solicitud = new DOMDocument("1.0","UTF-8");
 	/*Creación del root*/
-	$root_aspirante = $xml_aspirante->createElement("root");
+	$root_solicitud = $xml_solicitud->createElement("root");
 	/*Creación del elemento aspirante*/
-	$aspirante = $xml_aspirante->createElement("aspirante");
+	$solicitud = $xml_solicitud->createElement("solicitud");
 	/*Creación de atributos a aspirante*/
-	$aspirante->setAttribute('id',($obj_json['id']!=""?$obj_json['id']:-1));
-	$aspirante->setAttribute('tipo_id',$obj_json['tipo_id']);
-	$aspirante->setAttribute('numero_id',$obj_json['numero_id']);
-	$aspirante->setAttribute('nombre_1',utf8_encode($obj_json['nombre_1']));
-	$aspirante->setAttribute('nombre_2',utf8_encode($obj_json['nombre_2']));
-	$aspirante->setAttribute('apellido_1',utf8_encode($obj_json['apellido_1']));
-	$aspirante->setAttribute('apellido_2',utf8_encode($obj_json['apellido_2']));
-	$aspirante->setAttribute('genero',$obj_json['genero']);
-	$aspirante->setAttribute('fecha_ncto',$obj_json['fecha_ncto']);
-	$aspirante->setAttribute('religion',utf8_encode($obj_json['religion']));
-	$aspirante->setAttribute('pais_nac',utf8_encode($obj_json['pais_nac']));
-	$aspirante->setAttribute('provincia_nac',utf8_encode($obj_json['provincia_nac']));
-	$aspirante->setAttribute('ciudad_nac',utf8_encode($obj_json['ciudad_nac']));
-	$aspirante->setAttribute('direccion',utf8_encode($obj_json['direccion']));
-	$aspirante->setAttribute('num_convencional',$obj_json['num_convencional']);
-	$aspirante->setAttribute('num_celular',$obj_json['num_celular']);
-	$aspirante->setAttribute('correo',$obj_json['correo']);
-	$aspirante->setAttribute('vive_con',utf8_encode($obj_json['vive_con']));
-	$aspirante->setAttribute('vive_con_especifique',utf8_encode($obj_json['vive_con_especifique']));
-	$aspirante->setAttribute('facebook',$obj_json['facebook']);
-	$aspirante->setAttribute('instagram',$obj_json['instagram']);
-	$aspirante->setAttribute('twitter',$obj_json['twitter']);
+	$solicitud->setAttribute('id',($obj_json['id']!=""?$obj_json['id']:-1));
+	$solicitud->setAttribute('peri_codi',$obj_json['peri_codi']);
+	$solicitud->setAttribute('asp_codi',$obj_json['asp_codi']);
+	$solicitud->setAttribute('nivel_aplic',$obj_json['nivel_aplic']);
+	$solicitud->setAttribute('curso_aplic',$obj_json['curso_aplic']);
+	$solicitud->setAttribute('es_repetidor',$obj_json['es_repetidor']);
+	$solicitud->setAttribute('curs_repite',$obj_json['curs_repite']);
+	$solicitud->setAttribute('apoyo_acad',$obj_json['apoyo_acad']);
+	$solicitud->setAttribute('apoyo_social',$obj_json['apoyo_social']);
+	$solicitud->setAttribute('apoyo_ingles',$obj_json['apoyo_ingles']);
+	$solicitud->setAttribute('apoyo_otro',utf8_encode($obj_json['apoyo_otro']));
+	$solicitud->setAttribute('apoyo_aspectos',$obj_json['apoyo_aspectos']);
+	$solicitud->setAttribute('programa_terapia_ext',$obj_json['programa_terapia_ext']);
+	$solicitud->setAttribute('programa_drogas',$obj_json['programa_drogas']);
+	$solicitud->setAttribute('otros_programas',utf8_encode($obj_json['otros_programas']));
+	$solicitud->setAttribute('pertenece_grupo_cat',$obj_json['pertenece_grupo_cat']);
+	$solicitud->setAttribute('grupo_cat',utf8_encode($obj_json['grupo_cat']));
+	$solicitud->setAttribute('es_deportista',$obj_json['es_deportista']);
+	$solicitud->setAttribute('deporte',utf8_encode($obj_json['deporte']));
+	$solicitud->setAttribute('familiares_est',utf8_encode($obj_json['familiares_est']));
+	$solicitud->setAttribute('retiro_sug',$obj_json['retiro_sug']);
+	$solicitud->setAttribute('probl_acad',$obj_json['probl_acad']);
+	$solicitud->setAttribute('probl_discip',utf8_encode($obj_json['probl_discip']));
+	$solicitud->setAttribute('historial_ue',utf8_encode($obj_json['historial_ue']));
+	$solicitud->setAttribute('es_enfermo',$obj_json['es_enfermo']);
+	$solicitud->setAttribute('enfermedad',utf8_encode($obj_json['enfermedad']));
+	$solicitud->setAttribute('es_alergico',$obj_json['es_alergico']);
+	$solicitud->setAttribute('alergia',utf8_encode($obj_json['alergia']));
+	$solicitud->setAttribute('dato_com_1',utf8_encode($obj_json['dato_com_1']));
+	$solicitud->setAttribute('dato_com_2',utf8_encode($obj_json['dato_com_2']));
+	$solicitud->setAttribute('dato_com_3',utf8_encode($obj_json['dato_com_3']));
 	/*Adjunto aspirante a la raiz*/
-	$root_aspirante->appendChild($aspirante);
+	$root_solicitud->appendChild($solicitud);
 	/*Adjunto la raiz al documento principal*/
-	$xml_aspirante->appendChild($root_aspirante);
+	$xml_solicitud->appendChild($root_solicitud);
 	
-	$params   = array($xml_aspirante->saveXML());
-	$sql	  = "{call admisiones_aspirante_save(?)}";
+	$params   = array($xml_solicitud->saveXML());
+	$sql	  = "{call admisiones_form_save(?)}";
 	$stmt 	  = sqlsrv_query($conn, $sql, $params);  
 	
 	if ($stmt === false)

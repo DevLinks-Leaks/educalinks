@@ -6,9 +6,16 @@
 			float: left;
 		}
 	</style>
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body class="hold-transition skin-blue sidebar-mini <?php echo $_SESSION['sidebar_status']; ?>">
 		<?php include ('template/header.php');?>
-		<?php $Menu=700; include("template/menu.php");?>
+		<?php $Menu=700;
+			if($_SESSION['modulo'] == 'acad')
+				include("template/menu.php");
+			if($_SESSION['modulo'] == 'finan')
+				include("template/menu_finan.php");
+			if($_SESSION['modulo'] == 'medic')
+				include("../medic/template/menu.php");
+		?>
 		<div class="content-wrapper">
 			<!--<div style="padding: 20px 30px; background: rgb(243, 156, 18); z-index: 999999; font-size: 16px; font-weight: 600;"><a class="pull-right" href="#" data-toggle="tooltip" data-placement="left" 
 			title="No mostrarme este mensaje de nuevo!"
@@ -107,7 +114,7 @@
 						{	valida_tipo_growl(xhr_mensaje.responseText);
 						}
 						else
-						{   $.growl.warning({ title: "Educalinks informa:",message: "Proceso realizado sin confirmación del sistema." });
+						{   $.growl.warning({ title: "Educalinks informa",message: "Proceso realizado sin confirmación del sistema." });
 						}
 						load_ajax_mensajes( 'mens_main_view', 'mensajes_view.php', 'OP=' + document.getElementById('hd_op').value, 4 );              
 					}
@@ -185,6 +192,7 @@
 				{   if ( document.getElementById('hd_op').value !== 4 )
 						document.getElementById('btn_delete_all_sms').style.display = 'inline';
 				}
+				console.log( document.getElementById('hd_op').value );
 			}
 		</script>
 		<!-- Modal -->
@@ -209,38 +217,6 @@
 						<button type="button" class="btn btn-default" data-dismiss="modal">
 						Cerrar
 						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- Modal Responder-->
-		<div class="modal fade bs-example-modal-lg" id="mens_responder" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
-			<div class="modal-dialog modal-lg">
-				<div id="div_mens_resp" class="modal-content">
-				  
-				</div>
-			</div>
-		</div>
-		<!-- Modal eliminar-->
-		<div class="modal fade bs-example-modal-sm" id="modal_del_sms" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-sm">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-						<h4 class="modal-title">Educalinks</h4>
-					</div>
-					<div class="modal-body">
-						<div class="row">
-							<div class="col-md-12">
-								¿Eliminar mensaje? Pasará a la bandeja de mensajes eliminados.
-							</div>
-						</div>
-						<input type='hidden' id='hd_del_mes_codi' name='hd_del_mes_codi' value=''></input>
-					</div>
-					<div class="modal-footer">
-						<button class="btn btn-danger" type="button" onclick="elimina_mensaje_followed( )">
-							<span class="fa fa-trash"></span>&nbsp;Eliminar</button>
-						<button class="btn btn-default" data-dismiss="modal"><li style="color:red;" class="fa fa-ban"></li>&nbsp;No Eliminar</button>
 					</div>
 				</div>
 			</div>

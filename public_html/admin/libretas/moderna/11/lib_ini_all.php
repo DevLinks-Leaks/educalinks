@@ -184,7 +184,7 @@ while ($alumno = sqlsrv_fetch_array($alumnos_view))
 				$tabla_contraseñas.='</table>';
 			}
 			/*Ancho de asignaturas*/
-			$asign_ancho = 100-($num_cols*6);
+			$asign_ancho = 100-($num_cols*3);
 			/*Calificaciones*/
 			$calificaciones = '
 			<table width="100%" border="0.3" cellpadding="1" cellspacing="0">
@@ -192,7 +192,7 @@ while ($alumno = sqlsrv_fetch_array($alumnos_view))
 				<td class="cabecera_notas" align="center" width="'.$asign_ancho.'%">ÁMBITOS</td>';
 			$cabecera = array();
 			while($row_peri_dist_padr_view= sqlsrv_fetch_array($peri_dist_padr_view)) 
-			{   $calificaciones.='<td class="cabecera_notas centrar" width="6%">'.$row_peri_dist_padr_view['peri_dist_abre'].'</td>';
+			{   $calificaciones.='<td class="cabecera_notas centrar" width="3%">'.$row_peri_dist_padr_view['peri_dist_abre'].'</td>';
 			}
 			$calificaciones.='</tr>';
 			while ($row_alum_nota_peri_dist_view= sqlsrv_fetch_array($alum_nota_peri_dist_view)) 
@@ -209,7 +209,7 @@ while ($alumno = sqlsrv_fetch_array($alumnos_view))
 				$calificaciones.='</td>';
 				$CC_COLUM_index =0; 
 				while($CC_COLUM_index < $CC_COLUM )  
-				{   $calificaciones.='<td width="6%" class="cuerpo_notas centrar ';
+				{   $calificaciones.='<td width="3%" class="cuerpo_notas centrar ';
 					$calificaciones.= '">';
 					if ($row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]>0 and $row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]<>null)
 					{	switch ($row_alum_nota_peri_dist_view['mate_tipo'])

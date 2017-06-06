@@ -60,8 +60,8 @@
 	$pdf->SetAuthor($_SESSION['cliente']);
 	$pdf->SetTitle($_SESSION['cliente']);
 	$pdf->SetSubject($_SESSION['cliente']);
-	$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-	$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+	$pdf->SetMargins(PDF_MARGIN_LEFT, 25, PDF_MARGIN_RIGHT);
+	$pdf->SetAutoPageBreak(TRUE, 10);
 	$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 	
 	$arrDatos=array();

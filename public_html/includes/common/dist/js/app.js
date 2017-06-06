@@ -340,7 +340,6 @@ function _init() {
 					v_is_collapsed = 'true';
 				}
 			}
-			console.log( $('body').attr('class') );
 			var data = new FormData();
 			data.append( 'event', 'change_status_bar');
 			data.append( 'bar', v_is_collapsed );

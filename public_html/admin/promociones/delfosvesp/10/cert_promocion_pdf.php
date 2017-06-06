@@ -60,8 +60,8 @@
 	$pdf->SetAuthor($_SESSION['cliente']);
 	$pdf->SetTitle($_SESSION['cliente']);
 	$pdf->SetSubject($_SESSION['cliente']);
-	$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-	$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+	$pdf->SetMargins(PDF_MARGIN_LEFT, 25, PDF_MARGIN_RIGHT);
+	$pdf->SetAutoPageBreak(TRUE, 10);
 	$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 	
 	$arrDatos=array();
@@ -357,7 +357,7 @@
 				<td colspan="2"><br /></td>
 			</tr>
 			<tr>
-				<td colspan="2" class="texto" align="right"><p>{$ciudad}, {$fecha_hoy}</p></td>
+				<td colspan="2" class="texto" align="right"><p>{$ciudad}, 30 de enero del 2016</p></td>
 			</tr>
 			<tr>
 			<td colspan="2"><br/><br/><br/></td>

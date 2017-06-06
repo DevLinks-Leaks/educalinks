@@ -54,12 +54,12 @@
 
     <body class="login" style="background:url(<?= background_index($_SESSION['codi']);?>); ">
         <div class="row">
-            <img src="imagenes/clientes/<?= $_SESSION['directorio'];?>/logo_inicial_long.png" alt="">
+            <a href='index.php'><img src="imagenes/clientes/<?= $_SESSION['directorio'];?>/logo_inicial_long.png" alt=""></a>
         </div>
         <div class="row">
 
         </div>
-        <div class="box box-solid box-default">
+        <div class="box box-solid box-default" style='background: transparent; border: transparent;     box-shadow: 0 1px 1px rgba(0,0,0,0.0);'>
             
                 
 
@@ -77,7 +77,7 @@
 
                 <section class="log">
                 <div class="title">
-                    <h4>Seleccione el módulo</h4>
+                    <h4>&nbsp;</h4>
                 </div>
 
                 <p style="background-color: #e74c3c;"> 
