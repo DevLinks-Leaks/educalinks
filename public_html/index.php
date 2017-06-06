@@ -57,7 +57,7 @@
 				<img src="imagenes/clientes/<?= $_SESSION['directorio'];?>/logo_inicial_long.png" alt="Educalinks"  width="80%" height="80%">
 			</div>
 			<div class="login-box-body">
-				<p class="login-box-msg">Ingreso de usuario Prueba git</p>
+				<p class="login-box-msg">Ingreso de usuario</p>
 
 				<form  action="framework/main_valid.php" method="POST"  id="form_main">
 					<div class="form-group has-feedback">
