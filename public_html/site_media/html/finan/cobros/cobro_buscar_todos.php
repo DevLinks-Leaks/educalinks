@@ -474,7 +474,7 @@
 	<div class="box-footer">
 		<div id="cobro_opciones" class="btn-group pull-right">
 			<button type="button" class="btn btn-default btn-md" onclick="limpiaPagina('true')" {disabled_caja}><span class='glyphicon glyphicon-erase'></span> Limpiar selecciones</button>
-			<button type="button"  class="btn btn-primary btn-md" aria-hidden="true" data-toggle="modal" data-target="#modal_resultadoPago" 
+			<button type="button" id='btn_gen_pago' name='btn_gen_pago' class="btn btn-primary btn-md" aria-hidden="true" data-toggle="modal" data-target="#modal_resultadoPago" 
 					onclick="generaPago('modal_resultadoPago_body','{ruta_html_finan}/cobros/controller.php')" {disabled_caja}>
 				<span class='glyphicon glyphicon-record'></span> Confirmar pagos</button>
 		</div>

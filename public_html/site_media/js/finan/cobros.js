@@ -1115,6 +1115,7 @@ function generaPago(div, url){
 	var totalPagos = $('#totalPagos').val();
 	if(validacionFinal())
 	{   document.getElementById('btn_modal_resultadoPago_close').disabled=true;
+		document.getElementById('btn_gen_pago').disabled=true;
 		var pago = {};
 		pago['cabecera'] = {};
 		pago['cabecera']['codigoCliente'] = codigoCliente;
@@ -1223,6 +1224,7 @@ function generaPago(div, url){
 				if (n > 0)
 				{   document.getElementById('modal_resultadoPago_body').innerHTML = xhrpago.responseText;
 					document.getElementById('btn_modal_resultadoPago_close').disabled=false;
+					document.getElementById('btn_gen_pago').disabled=false;
 					codigoFC = $("#fc_generada").val(); //PDTE. Si se va a manejar el crear más de una factura, enviar un arreglo de codigos.
 					limpiar_despues_de_pago_existoso();
 					if( ( $("#fc_generada").val().length > 0 ) && ( $("#fc_generada").val() != 'no tiene' ) )
