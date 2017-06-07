@@ -1,4 +1,4 @@
- $(document).ready(function() {
+ $(document).ready(function() { //jimmy
 	$('#btn_folder_deudasPendientes').on('click', function () {
         var $el = $(this),
             textNode = this.lastChild;
