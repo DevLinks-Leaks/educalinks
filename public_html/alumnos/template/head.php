@@ -23,6 +23,7 @@
     //     session_activa(3);
     // }
     licencia_activa();
+    actualizacion_activa();
     $rand = rand().rand();
 ?>
 	<head>

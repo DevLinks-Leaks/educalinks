@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-	<?php  
-		$colegio='dev';
-	?>
     <?php include("template/head.php");?>
     <body class="hold-transition skin-blue sidebar-mini">
 		<div class="wrapper">
@@ -10,11 +7,11 @@
 			<?php $active="cons_estudiantes";include("template/menu.php");?>
 			<div class="content-wrapper">
 				<section class="content-header">
-					<h1>Carnet
-						<small>Foto de Carnet</small>
+					<h1>Actualización de Datos
+						<small>Datos del estudiante</small>
 					</h1>
 					<ol class="breadcrumb">
-						<!-- <li><button class="btn btn-xs btn-primary" data-target="#myModal" data-toggle="modal"><i class='fa fa-list'></i> Instrucciones</button></li> -->
+						 <li><button class="btn btn-xs btn-primary" data-target="#myModal" data-toggle="modal"><i class='fa fa-list'></i> Instrucciones</button></li>
 					</ol>
 				</section>
 				<section class="content" id="mainPanel">
@@ -53,24 +50,21 @@
 									<div class="zones">
 										<div class="nav-tabs-custom">  
 											<ul id="tabs" class="nav nav-tabs">
-												<?php if($_SESSION['directorio']==$colegio){?>
-												<li class="active"><a href="#tab2" data-toggle="tab" onClick=""><span class=" fa-image fa"></span> Foto del Alumno</a></li>
-												<?}?>
-												<!-- <li class="<?=($_SESSION['directorio']==$colegio ? '' : 'active')?>"><a href="#tab1" data-toggle="tab" onClick=""><span class=" fa-file-text-o fa"></span> Datos del Alumno</a></li> -->
-												<!-- <?if( $_SESSION['certus_medic'] == '1' ){?><li ><a href="#tab4" data-toggle="tab" onClick=""><span class="fa fa-medkit"></span> Ficha médica</a></li><?}?> -->
-												<!-- <li><a href="#tab2" data-toggle="tab" onClick=""><span class="fa-users fa"></span> 3. Datos del representante</a></li> -->
-												<!-- <li><a href="#tab3" data-toggle="tab" onClick=""><span class="fa-pencil fa"></span> Opciones</a></li> -->
-											</ul> 	
+                                                <?if( $_SESSION['certus_medic'] == '1' ){?><li class="active"><a href="#tab4" data-toggle="tab" onClick=""><span class="fa fa-medkit"></span> Ficha médica</a></li><?}?>
+												 <li><a href="#tab1" data-toggle="tab" onClick=""><span class=" fa-file-text-o fa"></span> Datos del Alumno</a></li>
+												 <li><a href="#tab2" data-toggle="tab" onClick=""><span class="fa-users fa"></span> 3. Datos del representante</a></li>
+												 <li><a href="#tab3" data-toggle="tab" onClick=""><span class="fa-pencil fa"></span> Opciones</a></li>
+											</ul>
 											<?php
-												// if($_SESSION['certus_medic']=='1')
-												// 	$ha_actualizado_medic = $alum_view['alum_upd_ficha_medica'];
-												// else
+												 if($_SESSION['certus_medic']=='1')
+												 	$ha_actualizado_medic = $alum_view['alum_upd_ficha_medica'];
+												 else
 													$ha_actualizado_medic = 1;
 											?>
 											<input type="hidden" name="hd_ha_actualizado_medic" id="hd_ha_actualizado_medic" value="<?php echo $ha_actualizado_medic;?>"/>
 										
 											<div class="tab-content">
-												<div class="tab-pane" id="tab4">
+												<div class="tab-pane active" id="tab4">
 													<div class="alumnos_add_script admin_pass">
 															<?php 
 																include ('../framework/dbconf.php');		
@@ -116,67 +110,7 @@
 															?>
 													</div>
 												</div>
-												<?php if($_SESSION['directorio']==$colegio){?>
-												<div class="tab-pane <?=($_SESSION['directorio']==$colegio ? 'active' : '')?>" id="tab2">
-													<div class="row">
-														<div class="col-md-3">
-															<div class="selector" style='text-align:center;'>
-																<?php
-																$file_exi=$_SESSION['ruta_foto_alumno'].$alum_view['alum_codi'].'.jpg';
-
-																if (file_exists($file_exi)) {
-																	$pp=$file_exi;
-																} else {
-																	$pp=$_SESSION['foto_carnet'];
-																}
-																?>
-																<div id="div_foto" >
-																	<img id="alum_preview" src="<?php echo $pp;?>?<?=$rand?>" width="220" height="200" />
-																</div>
-																<input type="file" class='form-control input-sm' name="alum_foto" id="alum_foto" class="btn" onblur="preview(this,1);" onchange="preview(this,1);"/>
-																
-															</div>
-														</div>
-														
-														<div class="col-md-6">
-															<div class="alert alert-warning">
-												                <h4><i class="icon fa fa-warning"></i> Importante!</h4>
-												                <p>Esta foto será usada para la emisión del carnet estudiantil.</p>
-												                <p>La foto debe cumplir los siguientes requisitos para proceder a la impresión:</p>
-												                <ul>
-												                	<li>Vestir el uniforme de diario.</li>
-												                	<li>Foto con fondo blanco.</li>
-												                	<li>Seguir formato de imagen sugerida.</li>
-												                	<li>En caso de mujeres: accesorios blancos.</li>
-												                </ul>
-												                <p><b>*En caso de no cumplir todos los requisitos la credencial no será emitida y deberá ser reemplazada.</b></p>
-											              	</div>
-														</div>
-														<div class="col-md-3">
-															<div class="nav-tabs-custom">  
-																<ul id="tabs" class="nav nav-tabs">
-																	<li class="active"><a href="#tab_1" data-toggle="tab" onClick=""><span class=" fa-male fa"></span> Hombre</a></li>
-																	<li class=""><a href="#tab_2" data-toggle="tab" onClick=""><span class=" fa-female fa"></span> Mujer </a></li>
-																</ul>
-																<div class="tab-content">
-																	<div class="tab-pane active" id="tab_1">
-																		<img class="img-responsive"  src="<?=$_SESSION['foto_carnet_hombre'];?>" />
-																	</div>
-																	<div class="tab-pane" id="tab_2">
-																		<img class="img-responsive" src="<?=$_SESSION['foto_carnet_mujer'];?>" />
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-md-4 col-md-offset-5 form-group">
-															<button id="btn_actualizar" class="btn btn-success" style="width:40%;" data-loading="Actualizando.." onclick="actualizar_datos();">Subir Foto</button>
-														</div>
-													</div>
-												</div>
-												<?}?>
-												<div class="tab-pane <?=($_SESSION['directorio']==$colegio ? '' : 'active')?>" id="tab1">
+												<div class="tab-pane" id="tab1">
 													<div class="row">
 														<div class="col-md-12"><h5 class="page-header">Datos Principales</h5></div>
 														<div class="col-md-6">
@@ -682,7 +616,7 @@
 													</div>
 
 												</div>
-												<!-- <div class="tab-pane" id="tab2">
+												<div class="tab-pane" id="tab2">
 													<div class="alumnos_add_script admin_pass">
 														<div class="row">
 															<div class="col-md-6">
@@ -851,7 +785,7 @@
 														    </div>
 														</div>
 													</div>
-												</div> -->
+												</div>
 												<div class="tab-pane" id="tab3">
 													<div class="row">
 														<div class="col-md-12">
@@ -860,7 +794,7 @@
 																	<ul>
 																		<li>Foto de Alumno</li>
 																		<li>Datos de Alumno</li>
-																		<!-- <li>Ficha Medica</li> -->
+																		 <li>Ficha Medica</li>
 																	</ul>
 															</div>
 														</div>

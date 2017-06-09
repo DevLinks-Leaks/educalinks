@@ -88,10 +88,10 @@
 								<input type="radio" onChange="select_opc('alumno');" name="option" id="option1" autocomplete="off" value="1" <? if ($_COOKIE['tipo']==1) echo 'checked'; ?> >
 								<span class="icon-pencil"></span> Alumnos </label>
 								<label id='repr' class="<?php echo ( $_COOKIE['tipo'] == 2 ? 'btn btn-danger btn-block btn-flat active' : 'btn btn-default btn-block btn-flat'); ?>">
-								<input type="radio" onChange="select_opc('repr');"name="option" id="option3" autocomplete="off" value="2" <? if ($_COOKIE['tipo']==2) echo 'checked'; ?> >
+								<input type="radio" onChange="select_opc('repr');" name="option" id="option3" autocomplete="off" value="2" <? if ($_COOKIE['tipo']==2) echo 'checked'; ?> >
 								<span class="icon-users"></span> Representantes</label>
 								<label id='docente' class="<?php echo ( $_COOKIE['tipo'] == 3 ? 'btn btn-danger btn-block btn-flat active' : 'btn btn-default btn-block btn-flat'); ?>">
-								<input type="radio" onChange="select_opc('docente');"name="option" id="option2" autocomplete="off" value="3" <? if ($_COOKIE['tipo']==3) echo 'checked'; ?> >
+								<input type="radio" onChange="select_opc('docente');" name="option" id="option2" autocomplete="off" value="3" <? if ($_COOKIE['tipo']==3) echo 'checked'; ?> >
 								<span class="icon-user"></span> Docentes </label>
 								<label id='admin' class="<?php echo ( $_COOKIE['tipo'] == 4 ? 'btn btn-danger btn-block btn-flat active' : 'btn btn-default btn-block btn-flat'); ?>">
 								<input type="radio" onChange="select_opc('admin');" name="option" id="option4" autocomplete="off" value="4" <? if ($_COOKIE['tipo']==4 or !isset($_COOKIE['tipo'])) echo 'checked';?> >
