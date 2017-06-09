@@ -7,7 +7,6 @@ if(isset($_POST['opc'])){$opc=$_POST['opc'];}else{$opc="";}
 switch($opc){
 	case 'repr_add':
 		$repr_fech_promoc=substr($_POST['repr_fech_promoc'],6,4)."".substr($_POST['repr_fech_promoc'],3,2)."".substr($_POST['repr_fech_promoc'],0,2);
-		$repr_fech_naci = substr($_POST['repr_fech_naci'],6,4)."".substr($_POST['repr_fech_naci'],3,2)."".substr($_POST['repr_fech_naci'],0,2);
 		$es_colaborador = ($_POST['repr_escolaborador']=='true' ? 1 : 0 );
 		$repr_ex_alum = ($_POST['repr_ex_alum']=='true' ? 1 : 0 );
 		$sql_opc = "{call repr_add(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
@@ -35,7 +34,6 @@ switch($opc){
 							$repr_ex_alum,
 							$repr_fech_promoc,
 							$_POST['repr_telf_trab'],
-							$repr_fech_naci,
 							$_POST['repr_pais_naci'],
 							$_POST['repr_prov_naci'],
 							$_POST['repr_ciud_naci'],
