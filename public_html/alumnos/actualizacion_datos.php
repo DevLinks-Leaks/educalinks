@@ -53,7 +53,7 @@
 											<ul id="tabs" class="nav nav-tabs">
                                                 <?if( $_SESSION['certus_medic'] == '1' ){?><li class="active"><a href="#tab4" data-toggle="tab" onClick=""><span class="fa fa-medkit"></span> Ficha médica</a></li><?}?>
 												 <li class="<?=( $_SESSION['certus_medic'] == '1' ? '' : 'active'  )?>"><a href="#tab1" data-toggle="tab" onClick=""><span class=" fa-file-text-o fa"></span> Datos del Alumno</a></li>
-												 <li><a href="#tab2" data-toggle="tab" onClick=""><span class="fa-users fa"></span> 3. Datos del representante</a></li>
+												 <li><a href="#tab2" data-toggle="tab" onClick=""><span class="fa-users fa"></span> Datos del representante</a></li>
 												 <li><a href="#tab3" data-toggle="tab" onClick=""><span class="fa-pencil fa"></span> Opciones</a></li>
 											</ul>
 											<?php
@@ -934,7 +934,7 @@
 															<div class="checkbox" style='font-size:large;'>
 																<label><input id="aceptar_terminos" name="aceptar_terminos" type="checkbox" /></label>&nbsp;Confirmo que la información proporcionada es completa, correcta y que ha sido revisada con exactitud en:<br>
 																	<ul>
-                                                                        <?if( $_SESSION['certus_medic'] == '1' ){?><li>Ficha Medica</li><?}?>
+                                                                        <?if( $_SESSION['certus_medic'] == '1' ){?><li>Ficha Médica</li><?}?>
 																		<li>Datos del Alumno</li>
 																		<li>Datos del Representante</li>
 																	</ul>
