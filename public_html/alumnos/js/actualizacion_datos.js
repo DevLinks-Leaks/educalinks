@@ -87,9 +87,39 @@ function ValidarDatos(direc)
 	{	$.growl.error({
 				title: 'Educalinks informa',
 				message: 'Por favor llene la ficha médica.' });
-		$('#tabs a[href="#tab3"]').tab('show');
+		$('#tabs a[href="#tab4"]').tab('show');
 		return false;
 	}
+    if (document.getElementById('repr_email').value.trim()=='')
+    {	$.growl.error({ title: "Educalinks informa",message: "Por favor ingrese el correo electrónico del representante" });
+        $('#repr_email').closest('.form-group').addClass('has-error');
+        $('#repr_email').focus();
+        $('#tabs a[href="#tab2"]').tab('show');
+        return false;
+    }
+    else
+    {	$('#repr_email').closest('.form-group').removeClass('has-error');
+    }
+    if (document.getElementById('repr_telf').value.trim()=='')
+    {	$.growl.error({ title: "Educalinks informa",message: "Por favor ingrese el teléfono del representante" });
+        $('#repr_telf').closest('.form-group').addClass('has-error');
+        $('#repr_telf').focus();
+        $('#tabs a[href="#tab2"]').tab('show');
+        return false;
+    }
+    else
+    {	$('#repr_telf').closest('.form-group').removeClass('has-error');
+    }
+    if (document.getElementById('repr_celular').value.trim()=='')
+    {	$.growl.error({ title: "Educalinks informa",message: "Por favor ingrese el célular del representante" });
+        $('#repr_celular').closest('.form-group').addClass('has-error');
+        $('#repr_celular').focus();
+        $('#tabs a[href="#tab2"]').tab('show');
+        return false;
+    }
+    else
+    {	$('#repr_celular').closest('.form-group').removeClass('has-error');
+    }
 	if (!document.getElementById('aceptar_terminos').checked)
 	{	$.growl.error({
 				title: 'Educalinks informa',
