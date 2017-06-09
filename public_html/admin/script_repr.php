@@ -64,42 +64,43 @@ switch($opc){
 		}
 	break;
 	case 'repr_upd':
-		$repr_fech_promoc=substr($_POST['repr_fech_promoc'],6,4)."".substr($_POST['repr_fech_promoc'],3,2)."".substr($_POST['repr_fech_promoc'],0,2);
-		$repr_fech_naci = substr($_POST['repr_fech_naci'],6,4)."".substr($_POST['repr_fech_naci'],3,2)."".substr($_POST['repr_fech_naci'],0,2);
-		$es_colaborador = ($_POST['repr_escolaborador']=='true' ? 1 : 0 );
-		$repr_ex_alum = ($_POST['repr_ex_alum']=='true' ? 1 : 0 );
-		$sql_opc = "{call repr_upd(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
-		$params_opc= array( $_POST['repr_nomb'],
-							$_POST['repr_apel'],
-							$_POST['repr_cedula'],
-							$_POST['repr_tipo_iden'],
-							$_POST['repr_email'],
-							$_POST['repr_telf'],
-							$_POST['repr_domi'],
-							$_POST['repr_estado_civil'],
-							$_POST['repr_celular'],
-							$_POST['repr_codi'],
-							$_POST['repr_profesion'],
-							$_POST['repr_nacionalidad'],
-							$_POST['repr_lugar_trabajo'],
-							$_POST['repr_direc_trabajo'],
-							$_POST['repr_cargo'],
-							$_POST['repr_religion'],
-							$_POST['repr_estudios'],
-							$_POST['repr_institucion'],
-							$_POST['repr_motivo_representa'],
-							$es_colaborador,
-							$repr_ex_alum,
-							$repr_fech_promoc,
-							$_POST['repr_telf_trab'],
-							$repr_fech_naci,
-							$_POST['repr_pais_naci'],
-							$_POST['repr_prov_naci'],
-							$_POST['repr_ciud_naci'],
+        $repr_fech_promoc=substr($_POST['repr_fech_promoc'],6,4)."".substr($_POST['repr_fech_promoc'],3,2)."".substr($_POST['repr_fech_promoc'],0,2);
+        $repr_fech_naci = substr($_POST['repr_fech_naci'],6,4)."".substr($_POST['repr_fech_naci'],3,2)."".substr($_POST['repr_fech_naci'],0,2);
+        $es_colaborador = ($_POST['repr_escolaborador']=='true' ? 1 : 0 );
+        $repr_ex_alum = ($_POST['repr_ex_alum']=='true' ? 1 : 0 );
+        $sql_opc = "{call repr_add(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        $params_opc= array( $_POST['repr_codi'],
+                            $_POST['repr_nomb'],
+                            $_POST['repr_apel'],
+                            $_POST['repr_cedula'],
+                            $_POST['repr_tipo_iden'],
+                            $_POST['repr_email'],
+                            $_POST['repr_telf'],
+                            $_POST['repr_domi'],
+                            $_POST['repr_estado_civil'],
+                            $_POST['repr_celular'],
+                            $_POST['alum_codi'],
+                            $_POST['repr_profesion'],
+                            $_POST['repr_nacionalidad'],
+                            $_POST['repr_lugar_trabajo'],
+                            $_POST['repr_direc_trabajo'],
+                            $_POST['repr_cargo'],
+                            $_POST['repr_religion'],
+                            $_POST['repr_estudios'],
+                            $_POST['repr_institucion'],
+                            $_POST['repr_motivo_representa'],
+                            $es_colaborador,
+                            $repr_ex_alum,
+                            $repr_fech_promoc,
+                            $_POST['repr_telf_trab'],
+                            $repr_fech_naci,
+                            $_POST['repr_pais_naci'],
+                            $_POST['repr_prov_naci'],
+                            $_POST['repr_ciud_naci'],
                             $_POST['identificacion_niv_1'],
                             $_POST['identificacion_niv_2'],
                             $_POST['identificacion_niv_3']);
-		$stmt_opc = sqlsrv_query( $conn, $sql_opc,$params_opc);
+        $stmt_opc = sqlsrv_query( $conn, $sql_opc,$params_opc);
 		if( $stmt_opc === false ){echo "Error in executing statement .\n";die( print_r( sqlsrv_errors(), true));} 
 		$repr_view_opc=0;
 		$repr_view_opc=lastId($stmt_opc);
