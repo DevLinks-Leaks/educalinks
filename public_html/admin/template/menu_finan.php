@@ -57,10 +57,10 @@
 								<?php if(permiso_activo(193))?> <li <? if($Menu==411) echo 'class="active"'; ?>><a href="../../finan/tarjetasCredito/"><span class='fa fa-cc-mastercard'></span> Tarjetas de créito</a></li>
 							</ul>
 						</li>
-						<li><a href='#/' 
+						<!--<li><a href='#/' 
 							onclick="js_general_settings_get();"
 							data-toggle="modal"
-							data-target="#modal_configColecturia"><i class="fa fa-wrench"></i> Configuración general</a></li>
+							data-target="#modal_configColecturia"><i class="fa fa-wrench"></i> Configuración general</a></li>-->
 					</ul>
 				</li>
 				<?php //}?>

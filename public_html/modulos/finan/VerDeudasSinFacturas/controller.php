@@ -5,6 +5,7 @@ require_once('../../../core/controllerBase.php');
 require_once('../../common/periodo/model.php');
 require_once('../../finan/general/model.php');
 require_once('../../finan/gruposEconomico/model.php');
+require_once('../../finan/puntos_emision/model.php');
 require_once('constants.php');
 require_once '../../../includes/finan/proc_comp_elec.php';
 require_once('../../finan/facturas/model.php');
@@ -16,6 +17,7 @@ require_once('view.php');
 function handler()
 {	require('../../../core/rutas.php');
     $permiso 	= get_mainObject('General');
+    $sucursales = get_mainObject('PtoEmision');
 	$item 		= get_mainObject('Item');
 	$periodo 	= get_mainObject('Periodo');
 	$grupEcon 	= get_mainObject('GrupoEconomico');
@@ -32,6 +34,14 @@ function handler()
 				$_SESSION['ERROR_MSG']="Por favor inicie sesión";
 				header("Location:".$domain);
 			}
+			$data = array("txt_num_sucursal"		=> '',
+						  "txt_num_ptoVenta"		=> '',
+						  "txt_num_factura"			=> '',
+						  "sucursal_codigo"			=> '',
+						  "puntVent_codigo"			=> '',
+						  'combo_sucursal' 			=> $sucu_combo
+                          );
+			
 			$today=new DateTime('yesterday');
 			$tomorrow=new DateTime('today');
 			$data['txt_fecha_ini'] = $today->format('d/m/Y');
@@ -75,9 +85,18 @@ function handler()
                                                                         2=> array()),
 															"options"   => array("name"=>"cursos","id"=>"curso","required"=>"required","class"=>"form-control input-sm"),
 										"selected"  => -1);
+			
+			$sucursales->get_all_sucursales_withPrefix( );
+			$sucu_combo ='<select class="form-control input-sm" id="pto_sucursal" name="pto_sucursal">';
+			foreach ($sucursales->rows as $sucursal)
+			{   if( !empty( $sucursal ) )
+					$sucu_combo.="<option data-sucu_codigo='".$sucursal[0]."' value='".$sucursal[2]."'>".$sucursal[1]."</option>";
+			}
+			$sucu_combo.="</select>";
+			
 			$data['mensaje'] = "";
 			$data['tabla'] = "<div style='font-size:small;'>Haga clic en buscar para realizar una consulta.</div>";
-            retornar_vista(VIEW_GET_ALL, $data);
+            retornar_vista(VIEW_GET_ALL, $data);	
             break;
 		case PRINT_EXCEL_ALL_DATA:
 			global $diccionario;
@@ -201,26 +220,6 @@ function handler()
 				{   $cabeceras ='Factura ref.,Titular,Id del titular,Sucursal,Punto de venta,Número secuencial,Total neto,Cliente ref. interna,Cliente nombre,Fecha de emisión,estado electrónico';
 				}
 			}
-			else if($tipo_documento=='NC')
-			{	if( $user_data['tipo_reporte'] == 'completo' )
-				{   $cabeceras ='N/C ref.,Número de Nota de crédito,Tipo Id,Id del titular,Titular,email titular,Número de autorización,'.
-								'Clave de acceso,Fecha de autorización,Numero secuencial,Total bruto,Total descuento,Total I.V.A.,Total I.C.E.,Total neto,Total abonado,Alumno/Cliente ref. interna,'.
-								'Alumno/Cliente nombre,Alumno/Cliente cedula,Alumno/Cliente fecha nacimiento,Fecha creación N/C,Fecha de pago,Fecha de creación de deuda,Estado electrónico,Curso';
-				}
-				if( $user_data['tipo_reporte'] == 'mini' )
-				{   $cabeceras ='Nota de crédito ref.,Titular,Id del titular,Sucursal,Punto de venta,Número secuencial,Total neto,Cliente ref. interna,Cliente nombre,Fecha de emisión,estado electrónico';
-				}
-			}
-			else if($tipo_documento=='ND')
-			{	if( $user_data['tipo_reporte'] == 'completo' )
-				{   $cabeceras ='Factura ref.,Número de factura,Producto,Tipo Id,Id del titular,Titular,email titular,Número de autorización,'.
-								'Clave de acceso,Fecha de autorización,Numero secuencial,Total bruto,Total descuento,Total I.V.A.,Total I.C.E.,Total neto,Alumno/Cliente ref. interna,'.
-								'Alumno/Cliente nombre,Alumno/Cliente cedula,Alumno/Cliente fecha nacimiento,Fecha de pago,Fecha de creación de deuda,Estado electrónico';
-				}
-				if( $user_data['tipo_reporte'] == 'mini' )
-				{   $cabeceras ='Factura ref.,Titular,Id del titular,Sucursal,Punto de venta,Número secuencial,Total neto,Cliente ref. interna,Cliente nombre,Fecha de emisión,estado electrónico';
-				}
-			}
 			$cabecera = explode( ",", $cabeceras );
 			$i_cabe=0;//Contador de cabeceras
 			$column = 'A';
@@ -267,10 +266,14 @@ function handler()
 			foreach ($facturas as $registro)
 			{	$i_deta_col=0;
 			  	foreach ($registro as $campo =>$valor )
-				{	$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow($i_deta_col, $i_deta_fila, $valor);       
-					$i_deta_col=$i_deta_col+1;
+				{	
+					if ( ( $user_data['tipo_reporte'] == 'mini' && $i_deta_col == 10 ) ||  ( $user_data['tipo_reporte'] == 'completo' && $i_deta_col == 23 ) )
+						$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow($i_deta_col, $i_deta_fila, 'DEUDA SIN FACTURA');
+					else
+						$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow($i_deta_col, $i_deta_fila, $valor);
+					$i_deta_col++;
 				}
-				$i_deta_fila=$i_deta_fila+1;
+				$i_deta_fila++;
 			}
 			
 			$objPHPExcel->getActiveSheet()->setTitle('Bandeja de facturas');
@@ -377,58 +380,16 @@ function handler()
 			$data['tabla'] = tablaDeudaSinFactura($tabla, $factura, $permiso, $tipo_documento);
 			retornar_result($data);
             break;
-        case RESEND_TO_SRI:
-			require_once('../../../includes/common/phpmailer/class.phpmailer.php');
-			if(!isset($user_data['tipoDocumentoAutorizado']))
-				$tipo_documento = 'FAC';
-			else 
-				$tipo_documento = $user_data['tipoDocumentoAutorizado'];
-			
-			if($tipo_documento=='FAC')
-			{	$facturaBD = new Factura(); $detalleFact = array(); $cabeceraFactura = array();
-				$detalleFact = $facturaBD->get_facturaToFormatXML($user_data['codigoDocumento']);
-				//$data = enviar_factura_al_SRI($user_data['codigoDocumento'], 'solo una',$ruta_documentosAutorizados, false);
-			}
-			else if($tipo_documento=='NC')
-			{	$notaCredito = new notaCredito(); $detalleFact = array(); $cabeceraFactura = array();
-				$detalleFact = $notaCredito->getNotacreditoTrama($user_data['codigoDocumento']);
-				//$data = enviar_nd_al_SRI($user_data['codigoDocumento'],'solo una', $ruta_documentosAutorizados, false);
-			}
-			else if($tipo_documento=='ND')
-			{	$notaDebito = new notaDebito(); $detalleFact = array(); $cabeceraFactura = array();
-				$detalleFact = $notaDebito->getNotadebitoTrama($user_data['codigoDocumento']);
-				//$data = enviar_nc_al_SRI($user_data['codigoDocumento'],'solo una', $ruta_documentosAutorizados, false);
-			}
-            $cabeceraFactura = $detalleFact[0];
-			$mail = new PHPMailer(true);                                  // the true param means it will throw exceptions on errors, which we need to catch
-			$mail->isSMTP();                                              // telling the class to use SMTP transport
-			$mail->Host = 'smtp.gmail.com';                               // Specify main and backup SMTP servers
-			$mail->SMTPAuth = true;                                       // Enable SMTP authentication
-			$mail->Username = 'facturaelectronica.redlinks@gmail.com';    // SMTP username
-			$mail->Password = 'Redlinks12345';                            // SMTP password
-			$mail->SMTPSecure = 'tls';                                    // Enable TLS encryption, `ssl` also accepted
-			$mail->Port = 587;      
-		  
-			$mail->AddReplyTo($_SESSION['correofacturas'], $_SESSION['name']);
-			$mail->AddAddress($cabeceraFactura['emailTitular'],$cabeceraFactura['razonSocialComprador']);
-			$mail->SetFrom('facturaelectronica.redlinks@gmail.com', 'Facturación Educalinks');
-			//$mail->AddReplyTo('sistemas@redlinks.com.ec', 'Sistemas Redlinks');
-			$mail->Subject = 'Envío de Factura Electrónica';
-			$mail->AltBody = 'Para ver este correo, por favor use un visualizador de email compatible con HTML.'; 
-			$body="<html><head><meta charset='UTF-8'><title></title></head><body>";
-			$body .="<p>Estimado,</p>";
-			$body .="<p>Se le ha adjuntado una factura electrónica a este correo.</p>";
-			
-			$body.="<p>Para acceder a revisar sus facturas anteriores <a href='".$_SESSION['visor']."'>Ingresar aqui</a></p></body></html>";
-			$mail->MsgHTML($body);                                        // optional - MsgHTML will create an alternate automatically
-			//$mail->AddAttachment('images/phpmailer.gif');               // attachment
-			$mail->AddAttachment('../../../documentos/autorizados/'.$_SESSION['directorio'].'/'.$cabeceraFactura['identificacionComprador'].'/'.$tipo_documento.$cabeceraFactura['prefijoSucursal'].'-'.$cabeceraFactura['prefijoPuntoVenta'].'-'.str_pad($cabeceraFactura['secuencialComprobante'], 9, "0", STR_PAD_LEFT).'.pdf'); // attachment
-			$mail->AddAttachment('../../../documentos/autorizados/'.$_SESSION['directorio'].'/'.$cabeceraFactura['identificacionComprador'].'/'.$tipo_documento.$cabeceraFactura['prefijoSucursal'].'-'.$cabeceraFactura['prefijoPuntoVenta'].'-'.str_pad($cabeceraFactura['secuencialComprobante'], 9, "0", STR_PAD_LEFT).'.xml');
-			$mail->isHTML(true);                                          // Set email format to HTML
-			$mail->CharSet = 'UTF-8';
-			$mail->Send();
-
-            retornar_formulario(VIEW_RESULT_SRI, $data);
+        case CONVERT_TO_FAC:
+			$factura = new Factura();
+			$factura->convert_DNA_to_FAC( 	$user_data['codigoDocumento'], 
+											$user_data['sucursal'],
+											$user_data['ptoVenta'],
+											$user_data['puntoVenta_codigo'],
+											$user_data['numeroFactura'],
+											$_SESSION['usua_codigo'],
+											$_SESSION['USUA_TIPO_CODI']);
+			echo $factura->mensaje;
             break;
         default:
             break;
@@ -452,8 +413,7 @@ function tablaDeudaSinFactura($tabla, $factura, $permiso, $tipo_documento)
 						<th>T. Neto</th>
 						<th>C&oacute;digo</th>
 						<th>Estudiante</th>
-						<th>F. Emisión</th>
-						<th>Estado</th>
+						<th>Fecha pago</th>
 						<th style='text-align:center'>DNA HTML</th>
 						<th style='text-align:center'>Convertir en Factura</th>
 					</tr></thead>";
@@ -512,10 +472,7 @@ function tablaDeudaSinFactura($tabla, $factura, $permiso, $tipo_documento)
 					$body.="<td>".$column."</td>";
 				}
 				elseif($x==10)
-				{	if ( $dontprint == 'true' )
-						$body.="<td>DEUDA SIN FACTURA</td>";
-					else
-						$body.="<td><div style='text-align:center;'>".$column."</div></td>";
+				{	//: do nothing
 				}
 				elseif($x==11)
 				{	//: do nothing
@@ -529,11 +486,17 @@ function tablaDeudaSinFactura($tabla, $factura, $permiso, $tipo_documento)
 				$x++;
 			}
 			$dir_archivos = $ruta_visor."/documentos/autorizados/".$_SESSION['directorio']."/".$cedula."/";
-			$archivoXML = $tipo_documento.$archivo .".XML";
-			$spanXML= "<span class='fa fa-refresh btn_opc_lista_eliminar' id='".$row['codigoFactura']."_makeFAC' onmouseover='$(this).tooltip(".'"show"'.")' title='Generar factura y enviarla a bandeja de gestión facturas' data-placement='bottom'></span>";
+			if ($row['totalNetoFactura'] == '$0.00' )
+				$spanXML= 'N/A';
+			else
+				$spanXML= "<span class='fa fa-refresh btn_opc_lista_eliminar' id='".$row['codigoFactura']."_makeFAC' onmouseover='$(this).tooltip(".'"show"'.")' 
+					onclick='js_verDeudasSinFacturas_convertToFAC(".$codigo.");'
+					data-target='#modal_convertToFac' data-toggle='modal'
+					title='Generar factura y enviarla a bandeja de gestión facturas' data-placement='bottom'></span>";
+				
 			$spanHTML="<span class='glyphicon glyphicon-print' id='".$codigo."_ver_factura' onmouseover='$(this).tooltip(".'"show"'.")' title='Ver documento en HTML' data-placement='left'></span>";
 			$body.="<td style='text-align:center'><a href='".$diccionario['ruta_html_finan']."/finan/documento/imprimir/".$dir_tdoc_detail."/".$codigo."' target='_blank'>".$spanHTML."</a></td>";
-			$body.="<td style='text-align:center'><a href=".$dir_archivos.$archivoXML." target='_blank'>".$spanXML."</a></td>";
+			$body.="<td style='text-align:center'>".$spanXML."</td>";
 		}
 		$body.="</tr>";
 		$c++;

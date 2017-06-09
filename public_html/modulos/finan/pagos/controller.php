@@ -1470,8 +1470,9 @@ function construct_table_pagos($user_data)
 	if ( $user_data['bandeja_factura'] == 'SI' )
 		$nombre_extendido = "_".$num_factura;
 	$construct_table="
-				<table class='table table-bordered table-hover' id='pagosRealizados_table".$nombre_extendido."'>
-					<thead><tr>".
+				<table class='table table-bordered table-hover table-striped' id='pagosRealizados_table".$nombre_extendido."'>
+					<thead style='background-color:#3C8DBC;color:white;'><tr>".
+			"<th style=\"text-align:center;vertical-align:middle\"></th>".
 			"<th style='font-size:small;text-align:center;'>Ref.</th>".
 			"<th style='font-size:small;text-align:center;'>Datos</th>".
 			"<th style='font-size:small;text-align:center;'>Total Pago</th>".
@@ -1501,7 +1502,7 @@ function construct_table_pagos($user_data)
 	}
 	foreach($pago->rows as $row)
 	{	if($c<($aux-1))
-		{	$body.="<tr>";
+		{	$body.="<tr><td class='details-control'><i style='color:green;' class='fa fa-plus-circle' title='Ver facturas relacionadas'></i></td>";
 			$x=0;
 			$datos="";
 			foreach($row as $column)

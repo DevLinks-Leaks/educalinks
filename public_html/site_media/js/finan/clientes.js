@@ -32,15 +32,17 @@ $(document).ready(function(){
 		$("#desplegable_busqueda").slideToggle(200);
 	});
 	$("#desplegable_busqueda").show();
-	$('#modal_showDebtState').on('shown.bs.modal', function () {
-	}); 
+	$('[rel=tooltip]').tooltip({container: 'body'});
+	shortcut.add("Enter", function() {$('#btn_search').trigger("click");});
 });
-shortcut.add("Enter", function() {$('#btn_search').trigger("click");});
-// Consulta filtrada
+
 function js_clientes_go_to_courses(url)
-{
-	document.getElementById( 'hd_url_acad' ).value = url;
+{   document.getElementById( 'hd_url_acad' ).value = url;
 }
+function js_clientes_go_to_courses_followed( )
+{   window.location.replace( document.getElementById( 'hd_url_acad' ).value );
+}
+
 function js_clientes_check_opc_avanzadas()
 {   var ckb_opc_adv = document.getElementById("ckb_opc_adv").checked;
 	if(ckb_opc_adv)
@@ -111,6 +113,7 @@ function js_clientes_buscar( div, url, view )
 				searching: true,
 				language: {url: '//cdn.datatables.net/plug-ins/1.10.8/i18n/Spanish.json'}
 			});
+			$('[rel=tooltip]').tooltip({container: 'body'});
 		} 
 	};
 	xhr.send(data);

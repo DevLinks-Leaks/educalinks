@@ -195,13 +195,15 @@ function handler()
 															$body.= $row["esta_deta"];
 													$body.="</small> |&nbsp<small><b style='color:#2d3c4a;'>Curso:</b>&nbsp;";
 													if( $permiso_10->rows[0]['veri'] )
-														$body.= "<a href='#' onclick='js_clientes_go_to_courses(\"../../../admin/cursos_paralelo_main.php?curs_para_codi=".$row['curs_para_codi']."\");' title='Ver información del curso ".$row["curso"]."'>".$row["curso"]."</a>";
+														$body.= "<a href='#' onclick='js_clientes_go_to_courses(\"../../../admin/cursos_paralelo_main.php?curs_para_codi=".$row['curs_para_codi']."\");' 
+																	data-toggle='modal' data-target='#modal_acad'
+																	title='Ver información del curso ".$row["curso"]."'>".$row["curso"]."</a>";
 													else
 														$body.= $row["curs_deta"]." - ".$row["para_deta"];
 													$body.="</small>
 												</div>
 												<div class='col-lg-6 col-md-6 col-sm-12 col-sm-12' style='text-align:center'>".
-													$opciones_print["EstadoCuenta"].' '.get_cliente_opciones($permiso, $codigo, 'button',
+													$opciones_print["EstadoCuenta"].' '.get_cliente_opciones($permiso, $row["codigo"], 'button',
 																											 $permiso_179->rows[0]['veri'],
 																											 $permiso->rows[0]['veri'],
 																											 $permiso_181->rows[0]['veri'] )
@@ -955,20 +957,19 @@ function get_cliente_opciones($permiso, $codigoCliente, $type='button', $permiso
 {	global $diccionario;
 	if($type=='span'){$tag=''; $space='&nbsp;';}
 	if($type=='button'){$tag='button'; $space='';}
-	$opciones="<div class='btn-group'>";
 	$client_options = array();
 	
 	if ($permiso_180 == 1 )
-	{	$opciones.= "<".$type." ".$tag." style='color:#DBBCDB;' class='btn btn-default fa fa-file' onclick='carga_visorEstadoCuenta(\"".$codigoCliente."\",".'"modal_showDebtState_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/clientes/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_showDebtState'  id='".$codigoCliente."_verEstadoCuenta' onmouseover='$(this).tooltip(".'"show"'.")' title='Ver estado de cuenta' data-placement='left'>".$space."</".$type.">";
+	{	$opciones.= "<".$type." type='".$tag."' style='color:#DBBCDB;' class='btn btn-default btn-sm' onclick='carga_visorEstadoCuenta(\"".$codigoCliente."\",".'"modal_showDebtState_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/clientes/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_showDebtState'  id='".$codigoCliente."_verEstadoCuenta' onmouseover='$(this).tooltip(".'"show"'.")' title='Ver estado de cuenta' data-placement='left'><span class='fa fa-file'></span></".$type.">";
 	}
 	if ($permiso_179 == 1 )
-	{	$opciones.= "<".$type." ".$tag." style='color:#3a3b45;' onclick='js_clientes_carga_asignacion(\"".$codigoCliente."\",".'"modal_asign_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/clientes/controller.php"'.")' class='btn btn-default fa fa-percent cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_asign'  id='".$codigoCliente."_asignar' onmouseover='$(this).tooltip(".'"show"'.");' title='Asignar Descuentos'  data-placement='left'>".$space."</".$type.">";
+	{	$opciones.= "<".$type." type='".$tag."' style='color:#3a3b45;' onclick='js_clientes_carga_asignacion(\"".$codigoCliente."\",".'"modal_asign_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/clientes/controller.php"'.")' class='btn btn-default btn-sm' aria-hidden='true' data-toggle='modal' data-target='#modal_asign'  id='".$codigoCliente."_asignar' onmouseover='$(this).tooltip(".'"show"'.");' title='Asignar Descuentos'  data-placement='left'><span class='fa fa-percent'></span></".$type.">";
 	}
 	if ( $permiso_181 == 1 )
-	{	$opciones.= "<".$type." ".$tag." style='color:#D89C3F;' onclick='js_clientes_carga_asignacionGrupoEconomico(\"".$codigoCliente."\",".'"modal_showSetGrupoEconomico_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/clientes/controller.php"'.")' class='btn btn-default fa fa-group cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_showSetGrupoEconomico'  id='".$codigoCliente."_asignarGrupoEconomico' onmouseover='$(this).tooltip(".'"show"'.");' title='Asignar Grupo Económico'  data-placement='left'>".$space."</".$type.">";
+	{	$opciones.= "<".$type." type='".$tag."' style='color:#D89C3F;' onclick='js_clientes_carga_asignacionGrupoEconomico(\"".$codigoCliente."\",".'"modal_showSetGrupoEconomico_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/clientes/controller.php"'.")' class='btn btn-default btn-sm' aria-hidden='true' data-toggle='modal' data-target='#modal_showSetGrupoEconomico'  id='".$codigoCliente."_asignarGrupoEconomico' onmouseover='$(this).tooltip(".'"show"'.");' title='Asignar Grupo Económico'  data-placement='top'><span class='fa fa-group'></span></".$type.">";
 	}
-	$opciones.= "<".$type." ".$tag." style='color:red;' onclick='carga_tabla_asign_repr(\"".$codigoCliente."\",".'"div_asign_repr"'.",".'"'.$diccionario['rutas_head']['ruta_html_common'].'/representantes/controller.php"'.")' class='btn btn-default fa fa-heart-o' aria-hidden='true' data-toggle='modal' data-target='#modal_asign_repr'  id='".$codigoCliente."_asignar_repr' onmouseover='$(this).tooltip(".'"show"'.");'  title='Asignar representante' data-placement='left'>".$space."</".$type.">";
-	$opciones.= "</div>";
+	$opciones.= "<".$type." type='".$tag."' style='color:red;' onclick='carga_tabla_asign_repr(\"".$codigoCliente."\",".'"div_asign_repr"'.",".'"'.$diccionario['rutas_head']['ruta_html_common'].'/representantes/controller.php"'.")' class='btn btn-default btn-sm' aria-hidden='true' data-toggle='modal' data-target='#modal_asign_repr'  id='".$codigoCliente."_asignar_repr' onmouseover='$(this).tooltip(".'"show"'.");'  title='Asignar representante' data-placement='top'><span class='fa fa-heart-o'></span></".$type.">";
+	
 	return $opciones;
 }
 function tabla_deudas( $tablacliente )

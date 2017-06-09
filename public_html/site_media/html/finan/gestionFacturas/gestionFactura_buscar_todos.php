@@ -172,11 +172,12 @@
 								</label>
 							</div>
 							<div class='col-md-6 col-sm-4' style='text-align:left;'>
-								<button class="btn btn-primary fa fa-search" type="button" 
+								<button class="btn btn-primary" type="button" 
 										data-placement="bottom"
 										title='Buscar facturas'
 										onmouseover='$(this).tooltip("show")'
-										onclick="js_gestionFactura_carga_busquedaFacturas('resultadoProceso','{ruta_html_finan}/gestionFacturas/controller.php')"></button>
+										onclick="js_gestionFactura_carga_busquedaFacturas('resultadoProceso','{ruta_html_finan}/gestionFacturas/controller.php')">
+											<span class='fa fa-search'></span></button>
 								<div class="btn-group">
 									<button type="button" 
 											title="Exportar búsqueda" onmouseover="$(this).tooltip('show');"
