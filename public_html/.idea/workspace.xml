@@ -53,11 +53,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="actualizacion_datos.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="actualizacion_datos.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/alumnos/js/actualizacion_datos.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="34" column="9" lean-forward="true" selection-start-line="34" selection-start-column="9" selection-end-line="34" selection-end-column="9" />
+            <state relative-caret-position="323">
+              <caret line="19" column="73" lean-forward="true" selection-start-line="19" selection-start-column="73" selection-end-line="19" selection-end-column="73" />
               <folding />
             </state>
           </provider>
@@ -83,11 +83,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="actualizacion_datos.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="actualizacion_datos.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/alumnos/actualizacion_datos.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="57" column="49" lean-forward="true" selection-start-line="57" selection-start-column="49" selection-end-line="57" selection-end-column="49" />
+            <state relative-caret-position="204">
+              <caret line="56" column="118" lean-forward="false" selection-start-line="56" selection-start-column="118" selection-end-line="56" selection-end-column="118" />
               <folding>
                 <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
                 <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#6;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -97,30 +97,14 @@
                 <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#4;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#5;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <marker date="1497038698967" expanded="true" signature="4365:4393" ph="..." />
-                <marker date="1497038698967" expanded="true" signature="4568:4997" ph="..." />
-                <marker date="1497038698967" expanded="true" signature="4592:4821" ph="..." />
-                <marker date="1497038698967" expanded="true" signature="4648:4796" ph="..." />
-                <marker date="1497038698967" expanded="true" signature="4845:4973" ph="..." />
-                <marker date="1497038698967" expanded="true" signature="5283:5551" ph="..." />
-                <marker date="1497038698967" expanded="true" signature="5341:5526" ph="..." />
-                <marker date="1497038698967" expanded="true" signature="7990:8000" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="funciones_repre.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admin/js/funciones_repre.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="328">
-              <caret line="551" column="16" lean-forward="true" selection-start-line="541" selection-start-column="4" selection-end-line="551" selection-end-column="16" />
-              <folding>
-                <marker date="1496765445518" expanded="true" signature="3325:3337" ph="..." />
-                <marker date="1496765445518" expanded="true" signature="3349:3379" ph="..." />
-                <marker date="1496765445518" expanded="true" signature="4166:4178" ph="..." />
-                <marker date="1496765445518" expanded="true" signature="4190:4220" ph="..." />
-                <marker date="1496765445518" expanded="true" signature="23045:23057" ph="..." />
+                <marker date="1497039485995" expanded="true" signature="4367:4395" ph="..." />
+                <marker date="1497039485995" expanded="true" signature="4570:4999" ph="..." />
+                <marker date="1497039485995" expanded="true" signature="4594:4823" ph="..." />
+                <marker date="1497039485995" expanded="true" signature="4650:4798" ph="..." />
+                <marker date="1497039485995" expanded="true" signature="4847:4975" ph="..." />
+                <marker date="1497039485995" expanded="true" signature="5285:5553" ph="..." />
+                <marker date="1497039485995" expanded="true" signature="5343:5528" ph="..." />
+                <marker date="1497039485995" expanded="true" signature="7992:8002" ph="..." />
               </folding>
             </state>
           </provider>
@@ -154,9 +138,9 @@
       <find>$row_alum_busq</find>
       <find>repr_fech_naci</find>
       <find>idestado</find>
-      <find>ValidarDatos</find>
       <find>licencia</find>
       <find>$row_repr_info</find>
+      <find>ValidarDatos</find>
     </findStrings>
     <replaceStrings>
       <replace>$row</replace>
@@ -204,9 +188,9 @@
         <option value="$PROJECT_DIR$/alumnos/template/head.php" />
         <option value="$PROJECT_DIR$/admin/representantes_add_modal_content.php" />
         <option value="$PROJECT_DIR$/alumnos/script_actualizacion_datos.php" />
-        <option value="$PROJECT_DIR$/alumnos/actualizacion_datos.php" />
         <option value="$PROJECT_DIR$/admin/script_repr.php" />
         <option value="$PROJECT_DIR$/alumnos/js/actualizacion_datos.js" />
+        <option value="$PROJECT_DIR$/alumnos/actualizacion_datos.php" />
       </list>
     </option>
   </component>
@@ -446,12 +430,12 @@
       <workItem from="1493147069569" duration="68000" />
       <workItem from="1493401430472" duration="14000" />
       <workItem from="1493410704649" duration="63000" />
-      <workItem from="1496857523526" duration="19703000" />
+      <workItem from="1496857523526" duration="20219000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="76357000" />
+    <option name="totallyTimeSpent" value="76873000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -664,31 +648,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/alumnos/actualizacion_datos.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="57" column="49" lean-forward="true" selection-start-line="57" selection-start-column="49" selection-end-line="57" selection-end-column="49" />
-          <folding>
-            <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#6;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#7;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#3;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#4;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#5;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <marker date="1497038698967" expanded="true" signature="4365:4393" ph="..." />
-            <marker date="1497038698967" expanded="true" signature="4568:4997" ph="..." />
-            <marker date="1497038698967" expanded="true" signature="4592:4821" ph="..." />
-            <marker date="1497038698967" expanded="true" signature="4648:4796" ph="..." />
-            <marker date="1497038698967" expanded="true" signature="4845:4973" ph="..." />
-            <marker date="1497038698967" expanded="true" signature="5283:5551" ph="..." />
-            <marker date="1497038698967" expanded="true" signature="5341:5526" ph="..." />
-            <marker date="1497038698967" expanded="true" signature="7990:8000" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/admin/js/funciones_repre.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="328">
@@ -705,9 +664,34 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/alumnos/js/actualizacion_datos.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="34" column="9" lean-forward="true" selection-start-line="34" selection-start-column="9" selection-end-line="34" selection-end-column="9" />
+        <state relative-caret-position="323">
+          <caret line="19" column="73" lean-forward="true" selection-start-line="19" selection-start-column="73" selection-end-line="19" selection-end-column="73" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alumnos/actualizacion_datos.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="56" column="118" lean-forward="false" selection-start-line="56" selection-start-column="118" selection-end-line="56" selection-end-column="118" />
+          <folding>
+            <element signature="n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#6;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#7;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#3;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#4;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#div#5;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#section#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <marker date="1497039485995" expanded="true" signature="4367:4395" ph="..." />
+            <marker date="1497039485995" expanded="true" signature="4570:4999" ph="..." />
+            <marker date="1497039485995" expanded="true" signature="4594:4823" ph="..." />
+            <marker date="1497039485995" expanded="true" signature="4650:4798" ph="..." />
+            <marker date="1497039485995" expanded="true" signature="4847:4975" ph="..." />
+            <marker date="1497039485995" expanded="true" signature="5285:5553" ph="..." />
+            <marker date="1497039485995" expanded="true" signature="5343:5528" ph="..." />
+            <marker date="1497039485995" expanded="true" signature="7992:8002" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

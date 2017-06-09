@@ -54,7 +54,7 @@
                                                 <?if( $_SESSION['certus_medic'] == '1' ){?><li class="active"><a href="#tab4" data-toggle="tab" onClick=""><span class="fa fa-medkit"></span> Ficha médica</a></li><?}?>
 												 <li class="<?=( $_SESSION['certus_medic'] == '1' ? '' : 'active'  )?>"><a href="#tab1" data-toggle="tab" onClick=""><span class=" fa-file-text-o fa"></span> Datos del Alumno</a></li>
 												 <li><a href="#tab2" data-toggle="tab" onClick=""><span class="fa-users fa"></span> Datos del representante</a></li>
-												 <li><a href="#tab3" data-toggle="tab" onClick=""><span class="fa-pencil fa"></span> Opciones</a></li>
+												 <li><a href="#tab3" data-toggle="tab" onClick=""><span class="fa-save fa"></span> Confirmación</a></li>
 											</ul>
 											<?php
 												 if($_SESSION['certus_medic']=='1')
