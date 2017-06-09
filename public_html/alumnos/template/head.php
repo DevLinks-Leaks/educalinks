@@ -23,7 +23,8 @@
     //     session_activa(3);
     // }
     licencia_activa();
-    actualizacion_activa();
+    if($_SESSION['USUA_TIPO']=='R')
+        actualizacion_activa();
     $rand = rand().rand();
 ?>
 	<head>

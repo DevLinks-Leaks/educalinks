@@ -179,86 +179,83 @@
 																<input class="form-control" id="alum_fech_naci" name="alum_fech_naci" type="text" placeholder="Ingrese la fecha de nacimiento del alumno..." value="<?=date_format($alum_view['alum_fech_naci'],"d/m/Y");?>" disabled>
 															</div>
 														</div>
-														<div class="col-md-6">
-															<div class="form-group">
-																<label for="alum_pais">País de nacimiento:</label>
-																<select onchange="CargarProvincias('alum_prov_naci',this.value);" class="form-control" id="alum_pais" name="alum_pais">
-																<?php 
-																$params = array();
-																$sql="{call cata_pais_cons()}";
-																$stmt = sqlsrv_query($conn, $sql, $params);
-																echo '<option value="">Seleccione</option>';
-																while($pais_view= sqlsrv_fetch_array($stmt))
-																{
-																	$seleccionado="";
-																	if ($pais_view["descripcion"]==$alum_view["alum_pais"])
-																		$seleccionado="selected";
-																	echo '<option value="'.$pais_view["codigo"].'" '.$seleccionado.'>'.$pais_view["descripcion"].'</option>';
-																}
-																echo '</select>';
-																?>
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="form-group">
-																<label for="alum_prov_naci">Provincia de nacimiento:</label>
-																<select onchange="CargarCiudades('alum_ciud_naci',this.value);" class='form-control' id='alum_prov_naci' name='alum_prov_naci'>
-																<?php 
-																$params = array(null,($alum_view["alum_pais"]==null ? 'Ecuador' : $alum_view["alum_pais"]));
-																$sql="{call cata_provincia_cons(?,?)}";
-																$stmt = sqlsrv_query($conn, $sql, $params);
-																echo '<option value="">Seleccione</option>';
-																while($ciudad_view= sqlsrv_fetch_array($stmt))
-																{
-																	$seleccionado="";
-																	if ($ciudad_view["descripcion"]==$alum_view["alum_prov_naci"])
-																		$seleccionado="selected";
-																	echo '<option value="'.$ciudad_view["codigo"].'" '.$seleccionado.'>'.$ciudad_view["descripcion"].'</option>';
-																}
-																echo '</select>';
-																?>
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="form-group">
-																<label for="alum_ciud_naci">Ciudad de nacimiento:</label>
-																<select onchange="CargarParroquias('alum_parr_naci',this.value);" class='form-control' id='alum_ciud_naci' name='alum_ciud_naci'>
-																<?php 
-																$params = array(null,$alum_view["alum_prov_naci"]);
-																$sql="{call cata_ciudad_cons(?,?)}";
-																$stmt = sqlsrv_query($conn, $sql, $params);
-																echo '<option value="">Seleccione</option>';
-																while($ciudad_view= sqlsrv_fetch_array($stmt))
-																{
-																	$seleccionado="";
-																	if ($ciudad_view["descripcion"]==$alum_view["alum_ciud_naci"])
-																		$seleccionado="selected";
-																	echo '<option value="'.$ciudad_view["codigo"].'" '.$seleccionado.'>'.$ciudad_view["descripcion"].'</option>';
-																}
-																echo '</select>';
-																?>
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="form-group">
-																<label for="alum_parr_naci">Parroquia de nacimiento:</label>
-																<select class="form-control" id="alum_parr_naci" name="alum_parr_naci">
-																<?php 
-																$params = array(null,$alum_view["alum_ciud_naci"]);
-																$sql="{call cata_parroquia_cons(?,?)}";
-																$stmt = sqlsrv_query($conn, $sql, $params);
-																echo '<option value="">Seleccione</option>';
-																while($parroquia_view= sqlsrv_fetch_array($stmt))
-																{
-																	$seleccionado="";
-																	if ($parroquia_view["descripcion"]==$alum_view["alum_parr_naci"])
-																		$seleccionado="selected";
-																	echo '<option value="'.$parroquia_view["codigo"].'" '.$seleccionado.'>'.$parroquia_view["descripcion"].'</option>';
-																}
-																echo '</select>';
-																?>
-															</div>
-														</div>
+                                                        <div class="form-group col-md-6">
+                                                            <label for="alum_pais">País de nacimiento:</label>
+                                                            <select class='form-control' onchange="CargarProvincias('alum_prov_naci',this.value);CargarCiudades('alum_ciud_naci',this.value);CargarParroquias('alum_parr_naci',this.value);" id="alum_pais" name="alum_pais">
+                                                                <?php
+                                                                $params = array();
+                                                                $sql="{call cata_pais_cons()}";
+                                                                $stmt = sqlsrv_query($conn, $sql, $params);
+                                                                while($pais_view= sqlsrv_fetch_array($stmt))
+                                                                {
+                                                                    $seleccionado="";
+                                                                    if($alum_view['alum_pais']==''){
+                                                                        if ($pais_view["descripcion"]=='Ecuador')
+                                                                            $seleccionado="selected";
+                                                                    }else{
+                                                                        if ($pais_view["descripcion"]==$alum_view["alum_pais"])
+                                                                            $seleccionado="selected";
+                                                                    }
+                                                                    echo '<option value="'.$pais_view["codigo"].'" '.$seleccionado.'>'.$pais_view["descripcion"].'</option>';
+                                                                }
+                                                                echo '</select>';
+                                                                ?>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label for="alum_prov_naci">Provincia de nacimiento:</label>
+                                                            <select class='form-control' onchange="CargarCiudades('alum_ciud_naci',this.value);CargarParroquias('alum_parr_naci',this.value);" id='alum_prov_naci' name='alum_prov_naci'>
+                                                                <?php
+
+                                                                $params = array(null,($alum_view["alum_pais"]==''?'Ecuador':$alum_view["alum_pais"]));
+                                                                $sql="{call cata_provincia_cons(?,?)}";
+                                                                $stmt = sqlsrv_query($conn, $sql, $params);
+                                                                echo '<option value="">Seleccione</option>';
+                                                                while($ciudad_view= sqlsrv_fetch_array($stmt))
+                                                                {
+                                                                    $seleccionado="";
+                                                                    if ($ciudad_view["descripcion"]==$alum_view["alum_prov_naci"])
+                                                                        $seleccionado="selected";
+                                                                    echo '<option value="'.$ciudad_view["codigo"].'" '.$seleccionado.'>'.$ciudad_view["descripcion"].'</option>';
+                                                                }
+                                                                echo '</select>';
+                                                                ?>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label for="alum_ciud_naci">Ciudad de nacimiento:</label>
+                                                            <select class='form-control' onchange="CargarParroquias('alum_parr_naci',this.value);" id='alum_ciud_naci' name='alum_ciud_naci'>
+                                                                <?php
+                                                                $params = array(null,$alum_view["alum_prov_naci"]);
+                                                                $sql="{call cata_ciudad_cons(?,?)}";
+                                                                $stmt = sqlsrv_query($conn, $sql, $params);
+                                                                echo '<option value="">Seleccione</option>';
+                                                                while($ciudad_view= sqlsrv_fetch_array($stmt))
+                                                                {
+                                                                    $seleccionado="";
+                                                                    if ($ciudad_view["descripcion"]==$alum_view["alum_ciud_naci"])
+                                                                        $seleccionado="selected";
+                                                                    echo '<option value="'.$ciudad_view["codigo"].'" '.$seleccionado.'>'.$ciudad_view["descripcion"].'</option>';
+                                                                }
+                                                                echo '</select>';
+                                                                ?>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label for="alum_parr_naci">Parroquia de nacimiento:</label>
+                                                            <select class='form-control' id="alum_parr_naci" name="alum_parr_naci">
+                                                                <?php
+                                                                $params = array(null,$alum_view["alum_ciud_naci"]);
+                                                                $sql="{call cata_parroquia_cons(?,?)}";
+                                                                $stmt = sqlsrv_query($conn, $sql, $params);
+                                                                echo '<option value="">Seleccione</option>';
+                                                                while($parroquia_view= sqlsrv_fetch_array($stmt))
+                                                                {
+                                                                    $seleccionado="";
+                                                                    if ($parroquia_view["descripcion"]==$alum_view["alum_parr_naci"])
+                                                                        $seleccionado="selected";
+                                                                    echo '<option value="'.$parroquia_view["codigo"].'" '.$seleccionado.'>'.$parroquia_view["descripcion"].'</option>';
+                                                                }
+                                                                echo '</select>';
+                                                                ?>
+                                                        </div>
 														<div class="col-md-6">
 															<div class="form-group">
 																<label for="alum_sect_naci">Sector de nacimiento:</label>
@@ -336,7 +333,7 @@
 																	echo "Error in executing statement .\n";
 																	die( print_r( sqlsrv_errors(), true));
 																}
-																echo '<select class="form-control input-sm" id="alum_etnia" name="alum_etnia">';
+																echo '<select class="form-control" id="alum_etnia" name="alum_etnia">';
 																while($religion_view= sqlsrv_fetch_array($stmt))
 																{
 																	$seleccionado="";
@@ -635,12 +632,12 @@
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
                                                                     <label for="repr_fech_naci">Fecha de Nacimiento:</label>
-                                                                    <input disabled class="form-control input-sm" id="repr_fech_naci" name="repr_fech_naci" type="text" placeholder="Ingrese la fecha de nacimiento..." value="<?=date_format($row_repr_view['repr_fech_naci'],"d/m/Y");?>"  >
+                                                                    <input disabled class="form-control" id="repr_fech_naci" name="repr_fech_naci" type="text" placeholder="Ingrese la fecha de nacimiento..." value="<?=date_format($row_repr_view['repr_fech_naci'],"d/m/Y");?>"  >
                                                                 </div>
                                                             </div>
                                                             <div class="form-group col-md-6">
                                                                 <label>País de Nacimiento:</label>
-                                                                <select class="form-control input-sm" onchange="CargarProvincias('repr_prov_naci',this.value);CargarCiudades('repr_ciud_naci',this.value);"  id="repr_pais_naci" name="repr_pais_naci"  >
+                                                                <select class="form-control" onchange="CargarProvincias('repr_prov_naci',this.value);CargarCiudades('repr_ciud_naci',this.value);"  id="repr_pais_naci" name="repr_pais_naci"  >
                                                                     <?php
                                                                     $params = array();
                                                                     $sql="{call cata_pais_cons()}";
@@ -972,6 +969,7 @@
 		<script type="text/javascript">  
 			$(document).ready(function(){  
 				$("#alum_fech_naci").datepicker();
+                $("#repr_fech_promoc").datepicker();
 				// $('#myModal').modal('show');
 			});
 			function preview(tField,iType) { 
