@@ -7,7 +7,7 @@
 *.tmp
 *.tmp.*
 
-.idea/
+.idea/*
 _notes/
 admin/**/*.pdf
 alumnos/**/*.pdf
