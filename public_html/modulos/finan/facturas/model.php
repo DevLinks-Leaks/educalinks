@@ -84,6 +84,22 @@ class Factura extends DBAbstractModel{
         }
 		return $this;
     }
+	public function convert_DNA_to_FAC( $codigo = '', $sucursal, $ptoVenta, $puntoVenta_codigo, $numeroFactura, $usuario, $usua_tipo_codi )
+	{   if ( $codigo == '' )
+			$this->mensaje="¡Error! No se pudo procesar el cambio de DNA a facturax.";
+		else
+		{   $this->parametros = array( $codigo, $sucursal, $ptoVenta, $puntoVenta_codigo, $numeroFactura, $usuario, $usua_tipo_codi );
+			$this->sp = "str_consultaFacturaConvert_DNA_to_FAC";
+			$this->executeSPConsulta();
+			if($this->rows>0)
+			{   $this->mensaje = $this->rows[0]['ESTADO'];
+			}
+			else
+			{   $this->mensaje="¡Error! No se pudo procesar el cambio de DNA a factura.";
+			}
+		}
+		return $this;
+    }
     public function get_clientes($filtros=array()){
         if (array_key_exists('nombres',$filtros)){
             $this->parametros = array('nombres',$filtros['nombres']); 

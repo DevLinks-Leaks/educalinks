@@ -14,22 +14,143 @@
     </div>
 </div>
 <!-- Modal enviar e-mail a cliente-->
-<div class="modal fade" id="modal_resend" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="modal_convertToFac" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Educalinks</h4>
+                <h4 class="modal-title" id="myModalLabel">Educalinks - DNA a Factura</h4>
+				<input type='hidden' id='hd_codigoFactura_convertToFAC' name='hd_codigoFactura_convertToFAC' value="" />
             </div>
-            <div class="modal-body" id="modal_resend_body">
-                ...
+            <div class="modal-body" id="modal_convertToFac_body" class='form-horizontal'>
+				<div id='modal_convertToFac_step1' style='display:inline;'>
+					¿Está seguro que desea convertir la deuda en factura?<br>
+					<br>
+					Esto hará que aparezca una factura más en la bandeja de gestión factura para enviarla al SRI.
+				</div>
+				<div id='modal_convertToFac_step2' style='display:none;'>
+					<div class="row">
+						<div class="col-sm-12">
+							Por favor, seleccione la información para el número de factura.
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="input-group">
+								<div class="input-group-addon input-sm" title='Ej.: 001-001-000027104' onmouseover='$(this).tooltip("show");'  data-placement='left'>
+									No. Factura
+								</div>
+								<input type="text" class="form-control input-sm" name="txt_num_sucursal" readonly="readonly" id="txt_num_sucursal" value='{txt_num_sucursal}' 
+									placeholder='xxx'
+									onclick='js_verDeudasSinFacturas_select_sucursal();'
+									style='width:30%;background-color:white;cursor:pointer;text-align:center;'
+									title='Asignar sucursal'
+									data-sucu_codigo='{sucursal_codigo}'
+									onmouseover='$(this).tooltip("show");' data-placement='bottom'
+									{disabled_txt_num_factura}> 
+								<input type="text" class="form-control input-sm" readonly="readonly" name="txt_num_ptoVenta" id="txt_num_ptoVenta" value='{txt_num_ptoVenta}' 
+									placeholder='xxx'
+									onclick='js_verDeudasSinFacturas_select_ptoVenta();'
+									style='width:30%;background-color:white;cursor:pointer;text-align:center;'
+									title='Asignar punto de venta'
+									data-puntvent_codigo='{puntVent_codigo}'
+									onmouseover='$(this).tooltip("show");' data-placement='bottom'
+									{disabled_txt_num_factura}> 
+								<input type="text" class="form-control input-sm" name="txt_num_factura" readonly="readonly" id="txt_num_factura" value='{txt_num_factura}'
+									placeholder='xxxxxxxxx'
+									onclick='js_verDeudasSinFacturas_select_numeroFactura();' 
+									style='width:40%;background-color:white;cursor:pointer;text-align:center;'
+									title='Asignar número de factura'
+									onmouseover='$(this).tooltip("show");' data-placement='bottom'
+									{disabled_txt_num_factura}> 
+							</div>
+						</div>
+					</div>
+				</div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Aceptar</button>
+            <div class="modal-footer" id="modal_convertToFac_footer">
+                <button style='display:none;' id='btn_convertToFac_step2' name='btn_convertToFac_step2'
+					type="button"
+					class="btn btn-success"
+					onclick='js_verDeudasSinFacturas_convertToFAC_followed2( );'><span class='fa fa-barcode'></span>&nbsp;Generar factura</button>
+				<button style='display:inline;' id='btn_convertToFac_step1' name='btn_convertToFac_step1'
+					type="button"
+					class="btn btn-primary"
+					onclick='js_verDeudasSinFacturas_convertToFAC_followed( );'>Si</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Ocultar</button>
             </div>
         </div>
     </div>
 </div>
+<!-- /. Modal Información-->
+<div class="modal fade" id="modal_select_sucursal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-institution"></i>&nbsp;Sucursal</h4>
+            </div>
+            <div class="modal-body" id="modal_select_sucursal_body">
+				<div class='form-horizontal'>
+					<div class='row'>
+						<div class='col-sm-12'>
+							<div class='input-group input-group-sm'>
+								{combo_sucursal}
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-info btn-flat" onclick="js_verDeudasSinFacturas_select_sucursal_followed();">Seleccionar</button>
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal guardar cambios-->
+<!-- Modal guardar cambios-->
+<div class="modal fade" id="modal_select_ptoVenta" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"><i class="glyphicon glyphicon-tent"></i>&nbsp;Punto de venta</h4>
+            </div>
+            <div class="modal-body" id="modal_select_ptoVenta_body">
+				<div class='form-horizontal'>
+					<div class='row'>
+						<div class='col-sm-12'>
+							<div id='div_cmb_ptoVenta' class='input-group input-group-sm'>
+							</div>
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal guardar cambios-->
+<div class="modal fade" id="modal_select_numeroFactura" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"><i class="icon icon-sri"></i>&nbsp;Numero Factura</h4>
+            </div>
+            <div class="modal-body" id="modal_select_numeroFactura_body">
+				<div class='form-horizontal'>
+					<div class='row'>
+						<div class='col-sm-12'>
+							<div id='div_cmb_numeroFactura' class='input-group input-group-sm'>
+							</div>
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal guardar cambios-->
 <!-- Modal enviar e-mail a cliente-->
 <form id="file_form" action="{ruta_html_finan}/verDeudasSinFacturas/controller.php" enctype="multipart/form-data" method="post" target="_blank">
 	<input type='hidden' name="event" id="evento" value="print_excel_all_data"/>
@@ -77,8 +198,8 @@
 								</label>
 							</div>
 							<div class='col-md-6 col-sm-4' style='text-align:left'>
-								<button class='btn btn-primary fa fa-search btn-sm' id='btn_selectTipoDocAut' name='btn_selectTipoDocAut'  type="button" 
-										onclick="js_verDeudasSinFacturas_carga_DSF('tabla_consulta_tipoDocumentoAutorizado');">
+								<button class='btn btn-primary' id='btn_selectTipoDocAut' name='btn_selectTipoDocAut'  type="button" 
+										onclick="js_verDeudasSinFacturas_carga_DSF('tabla_consulta_tipoDocumentoAutorizado');"><span class='fa fa-search'></span>
 								</button>
 								<div class="btn-group">
 									<button type="button" 

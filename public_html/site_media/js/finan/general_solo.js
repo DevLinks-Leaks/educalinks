@@ -2,8 +2,25 @@ $(document).ready(function() {
     actualiza_badge_gest_fact();
     $("#txt_fecha_ini").datepicker();
     $("#txt_fecha_fin").datepicker();
-    $("#cmb_producto").select2();
-    
+    //$("#cmb_producto").select2();
+	
+	let $select2 = $('#cmb_producto').select2();
+
+	/**
+	 * defaults: Cache order of the initial values
+	 * @type {object}
+	 */
+	let defaults = $select2.select2('data');
+	defaults.forEach(obj=>{
+		let order = $select2.data('preserved-order') || [];
+		order[ order.length ] = obj.id;
+		$select2.data('preserved-order', order)
+	});
+
+	$select2.on('select2:select select2:unselect', selectionHandler);
+
+	//runDemo($select2);
+	
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         var target = $(e.target).text(); //$(e.target).attr("href") 
         //console.log(target);
@@ -78,6 +95,50 @@ $(document).ready(function() {
         column.visible( ! column.visible() );
     });
 });
+/**
+ * select2_renderselections
+ * @param  {jQuery Select2 object}
+ * @return {null}
+ */
+function select2_renderSelections($select2){
+	const order      = $select2.data('preserved-order') || [];
+	const $container = $select2.next('.select2-container');
+	const $tags      = $container.find('li.select2-selection__choice');
+	const $input     = $tags.last().next();
+
+	// apply tag order
+	order.forEach(val=>{
+		let $el = $tags.filter(function(i,tag){
+			return $(tag).data('data').id === val;
+		});
+		$input.before( $el );
+	});
+}
+
+
+/**
+ * selectionHandler
+ * @param  {Select2 Event Object}
+ * @return {null}
+ */
+function selectionHandler(e){
+	const $select2  = $(this);
+	const val       = e.params.data.id;
+	const order     = $select2.data('preserved-order') || [];
+
+	switch (e.type){
+		case 'select2:select':      
+			order[ order.length ] = val;
+		break;
+		case 'select2:unselect':
+			let found_index = order.indexOf(val);
+			if (found_index >= 0 )
+				order.splice(found_index,1);
+		break;
+	}
+	$select2.data('preserved-order', order); // store it for later
+	select2_renderSelections($select2);
+}
 
 function js_general_cargaDeudores( div, url )
 {   "use strict";
@@ -96,10 +157,13 @@ function js_general_cargaDeudores( div, url )
     data.append('fechavenc_fin', dtpfechavenc_fin.value);
     data.append('quienes', quienes);
     var productos = []; 
+    let $select2 = $('#cmb_producto').select2();
+	select2_renderSelections($select2);
+	
     $('#cmb_producto :selected').each(function(i, selected){ 
-      productos[i] = $(selected).val(); 
+		productos[i] = $(selected).val();
     });
-    data.append('prod_codigo', JSON.stringify( productos ) );
+    data.append('prod_codigo', JSON.stringify( $select2.data('preserved-order') ) );
     //console.log(JSON.stringify( productos ));
     data.append('event', 'get_deudores');
     var xhr = new XMLHttpRequest();

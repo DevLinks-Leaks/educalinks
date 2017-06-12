@@ -1,4 +1,4 @@
-var _gaq = _gaq || [];
+/*var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-36251023-1']);
 _gaq.push(['_setDomainName', 'jqueryscript.net']);
 _gaq.push(['_trackPageview']);
@@ -7,10 +7,10 @@ _gaq.push(['_trackPageview']);
 var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
 ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-})();
+})();*/
 
 $(document).ready(function(){
-	// run test on initial page load
+	/*// run test on initial page load
 	checkSize();
 	// run test on resize of the window
 	$(window).resize(checkSize);
@@ -42,7 +42,8 @@ $(document).ready(function(){
 		  $('#ss_menu div i').removeClass('ss_animate');
 		}
 	});
-    actualiza_badge_sms();
+	*/
+	actualiza_badge_sms();
 	if(document.getElementById( 'hd_chan_flag' ))
 	{   if( document.getElementById( 'hd_chan_flag' ).value > 0 )
 		{   $('#modal_changelog').modal('show');

@@ -284,12 +284,12 @@ function seleccionarDeuda(codigo,div,url)
 	data.append('event', 'get_factura'); 
 	data.append('codigoFactura', codigo);
 	data.append('tipo_persona', document.getElementById('hd_tipo_persona').value);
-		
+	
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', url , true);
-	xhr.onreadystatechange=function(){
-		if (xhr.readyState==4 && xhr.status==200){
-			
+	xhr.onreadystatechange=function()
+	{   if (xhr.readyState==4 && xhr.status==200)
+		{   $.growl.notice({ title: "Educalinks informa",message: "Factura seleccionada" });
 			var respuesta = JSON.parse(xhr.responseText);
 
 			$('#prefijoSucursal').html(respuesta.cabecera.prefijoSucursal); 
@@ -326,7 +326,7 @@ function seleccionarDeuda(codigo,div,url)
 			    "retrieve" : true
 			});
 		} 
-	}
+	};
 	xhr.send(data);
 }
 function validaDesbordamientoNC(e, field)

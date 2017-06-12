@@ -5,11 +5,11 @@ require_once("../../../core/viewBase.php");
 $diccionario = array(
     'subtitle'=>array(
         VIEW_GET_ALL=>'Niveles económicos',
-        VIEW_EDIT=>'Modificar Niveles económicos'
+        VIEW_EDIT=>'Niveles económicos'
                      ),
 	'rutas_head'=>array(),
     'active_menu'=>array(
-        'submenu'  => '{menu206}', 
+        'submenu'  => '{menu205}',
 		    'open'  => '{open2}',
         'mainmenu' => '{menu2}' 
                         ),

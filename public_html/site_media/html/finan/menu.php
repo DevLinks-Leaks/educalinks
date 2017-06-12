@@ -23,7 +23,7 @@
 						<li class="{menu103}">{NotadeCredito}</li>
 						<li class="{menu105}">{GestionFacturas}</li>
 						<li class="{menu106}">{GestionNotascredito}</li>
-						<li class="{menu112}">{Convenio_pago}</li>
+						<!--<li class="{menu112}">{Convenio_pago}</li>-->
 						<li class="{menu108}">{GestionContifico}</li>
 						<li class="{menu109}">{ValidadorCheques}</li>
 						<li class="{menu111}">{CierredeCaja}</li>
@@ -57,10 +57,10 @@
 								<li class="{menu209}">{tarjetasCredito}</li>
 							</ul>
 						</li>
-						<li class='visible-desktop'><a href='#/' 
+						<!--<li class='visible-desktop'><a href='#/' 
 							onclick="js_general_settings_get();"
 							data-toggle="modal"
-							data-target="#modal_configColecturia"><i class="fa fa-wrench"></i> Parámetros sistema</a></li>
+							data-target="#modal_configColecturia"><i class="fa fa-wrench"></i> Parámetros sistema</a></li>-->
 					</ul>
 				</li>
 				<li class="{open3} treeview">

@@ -45,9 +45,9 @@
 					<div class="col-sm-12"  style='text-align:center;'>
 						<br>
 						<input type="checkbox" id="ckb_acad" name="ckb_acad"     value="" checked  data-toggle="toggle" data-on="Académico" data-off="Académico" disabled> 
-						<input type="checkbox" id="ckb_finan" name="ckb_finan"   value="" <?php echo ($_SESSION['certus_finan'] == 1 ? 'checked':'0'); ?>  data-toggle="toggle" data-on="Financiero" data-off="Financiero" disabled> 
-						<input type="checkbox" id="ckb_biblio" name="ckb_biblio" value="" <?php echo ($_SESSION['certus_biblio'] == 1 ? 'checked':'0'); ?>  data-toggle="toggle" data-on="Biblioteca" data-off="Biblioteca" disabled> 
-						<input type="checkbox" id="ckb_medic" name="ckb_medic"   value="" <?php echo ($_SESSION['certus_medic'] == 1 ? 'checked':'0'); ?> data-toggle="toggle" data-on="Médico" data-off="Médico" disabled>
+						<input type="checkbox" id="ckb_finan" name="ckb_finan"   value="" <?php echo ($_SESSION['certus_finan'] == 1 ? 'checked':''); ?>  data-toggle="toggle" data-on="Financiero" data-off="Financiero" disabled> 
+						<input type="checkbox" id="ckb_biblio" name="ckb_biblio" value="" <?php echo ($_SESSION['certus_biblio'] == 1 ? 'checked':''); ?>  data-toggle="toggle" data-on="Biblioteca" data-off="Biblioteca" disabled> 
+						<input type="checkbox" id="ckb_medic" name="ckb_medic"   value="" <?php echo ($_SESSION['certus_medic'] == 1 ? 'checked':''); ?> data-toggle="toggle" data-on="Médico" data-off="Médico" disabled>
 						<br>
 						<br>
 					</div>
@@ -192,8 +192,8 @@
 													<label style='font-size:small;'>Sexo del rector(a)</label>
 												</div>
 												<div class="col-sm-4">
-													<input type="checkbox" id="rector_sexo" name="rector_sexo" value="" data-toggle="toggle" data-on="M" data-off="F"
-														<?php echo ($row_para_sist['rector_sexo'] == 'M' ? 'checked':'0'); ?>>
+													<input type="checkbox" id="rector_sexo" name="rector_sexo" value="M" data-toggle="toggle" data-on="M" data-off="F"
+														<?php echo ($row_para_sist['rector_sexo'] == 'M' ? 'checked':''); ?>>
 												</div>
 											</div>
 											<div class="form-group">
@@ -227,8 +227,8 @@
 													<label style='font-size:small;'>Sexo del secretario(a)</label>
 												</div>
 												<div class="col-sm-4">
-													<input type="checkbox" id="secr_sexo" name="secr_sexo" value="" data-toggle="toggle" data-on="M" data-off="F"
-														<?php echo ($row_para_sist['secr_sexo'] == 'M' ? 'checked':'0'); ?>>
+													<input type="checkbox" id="secr_sexo" name="secr_sexo" value="M" data-toggle="toggle" data-on="M" data-off="F"
+														<?php echo ($row_para_sist['secr_sexo'] == 'M' ? 'checked':''); ?>>
 												</div>
 											</div>
 										</div>
@@ -345,8 +345,8 @@
 										<label style='font-size:small;'>Incluir alumnos retirados en Nómina Matr.</label>
 									</div>
 									<div class="col-sm-4">
-										<input type="checkbox" id="incluir_alum_ret" name="incluir_alum_ret" value="" data-toggle="toggle" data-on="SI" data-off="NO"
-											<?php echo ($row_para_sist['incluir_alum_ret'] == '1' ? 'checked':'0'); ?>>
+										<input type="checkbox" id="incluir_alum_ret" name="incluir_alum_ret" value="1" data-toggle="toggle" data-on="SI" data-off="NO"
+											<?php echo ($row_para_sist['incluir_alum_ret'] == '1' ? 'checked':''); ?>>
 									</div>
 								</div>
 								<div class="form-group">
@@ -354,8 +354,8 @@
 										<label style='font-size:small;'>Modo de Generación de códigos de alumnos</label>
 									</div>
 									<div class="col-sm-4">
-										<input type="checkbox" id="modo_genera_alum_codi" name="modo_genera_alum_codi" value="" data-toggle="toggle" data-on="P" data-off="D"
-											<?php echo ($row_para_sist['modo_genera_alum_codi'] == '1' ? 'checked':'0'); ?>>
+										<input type="checkbox" id="modo_genera_alum_codi" name="modo_genera_alum_codi" value="1" data-toggle="toggle" data-on="P" data-off="D"
+											<?php echo ($row_para_sist['modo_genera_alum_codi'] == '1' ? 'checked':''); ?>>
 											<button style='font-size:x-small' class="btn btn-success btn-sm" onclick="toggle_modo_genera_alum_codi(1)">POR PROMOCIÓN</button>
 											<button style='font-size:x-small' class="btn btn-danger btn-sm"  onclick="toggle_modo_genera_alum_codi(2)">DEFAULT</button>
 									</div>
@@ -365,8 +365,8 @@
 										<label style='font-size:small;'>Incluir bloqueo de preinscripción en pantalla Bloqueo Libreta</label>
 									</div>
 									<div class="col-sm-4">
-										<input type="checkbox" id="bloqueo_preinscr_pantalla_bloqueo" name="bloqueo_preinscr_pantalla_bloqueo" value="" data-toggle="toggle" data-on="SI" data-off="NO"
-											<?php echo ($row_para_sist['bloqueo_preinscr_pantalla_bloqueo'] == '1' ? 'checked':'0'); ?>>
+										<input type="checkbox" id="bloqueo_preinscr_pantalla_bloqueo" name="bloqueo_preinscr_pantalla_bloqueo" value="1" data-toggle="toggle" data-on="SI" data-off="NO"
+											<?php echo ($row_para_sist['bloqueo_preinscr_pantalla_bloqueo'] == '1' ? 'checked':''); ?>>
 									</div>
 								</div>
 								<div class="form-group">
@@ -388,8 +388,8 @@
 										<label style='font-size:small;'>Mostrar observación en matriculación</label>
 									</div>
 									<div class="col-sm-4">
-										<input type="checkbox" id="show_obs_matri" name="show_obs_matri" value="" data-toggle="toggle" data-on="SI" data-off="NO"
-											<?php echo ($row_para_sist['show_obs_matri'] == '1' ? 'checked':'0'); ?>>
+										<input type="checkbox" id="show_obs_matri" name="show_obs_matri" value="1" data-toggle="toggle" data-on="SI" data-off="NO"
+											<?php echo ($row_para_sist['show_obs_matri'] == '1' ? 'checked':''); ?>>
 									</div>
 								</div>
 								<div class="form-group">
@@ -397,8 +397,8 @@
 										<label style='font-size:small;'>Bloquear matrículación a un alumno por no aprobar una o más materias</label>
 									</div>
 									<div class="col-sm-4">
-										<input type="checkbox" id="bloq_matr_por_aprobacion" name="bloq_matr_por_aprobacion" value="" data-toggle="toggle" data-on="SI" data-off="NO"
-											<?php echo ($row_para_sist['bloq_matr_por_aprobacion'] == '1' ? 'checked':'0'); ?>>
+										<input type="checkbox" id="bloq_matr_por_aprobacion" name="bloq_matr_por_aprobacion" value="1" data-toggle="toggle" data-on="SI" data-off="NO"
+											<?php echo ($row_para_sist['bloq_matr_por_aprobacion'] == '1' ? 'checked':''); ?>>
 									</div>
 								</div>
 							</div>
@@ -411,8 +411,8 @@
 										<label style='font-size:small;'>Campo Número de Cuenta en Débito Bancario obligatorio</label>
 									</div>
 									<div class="col-sm-4">
-										<input type="checkbox" id="frm_alum_debito_mandatorio" name="frm_alum_debito_mandatorio" value="" data-toggle="toggle" data-on="SI" data-off="NO"
-											<?php echo ($row_para_sist['frm_alum_debito_mandatorio'] == '1' ? 'checked':'0'); ?>>
+										<input type="checkbox" id="frm_alum_debito_mandatorio" name="frm_alum_debito_mandatorio" value="1" data-toggle="toggle" data-on="SI" data-off="NO"
+											<?php echo ($row_para_sist['frm_alum_debito_mandatorio'] == '1' ? 'checked':''); ?>>
 									</div>
 								</div>
 								<div class="form-group">
@@ -420,8 +420,8 @@
 										<label style='font-size:small;'>Campo Número de Cédula Estudiante obligatorio</label>
 									</div>
 									<div class="col-sm-4">
-										<input type="checkbox" id="frm_alum_cedula_mandatorio" name="frm_alum_cedula_mandatorio" value="" data-toggle="toggle" data-on="SI" data-off="NO"
-											<?php echo ($row_para_sist['frm_alum_cedula_mandatorio'] == '1' ? 'checked':'0'); ?>>
+										<input type="checkbox" id="frm_alum_cedula_mandatorio" name="frm_alum_cedula_mandatorio" value="1" data-toggle="toggle" data-on="SI" data-off="NO"
+											<?php echo ($row_para_sist['frm_alum_cedula_mandatorio'] == '1' ? 'checked':''); ?>>
 									</div>
 								</div>
 							</div>
@@ -440,8 +440,8 @@
 								<label style='font-size:small;'><span class='fa fa-key'></span> Mostrar usuario y clave en libretas</label>
 							</div>
 							<div class="col-sm-4">
-								<input type="checkbox" id="libretas_show_user_pass" name="libretas_show_user_pass" value="" data-toggle="toggle" data-on="SI" data-off="NO"
-									<?php echo ($row_para_sist['libretas_show_user_pass'] == '1' ? 'checked':'0'); ?>>
+								<input type="checkbox" id="libretas_show_user_pass" name="libretas_show_user_pass" value="1" data-toggle="toggle" data-on="SI" data-off="NO"
+									<?php echo ($row_para_sist['libretas_show_user_pass'] == '1' ? 'checked':''); ?>>
 							</div>
 						</div>
 						<div class="form-group">
@@ -449,8 +449,8 @@
 								<label style='font-size:small;'>Manejo de decimales en libretas</label>
 							</div>
 							<div class="col-sm-4">
-								<input type="checkbox" id="notas_decimales" name="notas_decimales" value="" data-toggle="toggle" data-on="T" data-off="R"
-									<?php echo ($row_para_sist['notas_decimales'] == '1' ? 'checked':'0'); ?>>
+								<input type="checkbox" id="notas_decimales" name="notas_decimales" value="1" data-toggle="toggle" data-on="T" data-off="R"
+									<?php echo ($row_para_sist['notas_decimales'] == '1' ? 'checked':''); ?>>
 									<button class="btn btn-success" onclick="toggle_notas_decimales(1)">TRUNCAR</button>
 									<button class="btn btn-danger"  onclick="toggle_notas_decimales(2)">REDONDEAR</button>
 							</div>
@@ -482,6 +482,24 @@
 									value="<?php echo $row_para_sist['vista_libr_repr'];?>">
 							</div>
 						</div>
+						<div class="form-group">
+							<div class="col-sm-8">
+								<label style='font-size:small;'>Inclusión de materias agrupadas para cálculo de notas supletorio</label>
+							</div>
+							<div class="col-sm-4">
+								<input type="checkbox" id="incl_mat_group_calc" name="incl_mat_group_calc" value="1" data-toggle="toggle" data-on="S" data-off="N"
+									<?php echo ($row_para_sist['incl_mat_group_calc'] == '1' ? 'checked':''); ?>>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-8">
+								<label style='font-size:small;'>Promediado de nota en materias padre para columna de supletorios</label>
+							</div>
+							<div class="col-sm-4">
+								<input type="checkbox" id="prom_nota_padre_supl" name="prom_nota_padre_supl" value="1" data-toggle="toggle" data-on="S" data-off="N"
+									<?php echo ($row_para_sist['prom_nota_padre_supl'] == '1' ? 'checked':''); ?>>
+							</div>
+						</div>
 					</div>
 				</div><!-- /.tab-pane -->
 				<div class="tab-pane" id="tab_5">
@@ -502,8 +520,8 @@
 								<label style='font-size:small;'>Permitir que alumnos puedan enviar menajes a Administradores</label>
 							</div>
 							<div class="col-sm-4">
-								<input type="checkbox" id="sms_alum_to_admin" name="sms_alum_to_admin" value="S" data-toggle="toggle" data-on="SI" data-off="NO"
-									<?php echo ($row_para_sist['sms_alum_admin'] == 'A' ? 'checked':'0'); ?>>
+								<input type="checkbox" id="sms_alum_to_admin" name="sms_alum_to_admin" value="A" data-toggle="toggle" data-on="SI" data-off="NO"
+									<?php echo ($row_para_sist['sms_alum_admin'] == 'A' ? 'checked':''); ?>>
 							</div>
 						</div>
 						<div class="form-group">
@@ -511,8 +529,8 @@
 								<label style='font-size:small;'>Permitir que alumnos puedan enviar mensajes a Docentes</label>
 							</div>
 							<div class="col-sm-4">
-								<input type="checkbox" id="sms_alum_to_teacher" name="sms_alum_to_teacher" value="S" data-toggle="toggle" data-on="SI" data-off="NO"
-									<?php echo ($row_para_sist['sms_alum_doc'] == 'A' ? 'checked':'0'); ?>>
+								<input type="checkbox" id="sms_alum_to_teacher" name="sms_alum_to_teacher" value="A" data-toggle="toggle" data-on="SI" data-off="NO"
+									<?php echo ($row_para_sist['sms_alum_doc'] == 'A' ? 'checked':''); ?>>
 							</div>
 						</div>
 						<div class="form-group">
@@ -520,8 +538,8 @@
 								<label style='font-size:small;'>Permitir que alumnos puedan enviar mensajes a Alumnos</label>
 							</div>
 							<div class="col-sm-4">
-								<input type="checkbox" id="sms_alum_to_alum" name="sms_alum_to_alum" value="S" data-toggle="toggle" data-on="SI" data-off="NO"
-									<?php echo ($row_para_sist['sms_alum_alum'] == 'A' ? 'checked':'0'); ?>>
+								<input type="checkbox" id="sms_alum_to_alum" name="sms_alum_to_alum" value="A" data-toggle="toggle" data-on="SI" data-off="NO"
+									<?php echo ($row_para_sist['sms_alum_alum'] == 'A' ? 'checked':''); ?>>
 							</div>
 						</div>
 						<div class="form-group">
@@ -529,8 +547,8 @@
 								<label style='font-size:small;'>Permitir que alumnos puedan enviar mensajes a Representantes</label>
 							</div>
 							<div class="col-sm-4">
-								<input type="checkbox" id="sms_alum_to_repr" name="sms_alum_to_repr" value="S" data-toggle="toggle" data-on="SI" data-off="NO"
-									<?php echo ($row_para_sist['sms_alum_repr'] == 'A' ? 'checked':'0'); ?>>
+								<input type="checkbox" id="sms_alum_to_repr" name="sms_alum_to_repr" value="A" data-toggle="toggle" data-on="SI" data-off="NO"
+									<?php echo ($row_para_sist['sms_alum_repr'] == 'A' ? 'checked':''); ?>>
 							</div>
 						</div>
 						<div class="form-group">
@@ -544,8 +562,8 @@
 								<label style='font-size:small;'>Permitir que representantes puedan enviar menajes a Administradores</label>
 							</div>
 							<div class="col-sm-4">
-								<input type="checkbox" id="sms_repr_to_admin" name="sms_repr_to_admin" value="S" data-toggle="toggle" data-on="SI" data-off="NO"
-									<?php echo ($row_para_sist['sms_repr_admin'] == 'A' ? 'checked':'0'); ?>>
+								<input type="checkbox" id="sms_repr_to_admin" name="sms_repr_to_admin" value="A" data-toggle="toggle" data-on="SI" data-off="NO"
+									<?php echo ($row_para_sist['sms_repr_admin'] == 'A' ? 'checked':''); ?>>
 							</div>
 						</div>
 						<div class="form-group">
@@ -553,8 +571,8 @@
 								<label style='font-size:small;'>Permitir que representantes puedan enviar mensajes a Docentes</label>
 							</div>
 							<div class="col-sm-4">
-								<input type="checkbox" id="sms_repr_to_teacher" name="sms_repr_to_teacher" value="S" data-toggle="toggle" data-on="SI" data-off="NO"
-									<?php echo ($row_para_sist['sms_repr_doc'] == 'A' ? 'checked':'0'); ?>>
+								<input type="checkbox" id="sms_repr_to_teacher" name="sms_repr_to_teacher" value="A" data-toggle="toggle" data-on="SI" data-off="NO"
+									<?php echo ($row_para_sist['sms_repr_doc'] == 'A' ? 'checked':''); ?>>
 							</div>
 						</div>
 						<div class="form-group">
@@ -562,8 +580,8 @@
 								<label style='font-size:small;'>Permitir que representantes puedan enviar mensajes a Alumnos</label>
 							</div>
 							<div class="col-sm-4">
-								<input type="checkbox" id="sms_repr_to_alum" name="sms_repr_to_alum" value="S" data-toggle="toggle" data-on="SI" data-off="NO"
-									<?php echo ($row_para_sist['sms_repr_alum'] == 'A' ? 'checked':'0'); ?>>
+								<input type="checkbox" id="sms_repr_to_alum" name="sms_repr_to_alum" value="A" data-toggle="toggle" data-on="SI" data-off="NO"
+									<?php echo ($row_para_sist['sms_repr_alum'] == 'A' ? 'checked':''); ?>>
 							</div>
 						</div>
 						<div class="form-group">
@@ -571,8 +589,8 @@
 								<label style='font-size:small;'>Permitir que representantes puedan enviar mensajes a Representantes</label>
 							</div>
 							<div class="col-sm-4">
-								<input type="checkbox" id="sms_repr_to_repr" name="sms_repr_to_repr" value="S" data-toggle="toggle" data-on="SI" data-off="NO"
-									<?php echo ($row_para_sist['sms_repr_repr'] == 'A' ? 'checked':'0'); ?>>
+								<input type="checkbox" id="sms_repr_to_repr" name="sms_repr_to_repr" value="A" data-toggle="toggle" data-on="SI" data-off="NO"
+									<?php echo ($row_para_sist['sms_repr_repr'] == 'A' ? 'checked':''); ?>>
 							</div>
 						</div>
 						<div class="form-group">
@@ -586,8 +604,8 @@
 								<label style='font-size:small;'>Permitir que docentes puedan enviar menajes a Administradores</label>
 							</div>
 							<div class="col-sm-4">
-								<input type="checkbox" id="sms_repr_to_admin" name="sms_repr_to_admin" value="S" data-toggle="toggle" data-on="SI" data-off="NO"
-									<?php echo ($row_para_sist['sms_doc_admin'] == 'A' ? 'checked':'0'); ?>>
+								<input type="checkbox" id="sms_repr_to_admin" name="sms_repr_to_admin" value="A" data-toggle="toggle" data-on="SI" data-off="NO"
+									<?php echo ($row_para_sist['sms_doc_admin'] == 'A' ? 'checked':''); ?>>
 							</div>
 						</div>
 						<div class="form-group">
@@ -595,8 +613,8 @@
 								<label style='font-size:small;'>Permitir que docentes puedan enviar mensajes a Docentes</label>
 							</div>
 							<div class="col-sm-4">
-								<input type="checkbox" id="sms_teacher_to_teacher" name="sms_teacher_to_teacher" value="S" data-toggle="toggle" data-on="SI" data-off="NO"
-									<?php echo ($row_para_sist['sms_doc_doc'] == 'A' ? 'checked':'0'); ?>>
+								<input type="checkbox" id="sms_teacher_to_teacher" name="sms_teacher_to_teacher" value="A" data-toggle="toggle" data-on="SI" data-off="NO"
+									<?php echo ($row_para_sist['sms_doc_doc'] == 'A' ? 'checked':''); ?>>
 							</div>
 						</div>
 						<div class="form-group">
@@ -604,8 +622,8 @@
 								<label style='font-size:small;'>Permitir que docentes puedan enviar mensajes a alumnos</label>
 							</div>
 							<div class="col-sm-4">
-								<input type="checkbox" id="sms_teacher_to_alum" name="sms_teacher_to_alum" value="S" data-toggle="toggle" data-on="SI" data-off="NO"
-									<?php echo ($row_para_sist['sms_doc_alum'] == 'A' ? 'checked':'0'); ?>>
+								<input type="checkbox" id="sms_teacher_to_alum" name="sms_teacher_to_alum" value="A" data-toggle="toggle" data-on="SI" data-off="NO"
+									<?php echo ($row_para_sist['sms_doc_alum'] == 'A' ? 'checked':''); ?>>
 							</div>
 						</div>
 						<div class="form-group">
@@ -613,8 +631,8 @@
 								<label style='font-size:small;'>Permitir que docentes puedan enviar mensajes a Representantes</label>
 							</div>
 							<div class="col-sm-4">
-								<input type="checkbox" id="sms_teacher_to_repr" name="sms_teacher_to_repr" value="S" data-toggle="toggle" data-on="SI" data-off="NO"
-									<?php echo ($row_para_sist['sms_doc_repr'] == 'A' ? 'checked':'0'); ?>>
+								<input type="checkbox" id="sms_teacher_to_repr" name="sms_teacher_to_repr" value="A" data-toggle="toggle" data-on="SI" data-off="NO"
+									<?php echo ($row_para_sist['sms_doc_repr'] == 'A' ? 'checked':''); ?>>
 							</div>
 						</div>
 						<div class="form-group">
@@ -642,8 +660,8 @@
 								<label style='font-size:small;'><span class='fa fa-photo'></span> Hacer que alumnos cambien foto</label>
 							</div>
 							<div class="col-sm-4">
-								<input type="checkbox" id="sms_alum_to_admin" name="sms_alum_to_admin" value="S" data-toggle="toggle" data-on="SI" data-off="NO"
-									<?php echo ($row_para_sist['mod_alum_cambiar_foto'] == '1' ? 'checked':'0'); ?>>
+								<input type="checkbox" id="mod_alum_cambiar_foto" name="mod_alum_cambiar_foto" value="1" data-toggle="toggle" data-on="SI" data-off="NO"
+									<?php echo ($row_para_sist['mod_alum_cambiar_foto'] == '1' ? 'checked':''); ?>>
 							</div>
 						</div>
 					</div>
@@ -689,8 +707,8 @@
 								<label style='font-size:small;'><span class='fa fa-calendar'></span> Manejo de Citas (Para que aparezca las citas en el menu de docente)</label>
 							</div>
 							<div class="col-sm-4">
-								<input type="checkbox" id="sms_alum_to_admin" name="sms_alum_to_admin" value="S" data-toggle="toggle" data-on="SI" data-off="NO"
-									<?php echo ($row_para_sist['mod_doc_citas'] == '1' ? 'checked':'0'); ?>>
+								<input type="checkbox" id="sms_alum_to_admin" name="sms_alum_to_admin" value="1" data-toggle="toggle" data-on="SI" data-off="NO"
+									<?php echo ($row_para_sist['mod_doc_citas'] == '1' ? 'checked':''); ?>>
 							</div>
 						</div>
 					</div>
@@ -750,8 +768,8 @@
 												<label style='font-size:small;'>Aplicar cambio del IVA a todas las deudas por cobrar con abono 0.</label>
 											</div>
 											<div class="col-sm-4">
-												<input type="checkbox" id="usa_pp_dv" name="usa_pp_dv" value="S" data-toggle="toggle" data-on="SI" data-off="NO"
-													<?php echo ($row_para_sist['usa_pp_dv'] == '1' ? 'checked':'0'); ?>>
+												<input type="checkbox" id="usa_pp_dv" name="usa_pp_dv" value="1" data-toggle="toggle" data-on="SI" data-off="NO"
+													<?php echo ($row_para_sist['usa_pp_dv'] == '1' ? 'checked':''); ?>>
 											</div>
 										</div>
 										<div class="form-group">
@@ -761,7 +779,7 @@
 											<div class="col-sm-4">
 												<input type="checkbox" id="check_enviar_fac_sri_en_cobro" name="check_enviar_fac_sri_en_cobro" 
 													value="S" data-toggle="toggle" data-on="SI" data-off="NO"
-													<?php echo ($row_para_sist['enviar_fac_sri_en_cobro'] == 'S' ? 'checked':'0'); ?>> Intentar enviar factura(s) al SRI al cobrar una o más deudas en la ventana de "Cobrar deuda".
+													<?php echo ($row_para_sist['enviar_fac_sri_en_cobro'] == 'S' ? 'checked':''); ?>> Intentar enviar factura(s) al SRI al cobrar una o más deudas en la ventana de "Cobrar deuda".
 											</div>
 										</div>
 										<div class="form-group">
@@ -771,7 +789,7 @@
 											<div class="col-sm-4">
 												<input type="checkbox" id="check_enviar_cheque_a_bandeja" name="check_enviar_cheque_a_bandeja"
 													value="S" data-toggle="toggle" data-on="SI" data-off="NO"
-													<?php echo ($row_para_sist['enviar_cheque_a_bandeja'] == 'S' ? 'checked':'0'); ?>> Mandar los cheques a la bandeja de validar cheques para esperar a su aprobación.
+													<?php echo ($row_para_sist['enviar_cheque_a_bandeja'] == 'S' ? 'checked':''); ?>> Mandar los cheques a la bandeja de validar cheques para esperar a su aprobación.
 											</div>
 										</div>
 										<div class="form-group">
@@ -793,9 +811,9 @@
 												<div class="checkbox">
 													<label>
 														<input type="radio" id="rdb_metodo_descuento" name="rdb_metodo_descuento" value="desc_sobre" 
-															<?php echo ($row_para_sist['metodo_descuento_alumno'] == 'desc_sobre' ? 'checked':'0'); ?>> Aplicar descuento sobre descuento<br>
+															<?php echo ($row_para_sist['metodo_descuento_alumno'] == 'desc_sobre' ? 'checked':''); ?>> Aplicar descuento sobre descuento<br>
 														<input type="radio" id="rdb_metodo_descuento" name="rdb_metodo_descuento" value="desc_sumado"
-															<?php echo ($row_para_sist['metodo_descuento_alumno'] == 'desc_sumado' ? 'checked':'0'); ?>> Sumar todos los descuento asignados y restar el total de la suma de los porcentajes.
+															<?php echo ($row_para_sist['metodo_descuento_alumno'] == 'desc_sumado' ? 'checked':''); ?>> Sumar todos los descuento asignados y restar el total de la suma de los porcentajes.
 													</label>
 												</div>
 											</div>
@@ -816,7 +834,7 @@
 													<label>
 														<input type="checkbox" id="check_quitar_limite_dias_validez" name="check_quitar_limite_dias_validez"
 															value="S" data-toggle="toggle" data-on="SI" data-off="NO"
-															<?php echo ($row_para_sist['quitar_limite_dias_validez'] == 'S' ? 'checked':'0'); ?>> Hacer que el descuento no se elimine nunca si se recibe un abono parcial dentro de los días en los que el descuento es considerado válido.
+															<?php echo ($row_para_sist['quitar_limite_dias_validez'] == 'S' ? 'checked':''); ?>> Hacer que el descuento no se elimine nunca si se recibe un abono parcial dentro de los días en los que el descuento es considerado válido.
 														
 													</label>
 												</div>
@@ -882,8 +900,8 @@
 											</div>
 											<div class="col-sm-4">
 												<input type="checkbox" id="check_bloqueo" name="check_bloqueo"
-													value="S" data-toggle="toggle" data-on="SI" data-off="NO"
-													<?php echo ($row_para_sist['bloqueo'] == 'true' ? 'checked':'0'); ?>>
+													value="true" data-toggle="toggle" data-on="SI" data-off="NO"
+													<?php echo ($row_para_sist['bloqueo'] == 'true' ? 'checked':''); ?>>
 											</div>
 										</div>
 										<div class="form-group">
@@ -893,7 +911,7 @@
 											<div class="col-sm-4">
 												<input type="checkbox" id="check_genera_deuda_matr" name="check_genera_deuda_matr"
 													value="S" data-toggle="toggle" data-on="SI" data-off="NO"
-													<?php echo ($row_para_sist['generar_deuda_matricula'] == 'S' ? 'checked':'0'); ?>>
+													<?php echo ($row_para_sist['generar_deuda_matricula'] == 'S' ? 'checked':''); ?>>
 											</div>
 										</div>
 										<div class="form-group">
@@ -903,7 +921,7 @@
 											<div class="col-sm-4">
 												<input type="checkbox" id="check_bloqueo_matr_por_deuda" name="check_bloqueo_matr_por_deuda"
 													value="S" data-toggle="toggle" data-on="SI" data-off="NO"
-													<?php echo ($row_para_sist['bloquear_matricula_deuda'] == 'S' ? 'checked':'0'); ?>>
+													<?php echo ($row_para_sist['bloquear_matricula_deuda'] == 'S' ? 'checked':''); ?>>
 											</div>
 										</div>
 										<div class="form-group">
@@ -930,7 +948,7 @@
 											<div class="col-sm-4">
 												<input type="checkbox" id="check_biblio_genera_multa_por_mora" name="check_biblio_genera_multa_por_mora"
 													value="S" data-toggle="toggle" data-on="SI" data-off="NO"
-													<?php echo ($row_para_sist['biblio_genera_multa_por_mora'] == 'S' ? 'checked':'0'); ?>>
+													<?php echo ($row_para_sist['biblio_genera_multa_por_mora'] == 'S' ? 'checked':''); ?>>
 											</div>
 										</div>
 										<div class="form-group">
@@ -940,7 +958,7 @@
 											<div class="col-sm-4">
 												<input type="checkbox" id="check_biblio_bloquea_prestamo_por_deuda" name="check_biblio_bloquea_prestamo_por_deuda"
 													value="S" data-toggle="toggle" data-on="SI" data-off="NO"
-													<?php echo ($row_para_sist['biblio_bloquea_prestamo_por_deuda'] == 'S' ? 'checked':'0'); ?>>
+													<?php echo ($row_para_sist['biblio_bloquea_prestamo_por_deuda'] == 'S' ? 'checked':''); ?>>
 											</div>
 										</div>
 									</div>

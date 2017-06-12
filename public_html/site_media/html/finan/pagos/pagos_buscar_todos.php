@@ -58,10 +58,10 @@
 								</label>
 							</div>
 							<div class='col-md-6 col-sm-4' style='text-align:left'>
-								<button type="button" class='btn btn-primary fa fa-search' id='btn_selectPago_search' name='btn_selectPago_search'
+								<button type="button" class='btn btn-primary' id='btn_selectPago_search' name='btn_selectPago_search'
 									onmouseover='$(this).tooltip("show")' 
 									title="Buscar pagos" 
-									onclick="return js_Pago_carga_PagosRealizados('resultadoProcesoPagos');">
+									onclick="return js_Pago_carga_PagosRealizados('resultadoProcesoPagos');"><span class='fa fa-search'></span>
 								</button>
 								<!--<button type="button" class='btn btn-default' id='btn_selectPago_excel' name='btn_selectPago_excel' 
 										onclick="js_Pago_to_excel_PagosRealizados('print_excel_all_data','completo');"><span style='color:green;' class='fa fa-file-excel-o'></span>

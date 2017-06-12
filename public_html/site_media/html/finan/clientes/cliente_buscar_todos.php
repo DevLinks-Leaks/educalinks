@@ -14,22 +14,21 @@
     </div>
 </div>
 <!-- Modal Cargando-->
-<div class="modal modal-transparent fade" id="modal_acad" tabindex="-1"  data-backdrop="static" data-keyboard="false">
+<div class="modal modal-transparent fade modal-warning" id="modal_acad" tabindex="-1"  data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
-            <div class="modal-header" style="background-color:#f4f4f4">
+            <div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 				<h4 class="modal-title" id="myModalLabel" >Educalinks</h4>
 			</div>
 			<div class="modal-body" id="modal_acad_body" style='text-align:center;font-size:small;'>
-                ¿Ir a módulo académico?
+                ¿Ir al módulo académico?
 				<input type='hidden' id='hd_url_acad' name='hd_url_acad' value=''/>
             </div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-success"
-					onclick="print_cert_pdf('{ruta_html_finan}/clientes/controller.php')"><i class='fa fa-file-pdf-o'></i>&nbsp;Ir</button>
-				<button type="button" class="btn btn-default" 
-					onclick="print_pdf('{ruta_html_finan}/clientes/controller.php')>En otro momento</button>
+				<button type="button" class="btn btn-outline pull-left"
+					onclick="js_clientes_go_to_courses_followed()"><span class='fa fa-university'></span>&nbsp;Ir</button>
+				<button type="button" class="btn btn-outline pull-right" data-dismiss='modal'>En otro momento</button>
 			</div>
         </div>
     </div>

@@ -234,7 +234,7 @@
 												</div>
 											</div>
 										</div>
-										<div class="form-group" style='display:none;' id='div_cmb_producto' name='div_cmb_producto'>
+										<div class="form-group" style='display:inline;' id='div_cmb_producto' name='div_cmb_producto'>
 											<label class="col-md-2 col-sm-3 control-label" for="cmb_producto" style='text-align: right;'>Producto:</label>
 											<div class="col-md-4 col-sm-5">
 													{combo_producto}

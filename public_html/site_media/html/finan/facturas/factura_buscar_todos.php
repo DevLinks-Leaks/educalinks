@@ -2,17 +2,18 @@
 <div class="modal fade bs-example-modal-lg" id="modal_showDebtState" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
-			<div class="modal-header">
+			<div class="modal-header" style="background-color:#f4f4f4">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="myModalLabel">Estado de cuenta</h4>
+				<h4 class="modal-title" id="myModalLabel" >Estado de cuenta</h4>
 			</div>
-			<div class="modal-body" id="modal_showDebtState_body">
+			<div class="modal-body" id="modal_showDebtState_body" style="background-color:#f4f4f4;">
 			...
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" data-dismiss="modal" 
-						onclick="print_pdf('{ruta_html_finan}/clientes/controller.php')"><span class='glyphicon glyphicon-print'></span>&nbsp;Imprimir</button>
-				<!--<a href="/reporte/estadoCuenta/{codigoAlumno}/{periodo}/{fechaInicio}/{fechaFin}" class="btn btn-primary" role="button" >Imprimir</a>-->
+			<div class="modal-footer" style="background-color:#f4f4f4;">
+				<button type="button" class="btn btn-success"
+					onclick="print_cert_pdf('{ruta_html_finan}/clientes/controller.php')"><i class='fa fa-file-pdf-o'></i>&nbsp;Certificado financiero</button>
+				<button type="button" class="btn btn-primary"
+					onclick="print_pdf('{ruta_html_finan}/clientes/controller.php')"><i class='fa fa-file-pdf-o'></i>&nbsp;Estado de cuenta</button>
 			</div>
 		</div>
 	</div>
@@ -162,15 +163,7 @@
 </div>
 <!-- /. Modal datos persona-->
 <div id="div_modal_seleccionar_persona_lista" name="div_modal_seleccionar_persona_lista"></div>
-<div class="box box-default">
-	<div class="box-header with-border">
-		<button type="button" class="btn btn-primary" onclick="limpiaPaginaPreguntar('true')" >
-			<span class='glyphicon glyphicon-file'></span>&nbsp;</button>
-	</div>
-	<div class="box-body">
-		<div class='grid'>
-			<div id="datosCliente">
-				<div class='panel panel-info'>
+<div class='panel panel-info'>
 					<div class="panel-heading">
 						<table style='width:100%'>
 								<tr>
@@ -205,7 +198,7 @@
 								<div class="col-sm-4">
 									<input type="text" readonly class="form-control input-sm" id="nombresCliente" name="nombresCliente" placeholder="Nombres" />
 								</div>
-								<div class="col-sm-4" style='text-align:right;margin-top:2px;'>
+								<div class="col-sm-4" style='text-align:right;margin-top:4px;'>
 									<div style='vertical-align:top;' id='client_options'>{opciones_cliente}</div>
 								</div>
 							</div>
@@ -225,6 +218,14 @@
 						</div>
 					</div>
 				</div>
+				
+<div class="box box-default">
+	<div class="box-header with-border">
+		<h3 class="box-title">Formulario de generación de deuda/factura</h3>
+	</div>
+	<div class="box-body">
+		<div class='grid'>
+			<div id="datosCliente">
 				<div id="datosFactura" class='panel panel-info'>
 					<div class="panel-heading">
 						<table style='width:100%'>
@@ -354,10 +355,13 @@
 		</div>
 	</div><!-- /.box-body -->
 	<div class="box-footer">
-		Generación de deudas.
-		<button type="button" id='btn_generar_deuda' name='btn_generar_deuda'
-			class="btn btn-primary pull-right" aria-hidden="true" data-toggle="modal" data-target="#modal_mostrarFactura" 
-			onclick="generaFactura('modal_mostrarFactura_body','{ruta_html_finan}/facturas/controller.php')" {disabled_generar_deuda}>
-				<span class="glyphicon glyphicon-floppy-disk"></span>&nbsp;Generar deuda y factura</button>
+		<div class="btn-group pull-right">
+			<button type="button" class="btn btn-default " onclick="limpiaPaginaPreguntar('true')" >
+				<span class='fa fa-eraser'></span>&nbsp;Limpiar todo</button>
+			<button type="button" id='btn_generar_deuda' name='btn_generar_deuda'
+				class="btn btn-primary" aria-hidden="true" data-toggle="modal" data-target="#modal_mostrarFactura" 
+				onclick="generaFactura('modal_mostrarFactura_body','{ruta_html_finan}/facturas/controller.php')" {disabled_generar_deuda}>
+					<span class="fa fa-save"></span>&nbsp;Generar deuda y factura</button>
+		</div>
 	</div>
 </div>

@@ -35,7 +35,7 @@
 					<li class="dropdown user user-menu">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 							<img src="<?php echo $_SESSION['ruta_foto_header']; ?>" class="user-image" alt="Imagen de usuario">
-							<span class="hidden-xs" style='font-size:x-small;'><?php echo $nombre; ?></span>&nbsp;
+							<span class="hidden-xs" style='font-size:x-small;'><?php echo $nombre; ?></span>
 						</a>
 						<ul class="dropdown-menu">
 							<!-- User image -->

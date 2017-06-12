@@ -88,8 +88,8 @@
 								</label>
 							</div>
 							<div class='col-md-6 col-sm-4' style='text-align:left'>
-								<button class='btn btn-primary fa fa-search btn-sm' id='btn_selectTipoDocAut' name='btn_selectTipoDocAut'  type="button" 
-										onclick="return carga_tipoDocumentoAutorizado('tabla_consulta_tipoDocumentoAutorizado');">
+								<button class='btn btn-primary' id='btn_selectTipoDocAut' name='btn_selectTipoDocAut'  type="button" 
+										onclick="return carga_tipoDocumentoAutorizado('tabla_consulta_tipoDocumentoAutorizado');"><span class='fa fa-search'></span>
 								</button>
 								<div class="btn-group">
 									<button type="button" 

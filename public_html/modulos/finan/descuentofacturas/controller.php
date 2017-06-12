@@ -181,9 +181,9 @@ function handler()
 							<span style='display:none;'><input type='checkbox' onclick='js_descuentofactura_check_pvfalse();' id='ckb_aICE_".$rows['detafact_secuencia']."' name='ckb_aICE_".$rows['detafact_secuencia']."' ".
 							( $rows['prod_aplicaICE'] == 0 ? '' : 'checked' )."></span></td>
 							<td style='text-align:center;'><input class='form-control input-sm' type='text' id='txt_per_IVA_".$rows['detafact_secuencia']."' name='txt_per_IVA_".$rows['detafact_secuencia']."' value='".
-							$rows['prod_perIVA']."'>
+							(empty( $rows['prod_perIVA'] ) ? '0.00' : $rows['prod_perIVA'] )."'>
 							<input class='form-control input-sm' type='hidden' disabled = 'disabled' id='txt_per_ICE_".$rows['detafact_secuencia']."' name='txt_per_ICE_".$rows['detafact_secuencia']."' value='".
-							$rows['prod_perICE']."'></td>
+							(empty( $rows['prod_perICE'] ) ? '0.00' : $rows['prod_perICE'] )."'></td>
 							<!--<td style='text-align:center;'>".( $rows['prod_prontopago'] == 0 ? '' : 'checked' )."</td>-->";
 					$tabla_detalle.="</tr>";
 					$total_numero_detalle++;

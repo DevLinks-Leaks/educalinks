@@ -880,8 +880,8 @@ function enviar_factura_al_SRI($codigo, $cuantas,$ruta_documentosAutorizados, $e
 		$impuestoDetalle = array();
 		$impuesto = new impuesto(); // Impuesto del detalle
 		$impuesto->codigo = "2";
-		$impuesto->codigoPorcentaje = ($linea['totalIVADetalle']>0? "3" : "0" );
-		$impuesto->tarifa = ($linea['totalIVADetalle']>0? "14" : "0" );
+		$impuesto->codigoPorcentaje = ($linea['totalIVADetalle']>0? "2" : "0" );
+		$impuesto->tarifa = ($linea['totalIVADetalle']>0? "12" : "0" );
 		$impuesto->baseImponible = number_format($linea['precioTotalSinImpuesto'], 2, '.', '');
 		$impuesto->valor = number_format($linea['totalIVADetalle'], 2, '.', '');
 		$impuestoDetalle[] = $impuesto;
