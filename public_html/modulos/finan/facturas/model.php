@@ -22,50 +22,63 @@ class Factura extends DBAbstractModel{
 		$this->query = "select para_sist_valu from Parametros_sistemas where para_sist_codi = 509;";
 		$this->executeSentenciaConsulta();
         if (count($this->rows)>0)
-		{    $this->mensaje="Método encontrado.";
+		{    $this->mensaje="¡Exito! Método encontrado.";
         }
 		else
-		{    $this->mensaje="Método no encontrado.";
+		{    $this->mensaje="¡Exito! Método no encontrado.";
         }
 		return $this->rows[0]['para_sist_valu'];
 	}
 	public function get_facturas($estadoElectronico = '', $fechaemision_ini = '', $fechaemision_fin = '',
 		$cod_titular = '', $id_titular = '', $cod_estudiante = '', $nombre_estudiante = '',
-		$nombre_titular = '', $ptvo_venta = '', $sucursal = '', $ref_factura = '', $prod_codigo = '', 
+		$nombre_titular = '', $ptvo_venta = '', $sucursal = '', $numeroFactura = '', $ref_factura = '', $prod_codigo = '', 
 		$estado = '', $tneto_ini = 0, $tneto_fin = 0, $periodo = 0, $grupoEconomico = 0, $nivelEconomico = 0, $curso = 0, $fechadeuda_ini = '', $fechadeuda_fin = '',
 		$fechaAut_ini = '', $fechaAut_fin = '', $convenioPago = 0 ){
         $this->parametros = array($estadoElectronico, $fechaemision_ini, $fechaemision_fin,
 									$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
-									$nombre_titular, $ptvo_venta, $sucursal, $ref_factura, $prod_codigo, 
+									$nombre_titular, $ptvo_venta, $sucursal, $numeroFactura, $ref_factura, $prod_codigo, 
 									$estado, $tneto_ini, $tneto_fin, $periodo, $grupoEconomico, $nivelEconomico, $curso, $fechadeuda_ini, $fechadeuda_fin,
 									$fechaAut_ini, $fechaAut_fin, $convenioPago );
         $this->sp = "str_consultaFacturas";
         $this->executeSPConsulta();
 
         if (count($this->rows)>0)
-		{   $this->mensaje="Facturas encontradas.";
+		{   $this->mensaje="¡Exito! Facturas encontradas.";
         }else
-		{   $this->mensaje="Facturas no encontradas.";
+		{   $this->mensaje="¡Exito! Facturas no encontradas.";
+        }
+        return $this->rows;
+    }
+	public function get_facturas_by_payment( $cabePago_codigo )
+	{
+        $this->parametros = array( $cabePago_codigo );
+        $this->sp = "str_consultaFacturas_by_payment";
+        $this->executeSPConsulta();
+
+        if (count($this->rows)>0)
+		{   $this->mensaje="¡Exito! Facturas encontradas";
+        }else
+		{   $this->mensaje="¡Error! Facturas no encontradas";
         }
         return $this->rows;
     }
 	public function get_facturas_to_excel($estadoElectronico = '', $fechaemision_ini = '', $fechaemision_fin = '',
 		$cod_titular = '', $id_titular = '', $cod_estudiante = '', $nombre_estudiante = '',
-		$nombre_titular = '', $ptvo_venta = '', $sucursal = '', $ref_factura = '', $prod_codigo = '', 
+		$nombre_titular = '', $ptvo_venta = '', $sucursal = '', $numeroFactura = '', $ref_factura = '', $prod_codigo = '', 
 		$estado = '', $tneto_ini = 0, $tneto_fin = 0, $periodo = 0, $grupoEconomico = 0, $nivelEconomico = 0, $curso = 0, $fechadeuda_ini = '', $fechadeuda_fin = '',
 		$fechaAut_ini = '', $fechaAut_fin = '', $convenioPago = 0 ){
         $this->parametros = array($estadoElectronico, $fechaemision_ini, $fechaemision_fin,
 									$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
-									$nombre_titular, $ptvo_venta, $sucursal, $ref_factura, $prod_codigo, 
+									$nombre_titular, $ptvo_venta, $sucursal, $numeroFactura, $ref_factura, $prod_codigo, 
 									$estado, $tneto_ini, $tneto_fin, $periodo, $grupoEconomico, $nivelEconomico, $curso, $fechadeuda_ini, $fechadeuda_fin,
 									$fechaAut_ini, $fechaAut_fin, $convenioPago );
         $this->sp = "str_consultaFacturas_excel";
         $this->executeSPConsulta();
 
         if (count($this->rows)>0){
-            $this->mensaje="Facturas encontradas.";
+            $this->mensaje="¡Exito! Facturas encontradas.";
         }else{
-            $this->mensaje="Facturas no encontradas.";
+            $this->mensaje="¡Exito! Facturas no encontradas.";
         }
         return $this->rows;
     }

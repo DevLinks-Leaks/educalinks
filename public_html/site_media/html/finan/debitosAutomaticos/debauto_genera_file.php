@@ -1,4 +1,4 @@
-<div>
+<div class='nav-tabs-custom'>
     <ul class="nav nav-tabs" id="myTabs">
         <li {tab_class1}><a data-toggle="tab" href="#home">
             <div id='div_file_status_top' style='display:inline;font-size:small;text-align:left;vertical-align:middle;'></div>

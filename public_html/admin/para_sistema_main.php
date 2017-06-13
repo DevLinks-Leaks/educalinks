@@ -8,12 +8,6 @@
 			<div class="content-wrapper">
 				<?php if ($_SERVER['REQUEST_METHOD'] == 'POST') include ('para_sistema_main_submit_save.php'); ?>
 				<section class="content-header">
-					<?php
-						$params = array($_SESSION['curs_para_codi']);
-						$sql="{call curs_para_info(?)}";
-						$curs_para_info = sqlsrv_query($conn, $sql, $params);  
-						$row_curs_para_info = sqlsrv_fetch_array($curs_para_info);
-				  	?>
 					<h1><i class='fa fa-cog fa-spin'></i>&nbsp;Parámetros del sistema</h1>
 					<ol class="breadcrumb">
 						<li><a href="#"><i class="fa fa-cogs fa-spin"></i></a></li>

@@ -79,6 +79,7 @@ function carga_tipoDocumentoAutorizado(div)
         data.append('nombre_titular', document.getElementById("txt_nom_titular").value);
         data.append('ptvo_venta', document.getElementById("txt_ptoVenta").value);
         data.append('sucursal', document.getElementById("txt_sucursal").value);
+		data.append('numeroFactura', document.getElementById("txt_numeroFactura").value);
         data.append('ref_factura', document.getElementById("txt_ref_factura").value);
         var productos = []; 
 		$('#cmb_producto :selected').each(function(i, selected){ 
@@ -191,22 +192,31 @@ function carga_tipoDocumentoAutorizado(div)
 									info:false,
 									"order":[[4, 'asc']],
 									"columnDefs": [
-										{className: "dt-body-center" , "targets": [0]},
-										{className: "dt-body-center" , "targets": [1], "visible": false},
-										{className: "dt-body-right"  , "targets": [2]},
-										{className: "dt-body-right"  , "targets": [3]},
-										{className: "dt-body-center" , "targets": [4], "visible": false},
+										{className: "dt-body-center" , "targets": [0], "visible": false},
+										{className: "dt-body-center" , "targets": [1]},
+										{className: "dt-body-center" , "targets": [2], "visible": false},
+										{className: "dt-body-center" , "targets": [3]},
+										{className: "dt-body-center" , "targets": [4]},
 										{className: "dt-body-center" , "targets": [5], "visible": false},
 										{className: "dt-body-center" , "targets": [6], "visible": false},
 										{className: "dt-body-center" , "targets": [7], "visible": false},
-										{className: "dt-body-center" , "targets": [8]},
+										{className: "dt-body-center" , "targets": [8], "visible": false},
 										{className: "dt-body-center" , "targets": [9]},
-										{className: "dt-body-center" , "targets":[12], "visible": false}
+										{className: "dt-body-center" , "targets":[10]},
+										{className: "dt-body-center" , "targets":[13], "visible": false}
 									],
 									"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
 										$('td', nRow).css('background-color', '#d6f9da');
 									}
-								});	
+								});
+								table_deuda.column( '7:visible' ).order( 'desc' );
+								$(".detalle").tooltip({
+									'html': 		true,
+									'selector': 	'',
+									'placement': 	'bottom',
+									'container': 	'body',
+									'tooltipClass': 'detalleTooltip'
+								});
 							}
 						};
 						xhrII.send(data2);

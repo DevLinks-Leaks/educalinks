@@ -13,7 +13,7 @@
 <div class="modal fade" id="modal_send" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" style='background-color:#E55A2F;color:white;'>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Respuesta de Envío individual</h4>
             </div>
@@ -21,6 +21,8 @@
                 ...
             </div>
             <div class="modal-footer">
+			<a href='https://declaraciones.sri.gob.ec/comprobantes-electronicos-internet/publico/validezComprobantes.jsf' target='_blank'
+				class="btn btn-danger"><i class='icon icon-sri'></i> Revisar facturas en sitio del SRI</a>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Ocultar</button>
             </div>
         </div>
@@ -31,95 +33,99 @@
 <div class="modal fade" id="modal_lote" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" style='background-color:#E55A2F;color:white;'>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Resultado de Envio en lote</h4>
             </div>
             <div class="modal-body">
-				<ul class="nav nav-tabs" role="tablist">
-					<li role="presentation" class="active"><a href="#modal_lote_body" aria-controls="modal_lote_body" role="tab" data-toggle="tab">Proceso</a></li>
-					<li role="presentation"><a href="#lote_detail_body" aria-controls="lote_detail_body" role="tab" data-toggle="tab">Detalle</a></li>
-				</ul>
-				<div class="tab-content">
-					<div id="modal_lote_body" role="tabpanel" class="tab-pane active" >
-					</div>
-					<div id="lote_detail_body" role="tabpanel" class="tab-pane">
-						<div style='height:245px;overflow-y:scroll;'>
-							<div class="box-body">
-								<div class="box-group" id="accordion">
-								<!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
-									<div class="panel box box-success">
-										<div class="box-header with-border">
-											<h4 class="box-title">
-												<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" class="">
-													AUTORIZADOS <span id="span_log_lote_autorizadas"></span>
-												</a>
-											</h4>
+				<div class="nav-tabs-custom">
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active"><a href="#modal_lote_body" aria-controls="modal_lote_body" role="tab" data-toggle="tab"><i class='fa fa-cog fa-spin'></i> Proceso</a></li>
+						<li role="presentation"><a href="#lote_detail_body" aria-controls="lote_detail_body" role="tab" data-toggle="tab"><i class='fa fa-clipboard'></i>Detalle</a></li>
+					</ul>
+					<div class="tab-content">
+						<div id="modal_lote_body" role="tabpanel" class="tab-pane active" >
+						</div>
+						<div id="lote_detail_body" role="tabpanel" class="tab-pane">
+							<div style='height:245px;overflow-y:scroll;'>
+								<div class="box-body">
+									<div class="box-group" id="accordion">
+									<!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
+										<div class="panel box box-success">
+											<div class="box-header with-border">
+												<h4 class="box-title">
+													<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" class="">
+														AUTORIZADOS <span id="span_log_lote_autorizadas"></span>
+													</a>
+												</h4>
+											</div>
+											<div id="collapseOne" class="panel-collapse collapse in" aria-expanded="true">
+												<div id="div_log_lote_autorizadas" class="box-body">
+												</div>
+											</div>
 										</div>
-										<div id="collapseOne" class="panel-collapse collapse in" aria-expanded="true">
-											<div id="div_log_lote_autorizadas" class="box-body">
+										<div class="panel box box-warning">
+											<div class="box-header with-border">
+												<h4 class="box-title">
+													<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed" aria-expanded="false">
+														NO AUTORIZADOS <span id="span_log_lote_no_autorizadas"></span>
+													</a>
+												</h4>
+											</div>
+											<div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false">
+												<div id="div_log_lote_no_autorizadas" class="box-body">
+												</div>
+											</div>
+										</div>
+										<div class="panel box box-primary">
+											<div class="box-header with-border">
+												<h4 class="box-title">
+													<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="collapsed" aria-expanded="false">
+														DEVUELTAS <span id="span_log_lote_devueltas"></span>
+													</a>
+												</h4>
+											</div>
+											<div id="collapseThree" class="panel-collapse collapse" aria-expanded="false">
+												<div id="div_log_lote_devueltas" class="box-body">
+												</div>
+											</div>
+										</div>
+										<div class="panel box box-info">
+											<div class="box-header with-border">
+												<h4 class="box-title">
+													<a data-toggle="collapse" data-parent="#accordion" href="#collapseFour" class="collapsed" aria-expanded="false">
+														PROCESADAS <span id="span_log_lote_procesadas"></span>
+													</a>
+												</h4>
+											</div>
+											<div id="collapseFour" class="panel-collapse collapse" aria-expanded="false">
+												<div id="div_log_lote_procesadas" class="box-body">
+												</div>
+											</div>
+										</div>
+										<div class="panel box box-danger">
+											<div class="box-header with-border">
+												<h4 class="box-title">
+													<a data-toggle="collapse" data-parent="#accordion" href="#collapseFive" class="collapsed" aria-expanded="false">
+														CON ERRORES <span id="span_log_lote_errores"></span>
+													</a>
+												</h4>
+											</div>
+											<div id="collapseFive" class="panel-collapse collapse" aria-expanded="false">
+												<div id="div_log_lote_errores" class="box-body">
+												</div>
 											</div>
 										</div>
 									</div>
-									<div class="panel box box-warning">
-										<div class="box-header with-border">
-											<h4 class="box-title">
-												<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed" aria-expanded="false">
-													NO AUTORIZADOS <span id="span_log_lote_no_autorizadas"></span>
-												</a>
-											</h4>
-										</div>
-										<div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false">
-											<div id="div_log_lote_no_autorizadas" class="box-body">
-											</div>
-										</div>
-									</div>
-									<div class="panel box box-primary">
-										<div class="box-header with-border">
-											<h4 class="box-title">
-												<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="collapsed" aria-expanded="false">
-													DEVUELTAS <span id="span_log_lote_devueltas"></span>
-												</a>
-											</h4>
-										</div>
-										<div id="collapseThree" class="panel-collapse collapse" aria-expanded="false">
-											<div id="div_log_lote_devueltas" class="box-body">
-											</div>
-										</div>
-									</div>
-									<div class="panel box box-info">
-										<div class="box-header with-border">
-											<h4 class="box-title">
-												<a data-toggle="collapse" data-parent="#accordion" href="#collapseFour" class="collapsed" aria-expanded="false">
-													PROCESADAS <span id="span_log_lote_procesadas"></span>
-												</a>
-											</h4>
-										</div>
-										<div id="collapseFour" class="panel-collapse collapse" aria-expanded="false">
-											<div id="div_log_lote_procesadas" class="box-body">
-											</div>
-										</div>
-									</div>
-									<div class="panel box box-danger">
-										<div class="box-header with-border">
-											<h4 class="box-title">
-												<a data-toggle="collapse" data-parent="#accordion" href="#collapseFive" class="collapsed" aria-expanded="false">
-													CON ERRORES <span id="span_log_lote_errores"></span>
-												</a>
-											</h4>
-										</div>
-										<div id="collapseFive" class="panel-collapse collapse" aria-expanded="false">
-											<div id="div_log_lote_errores" class="box-body">
-											</div>
-										</div>
-									</div>
-							    </div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
             </div>
             <div class="modal-footer">
+			<a href='https://declaraciones.sri.gob.ec/comprobantes-electronicos-internet/publico/validezComprobantes.jsf' target='_blank'
+				class="btn btn-danger"><i class='icon icon-sri'></i> Revisar facturas en sitio del SRI</a>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Ocultar</button>
             </div>
         </div>
@@ -188,6 +194,10 @@
 										<li><a href="#" onclick="js_gestionFactura_to_excel_busquedaFacturas('print_excel_all_data','mini');">Reporte reducido</a></li>
 										<li><a href="#" onclick="js_gestionFactura_to_excel_busquedaFacturas('print_excel_all_data','completo');">Reporte completo</a></li>
 									</ul>
+								</div>
+								<div id='EducaLinksHelperCliente' style='display:inline;font-size:x-small;text-align:left;vertical-align:text-bottom;'>
+									<a href='#' onmouseover='$(this).tooltip("show")' 
+									title="Los filtros de búsqueda aplican también para todos los reportes en Excel." data-placement='right'><span class='glyphicon glyphicon-info-sign'></span></a>
 								</div>
 							</div>
 						</div>
