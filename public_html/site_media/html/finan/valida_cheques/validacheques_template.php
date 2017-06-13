@@ -56,42 +56,30 @@
 		{navbar}
 		{menu}
 		<div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-          <h1>
-            {subtitulo}
-            <small>{mensaje}</small>
-          </h1>
-          <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-home"></i> Supervisor</a></li>
-            <li class="active">{subtitulo}</li>
-          </ol>
-        </section>
-
-        <!-- Main content -->
-        <section class="content">
-		
-          <!-- SELECT2 EXAMPLE -->
-          <div class="box box-default">
-            <div class="box-header">
-				<h3 class="box-title"></h3>
-            </div><!-- /.box-header -->
-            <div class="box-body">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1>
+					{subtitulo}
+					<small>{mensaje}</small>
+				</h1>
+				<ol class="breadcrumb">
+					<li><a href="#"><i class="fa fa-home"></i> Supervisor</a></li>
+					<li class="active">{subtitulo}</li>
+				</ol>
+			</section>
+			<section class="content">
 				<div id="formulario">
 					{formulario}
 				</div>
-            </div>
-          </div>
-        </section><!-- /.content -->
-		<!-- Control Sidebar -->
-		{menu_sidebar}
-      </div><!-- /.content-wrapper -->
-	<form id="frm_rutas" name="frm_rutas" enctype="multipart/form-data" method="post">
-		{rutas_all}
-        <input type="hidden" class="form-control" name="cheq_codigo" id="cheq_codigo"  />
-	</form>
-	{footer}
-	</div><!-- ./wrapper -->
+			</section>
+			{menu_sidebar}
+		</div><!-- /.content-wrapper -->
+		<form id="frm_rutas" name="frm_rutas" enctype="multipart/form-data" method="post">
+			{rutas_all}
+			<input type="hidden" class="form-control" name="cheq_codigo" id="cheq_codigo"  />
+		</form>
+		{footer}
+	</div>
 	<!-- jQuery 2.1.4 -->
     <script src="{ruta_includes_common}/plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <!-- jQuery UI 1.11.4 -->

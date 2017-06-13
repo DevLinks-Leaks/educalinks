@@ -48,7 +48,7 @@
 		</h3>
 	</div>
 	<div class="box-body">
-		<div class="col-lg-4 col-sm-6 input-group input-group-sm">
+		<!--<div class="col-lg-4 col-sm-6 input-group input-group-sm">
 			<span id="span_balance_reason" name="span_balance_reason" class="input-group-addon">Ver</span>
 			<select id='cmb_mostrarDes' name='cmb_mostrarDes' class='form-control'>
 				<option value='zzz'>- Todos los descuentos -</option>
@@ -56,10 +56,10 @@
 				<option value='1' >- Descuento para convenio de pago -</option>
 			</select>
 			<span class="input-group-btn">
-				<button type="button" class="btn btn-info btn-flat" onClick='js_tipo_descuento_busca(document.getElementById("cmb_mostrarDes").value,"resultado");'><!--<span class="fa fa-search"></span>-->Ir</button>
+				<button type="button" class="btn btn-info btn-flat" onClick='js_tipo_descuento_busca(document.getElementById("cmb_mostrarDes").value,"resultado");'>Ir</button>
 			</span>
 		</div>
-		<br>
+		<br>-->
 		<div id="resultado">
 			{tabla}
 		</div>

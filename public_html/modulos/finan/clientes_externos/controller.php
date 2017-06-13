@@ -293,7 +293,7 @@ function handler()
                           'clie_nombres'     => $cliente->nombres,
                           'clie_apellidos'   => $cliente->apellidos,
                           '{tabla_descuentos}' =>array( "elemento"=>"tabla",
-                                                        "clase"=>"table table-bordered table-hover",
+                                                        "clase"=>"table table-striped table-hover",
                                                         "datos"=>$cliente_descuentos_activos->rows,
                                                         "id"=>"tabla_descuentos_cliente",
                                                         "encabezado" => array("Ref.","Motivo","Porcentaje","Días validez","Período","Asignado el","Inactivar"),
@@ -301,7 +301,7 @@ function handler()
 														"campo"=>"desc_alum_codigo"
                             ),
                           '{tabla_descuentos_inactivos}'=>array( "elemento"=>"tabla",
-																"clase"=>"table table-bordered table-hover",
+																"clase"=>"table table-striped table-hover",
 																"datos"=>$cliente_descuentos_inactivos->rows,
 																"id"=>"tabla_descuentos_inactivos_cliente",
 																"encabezado" => array("Ref.","Motivo","Porcentaje","Días validez","Período","Inactivado el","Eliminar"),
@@ -657,7 +657,7 @@ function construct_table_pagos($cod_alum, $fini, $ffin, $periodo, $deuda )
 								$cod_alum, '', '', '', '', '', '', '', 
 								'', '0', '0', '-1', $periodo,'-1','-1','-1', $deuda );
 	$construct_table="
-				<table class='table table-bordered table-hover' id='pagosRealizados_table'>
+				<table class='table table-striped table-hover' id='pagosRealizados_table'>
 					<thead><tr>".
 			"<th style='font-size:small;text-align:center;'>Ref.</th>".
 			"<th style='font-size:small;text-align:center;'>Total Pago</th>".
@@ -747,7 +747,7 @@ function get_cliente_opciones($permiso, $codigoCliente, $type='button', $permiso
 }
 function tabla_deudas( $tablacliente )
 {   global $diccionario;
-	$data = "<table class='table table-bordered table-hover' id='tabla_estadoCuenta' name='tabla_estadoCuenta'>
+	$data = "<table class='table table-striped table-hover' id='tabla_estadoCuenta' name='tabla_estadoCuenta'>
 				<thead>
 					<tr>
 					   <th style=\"text-align:center;vertical-align:middle\"></th>

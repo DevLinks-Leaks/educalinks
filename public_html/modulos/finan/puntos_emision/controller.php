@@ -90,7 +90,7 @@ function handler() {
                     $data['disabled_agregar_punto_emision']="disabled='disabled'";
                 }
                 $data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$pto_emision->rows,
                                            "encabezado" => array("Código de punto de emisión","Prefijo ","Sucursal","Secuencia Factura","Secuencia N/C","Opciones"),
@@ -142,7 +142,7 @@ function handler() {
                     $data['disabled_agregar_punto_emision']="disabled='disabled'";
                 }
                 $data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$pto_emision->rows,
                                              "encabezado" => array("Código de punto de emisión","Prefijo ","Sucursal","Secuencia Factura","Secuencia N/C","Opciones"),
@@ -195,7 +195,7 @@ function handler() {
                     $data['disabled_agregar_punto_emision']="disabled='disabled'";
                 }
                 $data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$pto_emision->rows,
                                               "encabezado" => array("Código de punto de emisión","Prefijo ","Sucursal","Secuencia Factura","Secuencia N/C","Opciones"),
@@ -213,7 +213,7 @@ function handler() {
                 global $diccionario;
                 $opciones = array("Asignar"=>"<span  onclick='asign_user(".'"{codigo}"'.",".'"modal_asign_footer"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/puntos_emision/controller.php"'.")' class='glyphicon glyphicon-check cursorlink' aria-hidden='true'id='{codigo}_asignar'onmouseover='$(".'"#{codigo}_asignar"'.").tooltip(".'"show"'.")' title='Asignar'></span>");
                 $data['{tabla_users}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla."_users",
                                         "datos"=>$pto_emision->rows,
                                         "encabezado" => array("Username","Nombre","Email","Asignar"),
@@ -234,7 +234,7 @@ function handler() {
                 global $diccionario;
                 $opciones = array("Eliminar"=>"<span onclick='del_user_asigned(".'"{codigo}"'.",".'"modal_asign_footer"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/puntos_emision/controller.php"'.")' class='glyphicon glyphicon-trash cursorlink' aria-hidden='true'id='{codigo}_del'onmouseover='$(this).tooltip(".'"show"'.")' title='Quitar' data-placement='left'></span>");
                 $data['{tabla_users_asigned}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla."_users_asigned",
                                         "datos"=>$pto_emision->rows,
                                         "encabezado" => array("Código","Username","Nombre","Email","Quitar"),
@@ -293,7 +293,7 @@ function handler() {
                     $data['disabled_agregar_punto_emision']="disabled='disabled'";
                 }
                     $data['{tabla}']= array("elemento"=>"tabla",
-                                            "clase"=>"table table-bordered table-hover",
+                                            "clase"=>"table table-striped table-hover",
                                             "id"=>$tabla,
                                             "datos"=>$pto_emision->rows,
                                                   "encabezado" => array("Código de punto de emisión","Prefijo ","Sucursal","Secuencia Factura","Secuencia N/C","Opciones"),

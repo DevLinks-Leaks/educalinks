@@ -104,7 +104,7 @@ function handler()
 			$opciones["Copiar"] = "<span onclick='js_debtAut_copiar_archivo_open_modal(".'"{codigo}"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/debitosAutomaticos/controller.php"'.")' class='btn_opc_lista_copiar glyphicon glyphicon-copy cursorlink' aria-hidden='true' id='{codigo}_copiar_archivo' onmouseover='$(".'"#{codigo}_copiar_archivo"'.").tooltip(".'"show"'.")' data-placement='bottom' title='Copiar formato'></span>&nbsp;&nbsp;";
 			$opciones["Eliminar"] = "<span onclick='js_debtAut_del(".'"{codigo}"'.",".'"div_tbl_format"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/debitosAutomaticos/controller.php"'.")' class='btn_opc_lista_eliminar glyphicon glyphicon-trash cursorlink' aria-hidden='true'id='{codigo}_del' onmouseover='$(".'"#{codigo}_del"'.").tooltip(".'"show"'.")' data-placement='top' title='Eliminar formato'></span>";
 			$data = array('{tbl_formato}' => array(   "elemento"=>"tabla",
-											  "clase"=>"table table-bordered table-hover",
+											  "clase"=>"table table-striped table-hover",
 											  "id"=>"table_formato",
 											  "datos"=>$formatos->rows,
 											  "encabezado" => array("Código",

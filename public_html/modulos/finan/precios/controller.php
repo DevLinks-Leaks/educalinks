@@ -67,7 +67,7 @@ function handler() {
             $precio_valor->producto = $user_data['codigoProducto'];
             $precio_valor->get_all();
             $data['{tabla}'] = array("elemento"=>"tabla",
-                                      "clase"=>"table table-bordered table-hover",
+                                      "clase"=>"table table-striped table-hover",
                                       "id"=>$tabla,
                                       "datos"=>$precio_valor->rows,
                                       "encabezado" => array("Ref.",
@@ -112,7 +112,7 @@ function handler() {
             }
 			
             $data['{tabla}'] = array("elemento"=>"tabla",
-                                     "clase"=>"table table-bordered table-hover",
+                                     "clase"=>"table table-striped table-hover",
                                      "id"=>$tabla,
                                      "datos"=>$precio_valor->rows,
                                      "encabezado" => array("Ref.",

@@ -78,7 +78,7 @@ function handler() {
                     $data['disabled_agregar_resultado']="disabled='disabled'";
                   }
                 $data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$resultados->rows,
                                         "encabezado" => array("Código","Descripción","Estado","Opciones"),
@@ -131,7 +131,7 @@ function handler() {
                     $data['disabled_agregar_resultado']="disabled='disabled'";
                   }
                 $data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$resultados->rows,
                                         "encabezado" => array("Código","Descripción","Estado","Opciones"),
@@ -159,7 +159,7 @@ function handler() {
                 global $diccionario;
                 $opciones = array("Eliminar"=>"<span onclick='del_deta(".'"{codigo}"'.",".'"resultado_detalles"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/crm_resultados/controller.php"'.")' class='btn_opc_lista_eliminar glyphicon glyphicon-trash cursorlink' aria-hidden='true'id='{codigo}_del'onmouseover='$(".'"#{codigo}_del"'.").tooltip(".'"show"'.")' title='Eliminar'></span>");
                 $data['{tabla_detalles}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla."_deta",
                                         "datos"=>$resultados->rows,
                                         "encabezado" => array("Código","Descripción","Opciones"),
@@ -177,7 +177,7 @@ function handler() {
                 global $diccionario;
                 $opciones = array("Eliminar"=>"<span onclick='del_deta(".'"{codigo}"'.",".'"resultado_detalles"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/crm_resultados/controller.php"'.")' class='btn_opc_lista_eliminar glyphicon glyphicon-trash cursorlink' aria-hidden='true'id='{codigo}_del'onmouseover='$(".'"#{codigo}_del"'.").tooltip(".'"show"'.")' title='Eliminar'></span>");
                 $data['{tabla_detalles}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla."_deta",
                                         "datos"=>$resultados->rows,
                                         "encabezado" => array("Código","Descripción","Opciones"),
@@ -229,7 +229,7 @@ function handler() {
                     $data['disabled_agregar_resultado']="disabled='disabled'";
                   }
                 $data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$resultados->rows,
                                         "encabezado" => array("Código","Descripción","Estado","Opciones"),

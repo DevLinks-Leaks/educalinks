@@ -140,7 +140,7 @@ function construct_table_pagos($user_data)
 										$nombre_titular, $ptvo_venta, $sucursal, $num_factura, $prod_codigo, 
 										$estado, $tpago_ini, $tpago_fin);
 	$construct_table="
-				<table class='table table-bordered table-hover' id='pagosRealizados_table'>
+				<table class='table table-striped table-hover' id='pagosRealizados_table'>
 					<thead><tr>".
 			"<th style='font-size:small;text-align:center;'>Ref.</th>".
 			"<th style='font-size:small;text-align:center;'>Datos</th>".

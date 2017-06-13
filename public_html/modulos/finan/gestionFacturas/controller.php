@@ -145,7 +145,7 @@ function handler() {
                                                                         2=> array()),
 															"options"   => array("name"=>"curso","id"=>"curso","required"=>"required","class"=>"form-control input-sm"),
 										"selected"  => -1);
-			$data['tabla'] = tablaFactura($tabla, $factura, $permiso);
+			$data['tabla'] = '<div style="font-size:small;">Haga clic en buscar para realizar una consulta.</div>';
             retornar_vista(VIEW_GET_ALL, $data);
             break;
 		case PRINT_EXCEL_ALL_DATA:
@@ -435,7 +435,7 @@ function handler() {
 		case GET_QUERY_BANCOS:
 			$factura->get_query_bancos('BANCO','9','10');
             $data['{querybanco1}'] = array("elemento"=>"tabla",
-                                      "clase"=>"table table-bordered table-hover",
+                                      "clase"=>"table table-striped table-hover",
                                       "id"=>'tbl_querybanco1',
                                       "datos"=>$factura->rows,
                                       "encabezado" => array("valor factura",
@@ -451,7 +451,7 @@ function handler() {
 			$factura2 = new Factura();
 			$factura2->get_query_bancos('TARJETA','9','10');
 			$data['{querybanco2}'] = array("elemento"=>"tabla",
-                                      "clase"=>"table table-bordered table-hover",
+                                      "clase"=>"table table-striped table-hover",
                                       "id"=>'tbl_querybanco2',
                                       "datos"=>$factura2->rows,
                                       "encabezado" => array("valor factura",

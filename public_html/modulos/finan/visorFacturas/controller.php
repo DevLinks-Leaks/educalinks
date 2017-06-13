@@ -126,7 +126,7 @@ function tablaFacturaAutorizada($tabla, $factura, $permiso, $tipo_documento)
 	$opciones="";
 	$construct_table="
 				<br>
-				<table class='table table-bordered table-hover' id='".$tabla."'>
+				<table class='table table-striped table-hover' id='".$tabla."'>
 					<thead><tr>
 						<th style='font-size:small;text-align:center;'>Ref.</th>
 						<th style='font-size:small;text-align:center;'>Datos</th>

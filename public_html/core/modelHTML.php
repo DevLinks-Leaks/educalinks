@@ -22,7 +22,7 @@ class HTML{
             $atributo .= $attr . '="' . $valor .'" ';
         }
         $tabla = "<table $atributo >";
-        $tabla .= "<thead><tr>";
+        $tabla .= "<thead style='background-color:rgba(1, 126, 186, 0.1);'><tr>";
         if(count($encabezado)<=0){
           foreach ($datos[0] as $campo=>$valor){
             $tabla .= "<th style=\"text-align:center;vertical-align:middle\">".$campo."</th>";
@@ -48,7 +48,7 @@ class HTML{
 	static function TableDeudasPendientes($datos = array(), $encabezado = array(), $id, $class, $opciones=array(),$pref){
         $opt = null;
         $tabla = "<table class='$class' id='$id'>";
-        $tabla .= "<thead><tr>";
+        $tabla .= "<thead style='background-color:rgba(1, 126, 186, 0.1);'><tr>";
 		$col=0;
         if(count($encabezado)<=0){
 			
@@ -100,7 +100,7 @@ class HTML{
         }*/
         $tabla = "<table class='$class' id='$id'>";
         // Encabezado
-        $tabla .= "<thead><tr>";
+        $tabla .= "<thead style='background-color:rgba(1, 126, 186, 0.1);'><tr>";
 		$col=0;
         if(count($encabezado)<=0){
 			
@@ -160,7 +160,7 @@ class HTML{
         }*/
         $tabla = "<table class='$class' id='$id'>";
         // Encabezado
-        $tabla .= "<thead><tr>";
+        $tabla .= "<thead style='background-color:rgba(1, 126, 186, 0.1);'><tr>";
         $tabla .= ($tablaAnidada? "<th style=\"text-align:center;vertical-align:middle\"></th>" : "<th style=\"text-align:center;vertical-align:middle\"></th>"); // Para la columna del botón que muestra/oculta la tabla anidada
         $col=0;
         if(count($encabezado)<=0){
@@ -216,7 +216,7 @@ class HTML{
         }*/
         $tabla = "<table class='$class' id='$id'>";
         // Encabezado
-        $tabla .= "<thead><tr>";
+        $tabla .= "<thead style='background-color:rgba(1, 126, 186, 0.1);'><tr>";
 		$col=0;
         if(count($encabezado)<=0){
 			
@@ -265,7 +265,7 @@ class HTML{
 	{	$tabla = "<table class='$class' id='$id'>";
 		// Encabezado
 		$Encabezado="";
-		$tabla .= "<thead><tr>";
+		$tabla .= "<thead style='background-color:rgba(1, 126, 186, 0.1);'><tr>";
 		$tabla .= ($tablaAnidada? "<th style=\"text-align:center;vertical-align:middle\"></th>" : ""); // Para la columna del botón que muestra/oculta la tabla anidada
 		$col=0;
 		if(count($encabezado)<=0)
@@ -317,7 +317,7 @@ class HTML{
     static function tableVisor($datos = array(), $encabezado = array(), $id, $class, $opciones=array(), $tablaAnidada=false){
       $tabla = "<table class='$class' id='$id'>";
       // Encabezado
-      $tabla .= "<thead><tr>";
+      $tabla .= "<thead style='background-color:rgba(1, 126, 186, 0.1);'><tr>";
       $tabla .= ($tablaAnidada? "<th style=\"text-align:center;vertical-align:middle\"></th>" : ""); // Para la columna del botón que muestra/oculta la tabla anidada
       $col=0;
       if(count($encabezado)<=0){

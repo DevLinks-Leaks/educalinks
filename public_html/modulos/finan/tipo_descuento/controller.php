@@ -85,7 +85,7 @@ function handler() {
                 }
 				
 				$data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$descuento->rows,
                                         "encabezado" => array("Código","Descripción","Porcentaje","Estado","Aplica Prontopago","Opciones"),
@@ -132,7 +132,7 @@ function handler() {
                     $data['disabled_agregar_descuento']="disabled='disabled'";
                 }
 				$data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$descuento->rows,
                                         "encabezado" => array("Código","Descripción","Porcentaje","Estado","Aplica Prontopago","Opciones"),
@@ -180,7 +180,7 @@ function handler() {
                     $data['disabled_agregar_descuento']="disabled='disabled'";
                 }
 				$data['{tabla}']= array("elemento"=>"tabla",
-									"clase"=>"table table-bordered table-hover",
+									"clase"=>"table table-striped table-hover",
 									"id"=>$tabla,
 									"datos"=>$descuento->rows,
 									"encabezado" => array("Código","Modelo","Descripción","Estado","Aplica Prontopago","Opciones"),

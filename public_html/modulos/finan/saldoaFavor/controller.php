@@ -62,7 +62,7 @@ function handler()
                 }
 
 				$data['{tabla}']= array("elemento"=>"tabla_anidada",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$saldo->rows,
                                         "encabezado" => array(
@@ -89,7 +89,7 @@ function handler()
 				$opciones["nothing"]="";
 
 				$data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>'safHistorico_table_'.$saldo_data['cabeSaf_codigo'],
                                         "datos"=>$saldo->rows,
                                         "encabezado" => array(
@@ -203,7 +203,7 @@ function handler()
                 }
 
 				$data['{tabla}']= array("elemento"=>"tabla_anidada",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$saldo->rows,
                                         "encabezado" => array(
@@ -287,7 +287,7 @@ function handler()
                 }
 
 				$data['{tabla}']= array("elemento"=>"tabla_anidada",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$saldo->rows,
                                         "encabezado" => array(
@@ -326,7 +326,7 @@ function handler()
                 }
 
 				$data['{tabla}']= array("elemento"=>"tabla_anidada",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$saldo->rows,
                                         "encabezado" => array(
@@ -366,7 +366,7 @@ function handler()
                 }
 
 				$data['{tabla}']= array("elemento"=>"tabla_anidada",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$saldo->rows,
                                         "encabezado" => array(

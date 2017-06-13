@@ -73,7 +73,7 @@ function handler()
                 }
 
                 $data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$tarjeta->rows,
                                         "encabezado" => array("Código de Tarjeta","Nombre","Banco","Opciones"),
@@ -111,7 +111,7 @@ function handler()
                   $opciones["Eliminar"]="";
                 }
                 $data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$pto_emision->rows,
                                         "encabezado" => array("Código de Tarjeta","Nombre","Banco","Opciones"),
@@ -146,7 +146,7 @@ function handler()
                   $opciones["Eliminar"]="";
                 }
                 $data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$tarjeta->rows,
                                         "encabezado" => array("Código de Tarjeta","Nombre","Banco","Opciones"),
@@ -184,7 +184,7 @@ function handler()
                   $opciones["Eliminar"]="";
                 }
                 $data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$tarjeta->rows,
                                         "encabezado" => array("Código de Tarjeta","Nombre","Banco","Opciones"),
@@ -202,7 +202,7 @@ function handler()
                 global $diccionario;
                 $opciones = array("Asignar"=>"<span onclick='asign_user(".'"{codigo}"'.",".'"modal_asign_footer"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/puntos_emision/controller.php"'.")' class='glyphicon glyphicon-check cursorlink' aria-hidden='true'id='{codigo}_asignar'onmouseover='$(".'"#{codigo}_asignar"'.").tooltip(".'"show"'.")' title='Asignar'>&nbsp;</span>");
                 $data['{tabla_users}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla."_users",
                                         "datos"=>$pto_emision->rows,
                                         "encabezado" => array("Username","Nombre","Email","Opciones"),
@@ -223,7 +223,7 @@ function handler()
                 global $diccionario;
                 $opciones = array("Eliminar"=>"<span onclick='js_tarjetaCredito_del_user_asigned(".'"{codigo}"'.",".'"modal_asign_footer"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/puntos_emision/controller.php"'.")' class='btn_opc_lista_eliminar glyphicon glyphicon-trash cursorlink' aria-hidden='true'id='{codigo}_del'onmouseover='$(".'"#{codigo}_del"'.").tooltip(".'"show"'.")' title='Eliminar'>&nbsp;</span>");
                 $data['{tabla_users_asigned}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla."_users_asigned",
                                         "datos"=>$pto_emision->rows,
                                         "encabezado" => array("Código","Username","Nombre","Email","Opciones"),
@@ -273,7 +273,7 @@ function handler()
                   $opciones["Eliminar"]="";
                 }
                     $data['{tabla}']= array("elemento"=>"tabla",
-                                            "clase"=>"table table-bordered table-hover",
+                                            "clase"=>"table table-striped table-hover",
                                             "id"=>$tabla,
                                             "datos"=>$pto_emision->rows,
                                             "encabezado" => array("Código de punto de emisión","Prefijo ","Sucursal","Secuencia","Opciones"),

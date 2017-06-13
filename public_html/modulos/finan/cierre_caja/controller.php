@@ -50,7 +50,7 @@ function handler() {
 				$opciones["Opciones"].="";
 				}
 				$data['{tabla}']= array("elemento"=>"tabla",
-									  "clase"=>"table table-bordered table-hover",
+									  "clase"=>"table table-striped table-hover",
 									  "id"=>$tabla,
 									  "datos"=>$cierre_caja->rows,
 									  "encabezado" => array(
@@ -104,7 +104,7 @@ function handler() {
 				$opciones["Opciones"].="";
 				}
                 $data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$cierre_caja->rows,
                                         "encabezado" => array(

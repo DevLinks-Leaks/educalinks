@@ -43,7 +43,7 @@ function handler()
 				{	$data['disabled_agregar_categoria']="disabled='disabled'";
 				}             
       				$data['{tabla}']= array("elemento"=>"tabla",
-                                      "clase"=>"table table-bordered table-hover",
+                                      "clase"=>"table table-striped table-hover",
                                       "id"=>$tabla,
                                       "datos"=>$categoria->rows,
                                       "encabezado" => array("Codigo",
@@ -87,7 +87,7 @@ function handler()
                 {	$data['disabled_agregar_categoria']="disabled='disabled'";
                 } 
                 $data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$categoria->rows,
                                         "encabezado" => array("Codigo",

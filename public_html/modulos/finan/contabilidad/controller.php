@@ -57,7 +57,7 @@ function handler() {
 			$data = array('mes_paid_dnas' => $user_data['mes']);
 			
 			$data['{tablapaiddnas}'] =array("elemento"	=>"tabla",
-											"clase"		=>"table table-bordered table-hover",
+											"clase"		=>"table table-striped table-hover",
 											"id"		=>"tablapaiddnas",
 											"datos"		=> $conta->rows,
 											"encabezado"=>array("Codigo Deuda",
@@ -77,7 +77,7 @@ function handler() {
 			$opciones["Migrar"] = "<span onclick='js_contabilidad_migrarfacturasindividuales(".'"{codigo}"'.",".'"modal_pagosconfirmacion_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/contabilidad/controller.php"'.",".'this'.");' class='btn_opc_lista_migrar glyphicon glyphicon-send cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_pagosconfirmacion' id='{codigo}' onmouseover='$(this).tooltip(".'"show"'.")' title='Migrar'>&nbsp;</span>";
 			$data = array('mes' => $user_data['mes']);
 			$data['{tabladeudasmigrar}'] =array("elemento"=>"tabla",
-												"clase"=>"table table-bordered table-hover",
+												"clase"=>"table table-striped table-hover",
 												"id"=>"tablapagomigrar",
 												"datos"=> $conta->rows,
 												"encabezado" => array("Ref. Pago/sec.",
@@ -264,7 +264,7 @@ function handler() {
 			global $diccionario;
 			$opcionescat["match"] = "<span onclick='categorias(".'"{codigo}"'.",".'"modal_matchcategorias_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/contabilidad/controller.php"'.")' class='btn_opc_lista_migrar glyphicon glyphicon-send cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_matchcategorias'>&nbsp;</span>";
 			$data['{tabla_categoria}']= array("elemento"=>"tabla",
-											  "clase"=>"table table-bordered table-hover",
+											  "clase"=>"table table-striped table-hover",
 											  "id"=>"tablacategoria",
 											  "datos"=>$conta->rows,
 											  "encabezado" => array("Codigo",
@@ -283,7 +283,7 @@ function handler() {
             $opcionesprod["match"] = "<span onclick='productos(".'"{codigo}"'.",".'"modal_matchproductos_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/contabilidad/controller.php"'.")' class='btn_opc_lista_migrar glyphicon glyphicon-send cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_matchproductos'>&nbsp;</span>";
             $opcionesprod["agregar"] = "<span onclick='addproductos(".'"{codigo}"'.",".'"modal_matchproductos_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/contabilidad/controller.php"'.")' class='btn_opc_lista_agregar glyphicon glyphicon-plus cursorlink' aria-hidden='true' >&nbsp;</span>";
             $data['{tabla_productos}']= array("elemento"=>"tabla",
-											  "clase"=>"table table-bordered table-hover",
+											  "clase"=>"table table-striped table-hover",
 											  "id"=>"tablaproductos",
 											  "datos"=>$prod->rows,
 											  "encabezado" => array("Codigo",
@@ -308,7 +308,7 @@ function handler() {
 			$opcionesprod["agregar"] = "<span  onclick='addproductos(".'"{codigo}"'.",".'"modal_matchproductos_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/contabilidad/controller.php"'.")' class='btn_opc_lista_agregar glyphicon glyphicon-plus cursorlink' aria-hidden='true' onmouseover='$(this).tooltip(".'"show"'.")' 	id='".'"#{codigo}"'."_add_prod' title='Agregar producto'></span>";
 			
 			$data['{tabla_categoria}']= array("elemento"=>"tabla",
-								  "clase"=>"table table-bordered table-hover",
+								  "clase"=>"table table-striped table-hover",
 								  "id"=>"tablacategoria",
 								  "datos"=>$categoria->rows,
 								  "encabezado" => array("Codigo",
@@ -320,7 +320,7 @@ function handler() {
 														"options"=>array($opcionescat),
 														"campo"=>"codigo");
 			$data['{tabla_productos}']= array("elemento"=>"tabla",
-								  "clase"=>"table table-bordered table-hover",
+								  "clase"=>"table table-striped table-hover",
 								  "id"=>"tablaproductos",
 								  "datos"=>$prod->rows,
 								  "encabezado" => array("Codigo",
@@ -340,7 +340,7 @@ function handler() {
 			$opcionesdeudas["Migrar"] = "<span onclick='js_contabilidad_migrar(".'"{codigo}"'.",".'"modal_pagos_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/contabilidad/controller.php"'.")' class='btn_opc_lista_migrar glyphicon glyphicon-send cursorlink cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_edit' id='{codigo}' onmouseover='$(".'"#{codigo}"'.").tooltip(".'"show"'.")' title='Migrar pagos'>&nbsp;</span>";
 
 				$data['{tabla_pagos}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>"tablapagos",
                                         "datos"=>$conta->rows,
                                         "encabezado" => array("Mes",
@@ -358,7 +358,7 @@ function handler() {
 			$opcionesdeudas["Migrar"] = "<span onclick='js_contabilidad_actualizar_DNAs(".'"{codigo}"'.",".'"modal_actualizar_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/contabilidad/controller.php"'.")' class='btn_opc_lista_migrar glyphicon glyphicon-send cursorlink cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_actualizar' id='{codigo}' onmouseover='$(".'"#{codigo}"'.").tooltip(".'"show"'.")' title=\"Actualizar DNA's\">&nbsp;</span>";
 
 				$data['{tabla_paidDNAs}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>"tabla_paidDNAs_main",
                                         "datos"=>$conta->rows,
                                         "encabezado" => array("Mes",

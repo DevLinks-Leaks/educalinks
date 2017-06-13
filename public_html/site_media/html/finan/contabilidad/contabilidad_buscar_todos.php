@@ -95,33 +95,35 @@
 	<div class="box-header">
 	</div>
 	<div class="box-body">
-		<!-- Nav tabs -->
-		<ul class="nav nav-tabs" role="tablist">
-			<li role="presentation" class="active"><a href="#Categorias" aria-controls="Categorias" role="tab" data-toggle="tab">Categorias</a></li>
-			<li role="presentation"><a href="#Productos" aria-controls="Productos" role="tab" data-toggle="tab">Productos</a></li>
-		</ul>
-		<div class="tab-content">
-			<div role="tabpanel" class="tab-pane fade in active" id="Categorias">
-				<div class="form-medium">
-					<div class="col-sm-12">
-						<br>
+		<div class="nav-tabs-custom">
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active"><a href="#Categorias" aria-controls="Categorias" role="tab" data-toggle="tab">Categorias</a></li>
+				<li role="presentation"><a href="#Productos" aria-controls="Productos" role="tab" data-toggle="tab">Productos</a></li>
+			</ul>
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane active" id="Categorias">
+					<div class="form-medium">
+						<div class="col-sm-12">
+							<br>
+						</div>
+					</div>
+					<div class="form-medium">
+						<div class="col-sm-12" id="resultado">
+							{tabla_categoria}
+						</div>
 					</div>
 				</div>
-				<div class="form-medium">
-					<div class="col-sm-12" id="resultado">
-						{tabla_categoria}
+				<div role="tabpanel" class="tab-pane" id="Productos">
+					<div class="form-medium">
+						<div class="col-sm-12">
+							<br>
+						</div>
 					</div>
-				</div>
-			</div>
-			<div role="tabpanel" class="tab-pane fade" id="Productos">
-				<div class="form-medium">
-					<div class="col-sm-12">
-						<br>
-					</div>
-				</div>
-				<div class="form-medium">
-					<div class="col-sm-12" id="resultadoproductos">
-						{tabla_productos}
+					<div class="form-medium">
+						<div class="col-sm-12" id="resultadoproductos">
+							{tabla_productos}
+						</div>
 					</div>
 				</div>
 			</div>
