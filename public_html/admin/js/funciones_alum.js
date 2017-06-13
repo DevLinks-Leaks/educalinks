@@ -314,6 +314,55 @@ xhr.onreadystatechange=function(){
 	} 
 };
 }
+function aplicar_estado(div,alum_curs_para_codi,alum_codi)
+{   
+    $('#btn_aplicar').button('loading');
+    if (window.XMLHttpRequest)
+    {// code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp=new XMLHttpRequest();
+    }
+    else
+    {// code for IE6, IE5
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    var data = new FormData();
+    data.append('opc', 'add_curs_para');
+    data.append('esta_codi', document.getElementById('esta_codi').value);
+    data.append('curs_para_codi', (document.getElementById('curs_para_codi') === null) ? '0' : document.getElementById('curs_para_codi').value);
+    data.append('alum_codi', alum_codi);
+    data.append('alum_curs_para_codi', alum_curs_para_codi);
+    xmlhttp.onreadystatechange=function()
+    {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+            var json = JSON.parse(xmlhttp.responseText);
+            if (json.state=="success"){               
+                $.growl.notice({ title: "Educalinks informa",message: alum_est_mensaje('add_alum_est_reg', true) });
+                $('#btn_aplicar').button('reset');
+                $('#ModalEstado').modal('hide');
+                BuscarAlumnos_complete( document.getElementById( 'tipo_bandeja' ).value );            
+            }
+            else
+            {
+                $.growl.error({ title: "Educalinks informa",message: alum_est_mensaje('add_alum_est_reg', false) });
+                $('#btn_aplicar').button('reset');
+                // $('#ModalMatri').modal('hide');
+            }
+            // location.reload();
+            //  Descomentar en caso de querer que la ventana matriculado se mantenga abierta despues de darle click a Matricular.
+            
+            // document.getElementById('div_adm_est_alum_curs_para_codi').innerHTML='Matriculado Por Pagar';
+            // document.getElementById('div_curs').innerHTML ='';
+            // document.getElementById('div_alumno_estado_periodo').innerHTML ='';
+            // document.getElementById('adm_est_curs_para_codi').value=curs_para_codi;
+            // document.getElementById('adm_est_alum_est_det').value='Matriculado Por Pagar';
+            // load_ajax_si_valor_es_igual('Matriculado Por Pagar', 'Matriculado Por Pagar', 'div_checks','alumno_estado_detalle.php','div_alumno_estado_periodo', 'alumnos_main_estado_combo.php','peri_codi=' + document.getElementById('peri_0').value + '&alum_est_codi=' + document.getElementById('adm_est_alum_est_codi').value + '&alum_est_det=Matriculado Por Pagar&alum_codi=' + document.getElementById('alum_codi').value + '&peri_tipo=R');
+        }
+    };
+    xmlhttp.open("POST","script_alum.php",true);
+ // xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    xmlhttp.send(data);
+}
 function alum_est_mensaje(opc, respuesta)
 {   if (opc=='alum_info_alum_est_check' && respuesta === true)
 {
