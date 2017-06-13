@@ -136,9 +136,9 @@
 															<div class="form-group">
 																<label for="lbl_tipo">Género:</label><br/><br/>
 																	<label>
-																		<input id="alum_hombre" class="alum_genero" type="radio" name="genero" value="Hombre" <?= ($alum_view['alum_genero']==1?' checked':'') ?> /> Masculino  </label>
+																		<input disabled id="alum_hombre" class="alum_genero" type="radio" name="genero" value="Hombre" <?= ($alum_view['alum_genero']==1?' checked':'') ?> /> Masculino  </label>
 																	<label>					
-																		<input id="alum_mujer" class="alum_genero" type="radio" name="genero" value="Mujer" <?= ($alum_view['alum_genero']==0?' checked':'') ?> /> Femenino </label>
+																		<input disabled id="alum_mujer" class="alum_genero" type="radio" name="genero" value="Mujer" <?= ($alum_view['alum_genero']==0?' checked':'') ?> /> Femenino </label>
 																
 															</div>
 														</div>
@@ -929,7 +929,7 @@
 													<div class="row">
 														<div class="col-md-12">
 															<div class="checkbox" style='font-size:large;'>
-																<label><input id="aceptar_terminos" name="aceptar_terminos" type="checkbox" /></label>&nbsp;Confirmo que la información proporcionada es completa, correcta y que ha sido revisada con exactitud en:<br>
+																<label><input id="aceptar_terminos" name="aceptar_terminos" type="checkbox" />&nbsp;Confirmo que la información proporcionada es completa, correcta y que ha sido revisada con exactitud en:</label><br>
 																	<ul>
                                                                         <?if( $_SESSION['certus_medic'] == '1' ){?><li>Ficha Médica</li><?}?>
 																		<li>Datos del Alumno</li>
