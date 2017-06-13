@@ -1,8 +1,23 @@
+<!-- Modal Cargando-->
+<div class="modal modal-transparent fade" id="modal_wait" tabindex="-1"  data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body" id="modal_resend_body" style='text-align:center;font-size:small;'>
+                <div align="center" style="height:100%;">
+					Por favor, espere
+					<br>
+					<br>
+					<i style="color:darkred;" class="fa fa-cog fa-spin"></i>
+				</div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Modal Revertir deuda y borrar pago-->
 <div class="modal fade" id="modal_revert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" style='background-color:#3C8DBC;color:white;'>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Revertir deuda y borrar pago</h4>
             </div>

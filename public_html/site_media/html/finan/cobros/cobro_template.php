@@ -146,20 +146,5 @@
 	<script src="{ruta_js_finan}/general.js"></script>
 	<script src="{ruta_js_common}/general.js"></script>
 	<script src="{ruta_js_common}/mensajeria.js"></script>
-	
-    <script type="text/javascript" charset="utf-8">
-	$(document).ready(function() {
-		//Si no da click al boton cerrar, sino que da click fuera del modal, las tablas no se reseteaban.
-		//Esta funcion arregla eso.
-		$('#modal_resultadoPago').on('hidden.bs.modal', function () {
-			if (document.getElementById('modal_resultadoPago_header').innerHTML=="<strong>¡Pago realizado!</strong>")
-			{	//
-			}
-		})
-		$('#modal_editarPago').on('hidden.bs.modal', function () {
-			<!-- document.getElementById('resultadoMetadataEditarPago').innerHTML="";-->
-		})
-	} );
-	</script>
 </body>
 </html>

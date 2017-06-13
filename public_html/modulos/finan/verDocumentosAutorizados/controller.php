@@ -127,6 +127,10 @@ function handler()
 				$sucursal = '';
 			else 
 				$sucursal = $user_data['txt_sucursal'];
+			if(!isset($user_data['txt_numeroFactura']))
+				$numeroFactura = '';
+			else 
+				$numeroFactura = $user_data['txt_numeroFactura'];
 			if(!isset($user_data['txt_ref_factura']))
 				$ref_factura = '';
 			else 
@@ -243,7 +247,7 @@ function handler()
 				if( $user_data['tipo_reporte'] == 'completo' )
 				{   $factura->get_facturas_to_excel($estadoElectronico, $fechavenc_ini, $fechavenc_fin,
 													$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
-													$nombre_titular, $ptvo_venta, $sucursal, $ref_factura, $prod_codigo, 
+													$nombre_titular, $ptvo_venta, $sucursal, $numeroFactura, $ref_factura, $prod_codigo, 
 													$estado, $tneto_ini, $tneto_fin,
 													$user_data['periodos'],$user_data['cmb_grupoEconomico'],$user_data['cmb_nivelesEconomicos'],
 													$user_data['cursos'],$user_data['txt_fecha_deuda_ini'],$user_data['txt_fecha_deuda_fin'],
@@ -252,7 +256,7 @@ function handler()
 				if( $user_data['tipo_reporte'] == 'mini' )
 				{   $factura->get_facturas( $estadoElectronico, $fechavenc_ini, $fechavenc_fin,
 											$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
-											$nombre_titular, $ptvo_venta, $sucursal, $ref_factura, $prod_codigo, 
+											$nombre_titular, $ptvo_venta, $sucursal, $numeroFactura, $ref_factura, $prod_codigo, 
 											$estado, $tneto_ini, $tneto_fin,
 											$user_data['periodos'],$user_data['cmb_grupoEconomico'],$user_data['cmb_nivelesEconomicos'],
 											$user_data['cursos'],$user_data['txt_fecha_deuda_ini'],$user_data['txt_fecha_deuda_fin'],
@@ -264,7 +268,7 @@ function handler()
 				if( $user_data['tipo_reporte'] == 'completo' )
 				{   $factura->get_notasCredito_excel(   $estadoElectronico, $fechavenc_ini, $fechavenc_fin,
 														$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
-														$nombre_titular, $ptvo_venta, $sucursal, $ref_factura, $prod_codigo, 
+														$nombre_titular, $ptvo_venta, $sucursal, $numeroFactura, $ref_factura, $prod_codigo, 
 														$estado, $tneto_ini, $tneto_fin,
 														$user_data['periodo'],$user_data['grupoEconomico'],$user_data['nivelEconomico'],
 														$user_data['cursos'],$user_data['fechadeuda_ini'],$user_data['fechadeuda_fin'],
@@ -273,7 +277,7 @@ function handler()
 				if( $user_data['tipo_reporte'] == 'mini' )
 				{   $factura->get_notasCredito( $estadoElectronico, $fechavenc_ini, $fechavenc_fin,
 												$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
-												$nombre_titular, $ptvo_venta, $sucursal, $ref_factura, $prod_codigo, 
+												$nombre_titular, $ptvo_venta, $sucursal, $numeroFactura, $ref_factura, $prod_codigo, 
 												$estado, $tneto_ini, $tneto_fin,
 												$user_data['periodo'],$user_data['grupoEconomico'],$user_data['nivelEconomico'],
 												$user_data['cursos'],$user_data['fechadeuda_ini'],$user_data['fechadeuda_fin'],
@@ -360,6 +364,10 @@ function handler()
 				$sucursal = '';
 			else 
 				$sucursal = $user_data['sucursal'];
+			if(!isset($user_data['numeroFactura']))
+				$numeroFactura = '';
+			else 
+				$numeroFactura = $user_data['numeroFactura'];
 			if(!isset($user_data['ref_factura']))
 				$ref_factura = '';
 			else 
@@ -398,7 +406,7 @@ function handler()
 			{	$factura = new Factura();
 				$factura->get_facturas($estadoElectronico, $fechavenc_ini, $fechavenc_fin,
 										$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
-										$nombre_titular, $ptvo_venta, $sucursal, $ref_factura, $prod_codigo, 
+										$nombre_titular, $ptvo_venta, $sucursal, $numeroFactura, $ref_factura, $prod_codigo, 
 										$estado, $tneto_ini, $tneto_fin,
 										$user_data['periodo'],$user_data['grupoEconomico'],$user_data['nivelEconomico'],
 										$user_data['curso'],$user_data['fechadeuda_ini'],$user_data['fechadeuda_fin'],
@@ -409,7 +417,7 @@ function handler()
 			{	$factura = new notaCredito();
 				$factura->get_notasCredito( $estadoElectronico, $fechavenc_ini, $fechavenc_fin,
 											$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
-											$nombre_titular, $ptvo_venta, $sucursal, $ref_factura, $prod_codigo, 
+											$nombre_titular, $ptvo_venta, $sucursal, $numeroFactura, $ref_factura, $prod_codigo, 
 											$estado, $tneto_ini, $tneto_fin,
 											$user_data['periodo'],$user_data['grupoEconomico'],$user_data['nivelEconomico'],
 											$user_data['curso'],$user_data['fechadeuda_ini'],$user_data['fechadeuda_fin'],
@@ -420,13 +428,19 @@ function handler()
 			{	$factura = new notaDebito();
 				$factura->get_notasDebito($estadoElectronico, $fechavenc_ini, $fechavenc_fin,
 											$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
-											$nombre_titular, $ptvo_venta, $sucursal, $ref_factura, 
+											$nombre_titular, $ptvo_venta, $sucursal, $numeroFactura, $ref_factura, 
 											$estado, $tneto_ini, $tneto_fin);
 				//$data['mensaje'] = "Bandeja de notas de d&eacute;bito autoziadas";
 			}
 			$data['tabla'] = tablaFacturaAutorizada($tabla, $factura, $permiso, $tipo_documento);
 			retornar_result($data);
             break;
+		case GET_FACTURAS_BY_PAYMENT:
+			$factura = new Factura();
+			$factura->get_facturas_by_payment( $user_data['cabePago_codigo'] );
+			$data['tabla'] = tablaFacturaAutorizada_por_pago($tabla, $factura, $permiso, 'FACbyPAY',$user_data['cabePago_codigo'] );
+			retornar_result($data);
+			break;
         case RESEND_TO_SRI:
 			require_once('../../../includes/common/phpmailer/class.phpmailer.php');
 			if(!isset($user_data['tipoDocumentoAutorizado']))
@@ -485,24 +499,133 @@ function handler()
     }
 }
 handler();
-function tablaFacturaAutorizada($tabla, $factura, $permiso, $tipo_documento)
+
+function tablaFacturaAutorizada_por_pago($tabla, $factura, $permiso, $tipo_documento, $codigoPago )
 {	global $diccionario;
-	$anidado = "";
+	$anidado = $tabla_subnombre = "";
+	$tipo_documento = 'FAC';
+	$dir_tdoc_detail='factura';
+	$tabla_subnombre = '_'.$codigoPago;
+	$opciones="";
+	$construct_table="
+				<table class='table table-striped table-hover' id='".$tabla.$tabla_subnombre."' style='font-size:11px;text-align:center;vertical-align:middle;'>
+					<thead style='background-color:#E55A2F;color:white;'>
+					<tr>
+						<th style='font-size:11px;text-align:center;'>Referencia</th>
+						<th style='font-size:11px;text-align:center;'>Datos</th>
+						<th style='font-size:11px;text-align:center;'>Total Neto</th>
+						<th style='font-size:11px;text-align:center;'>F. Emisión</th>
+						<th style='font-size:11px;text-align:center;'>Estado</th>
+						<th style='font-size:11px;text-align:center;'>PDF</th>
+						<th style='font-size:11px;text-align:center;'>HTML</th>
+					</tr></thead>";
+	$body="<tbody>";
+	$c=0;
+	$aux=0;
+	$archivo="";
+	$archivoPDF = "";
+	$archivoXML = "";
+	$codigo="";
+	$cedula="";
+	$dontprint = "false";
+	foreach($factura->rows as $row)
+	{	$aux++;
+	}
+	foreach($factura->rows as $row)
+	{   $dontprint = "false";
+		if($c<($aux-1))
+		{	$body.="<tr >";
+			$x=0;
+			$datos="";
+			foreach($row as $column)
+			{	if($x==1)
+				{	$datos.="<div style=\"text-align:left;\">".
+								"<table><tr><td style=\"vertical-align:top;\"><b>Titular:&nbsp;</b></td><td>". $column."</td></tr>";
+				}
+				elseif($x==2)
+				{	$datos.="<tr><td><b>C&eacute;dula:&nbsp;</b></td><td>". $column."</td></tr>";
+					$cedula = $column;
+				}
+				elseif($x==3)
+				{	$archivo = $column;
+				}
+				elseif($x==4)
+				{	$archivo.= "-" . $column;
+				}
+				elseif($x==5)
+				{	if ( $column == NULL )
+						$dontprint = 'true';
+					
+					$archivo.= "-" . $column;
+					$datos.="<tr><td><b>".$tipo_documento.":&nbsp;</b></td><td>". $archivo."</td></tr></table></div>";
+				}
+				elseif($x==6)
+				{	if ( $dontprint == 'true' )
+						$body.="<td></td>";
+					else
+						$body.= "<td>".$datos."</td>";
+					
+					
+					$body.="<td>".$column."</td>";
+				}
+				elseif($x==10)
+				{	if ( $dontprint == 'true' )
+						$body.="<td>DEUDA SIN FACTURA</td>";
+					else
+						$body.="<td>".$column."</td>";
+				}
+				elseif( $x == 7 || $x == 8 ||$x == 11 )
+				{	//: do nothing
+				}
+				else
+				{	$body.="<td>".$column."</td>";
+					if($x==0)
+					{	$codigo = $column;
+					}
+				}
+				$x++;
+			}
+			$dir_archivos = $ruta_visor."/documentos/autorizados/".$_SESSION['directorio']."/".$cedula."/";
+			$archivoPDF = $tipo_documento.$archivo .".PDF";
+			$archivoXML = $tipo_documento.$archivo .".XML";
+			if ( $dontprint == 'false' )
+			{   $spanPDF= "<span class='glyphicon glyphicon-download' id='".$row['codigoFactura']."_printPDF' onmouseover='$(this).tooltip(".'"show"'.")' title='Descargar documento en PDF' data-placement='top'></span>";
+			}
+			$spanHTML="<span class='glyphicon glyphicon-print' id='".$codigo."_ver_factura' onmouseover='$(this).tooltip(".'"show"'.")' title='Ver documento en HTML' data-placement='left'></span>";
+			$body.="<td style='text-align:center'><a href=".$dir_archivos.$archivoPDF." target='_blank'>".$spanPDF."</a></td>";
+			$body.="<td style='text-align:center'><a href='".$diccionario['ruta_html_finan']."/finan/documento/imprimir/".$dir_tdoc_detail."/".$codigo."' target='_blank'>".$spanHTML."</a></td>";
+		}
+		$body.="</tr>";
+		$c++;
+	}
+	$construct_table.=$body;
+	$construct_table.="</tbody></table>";
+	return $construct_table;
+}
+function tablaFacturaAutorizada($tabla, $factura, $permiso, $tipo_documento, $codigoPago = '' )
+{	global $diccionario;
+	$anidado = $tabla_subnombre = "";
 	if ($tipo_documento=='FAC')
 	{	$dir_tdoc_detail='factura';
 		$anidado = "<th style=\"text-align:center;vertical-align:middle\"></th>";
 	}
-	else if ($tipo_documento=='NC')
+	else if ( $tipo_documento == 'NC' )
 	{	$dir_tdoc_detail='notaCredito';
 	}
-	else if ($tipo_documento=='ND')
+	else if ( $tipo_documento == 'ND' )
 	{	$dir_tdoc_detail='notaDebito';
+	}
+	else if ($tipo_documento == 'FACbyPAY' )
+	{   $tipo_documento = 'FAC';
+		$dir_tdoc_detail='factura';
+		$anidado = "<th style=\"text-align:center;vertical-align:middle\"></th>";
+		$tabla_subnombre = '_'.$codigoPago;
 	}
 	$opciones="";
 	$construct_table="
 				<br>
-				<table class='table table-bordered table-hover' id='".$tabla."'>
-					<thead><tr style='font-size:small;text-align:center;'>
+				<table class='table table-striped table-hover' id='".$tabla.$tabla_subnombre."'>
+					<thead style='background-color:#E55A2F;color:white;'><tr style='font-size:small;text-align:center;'>
 						".$anidado."
 						<th >Ref.</th>
 						<th>Datos</th>

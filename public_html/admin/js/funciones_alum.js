@@ -226,93 +226,142 @@ xhr.onreadystatechange=function(){
 }
 function BuscarAlumnos_complete( view )
 {   document.getElementById( 'btn_buscar_alumnos' ).disabled = true;
-document.getElementById( 'alum_main' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere</div>';
+	document.getElementById( 'alum_main' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere</div>';
 
-var data = new FormData();
-data.append('alum_codi', document.getElementById('alum_codi_in').value );
-data.append('alum_apel', document.getElementById('alum_apel_in').value );
+	var data = new FormData();
+	data.append('alum_codi', document.getElementById('alum_codi_in').value );
+	data.append('alum_apel', document.getElementById('alum_apel_in').value );
 
-var ckb_opc_adv = document.getElementById("ckb_opc_adv").checked;
-data.append('ckb_opc_adv', ckb_opc_adv);
-if(ckb_opc_adv)
-{	
-	data.append('grupo_economico', document.getElementById('cmb_grupo_economico').value );
-	data.append('nivel', document.getElementById( 'cmb_nivel' ).value );
-	data.append('curs_para_codi', document.getElementById('curso').value );
-	data.append('alum_estado', document.getElementById( 'cmb_alum_estado' ).value );
-	data.append('alum_id', document.getElementById( 'txt_alum_id' ).value );
+	var ckb_opc_adv = document.getElementById("ckb_opc_adv").checked;
+	data.append('ckb_opc_adv', ckb_opc_adv);
+	if(ckb_opc_adv)
+	{	
+		data.append('grupo_economico', document.getElementById('cmb_grupo_economico').value );
+		data.append('nivel', document.getElementById( 'cmb_nivel' ).value );
+		data.append('curs_para_codi', document.getElementById('curso').value );
+		data.append('alum_estado', document.getElementById( 'cmb_alum_estado' ).value );
+		data.append('alum_id', document.getElementById( 'txt_alum_id' ).value );
 
-	var chk_fechanac = document.getElementById("chk_fecha_nac").checked;
-	if( chk_fechanac )
-		{   data.append('fechanac_ini', document.getElementById("txt_fecha_nac_ini").value);
-	data.append('fechanac_fin', document.getElementById("txt_fecha_nac_fin").value);
-}
-var chk_fechamatri = document.getElementById("chk_fecha_matri").checked;
-if( chk_fechamatri )
-	{   data.append('fechamatri_ini', document.getElementById("txt_fecha_matri_ini").value);
-data.append('fechamatri_fin', document.getElementById("txt_fecha_matri_fin").value);
-}
-}
-var xhr = new XMLHttpRequest();
+		var chk_fechanac = document.getElementById("chk_fecha_nac").checked;
+		if( chk_fechanac )
+			{   data.append('fechanac_ini', document.getElementById("txt_fecha_nac_ini").value);
+		data.append('fechanac_fin', document.getElementById("txt_fecha_nac_fin").value);
+	}
+	var chk_fechamatri = document.getElementById("chk_fecha_matri").checked;
+	if( chk_fechamatri )
+		{   data.append('fechamatri_ini', document.getElementById("txt_fecha_matri_ini").value);
+	data.append('fechamatri_fin', document.getElementById("txt_fecha_matri_fin").value);
+	}
+	}
+	var xhr = new XMLHttpRequest();
 
-if ( view === null )
-	view = 1;
+	if ( view === null )
+		view = 1;
 
-if ( view == 1 )
-{
-	if (window.matchMedia('(max-width:960px)').matches)
-		url = 'alumnos_main_lista_mobile.php';
-	
-	if (window.matchMedia('(min-width:961px)').matches)
-		url = 'alumnos_main_lista.php';
-}
+	if ( view == 1 )
+	{
+		if (window.matchMedia('(max-width:960px)').matches)
+			url = 'alumnos_main_lista_mobile.php';
+		
+		if (window.matchMedia('(min-width:961px)').matches)
+			url = 'alumnos_main_lista.php';
+	}
 
-if ( view == 2 )
-	url = 'alumnos_main_lista_cell.php';
+	if ( view == 2 )
+		url = 'alumnos_main_lista_cell.php';
 
-if ( view == 3 )
-	url = 'alum_matri_main_lista.php';
+	if ( view == 3 )
+		url = 'alum_matri_main_lista.php';
 
-xhr.open( 'POST',  url, true );
-xhr.send( data );
-xhr.onreadystatechange=function(){
-	if ( xhr.readyState === 4 && xhr.status === 200 )
-		{   document.getElementById('alum_main').innerHTML = xhr.responseText;
-	document.getElementById( 'btn_buscar_alumnos' ).disabled = false;
-	if (window.matchMedia('(min-width:961px)').matches)
-		{	if ( view === 3 )
-			$('#alum_table').DataTable({
-				dom: 'Bfrtip',
-				buttons: [ 
-				{ extend: 'copy', text: 'Copiar <i class="fa fa-copy"></i>' },
-				{ extend: 'csv', text: 'CSV <i style="color:green" class="fa fa-file-excel-o"></i>' },
-				{ extend: 'excel', text: 'Excel <i style="color:green" class="fa fa-file-excel-o"></i>' },
-				{ extend: 'pdf', text: 'PDF <i style="color:red" class="fa fa-file-pdf-o"></i>' },
-				{ extend: 'print', text: 'Imprimir <i style="color:#428bca" class="fa fa-print"></i>' },
-				],
-				"bPaginate": true,
-				"bStateSave": false,
-				"bAutoWidth": false,
-				"bScrollAutoCss": true,
-				"bProcessing": true,
-				"bRetrieve": true,
-				"aLengthMenu": [[10,25, 50, 100, -1], [10,25, 50, 100, "Todos"]],
-				"sScrollXInner": "110%",
-				"fnInitComplete": function() {
-					this.css("visibility", "visible");
-				},
-				paging: true,
-				lengthChange: true,
-				searching: true,
-				language: {url: '//cdn.datatables.net/plug-ins/1.10.8/i18n/Spanish.json'}
-			});
-			else
+	xhr.open( 'POST',  url, true );
+	xhr.send( data );
+	xhr.onreadystatechange=function(){
+		if ( xhr.readyState === 4 && xhr.status === 200 )
+			{   document.getElementById('alum_main').innerHTML = xhr.responseText;
+		document.getElementById( 'btn_buscar_alumnos' ).disabled = false;
+		if (window.matchMedia('(min-width:961px)').matches)
+			{	if ( view === 3 )
 				$('#alum_table').DataTable({
+					dom: 'Bfrtip',
+					buttons: [ 
+					{ extend: 'copy', text: 'Copiar <i class="fa fa-copy"></i>' },
+					{ extend: 'csv', text: 'CSV <i style="color:green" class="fa fa-file-excel-o"></i>' },
+					{ extend: 'excel', text: 'Excel <i style="color:green" class="fa fa-file-excel-o"></i>' },
+					{ extend: 'pdf', text: 'PDF <i style="color:red" class="fa fa-file-pdf-o"></i>' },
+					{ extend: 'print', text: 'Imprimir <i style="color:#428bca" class="fa fa-print"></i>' },
+					],
+					"bPaginate": true,
+					"bStateSave": false,
+					"bAutoWidth": false,
+					"bScrollAutoCss": true,
+					"bProcessing": true,
+					"bRetrieve": true,
+					"aLengthMenu": [[10,25, 50, 100, -1], [10,25, 50, 100, "Todos"]],
+					"sScrollXInner": "110%",
+					"fnInitComplete": function() {
+						this.css("visibility", "visible");
+					},
+					paging: true,
+					lengthChange: true,
+					searching: true,
 					language: {url: '//cdn.datatables.net/plug-ins/1.10.8/i18n/Spanish.json'}
 				});
-		}
-	} 
-};
+				else
+					$('#alum_table').DataTable({
+						language: {url: '//cdn.datatables.net/plug-ins/1.10.8/i18n/Spanish.json'}
+					});
+			}
+		} 
+	};
+}
+function aplicar_estado(div,alum_curs_para_codi,alum_codi)
+{   
+    $('#btn_aplicar').button('loading');
+    if (window.XMLHttpRequest)
+    {// code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp=new XMLHttpRequest();
+    }
+    else
+    {// code for IE6, IE5
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    var data = new FormData();
+    data.append('opc', 'add_curs_para');
+    data.append('esta_codi', document.getElementById('esta_codi').value);
+    data.append('curs_para_codi', (document.getElementById('curs_para_codi') === null) ? '0' : document.getElementById('curs_para_codi').value);
+    data.append('alum_codi', alum_codi);
+    data.append('alum_curs_para_codi', alum_curs_para_codi);
+    xmlhttp.onreadystatechange=function()
+    {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+            var json = JSON.parse(xmlhttp.responseText);
+            if (json.state=="success"){               
+                $.growl.notice({ title: "Educalinks informa",message: alum_est_mensaje('add_alum_est_reg', true) });
+                $('#btn_aplicar').button('reset');
+                $('#ModalEstado').modal('hide');
+                BuscarAlumnos_complete( document.getElementById( 'tipo_bandeja' ).value );            
+            }
+            else
+            {
+                $.growl.error({ title: "Educalinks informa",message: alum_est_mensaje('add_alum_est_reg', false) });
+                $('#btn_aplicar').button('reset');
+                // $('#ModalMatri').modal('hide');
+            }
+            // location.reload();
+            //  Descomentar en caso de querer que la ventana matriculado se mantenga abierta despues de darle click a Matricular.
+            
+            // document.getElementById('div_adm_est_alum_curs_para_codi').innerHTML='Matriculado Por Pagar';
+            // document.getElementById('div_curs').innerHTML ='';
+            // document.getElementById('div_alumno_estado_periodo').innerHTML ='';
+            // document.getElementById('adm_est_curs_para_codi').value=curs_para_codi;
+            // document.getElementById('adm_est_alum_est_det').value='Matriculado Por Pagar';
+            // load_ajax_si_valor_es_igual('Matriculado Por Pagar', 'Matriculado Por Pagar', 'div_checks','alumno_estado_detalle.php','div_alumno_estado_periodo', 'alumnos_main_estado_combo.php','peri_codi=' + document.getElementById('peri_0').value + '&alum_est_codi=' + document.getElementById('adm_est_alum_est_codi').value + '&alum_est_det=Matriculado Por Pagar&alum_codi=' + document.getElementById('alum_codi').value + '&peri_tipo=R');
+        }
+    };
+    xmlhttp.open("POST","script_alum.php",true);
+ // xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    xmlhttp.send(data);
 }
 function alum_est_mensaje(opc, respuesta)
 {   if (opc=='alum_info_alum_est_check' && respuesta === true)

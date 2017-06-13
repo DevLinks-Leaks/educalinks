@@ -121,6 +121,12 @@ function handler() {
 			$data =array("mensaje" => $resultado->mensaje);
 			retornar_result($data);
 			break;
+		case REVERT_FACTURA_KEEP_E_INFO:
+			global $diccionario;
+			$resultado = $pago->revertir_factura_keep_e_info($user_data['codigoDocumento']);
+			$data =array("mensaje" => $resultado->mensaje);
+			retornar_result($data);
+			break;
 		case PRINT_EXCEL_ALL_DATA:
 			global $diccionario;
 			if(!isset($user_data['txt_codigo_pago']))
@@ -1470,7 +1476,7 @@ function construct_table_pagos($user_data)
 	if ( $user_data['bandeja_factura'] == 'SI' )
 		$nombre_extendido = "_".$num_factura;
 	$construct_table="
-				<table class='table table-bordered table-hover table-striped' id='pagosRealizados_table".$nombre_extendido."'>
+				<table class='table table-hover table-striped' id='pagosRealizados_table".$nombre_extendido."'>
 					<thead style='background-color:#3C8DBC;color:white;'><tr>".
 			"<th style=\"text-align:center;vertical-align:middle\"></th>".
 			"<th style='font-size:small;text-align:center;'>Ref.</th>".

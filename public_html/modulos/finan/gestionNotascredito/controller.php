@@ -760,8 +760,8 @@ function tablaFactura($tabla, $factura, $permiso)
 	$opciones="";
 	$construct_table="
 				<br>
-				<table class='table table-bordered table-hover' id='".$tabla."'>
-					<thead><tr>
+				<table class='table table-stripeds table-hover' id='".$tabla."'>
+					<thead style='background-color:#E55A2F;color:white;'><tr>
 						<th style='font-size:small;text-align:center;'>Ref.</th>
 						<th style='font-size:small;text-align:center;'>Datos</th>
 						<th style='font-size:small;text-align:center;'>T. Neto</th>

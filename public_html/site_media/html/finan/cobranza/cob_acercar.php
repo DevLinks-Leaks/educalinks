@@ -1,15 +1,15 @@
-<div class="modal-header">
+<div class="modal-header" style='background-color:#00A65A;color:white;'>
 	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	<h4 class="modal-title" id="modal_crm_head">Acercamiento de '{clie_nombres}'</h4>
+	<h4 class="modal-title" id="modal_crm_head"><i class='fa fa-phone'></i>&nbsp;Acercamiento de <b>{clie_nombres}</b></h4>
 </div>
 <div class="modal-body">
-	<div role="tabpanel">
+	<div class="nav-tabs-custom">
 		<!-- Nav tabs -->
 		<ul class="nav nav-tabs" role="tablist">
-			<li role="presentation" class="active"><a href="#datos" aria-controls="datos" role="tab" data-toggle="tab">Datos</a></li>
-			<li role="presentation"><a href="#datos2" aria-controls="dato2" role="tab" data-toggle="tab">Representante económico</a></li>
-			<li role="presentation"><a href="#datos3" aria-controls="datos3" role="tab" data-toggle="tab">Representante académico</a></li>
-			<li role="presentation"><a href="#acercamientos" aria-controls="acercamientos" role="tab" data-toggle="tab">Acercamientos</a></li>
+			<li role="presentation" class="active"><a href="#datos" aria-controls="datos" role="tab" data-toggle="tab"><i class='fa fa-clipboard'></i> Datos</a></li>
+			<li role="presentation"><a href="#datos2" aria-controls="dato2" role="tab" data-toggle="tab"><i class='fa fa-graduation-cap'></i> Representante económico</a></li>
+			<li role="presentation"><a href="#datos3" aria-controls="datos3" role="tab" data-toggle="tab"><i class='fa fa-dollar'></i> Representante académico</a></li>
+			<li role="presentation"><a href="#acercamientos" aria-controls="acercamientos" role="tab" data-toggle="tab"><i class='fa fa-phone'></i> Acercamientos</a></li>
 		</ul>
 		<!-- Tab panes -->
 		<div class="tab-content">
@@ -251,5 +251,5 @@
 </div>
 <div class="modal-footer">
 	<button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
-	<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="js_cobranza_save_acerca(document.getElementById('clie_codigo').value,'resultado','{ruta_html_finan}/cobranza/controller.php')">Guardar acercamiento</button>
+	<button type="button" class="btn btn-success" data-dismiss="modal" onclick="js_cobranza_save_acerca(document.getElementById('clie_codigo').value,'resultado','{ruta_html_finan}/cobranza/controller.php')"><i class='fa fa-save'></i>&nbsp;Guardar acercamiento</button>
 </div>

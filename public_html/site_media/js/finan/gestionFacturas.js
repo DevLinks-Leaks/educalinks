@@ -529,6 +529,7 @@ function js_gestionFactura_carga_busquedaFacturas(div)
         data.append('nombre_titular', document.getElementById("txt_nom_titular").value);
         data.append('ptvo_venta', document.getElementById("txt_ptoVenta").value);
         data.append('sucursal', document.getElementById("txt_sucursal").value);
+		data.append('numeroFactura', document.getElementById("txt_numeroFactura").value);
         data.append('ref_factura', document.getElementById("txt_ref_factura").value);
         var productos = []; 
 		$('#cmb_producto :selected').each(function(i, selected){ 

@@ -104,6 +104,10 @@
 										<li><a href="#" onclick="js_gestionNotascredito_to_excel_busquedaFacturas('print_excel_all_data','completo');">Reporte completo</a></li>
 									</ul>
 								</div>
+								<div id='EducaLinksHelperCliente' style='display:inline;font-size:x-small;text-align:left;vertical-align:text-bottom;'>
+									<a href='#' onmouseover='$(this).tooltip("show")' 
+									title="Los filtros de búsqueda aplican también para todos los reportes en Excel." data-placement='right'><span class='glyphicon glyphicon-info-sign'></span></a>
+								</div>
 							</div>
 						</div>
 					</div>
