@@ -100,7 +100,7 @@ function js_cobros_selecciona( div_buttons, div_body, tipo_persona )
 	$('#pagos_table tbody tr').each(function(){
 		$(this).remove();	// Remuevo la información de formas de pago.
 	});
-	document.getElementById('Totalabonado').value='';
+	
 	// === Consulta de los datos del titular del cliente seleccionado
 	var data = new FormData();
 	data.append('event', 'get_cliente_info_adicional');
@@ -461,10 +461,13 @@ function validaFechaVencimiento(codigo,div,url)
 				if(deudaAgregadaParaCobro(arreglo[ultimo_indice]['deud_codigo'])){
 					seleccionarDeuda(codigo,div,url);
 				}else{
-					$.growl.error({ title: 'Educalinks informa', message: 'Tiene deudas previas pendientes de pago. '+
-						'<a style="color:white;text-decoration:underline;" href="#div_noticias_deudas_anteriores"><i class="fa fa-search"></i>&nbsp;Ver deudas</a>' });
+					//alert(mensaje);
+					//$.growl.error({ title: titulo, message: mensaje });
 					document.getElementById('div_noticia_deudas_anteriores').innerHTML="<div class='alert alert-info fade in'><a href='#' class='close' data-dismiss='alert'>&times;</a><strong>¡Informaci&oacute;n! </strong>"+mensaje+"</div>";
 					document.getElementById('div_noticia_deudas_anteriores').style.display="block";
+					document.getElementById('modal_resultadoPago_header').innerHTML="<strong>¡Deuda pendiente!</strong>";
+					document.getElementById('modal_resultadoPago_body').innerHTML="<div class='alert alert-info'><strong>¡Informaci&oacute;n! </strong>"+mensaje+"</div>";
+					$('#modal_resultadoPago').modal('show');
 					return false;
 				}
 			}else{
@@ -657,9 +660,8 @@ function randomString() {
 }
 
 function agregarPago2(url)
-{	$('#pagos_table tbody tr').each(function()
-	{   if($(this).attr('class')=='odd')
-		{
+{	$('#pagos_table tbody tr').each(function(){
+		if($(this).attr('class')=='odd'){
 			$(this).remove();	// Quito el div que coloca el datatable donde dice: "No data available in table"
 		}
 	});
@@ -739,11 +741,7 @@ function agregarPago2(url)
 	var nuevoPago = '<tr>';
 		nuevoPago += "<td style='text-align:center;' data-id='"+idPago+"'  data-meta='"+JSON.stringify(metadato)+"' >"+$('#formaPago_asign').find(':selected').text()+"</td>";
 		nuevoPago += "<td style='text-align:center;'>"+$('#monto').val()+"</td>";
-		
-	if ( $('#formaPago_asign').find(':selected').text() != 'SALDOS A FAVOR' )
 		nuevoPago += "<td style='text-align:center;'><span onclick='cargaFormularioEditarPago("+'"'+url+'"'+","+'"'+idPago+'"'+")' class='glyphicon glyphicon-pencil cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_editarPago' onmouseover='$(this).tooltip(\"show\")' title='Editar Pago'  data-placement='left'></span></td>";
-	else
-		nuevoPago += "<td style='text-align:center;font-size:x-small;'>N/A</td>";
 		nuevoPago += "<td style='text-align:center;'><span onclick='quitarPago("+'"'+idPago+'"'+")' class='btn_opc_lista_eliminar glyphicon glyphicon-remove-circle cursorlink' aria-hidden='true' onmouseover='$(this).tooltip(\"show\")' title='Eliminar' data-placement='bottom'></span></td>";
 		nuevoPago += '</tr>';
 	$('#pagos_table tbody').append(nuevoPago);
@@ -1021,7 +1019,12 @@ function editarPago2() {
 
 	setearMontosAsignados();
 	
-	$.growl.notice({ title: 'Educalinks informa', message: 'Cambios almacenados' });
+	//$('#modal_editarPago').modal('hide');
+	//document.getElementById('resultadoMetadataEditarPago').innerHTML= "<div id='frm_pagoNones' class='form-horizontal' ><div class='alert alert-success'><strong>¡&Eacute;xito!</strong>"
+	//	+" Cambios almacenados.</div></div>";
+	$('#modal_editarPago').modal('hide');
+	document.getElementById('modal_resultadoPago_body').innerHTML="<div class='alert alert-success'><strong>¡&Eacute;xito!</strong> Cambios almacenados.</div>";
+	$('#modal_resultadoPago').modal('show');
 }
 function editarPago() {
 	var nombreFormaPago = $('#nombreFP').val();
@@ -1345,7 +1348,8 @@ function js_cobros_limpiar_despues_de_pago_existoso(){
 	document.getElementById('formularioCobro').style.display='none';
 	document.getElementById('EducaLinksHelperCliente2').style.display='inline';
 	document.getElementById('client_options').innerHTML='';
-	document.getElementById('Totalabonado').value='';
+	//document.getElementById('modal_resultadoPago_header').innerHTML='<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="myModalLabel">Resultado de la operación</h4>';
+	//document.getElementById('modal_resultadoPago_body').innerHTML='...';
 }
 function mostrarDetalleDeuda(codigoDeuda, div, url){
 	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';

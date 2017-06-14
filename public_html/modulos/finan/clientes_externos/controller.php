@@ -113,8 +113,8 @@ function handler()
 				$permiso_181->permiso_activo($_SESSION['usua_codigo'], 181);
 				$permiso->permiso_activo($_SESSION['usua_codigo'], 180);
 				
-				$body= "<table id='".$tabla."' class='table table-bordered table-hover'>";
-				$body.= "<thead>
+				$body= "<table id='".$tabla."' class='table table-striped table-hover'>";
+				$body.= "<thead style='background-color:#F39C12;color:white;'>
 							<th style='text-align:center;font-size:small;'>Código</th>
 							<th style='text-align:center;font-size:small;'>Identificaci&oacute;n</th>
 							<th style='text-align:center;font-size:small;'>Nombre</th>

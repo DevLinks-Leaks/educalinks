@@ -406,8 +406,8 @@ function tablaDeudaSinFactura($tabla, $factura, $permiso, $tipo_documento)
 	$opciones="";
 	$construct_table="
 				<br>
-				<table class='table table-striped table-bordered table-hover' id='".$tabla."' cellpadding='0' cellspacing='0' border='0' >
-					<thead><tr style='font-size:small;text-align:center;'>
+				<table class='table table-striped table-hover' id='".$tabla."' cellpadding='0' cellspacing='0' border='0' >
+					<thead style='background-color:#E55A2F;color:white;'><tr style='font-size:small;text-align:center;'>
 						".$anidado."
 						<th >Ref.</th>
 						<th>T. Neto</th>

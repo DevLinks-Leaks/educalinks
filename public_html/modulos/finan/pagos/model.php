@@ -92,24 +92,51 @@ class Pagos extends DBAbstractModel{
         $this->executeSPConsulta();
         if (count($this->rows)>0)
 		{   if ( $this->rows[0]['Estado'] == 'OK' )
-				$this->mensaje="¡Exito! Pago eliminado. Deuda reviertida a Estado: 'Por cobrar'.";
+				$this->mensaje='¡Exito! Pago eliminado. Deuda revertida a Estado: "Por cobrar".</div>
+						<br><div class="row">
+						<div class="col-md-12" style="text-align:right"><button class="btn btn-default" id="btn_modal_revert_dismiss" name="btn_modal_revert_dismiss" data-dismiss="modal">Entendido</button></div></div>';
+			else if ( $this->rows[0]['Estado'] == 'WORKABLE' )
+				$this->mensaje="¡Advertencia! ".
+					'<div class="row"><div class="col-md-12">
+					 	El sistema ha detectado que la(s) factura(s) relacionada(s) a este pago tienen uno de los siguientes estados
+					    electrónico: ERROR, NO AUTORIZADO, AUTORIZADO, DEVUELTA, EN PROCESO;<br>
+					    <br>
+					    por lo que puede que su factura ya esté registrada en el sistema del SRI, por lo que el sistema de Educalinks
+					    no puede completar el proceso de reverso de pago normalmente.<br>
+					    <br>
+					    Si desea, puede continuar con el proceso de pago, pero la información referente a facturación electrónica (incluyendo el número secuencial
+						de factura) no serán reseteados.<br>
+						<br>
+						¿Desea continuar?</div></div></div>
+						<br><div>
+						<div class="row"><div class="col-md-6" style="text-align:center"><button class="btn btn-default" id="btn_modal_revert_followed" name="btn_modal_revert_followed" onclick="js_Pago_revertir_followed_keep_e_info( '. $this->rows[0]['cabePago_codigo'].' );" ><li class="fa fa-history btn_opc_lista_editar"></li>&nbsp;Revertir de todos modos</button></div>'.
+						'<div class="col-md-6" style="text-align:center"><button class="btn btn-default" id="btn_modal_revert_dismiss" name="btn_modal_revert_dismiss" data-dismiss="modal"><li style="color:red;" class="fa fa-ban"></li>&nbsp;No revertir</button></div></div>';
 			else if ( $this->rows[0]['Estado'] == 'NO OK' )
-				$this->mensaje="¡Advertencia!".
-					"<b>El sistema ha detectado que la(s) factura(s) relacionada(s) a este pago tienen uno de los siguientes estados
-					   electrónico: ERROR, NO AUTORIZADO, AUTORIZADO, DEVUELTA, EN PROCESO;<br>
-					   <br>
-					   por lo que puede que su factura ya esté registrada en el sistema del SRI, por lo que el sistema de Educalinks
-					   no puede completar con el proceso de reverso de pago normalmente.<br>
-					   <br>
-					   Si desea, puede continuar con el proceso de pago, pero la información referente a facturación electrónica (incluyendo el número secuencial
-					   de factura) no serán reseteados.<br>
-					   <br>
-					   ¿Desea continuar?";
+				$this->mensaje="¡Error! <b>No se pudo eliminar el pago.</b><br>Pago no encontrado.";
 			else
 				$this->mensaje="¡Error! <b>No se pudo eliminar el pago.</b><br>Puede que la factura haya sido autorizada. Los pagos de facturas autorizadas no se pueden revertir.";
         }
 		else
 		{   $this->mensaje="¡Error! <b>No se pudo eliminar el pago.</b><br>Puede que la factura haya sido autorizada. Los pagos de facturas autorizadas no se pueden revertir.";
+        }
+		return $this;
+    }
+	public function revertir_factura_keep_e_info( $codigo )
+	{   $this->parametros = array( $codigo, $_SESSION['usua_codi'] );
+		$this->sp = "str_factura_revertirPago_ex";
+        $this->executeSPConsulta();
+        if (count($this->rows)>0)
+		{   if ( $this->rows[0]['Estado'] == 'OK' )
+				$this->mensaje='¡Exito! Pago eliminado. Deuda revertida a Estado: "Por cobrar". <b>Información electrónica</b> y <b>número secuencial</b> preservados.</div>
+						<br><div class="row">
+						<div class="col-md-12" style="text-align:right"><button class="btn btn-default" id="btn_modal_revert_dismiss" name="btn_modal_revert_dismiss" data-dismiss="modal">Entendido</button></div></div>';
+			else if ( $this->rows[0]['Estado'] == 'NO OK' )
+				$this->mensaje="¡Error! <b>No se pudo eliminar el pago.</b>";
+			else
+				$this->mensaje="¡Error! <b>No se pudo eliminar el pago.</b>";
+        }
+		else
+		{   $this->mensaje="¡Error! <b>No se pudo eliminar el pago.</b>";
         }
 		return $this;
     }

@@ -184,11 +184,11 @@
 		<p ><b>La migración a contífico consiste de tres pasos sencillos.</b></p>
 	</div>
 	<div class="box-body">
-		<div>
+		<div class="nav-tabs-custom">
 			<ul class="nav nav-tabs" role="tablist">
-				<li role="presentation" class="active"><a href="#MigracionDeudas" aria-controls="MigracionDeudas" role="tab" data-toggle="tab"><span id="badge_gest_deudas_in"></span>Enviar deudas&nbsp;</a></li>
-				<li role="presentation" ><a href="#MigracionPagos" aria-controls="MigracionPagos" role="tab" data-toggle="tab"><span id="badge_gest_pagos_in"></span>Enviar pagos&nbsp;</a></li>
-				<li role="presentation" ><a href="#ActulizacionPagos" aria-controls="ActulizacionPagos" role="tab" data-toggle="tab">Actualizar DNA's a Facturas</a></li>
+				<li role="presentation" class="active"><a href="#MigracionDeudas" aria-controls="MigracionDeudas" role="tab" data-toggle="tab"><span id="badge_gest_deudas_in"></span><i class='fa fa-send'></i> Enviar deudas&nbsp;</a></li>
+				<li role="presentation" ><a href="#MigracionPagos" aria-controls="MigracionPagos" role="tab" data-toggle="tab"><span id="badge_gest_pagos_in"></span><i class='fa fa-send'></i> Enviar pagos&nbsp;</a></li>
+				<li role="presentation" ><a href="#ActulizacionPagos" aria-controls="ActulizacionPagos" role="tab" data-toggle="tab"><i class='fa fa-refresh'></i> Actualizar DNA's a Facturas</a></li>
 			</ul>
 			<div class="tab-content">
 				<div role="tabpanel" class="tab-pane fade in active" id="MigracionDeudas">
@@ -303,7 +303,6 @@
 								{tabla_paidDNAs}
 							</div>
 						</div>
-					</div>
 					</div>
 				</div>
 			</div>

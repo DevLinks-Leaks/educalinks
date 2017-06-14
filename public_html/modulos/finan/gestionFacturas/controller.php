@@ -102,7 +102,7 @@ function handler() {
 			}
 			$today=new DateTime('yesterday');
 			$tomorrow=new DateTime('today');
-            $factura->get_facturas();
+            //$factura->get_facturas();
             $data['mensaje'] = "Facturas por autorizar, autorizadas, DNA, etc.";
 			$data['txt_fecha_ini'] = $today->format('d/m/Y');
 			$data['txt_fecha_fin'] = $tomorrow->format('d/m/Y');
@@ -196,6 +196,10 @@ function handler() {
 				$sucursal = '';
 			else 
 				$sucursal = $user_data['txt_sucursal'];
+			if(!isset($user_data['txt_numeroFactura']))
+				$numeroFactura = '';
+			else 
+				$numeroFactura = $user_data['txt_numeroFactura'];
 			if(!isset($user_data['txt_ref_factura']))
 				$ref_factura = '';
 			else 
@@ -289,7 +293,7 @@ function handler() {
 			if( $user_data['tipo_reporte'] == 'completo' )
 			{   $factura->get_facturas_to_excel($estadoElectronico, $fechavenc_ini, $fechavenc_fin,
 											$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
-											$nombre_titular, $ptvo_venta, $sucursal, $ref_factura, $prod_codigo, 
+											$nombre_titular, $ptvo_venta, $sucursal, $numeroFactura, $ref_factura, $prod_codigo, 
 											$estado, $tneto_ini, $tneto_fin,
 											$user_data['periodos'],$user_data['cmb_grupoEconomico'],$user_data['cmb_nivelesEconomicos'],
 											$user_data['cursos'],$user_data['txt_fecha_deuda_ini'],$user_data['txt_fecha_deuda_fin'],
@@ -298,7 +302,7 @@ function handler() {
 			if( $user_data['tipo_reporte'] == 'mini' )
 			{   $factura->get_facturas( $estadoElectronico, $fechavenc_ini, $fechavenc_fin,
 										$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
-										$nombre_titular, $ptvo_venta, $sucursal, $ref_factura, $prod_codigo, 
+										$nombre_titular, $ptvo_venta, $sucursal, $numeroFactura, $ref_factura, $prod_codigo, 
 										$estado, $tneto_ini, $tneto_fin,
 										$user_data['periodos'],$user_data['cmb_grupoEconomico'],$user_data['cmb_nivelesEconomicos'],
 										$user_data['cursos'],$user_data['txt_fecha_deuda_ini'],$user_data['txt_fecha_deuda_fin'],
@@ -380,6 +384,10 @@ function handler() {
 				$sucursal = '';
 			else 
 				$sucursal = $user_data['sucursal'];
+			if(!isset($user_data['numeroFactura']))
+				$numeroFactura = '';
+			else 
+				$numeroFactura = $user_data['numeroFactura'];
 			if(!isset($user_data['ref_factura']))
 				$ref_factura = '';
 			else 
@@ -416,7 +424,7 @@ function handler() {
 			$factura = new Factura();
 			$factura->get_facturas( $estadoElectronico, $fechavenc_ini, $fechavenc_fin,
 									$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
-									$nombre_titular, $ptvo_venta, $sucursal, $ref_factura, $prod_codigo, 
+									$nombre_titular, $ptvo_venta, $sucursal, $numeroFactura, $ref_factura, $prod_codigo, 
 									$estado, $tneto_ini, $tneto_fin,
 									$user_data['periodo'],$user_data['grupoEconomico'],$user_data['nivelEconomico'],
 									$user_data['curso'],$user_data['fechadeuda_ini'],$user_data['fechadeuda_fin'],
@@ -506,6 +514,10 @@ function handler() {
 				$sucursal = '';
 			else 
 				$sucursal = $user_data['sucursal'];
+			if(!isset($user_data['numeroFactura']))
+				$numeroFactura = '';
+			else 
+				$numeroFactura = $user_data['numeroFactura'];
 			if(!isset($user_data['ref_factura']))
 				$ref_factura = '';
 			else 
@@ -539,7 +551,7 @@ function handler() {
 				$tneto_fin = (float)$user_data['tneto_fin'];
 			$factura->get_facturas( $estadoElectronico, $fechavenc_ini, $fechavenc_fin,
 									$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
-									$nombre_titular, $ptvo_venta, $sucursal, $ref_factura, $prod_codigo, 
+									$nombre_titular, $ptvo_venta, $sucursal, $numeroFactura, $ref_factura, $prod_codigo, 
 									$estado, $tneto_ini, $tneto_fin,
 									$user_data['periodo'],$user_data['grupoEconomico'],$user_data['nivelEconomico'],
 									$user_data['curso'],$user_data['fechadeuda_ini'],$user_data['fechadeuda_fin'],
@@ -629,6 +641,10 @@ function handler() {
 				$sucursal = '';
 			else 
 				$sucursal = $user_data['sucursal'];
+			if(!isset($user_data['numeroFactura']))
+				$numeroFactura = '';
+			else 
+				$numeroFactura = $user_data['numeroFactura'];
 			if(!isset($user_data['ref_factura']))
 				$ref_factura = '';
 			else 
@@ -664,7 +680,7 @@ function handler() {
 			
 			$factura->get_facturas( $estadoElectronico, $fechavenc_ini, $fechavenc_fin,
 									$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
-									$nombre_titular, $ptvo_venta, $sucursal, $ref_factura, $prod_codigo, 
+									$nombre_titular, $ptvo_venta, $sucursal, $numeroFactura, $ref_factura, $prod_codigo, 
 									$estado, $tneto_ini, $tneto_fin,
 									$user_data['periodo'],$user_data['grupoEconomico'],$user_data['nivelEconomico'],
 									$user_data['curso'],$user_data['fechadeuda_ini'],$user_data['fechadeuda_fin'],
@@ -942,16 +958,16 @@ function enviar_factura_al_SRI($codigo, $cuantas,$ruta_documentosAutorizados, $e
 	$informacionAdicional = (is_array($res->return->mensajes)? $res->return->mensajes[0]->informacionAdicional : $res->return->mensajes->informacionAdicional );
 	if ($informacionAdicional=='') $informacionAdicional='-n/a-';
 	$numAutorizacion = (($res->return->numeroAutorizacion=='')? '-n/a-' : $res->return->numeroAutorizacion);
-	$documentosElectronicos[] = HTML::a('../../documentos/autorizados/'.$_SESSION['directorio'].'/'.$cabeceraFactura['identificacionComprador'].'/FAC'.$cabeceraFactura['prefijoSucursal'].'-'.$cabeceraFactura['prefijoPuntoVenta'].'-'.str_pad($cabeceraFactura['secuencialComprobante'], 9, "0", STR_PAD_LEFT).'.pdf',
-										'Factura Electr&oacute;nica # '.$codigo).'<br>'.
-										'<br><b>Datos del comprobante</b><br>'.
-										'<br><table><tr><td width="25%" align="left"><b><small>Clave de Acceso:</b></td><td valign="top"><i><small>'.$res->return->claveAcceso.'</small></i></td></tr>'.
-										'<tr><td align="left" valign="top"><b><small>No. de autorización:</b></td><td valign="top"><small>'.$numAutorizacion.'</small></td></tr>'.
-										'<tr><td align="left" valign="top"><b><small>Estado:</small></b></td><td valign="top"><i><small>'.$res->return->estadoComprobante.'.</small></i></td></tr>'.
-										'<tr><td colspan="2"><hr/></td></tr>'.
-										'<tr><td align="left" valign="top"><b><small>Mensaje:</small></b></td><td valign="top"><i><small>'.$mensaje.'.</small></i></td></tr>'.
-										'<tr><td align="left" valign="top"><b><small>Información adicional:</small></b></td><td valign="top"><i><small>'.$informacionAdicional.'.</small></i></td></tr>'.
-										'</table>';
+	$url = '../../documentos/autorizados/'.$_SESSION['directorio'].'/'.$cabeceraFactura['identificacionComprador'].'/FAC'.$cabeceraFactura['prefijoSucursal'].'-'.$cabeceraFactura['prefijoPuntoVenta'].'-'.str_pad($cabeceraFactura['secuencialComprobante'], 9, "0", STR_PAD_LEFT).'.pdf';
+	$documentosElectronicos[] = '<a href="'.$url.'" target="_blank" >Factura Electr&oacute;nica no. '.$codigo.'</a><br>'.
+							'<br><b>Datos del comprobante</b><br>'.
+							'<br><table><tr><td width="25%" align="left"><b><small>Clave de Acceso:</b></td><td valign="top"><i><small>'.$res->return->claveAcceso.'</small></i></td></tr>'.
+							'<tr><td align="left" valign="top"><b><small>No. de autorización:</b></td><td valign="top"><small>'.$numAutorizacion.'</small></td></tr>'.
+							'<tr><td align="left" valign="top"><b><small>Estado:</small></b></td><td valign="top"><i><small>'.$res->return->estadoComprobante.'.</small></i></td></tr>'.
+							'<tr><td colspan="2"><hr/></td></tr>'.
+							'<tr><td align="left" valign="top"><b><small>Mensaje:</small></b></td><td valign="top"><i><small>'.$mensaje.'.</small></i></td></tr>'.
+							'<tr><td align="left" valign="top"><b><small>Información adicional:</small></b></td><td valign="top"><i><small>'.$informacionAdicional.'.</small></i></td></tr>'.
+							'</table>';
 	if( $cuantas == 'por lote' )
 	{	$data['estado'] = $res->return->estadoComprobante;
 		$data['detalle']=array(	"elemento"  => "lista",
@@ -1038,16 +1054,16 @@ function autorizar_factura_al_SRI( $codigo, $cuantas, $ruta_documentosAutorizado
 	$informacionAdicional = (is_array($res->return->mensajes)? $res->return->mensajes[0]->informacionAdicional : $res->return->mensajes->informacionAdicional );
 	if ($informacionAdicional=='') $informacionAdicional='-n/a-';
 	$numAutorizacion = (($res->return->numeroAutorizacion=='')? '-n/a-' : $res->return->numeroAutorizacion);
-	$documentosElectronicos[] = HTML::a('../../../documentos/autorizados/'.$_SESSION['directorio'].'/'.$cabeceraFactura['identificacionComprador'].'/FAC'.$cabeceraFactura['prefijoSucursal'].'-'.$cabeceraFactura['prefijoPuntoVenta'].'-'.str_pad($cabeceraFactura['secuencialComprobante'], 9, "0", STR_PAD_LEFT).'.pdf',
-										'Factura Electr&oacute;nica # '.$codigo).'<br>'.										
-										'<br><b>Datos del comprobante</b><br>'.
-										'<br><table><tr><td width="25%" align="left"><b><small>Clave de Acceso:</b></td><td valign="top"><i><small>'.$res->return->claveAcceso.'</small></i></td></tr>'.
-										'<tr><td align="left" valign="top"><b><small>No. de autorización:</b></td><td valign="top"><small>'.$numAutorizacion.'</small></td></tr>'.
-										'<tr><td align="left" valign="top"><b><small>Estado:</small></b></td><td valign="top"><i><small>'.$res->return->estadoComprobante.'.</small></i></td></tr>'.
-										'<tr><td colspan="2"><hr/></td></tr>'.
-										'<tr><td align="left" valign="top"><b><small>Mensaje:</small></b></td><td valign="top"><i><small>'.$mensaje.'.</small></i></td></tr>'.
-										'<tr><td align="left" valign="top"><b><small>Información adicional:</small></b></td><td valign="top"><i><small>'.$informacionAdicional.'.</small></i></td></tr>'.
-										'</table>';
+	$url = '../../documentos/autorizados/'.$_SESSION['directorio'].'/'.$cabeceraFactura['identificacionComprador'].'/FAC'.$cabeceraFactura['prefijoSucursal'].'-'.$cabeceraFactura['prefijoPuntoVenta'].'-'.str_pad($cabeceraFactura['secuencialComprobante'], 9, "0", STR_PAD_LEFT).'.pdf';
+	$documentosElectronicos[] = '<a href="'.$url.'" target="_blank" >Factura Electr&oacute;nica no. '.$codigo.'</a><br>'.									
+								'<br><b>Datos del comprobante</b><br>'.
+								'<br><table><tr><td width="25%" align="left"><b><small>Clave de Acceso:</b></td><td valign="top"><i><small>'.$res->return->claveAcceso.'</small></i></td></tr>'.
+								'<tr><td align="left" valign="top"><b><small>No. de autorización:</b></td><td valign="top"><small>'.$numAutorizacion.'</small></td></tr>'.
+								'<tr><td align="left" valign="top"><b><small>Estado:</small></b></td><td valign="top"><i><small>'.$res->return->estadoComprobante.'.</small></i></td></tr>'.
+								'<tr><td colspan="2"><hr/></td></tr>'.
+								'<tr><td align="left" valign="top"><b><small>Mensaje:</small></b></td><td valign="top"><i><small>'.$mensaje.'.</small></i></td></tr>'.
+								'<tr><td align="left" valign="top"><b><small>Información adicional:</small></b></td><td valign="top"><i><small>'.$informacionAdicional.'.</small></i></td></tr>'.
+								'</table>';
 	if( $cuantas == 'por lote' )
 	{	$data['estado'] = $res->return->estadoComprobante;
 		$data['detalle']=array( "elemento"  => "lista",
@@ -1085,8 +1101,8 @@ function tablaFactura($tabla, $factura, $permiso, $estadoFac = 'P')
 	$opciones="";
 	$construct_table="
 				<br>
-				<table class='table table-bordered table-hover' id='".$tabla."'>
-					<thead><tr id='tr_row_head' name='tr_row_head'>
+				<table class='table table-hover' id='".$tabla."'>
+					<thead style='background-color:#E55A2F;color:white;'><tr id='tr_row_head' name='tr_row_head'>
 						<th id='select_deud_codigo_box' name='select_deud_codigo_box'>
 							<div style='font-size:x-small;text-align:center;' >
 								<input style='display:none;' type='checkbox' id='ckb_codigoDocumento_head' name='ckb_codigoDocumento_head' onClick='js_gestionFactura_select_all(this)'></input>

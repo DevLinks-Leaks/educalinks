@@ -97,8 +97,8 @@ function curs_para_save(peri_codi,peri_dist_cabe_codi,curs_codi,para_codi,curs_p
 												+ '&add_curs_para=Y');
 				
 }
-function cargar_lista_cursos_paralelos(div,url,data){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+function cargar_lista_cursos_paralelos(div,url,data)
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
 	if (window.XMLHttpRequest)
 	{// code for IE7+, Firefox, Chrome, Opera, Safari
 		xmlhttp=new XMLHttpRequest();
@@ -116,7 +116,7 @@ function cargar_lista_cursos_paralelos(div,url,data){
 				 "bSort": false 
 			});
 		}
-	}
+	};
 	xmlhttp.open("POST",url,true);
 	xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 	xmlhttp.send(data);	

@@ -94,15 +94,6 @@ function js_cobranza_buscar( div, url )
 				searching: true,
 				language: {url: '//cdn.datatables.net/plug-ins/1.10.8/i18n/Spanish.json'},
 				bInfo : false,
-				"columnDefs": [
-					{className: "dt-body-center", "targets": [ 0 ]},
-					{className: "dt-body-center" , "targets": [ 1 ]},
-					{className: "dt-body-right" , "targets": [ 2 ]},
-					{"title": "<span style='color:black'>Deuda pendt.</span>", className: "dt-body-right", "targets": [ 5 ]},
-					{"title": "<span style='color:DarkRed'>F. vencimiento</span>", className: "dt-body-center" , "targets": [6]},
-					{"title": "<span style='color:black'>F. seguimiento</span>", className: "dt-body-center" , "targets": [7]},
-					{"title": "<span style='color:black'>Acercamiento</span>", className: "dt-body-center" , "targets": [8]}
-				]
 			});
 			table.page.len(10).draw();
 			$('#cobr_table thead tr th').css('background-color', 'bgGreen');

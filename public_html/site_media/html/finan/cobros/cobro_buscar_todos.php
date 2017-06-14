@@ -198,18 +198,26 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header" id='modal_resultadoPago_header'>
-				<!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span></button>-->
 				<h4 class="modal-title" id="myModalLabel">Resultado de la operación</h4>
 			</div>
 			<div class="modal-body" id="modal_resultadoPago_body">
 				...
 			</div>
-			<div class="modal-footer"  id='modal_resultadoPago_foot'>
-				<!-- <button type="button" class="btn btn-default"  onclick="cancelar();" data-dismiss="modal">Cerrar</button>-->
-				<button type="button" id='btn_modal_resultadoPago_close' name='btn_modal_resultadoPago_close' class="btn btn-default" data-dismiss="modal">Cerrar</button>
-				<!--<button type="submit" class="btn btn-primary" aria-hidden='true' data-toggle='modal' data-target='#modal_deudasconfirmacion' 
-					onclick="migrarfacturasindividuales(document.getElementById('fc_generada').value,'fc_generada','{ruta_html_finan}/cobros/controller.php',document.getElementById('codigopago').value)">Migrar Pago</button>-->
+			<div class="modal-footer"  id='modal_resultadoPago_foot' style='text-align:center;'>
+				<button type='button' onclick='window.location.replace("../../../finan/gestionFacturas/")'; id='btn_modal_resultadoPago_gestionFac' name='btn_modal_resultadoPago_gestionFac' 
+					class="btn btn-block btn-sm btn-warning" data-dismiss="modal">
+					<i class='fa fa-barcode'></i>&nbsp;Ir a gestión facturas</a>
+				<button type='button' onclick='window.location.replace("../../../finan/pagos/");' id='btn_modal_resultadoPago_pagos' name='btn_modal_resultadoPago_pagos'
+					class="btn btn-block btn-sm btn-primary" data-dismiss="modal">
+					<i class='fa fa-list'></i>&nbsp;Ir a bandeja de pagos</a>
+				<button type="button" id='btn_modal_resultadoPago_current_cl' name='btn_modal_resultadoPago_current_cl'
+					class="btn btn-block btn-sm btn-danger" data-dismiss="modal"
+					onclick="js_cobros_selecciona( 'span_button_save_person','', document.getElementById('hd_tipo_persona').value );">
+					<i class='fa fa-user-circle-o'></i>&nbsp;Cobrar deuda al mismo cliente</button>
+				<button type="button" id='btn_modal_resultadoPago_new_cl' name='btn_modal_resultadoPago_new_cl'
+					class="btn btn-block btn-sm btn-success" data-dismiss="modal"
+					onclick='js_cobros_limpiar_despues_de_pago_existoso();'>
+					<i class='fa fa-users'></i>&nbsp;Cobrar deuda a otro cliente</button>
 			</div>
 		</div>
 	</div>
@@ -341,7 +349,8 @@
 					<div  id="collapse_deudasPendientes" class="panel-collapse collapse">
 						<div id="resultado" style="display:none;" class="grid">
 							<div class="row">
-								<div class="col-sm-12" id="div_noticia_deudas_anteriores" style='align:center;display:none;'>
+								<a name='div_noticias_deudas_anteriores'></a>
+								<div class="col-sm-12" id="div_noticia_deudas_anteriores" style='align:center;display:none;' >
 								</div>
 							</div>
 							<div class="row">
@@ -476,7 +485,7 @@
 	<div class="box-footer">
 		<div id="cobro_opciones" class="btn-group pull-right">
 			<button type="button" class="btn btn-default btn-md" onclick="limpiaPagina('true')" {disabled_caja}><span class='glyphicon glyphicon-erase'></span> Limpiar selecciones</button>
-			<button type="button" id='btn_gen_pago' name='btn_gen_pago' class="btn btn-primary btn-md" aria-hidden="true" data-toggle="modal" data-target="#modal_resultadoPago" 
+			<button type="button" id='btn_gen_pago' name='btn_gen_pago' class="btn btn-primary btn-md" aria-hidden="true" 
 					onclick="generaPago('modal_resultadoPago_body','{ruta_html_finan}/cobros/controller.php')" {disabled_caja}>
 				<span class='glyphicon glyphicon-record'></span> Confirmar pagos</button>
 		</div>

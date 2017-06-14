@@ -165,8 +165,8 @@ function handler()
 					$permiso_10->permiso_activo($_SESSION['usua_codigo'], 10);
 					$permiso->permiso_activo($_SESSION['usua_codigo'], 180);
 					
-					$body= "<table id='".$tabla."' class='table table-bordered table-hover table-striped'>";
-					$body.= "<thead>
+					$body= "<table id='".$tabla."' class='table table-hover table-striped'>";
+					$body.= "<thead style='background-color:#F39C12;color:white;'>
 								<tr><th style='text-align:center;font-size:small;'>Alumnos</th></tr>
 							</thead>
 							<tbody>";
@@ -233,8 +233,8 @@ function handler()
 					$permiso_181->permiso_activo($_SESSION['usua_codigo'], 181);
 					$permiso->permiso_activo($_SESSION['usua_codigo'], 180);
 					
-					$body= "<table id='".$tabla."' class='table table-bordered table-hover table-striped'>";
-					$body.= "<thead>
+					$body= "<table id='".$tabla."' class='table table-hover table-striped'>";
+					$body.= "<thead style='background-color:#F39C12;color:white;'>
 								<tr>
 									<th style='text-align:center;font-size:small;'>Código</th>
 									<th style='text-align:center;font-size:small;'>Identificaci&oacute;n</th>
@@ -974,8 +974,8 @@ function get_cliente_opciones($permiso, $codigoCliente, $type='button', $permiso
 }
 function tabla_deudas( $tablacliente )
 {   global $diccionario;
-	$data = "<table class='table table-bordered table-hover' id='tabla_estadoCuenta' name='tabla_estadoCuenta'>
-				<thead>
+	$data = "<table class='table table-striped table-hover' id='tabla_estadoCuenta' name='tabla_estadoCuenta'>
+				<thead style='background-color:#d1427e;color:white;'>
 					<tr>
 					   <th style=\"text-align:center;vertical-align:middle\"></th>
 					   <th><div style='font-size:x-small;text-align:center;'>No. deuda</div></th>

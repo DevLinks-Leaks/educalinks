@@ -281,28 +281,47 @@ function handler()
             if(count($cobranza->rows)>0)
 			{   global $diccionario;
                 $permiso->permiso_activo($_SESSION['usua_codigo'], 174);
-                if ($permiso->rows[0]['veri']==1)
-                {
-                    $opciones["Acercamiento"] = "<span onclick='edit(".'"{codigo}"'.",".'"modal_crm_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/cobranza/controller.php"'.")' class='btn_opc_lista_acercamiento glyphicon glyphicon-phone-alt cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_crm'id='{codigo}_crm'onmouseover='$(this).tooltip(".'"show"'.")' title='Acercamiento'></span>";
-                }
-                else
-                {
-                    $opciones["Acercamiento"] = "";
-                }
-                $data['{tabla}']= array("elemento"	=>"tabla_anidada",
-                                        "clase"		=>"table table-striped table-bordered",
-                                        "id"		=>$tabla,
-                                        "datos"		=>$cobranza->rows,
-                                        "encabezado"=>array("Código",
-															"Identificación",
-															"Nombre",
-															"Curso",
-															"Deuda Pdte.",
-															"F. Vencido",
-															"F. Seguimiento",
-															""),
-                                        "options"	=>array( $opciones ),
-                                        "campo"=>"alum_codi");
+				$construct_table="
+				<br>
+				<table class='table table-striped table-hover' id='".$tabla."' style='font-size:small;text-align:center;'>
+					<thead style='background-color:#008D4D;color:white;'>
+						<tr>
+							<th style=\"text-align:center;vertical-align:middle\"></th>
+							<th >Ref.</th>
+							<th>Identificación</th>
+							<th>Nombre</th>
+							<th>Curso</th>
+							<th>Deuda Pdte.</th>
+							<th>F. vencimiento</th>
+							<th>F. seguimiento</th>
+							<th>Opciones</th>
+						</tr>
+					</thead>";
+				$body="<tbody>";
+				foreach ($cobranza->rows as $row)
+				{	if( !empty( $row ) )
+					{   $body.='<tr><td class="details-control"><i style="color:green;" class="fa fa-plus-circle"></i></td>';
+						$body.='	<td>'.$row['alum_codi'].'</td>';
+						$body.='	<td>'.$row['numeroIdentificacion'].'</td>';
+						$body.='	<td>'.$row['alum_nomb_full2'].'</td>';
+						$body.='	<td>'.$row['curso'].'</td>';
+						$body.='	<td>'.$row['deud_totalPendiente'].'</td>';
+						$body.='	<td>'.$row['deud_fechaVencimiento'].'</td>';
+						$body.='	<td>'.$row['acerca_fecha_seguimiento'].'</td>';
+						if ($permiso->rows[0]['veri']==1)
+						{
+							$body.="<td><span onclick='edit(".$row['alum_codi'].",\"modal_crm_body\",\"".$diccionario['rutas_head']['ruta_html_finan']."/cobranza/controller.php\")' class='btn_opc_lista_acercamiento glyphicon glyphicon-phone-alt cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_crm'
+							id='".$row['alum_codi']."_crm'onmouseover='$(this).tooltip(".'"show"'.")' title='Acercamiento'></span></td>";
+						}
+						else
+						{   $body.="";
+						}
+						$body.='</tr>';
+					}					
+				}
+				$body.="</tbody></table>";
+				$construct_table.= $body;
+				$data['tabla'] = $construct_table;
             }
 			else
 			{   $data = array('mensaje'=>$cobranza->mensaje.$cobranza->ErrorToString());
