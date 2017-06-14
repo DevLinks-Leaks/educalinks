@@ -3,7 +3,7 @@
 	$serverName = "69.64.91.237";		 
 	$db = "Certuslinks_admin"; 
 	$uid = "sa";
-	$pwd = "R3dlink51981";
+	$pwd = "$3cur!ty@@";
 	$charset = "UTF-8";
 
 	$connectionInfo = array("Database"=>$db, 
