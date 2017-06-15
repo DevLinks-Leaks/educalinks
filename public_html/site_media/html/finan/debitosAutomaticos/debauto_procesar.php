@@ -26,7 +26,7 @@
 		<div class="form-group" >
 			<div class='col-sm-3'>
 				<input type="hidden" name="event" id="evento" value="subir_archivo" />
-				<label for="textook" class='control-label'>Fecha del débito</label>
+				<label for="fecha_debito" class='control-label'>Fecha del débito</label>
 			</div>
 			<div class='col-sm-3'>
 				<input type="text" class="form-control" name="fecha_debito" id="fecha_debito" value="{txt_fecha_debito}" readonly='readonly' />
@@ -37,7 +37,7 @@
 	<div class="row">
 		<div class="form-group" >
 			<div class='col-sm-3'>
-				<label for="textook" class='control-label'>Campo C&oacute;digo Deuda</label>
+				<label for="combo_codigodeuda" class='control-label'>Campo C&oacute;digo Deuda</label>
 			</div>
 			<div class='col-sm-3'>
 				{combo_codigodeuda}
@@ -48,7 +48,7 @@
 	<div class="row">
 		<div class="form-group" >
 			<div class='col-sm-3'>
-				<label for="textook" class='control-label'>Campo Valor</label>
+				<label for="combo_valor" class='control-label'>Campo Valor</label>
 			</div>
 			<div class='col-sm-3'>
 				{combo_valor}
@@ -59,7 +59,7 @@
 	<div class="row">
 		<div class="form-group" >
 			<div class='col-sm-3'>
-				<label for="textook" class='control-label'>Campo de Texto Confirmaci&oacute;n</label>
+				<label for="combo_estado" class='control-label'>Campo de Estado (indica si dueda fue procesada)</label>
 			</div>
 			<div class='col-sm-3'>
 				{combo_estado}
@@ -81,6 +81,18 @@
 			</div>
 			<div class='col-sm-3'>
 				<input type="text" class="form-control" name="textook" id="textook" placeholder="Texto de confirmación" />
+			</div>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="form-group" >
+			<div class='col-sm-3'>
+				<input type="hidden" name="event" id="evento" value="subir_archivo" />
+				<label for="textonook" class='control-label'>Texto de reprobación</label>
+			</div>
+			<div class='col-sm-3'>
+				<input type="text" class="form-control" name="textonook" id="textonook" placeholder="Texto de reprobación" />
 			</div>
 		</div>
 	</div>

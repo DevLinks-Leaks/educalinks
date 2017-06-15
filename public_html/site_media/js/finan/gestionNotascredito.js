@@ -68,7 +68,7 @@ $(document).ready(function(){
 	table_NC.column( '5:visible' ).order( 'desc' );
 });
 function reenvio_factura(codigo, div,url){
-    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
     data.append('event', 'resend_to_sri');
     data.append('codigoDocumento', codigo);
@@ -86,7 +86,7 @@ function reenvio_factura(codigo, div,url){
 }
 
 function envio_factura(codigo, div, url, envio){
-    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
     data.append('event', 'send_to_sri');
     data.append('codigoDocumento', codigo);
@@ -105,7 +105,7 @@ function envio_factura(codigo, div, url, envio){
 }
 
 function carga_facturasPendientes(div, url){
-    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
     data.append('event', 'get_pending_bills');
     var xhr = new XMLHttpRequest();
@@ -159,7 +159,7 @@ function envio_facturasPorLote(div, url){
 
 }
 function editar(codigo,alum_codi,tipo_persona,div,url,url2,follow_next)
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();	
     data.append('event', 'editar_factura');
     data.append('codigofactura', codigo);
@@ -235,7 +235,7 @@ function js_gestionNotascredito_to_excel_busquedaFacturas( evento, tipo_reporte 
 	document.getElementById( 'file_form' ).submit();
 }
 function carga_busquedaFacturas(div, url)
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var tipoDocumentoAutorizado = 'NC';
     var fechavenc_ini = document.getElementById("txt_fecha_ini").value;
     var fechavenc_fin = document.getElementById("txt_fecha_fin").value;

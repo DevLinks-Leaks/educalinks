@@ -43,7 +43,7 @@ function countDown(div) {
 }
 //CONSULTA FILTRADA. NO USADA ACTUALMENTE.
 function busca(busq,div,url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'get_all_data');
 	data.append('busq', busq);	
@@ -61,7 +61,7 @@ function busca(busq,div,url){
 
 // JS LLAMADO A REPORTES
 function carga_reports_item(codigo,div,url,evento){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'printvisor');
 	data.append('codigo', codigo);	
@@ -79,7 +79,7 @@ function carga_reports_item(codigo,div,url,evento){
 	xhr.send(data);
 }
 function carga_reports_fp(codigo,div,url,evento){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'printvisor');
 	data.append('codigo', codigo);	
@@ -97,7 +97,7 @@ function carga_reports_fp(codigo,div,url,evento){
 	xhr.send(data);
 }
 function carga_reports_nc(codigo,div,url,evento){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'printvisor');
 	data.append('codigo', codigo);	

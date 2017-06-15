@@ -10,7 +10,7 @@
         $el.find('span').toggleClass('glyphicon-folder-close glyphicon-folder-open');
     });
 	$('#modal_msg').on('hidden.bs.modal', function () {
-		document.getElementById('modal_msg_body').innerHTML='div align="center" style="height:100%;">Por favor, espere<br><br><i style="color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+		document.getElementById('modal_msg_body').innerHTML='div align="center" style="height:100%;">Por favor, espere<br><br><i style="color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 		document.getElementById('modal_msg_footer').innerHTML='<button type="button" class="btn btn-default" data-dismiss="modal">Ocultar</button>';
 	})
 	$('#deudasPendiente_table').DataTable({
@@ -235,7 +235,7 @@ function js_cobros_selecciona_get_deuda( codigoCliente, tipo_persona )
 }
 function carga_busquedaCliente(div,url){
 	var spanish_in="//cdn.datatables.net/plug-ins/f2c75b7247b/i18n/Spanish.json";
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 	var data = new FormData();
 	data.append('event', 'buscar_clientes');	
 	var xhr = new XMLHttpRequest();
@@ -260,7 +260,7 @@ function carga_busquedaCliente(div,url){
 
 // Carga el formulario para agregar un pago
 function carga_formularioPago(div, url)
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 	var data = new FormData();
 	data.append('event', 'agregarPago');	
 	var xhr = new XMLHttpRequest();
@@ -276,7 +276,7 @@ function carga_formularioPago(div, url)
 }
 // Carga el formulario para agregar los metadatos de cada forma de pago
 function carga_formularioMetadata(div, url)
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 	var metadata= $('#formaPago_asign').find(':selected').text();
 	var data = new FormData();
 	data.append('event', 'get_metadata_form');
@@ -301,7 +301,7 @@ function carga_formularioMetadata(div, url)
 // Consulta filtrada de los clientes
 function busca_clientes(filtro, div, url)
 {   var spanish_in="//cdn.datatables.net/plug-ins/f2c75b7247b/i18n/Spanish.json";
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 	var data = new FormData();
 	data.append('event', 'get_client');
 	if(filtro == 'nombres'){
@@ -479,7 +479,7 @@ function validaFechaVencimiento(codigo,div,url)
 	xhr.send(data);
 }
 function js_cobros_pagado_cero ( codigo, url )
-{   document.getElementById('modal_msg_body').innerHTML='div align="center" style="height:100%;">Por favor, espere<br><br><i style="color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById('modal_msg_body').innerHTML='div align="center" style="height:100%;">Por favor, espere<br><br><i style="color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 	var xhr = new XMLHttpRequest();
 	var data = new FormData();
 	data.append('event', 'marcar_pagado_cero');
@@ -908,7 +908,7 @@ function justificaMensajeNoData(tabla, div){
 
 
 function cargaFormularioEditarPago(url, idPago)
-{	document.getElementById( 'modal_editarPago_body' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{	document.getElementById( 'modal_editarPago_body' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 	var data = new FormData();
 	data.append('event', 'editarPago');
 	data.append('idPago', idPago);
@@ -1215,7 +1215,7 @@ function generaPago(div, url)
 		data.append('datosPago', JSON.stringify(pago));
 		data.append('valor',saldo);
 		
-		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
         $( '#modal_resultadoPago' ).modal('show');
 		
 		var xhrpago = new XMLHttpRequest();
@@ -1263,7 +1263,7 @@ function generaPago(div, url)
 	} // fin de condición que valida los campos necesarios
 }
 function generaFcElect( codigoCliente, codigoFC, div, url, bandera )
-{   document.getElementById(div).innerHTML='Por favor, espere... <br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='Por favor, espere... <br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'SendfacturaSRI');
 	data.append('codigoFC', codigoFC);
@@ -1348,7 +1348,7 @@ function js_cobros_limpiar_despues_de_pago_existoso(){
 	document.getElementById('Totalabonado').value='';
 }
 function mostrarDetalleDeuda(codigoDeuda, div, url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'detalleDeuda');	
 	data.append('codigoDeuda', codigoDeuda);	
@@ -1371,7 +1371,7 @@ function mostrarDetalleDeuda(codigoDeuda, div, url){
 }
 
 function mostrarPagosDeuda(codigoDeuda, div, url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
      var data = new FormData();
 	data.append('event', 'detallePagosDeuda');	
 	data.append('codigoDeuda', codigoDeuda);	

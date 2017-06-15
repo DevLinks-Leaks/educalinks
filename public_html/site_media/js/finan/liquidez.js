@@ -23,7 +23,7 @@
 		    });
 // Consulta filtrada
 function busca(busq,div,url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'get_all_data');
 	data.append('busq', busq);	
@@ -44,7 +44,7 @@ function busca(busq,div,url){
 }
 // Carga el formulario para ingresar un nuevo registro
 function carga_add(div,url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'agregar');	
 	var xhr = new XMLHttpRequest();
@@ -57,7 +57,7 @@ function carga_add(div,url){
 	xhr.send(data);
 }
 function add(div,url)
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'set');
 	var cmb_grupo = document.getElementById('grupo_cuentaContable_add');
@@ -77,7 +77,7 @@ function add(div,url)
 	xhr.send(data);
 }
 function edit(codigo,div,url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'modificar');
 	data.append('codigo', codigo);	
@@ -92,7 +92,7 @@ function edit(codigo,div,url){
 }
 function save_edited(codigo,div,url){
 	if(confirm("¿Está seguro que desea editar la información de la cuenta contable?")){
-		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 		var data = new FormData();
 		data.append('event', 'edit');
 		data.append('codigo', document.getElementById('codigo_mod').value);
@@ -115,7 +115,7 @@ function save_edited(codigo,div,url){
 }
 
 function carga_reports_liquidez(div,url,evento){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'printvisor');
 
@@ -137,7 +137,7 @@ function carga_reports_liquidez(div,url,evento){
 }
 
 function crearhtml(div,url,evento){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var sumabancos = document.getElementById('sumbancos').value;
 	var saldo = 0;
 	var chequesgirados = document.getElementById('cheqgiradonocobrado').value;
@@ -306,7 +306,7 @@ document.getElementById('subtotal').value =acu;
 function del(codigo,div,url){
 	var cmb_grupo = document.getElementById('codigoGrupo_mod');
 	if(confirm("¿Está seguro que desea eliminar la información de la cuenta contable?")){
-		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 		var data = new FormData();
 		data.append('event', 'delete');
 		data.append('codigo', codigo);

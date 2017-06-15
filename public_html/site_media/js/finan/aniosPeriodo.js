@@ -112,7 +112,7 @@ function aumenta_10(div)
 }
 // Carga el combo de los productos
 function cargaProductos(div, url){
-    document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+    document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var comboCategoria = document.getElementById("codigoCategoria_add");
     var data = new FormData();
     data.append('categoria', comboCategoria.options[comboCategoria.selectedIndex].value);
@@ -128,7 +128,7 @@ function cargaProductos(div, url){
 }
 // Carga el formulario para ingresar un nuevo registro
 function js_aniosPeriodo_carga_add( div, url )
-{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var data = new FormData();
     data.append('event', 'agregar');
     var xhr = new XMLHttpRequest();
@@ -142,7 +142,7 @@ function js_aniosPeriodo_carga_add( div, url )
 }
 function js_aniosPeriodo_carga_deudas( codigo, div, url )
 {   if ( proceso_corriendo === 0 )
-    {   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+    {   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
         document.getElementById('span_boton_headerdeudas').innerHTML = '';
         document.getElementById('footerdeudas').innerHTML =
                 '<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button></div>';
@@ -172,7 +172,7 @@ function js_aniosPeriodo_carga_deudas( codigo, div, url )
     }
 }
 function js_aniosPeriodo_carga_deudasfechas(div, url){
-    document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+    document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var data = new FormData();
     data.append('event', 'deuda');
     data.append('mes', codigo);//DE DONDE SACA "CODIGO"
@@ -214,7 +214,7 @@ function js_aniosPeriodo_carga_deudasfechas(div, url){
 function js_aniosPeriodo_migrarfacturas( div, url )
 {   if ( document.getElementById( 'codigomes_deudas' ) )
     {   var codigo = document.getElementById('codigomes_deudas').value;
-        document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+        document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
         var data = new FormData();
         data.append('event', 'migrarfacturas');
         data.append('mes', codigo);
@@ -239,7 +239,7 @@ function js_aniosPeriodo_migrarfacturas( div, url )
     }
 }
 function js_aniosPeriodo_migrarfacturasindividuales( codigo, div, url )
-{   document.getElementById( div ).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+{   document.getElementById( div ).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     document.getElementById( 'span_senddeudaindividual_result_button' ).innerHTML = 
                 '<button type="button" class="btn btn-primary" id="btn_senddeudaindividual" name="btn_senddeudaindividual" ' +
                 'onclick="js_aniosPeriodo_senddeudaindividual(document.getElementById(\'codigodeuda\').value,\'modal_deudasconfirmacion_body\',' +
@@ -260,7 +260,7 @@ function js_aniosPeriodo_migrarfacturascontificos( url2, div, i, cc, ce, cd )
 {   document.getElementById( 'btn_migrardeudascontifico' ).disabled = true;
     var datosdeudas=document.getElementById('jsondeudas').innerHTML;
     var cantidad=document.getElementById('cantidad').value;
-    document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+    document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var data = new FormData();
     var valores = JSON.parse(datosdeudas);
     json_codigoDeudas_envioContifico = JSON.parse(datosdeudas);
@@ -342,7 +342,7 @@ function js_aniosPeriodo_migrarfacturascontificos_followed( url2, div, indice, o
                     document.getElementById(div).innerHTML=
                     '<br>'+ 
                     '<div align="center" style="height:50%;">'+
-                        '<i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i>'+
+                        '<i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i>'+
                         '<br>'+ 
                         '<span style="font-size:small;">Envío de deudas a Contífico... <span id="div_text_per_complete" name="div_text_per_complete">' + (per_complete) + '</span>% completado</span>'+
                         '<br>'+
@@ -382,7 +382,7 @@ function js_aniosPeriodo_migrarfacturascontificos_followed( url2, div, indice, o
         {   document.getElementById(div).innerHTML=
                 '<br>'+ 
                 '<div align="center">'+
-                    '<i style="font-size:large;color:darkred;" class="fa fa-cog"></i>'+
+                    '<i style="font-size:large;color:#E55A2F;" class="fa fa-cog"></i>'+
                     '<br>'+
                     '<span style="font-size:small;">Envío de deudas a Contífico... <span id="div_text_per_complete" name="div_text_per_complete">' + (per_complete - per_complete_first - 1) + '</span>% completado</span>'+
                     '<br>'+ 
@@ -417,7 +417,7 @@ function js_aniosPeriodo_continuar_envio_CONTIFICO( )
 function js_aniosPeriodo_envio_deudas_lote_resultadofinal( url, cc, ce, cd, div, indice, obj_len )
 {   if ( !div )
         div = 'migrardeudasresult';
-    document.getElementById( div ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+    document.getElementById( div ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
     data.append('event', 'resultado');
     data.append('contadorcorrectos', cc);
@@ -460,7 +460,7 @@ function js_aniosPeriodo_envio_deudas_lote_resultadofinal( url, cc, ce, cd, div,
 function js_aniosPeriodo_senddeudaindividual( id, div, div2, url2, mes )
 {   var deuda=document.getElementById('jsondeudas').innerHTML;
     document.getElementById( 'span_senddeudaindividual_result_button' ).innerHTML = '';
-    document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+    document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var data = new FormData();
     var url='https://www.contifico.com/sistema/api/v1/documento/';
     var apikey = document.getElementById('apikey').value;
@@ -503,7 +503,7 @@ function js_aniosPeriodo_senddeudaindividual( id, div, div2, url2, mes )
     xhrr.send(deuda);
 }
 function js_aniosPeriodo_upddocumentoindividual(codigo_contifico,url,codigo, div,estado,cantidad)
-{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var data = new FormData();
     fact_procesadas = fact_procesadas + 1;
     data.append('event', 'upddeuda');
@@ -520,7 +520,7 @@ function js_aniosPeriodo_upddocumentoindividual(codigo_contifico,url,codigo, div
     xhr.send(data);
 }
 function js_aniosPeriodo_buscadeudas(div, url)
-{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var anio = $("#cmb_periodo_anual_deudas option:selected").text();
     var data = new FormData();
     data.append('event', 'get_all_deuda');
@@ -561,7 +561,7 @@ function js_aniosPeriodo_buscadeudas(div, url)
 }
 // Consulta filtrada
 function js_aniosPeriodo_buscaItemsPeriodo(div, url)
-{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var data = new FormData();
     data.append('event', 'get_all_data');
     data.append('anio', $("#codigoAnio option:selected").val());
@@ -615,7 +615,7 @@ function js_aniosPeriodo_carga_resultadoLote(div, url)
                             'aria-hidden="true" data-toggle="modal" data-target="#modal_infoPa">'+
                             '&nbsp;<span style="color:#3c8dbc;" class="fa fa-info-circle"></span>&nbsp;</button>'+
                     '</div>';
-    document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+    document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var data = new FormData();
     data.append('event', 'genera_deudas');
     var xhr = new XMLHttpRequest();
@@ -638,7 +638,7 @@ function js_aniosPeriodo_carga_bloqueo_alumnos(div, url)
                             'aria-hidden="true" data-toggle="modal" data-target="#modal_infoPa">'+
                             '&nbsp;<span style="color:#3c8dbc;" class="fa fa-info-circle"></span>&nbsp;</button>'+
                     '</div>';
-    document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+    document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var data = new FormData();
     data.append('event', 'bloqueo_alumnos');
     var xhr = new XMLHttpRequest();
@@ -663,7 +663,7 @@ function js_aniosPeriodo_saveAddItem( div, url )
         }
         else
         {   if (js_general_compare_dates( document.getElementById('fechaInicio_add').value, document.getElementById('fechaFin_add').value ) == 'OK' )
-            {   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+            {   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
                 var data = new FormData();
                 data.append('event', 'set');
                 data.append('anio',  document.getElementById('periodo_add').value);
@@ -705,7 +705,7 @@ function js_aniosPeriodo_generarDeudaLote( div2, url )
     if ( bandera_prod === 0 )
         $.growl.warning({ title: "Educalinks informa", message: "Seleccione al menos un producto para continuar." });
     else
-    {   document.getElementById( 'div_deudas_resultado' ).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';    aumenta_porc( 0 ); //Función llamada de general.js    document.getElementById('btn_genera_deuda').disabled = true;
+    {   document.getElementById( 'div_deudas_resultado' ).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';    aumenta_porc( 0 ); //Función llamada de general.js    document.getElementById('btn_genera_deuda').disabled = true;
         var alumnos={};
         $('#alumnos :selected').each(function(i, selected){ 
           alumnos[i] = $(selected).val(); 
@@ -767,7 +767,7 @@ function js_aniosPeriodo_validaTodos()
 }
 // Carga el formulario para editar un registro
 function js_aniosPeriodo_carga_edit(codigo, div, url)
-{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var data = new FormData();
     data.append('event', 'get');
     data.append('producto', codigo);
@@ -792,7 +792,7 @@ function js_aniosPeriodo_saveEditItem( div, url )
         {   
             if(confirm("¿Está seguro que desea editar la informacion actual?"))
             {   
-                document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+                document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
                 var data = new FormData();
                 data.append('event', 'edit');
                 data.append('anio', document.getElementById('codigoPeriodo_mod').value);
@@ -822,7 +822,7 @@ function js_aniosPeriodo_saveEditItem( div, url )
     }
 }
 function js_aniosPeriodo_cargaCursos( div, url )
-{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var comboPeriodos = document.getElementById("periodos");
     var data = new FormData();
     data.append('cod_peri', comboPeriodos.value);
@@ -839,7 +839,7 @@ function js_aniosPeriodo_cargaCursos( div, url )
     xhr.send(data);
 }
 function js_aniosPeriodo_cargaAlumnos( div )
-{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var comboCursos = document.getElementById("curso");
     var data = new FormData();
     data.append('cod_curso', comboCursos.value);
@@ -866,7 +866,7 @@ function js_aniosPeriodo_cargaAlumnos( div )
 // Realiza la eliminacion del cliente en la BD
 function js_aniosPeriodo_del( codigo, div, url )
 {   if( confirm( "¿Está seguro que desea eliminar el item del periodo actual?" ) )
-    {   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+    {   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
         var data = new FormData();
         data.append('event', 'delete');
         data.append('anio',  $("#peri_codi").val());
@@ -940,7 +940,7 @@ function js_aniosPeriodo_bloquear ( div, url )
 // Realiza la eliminacion del cliente en la BD
 function js_aniosPeriodo_del_bloqueo( codigo )
 {   if( confirm( "¿Está seguro que desea eliminar el bloqueo de este alumno?" ) )
-    {   document.getElementById( 'div_lista_bloqueados' ).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+    {   document.getElementById( 'div_lista_bloqueados' ).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
         var data = new FormData();
         data.append('event', 'del_bloqueo_alumno');
         data.append('alum_moti_bloq_opci_codi',  codigo);

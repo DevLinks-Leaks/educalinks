@@ -57,7 +57,7 @@
 
 
 function carga_busquedaCliente(div, url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'buscar_clientes');	
 	var xhr = new XMLHttpRequest();
@@ -82,7 +82,7 @@ function carga_busquedaCliente(div, url){
 
 function busca(div,url){
 	var codcliente =document.getElementById('codigoCliente').value;
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'get_all_data');
 	data.append('codigoCliente', codcliente);	
@@ -99,7 +99,7 @@ function busca(div,url){
 
 // Consulta filtrada de los alumnos
 function busca_clientes(filtro, div, url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'get_client');
 	if(filtro == 'nombres'){
@@ -279,7 +279,7 @@ function seleccionarDeuda(codigo,div,url)
 {	$('#detalleNotaCredito_table tbody tr').each(function(){
 		$(this).remove();
 	});
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'get_factura'); 
 	data.append('codigoFactura', codigo);
@@ -370,7 +370,7 @@ function validaDesbordamientoNC222(e, field){
 }
 
 function mostrarReduccionDetalleDeuda(secuenciaDetalle, div, url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var codigoProducto = "", nombreProducto = "", valorBruto = "", descuento = "", iva = "", valorNeto = "", valorNC = "";
 	$('#detalleFactura_table tbody tr').each(function(){
 		if(!$(this).find('td').eq(0).attr('class')){ // Que no este vacía la tabla
@@ -683,7 +683,7 @@ function generaNotaCredito(div, url)
 			notaCredito['detalle'].push(detalle);
 		});
 
-		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 		var data = new FormData();
 		data.append('event', 'ingresaNotaCredito');
 		data.append('datosNotaCredito', JSON.stringify(notaCredito));
@@ -700,7 +700,7 @@ function generaNotaCredito(div, url)
 		xhrnc.send(data);
 }
 function generaNcElect(codigoNC,div,url)
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'SendNotaCreditoSRI');
 	data.append('codigoNC', codigoNC);

@@ -104,7 +104,7 @@ $(document).ready(function()
 	});
 })	
 function js_saldoaFavor_busca( busq, div, url )
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'get_all_data');
 	data.append('cuales', document.getElementById( 'cmb_mostrarSaf' ).value );
@@ -223,7 +223,7 @@ function js_saldoaFavor_change_reason()
 /*
 function js_saldoafavor_eliminar(codigo,div,url)
 {   if(confirm("¿Está seguro que desea eliminar el saldo a favor?"))
-	{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 		var data = new FormData();
 		data.append('event', 'delete');
 		data.append('banc_codigo', codigo);	
@@ -240,7 +240,7 @@ function js_saldoafavor_eliminar(codigo,div,url)
 }
 function js_saldoafavor_devolver(codigo,div,url)
 {   if(confirm("¿Marcar saldo a favor como 'devuelto' ahora?"))
-	{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 		var data = new FormData();
 		data.append('event', 'devolver');
 		data.append('banc_codigo', codigo);	
@@ -256,7 +256,7 @@ function js_saldoafavor_devolver(codigo,div,url)
 	}
 }*/
 function edit( codigo, div, url )
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'get');
 	data.append('banc_codigo', codigo);	
@@ -270,7 +270,7 @@ function edit( codigo, div, url )
 	xhr.send(data);
 }
 /*function carga_add(div,url)
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'agregar');	
 	var xhr = new XMLHttpRequest();
@@ -284,7 +284,7 @@ function edit( codigo, div, url )
 }*/
 function js_saldoaFavor_busca_clientes( filtro, div, url )
 {   var spanish_in="//cdn.datatables.net/plug-ins/f2c75b7247b/i18n/Spanish.json";
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'get_client');
 	data.append('tipo_persona', document.getElementById('cmb_per_consulta_tipo_persona').value );
@@ -329,7 +329,7 @@ function js_saldoaFavor_busca_clientes( filtro, div, url )
 // Carga el formulario para buscar a un cliente especifico
 function js_saldoaFavor_carga_busquedaCliente(url)
 {   var spanish_in="//cdn.datatables.net/plug-ins/f2c75b7247b/i18n/Spanish.json";
-	document.getElementById('modal_busquedaCliente_body').innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById('modal_busquedaCliente_body').innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'buscar_clientes');	
 	data.append('tabla', 'clientes_table');
@@ -367,7 +367,7 @@ function js_saldoaFavor_carga_busquedaCliente(url)
 	xhr.send(data);
 }
 function js_saldoaFavor_add( )
-{   document.getElementById( 'resultado' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById( 'resultado' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append( 'event', 'set' );
 	data.append( 'valor', document.getElementById( 'valor' ).value );
@@ -384,7 +384,7 @@ function js_saldoaFavor_add( )
 	xhr.send(data);
 }
 function js_saldoaFavor_add2(  )
-{   document.getElementById( 'resultado' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById( 'resultado' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     
 	var data = new FormData();
 	data.append( 'event', 'set' );
@@ -432,7 +432,7 @@ function js_saldoaFavor_balancear( per_codi )
 	$(function() {$('#valor_balance' ).maskMoney({thousands:'', decimal:'.', allowZero:false});});
 }
 function js_saldoaFavor_rep_hist( per_codi )
-{   document.getElementById( 'modal_rep_body' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById( 'modal_rep_body' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 	var cartera_codigo = 0;
 	var cliente_codigo = '0';
 	var tipo_persona = 0;
@@ -463,7 +463,7 @@ function js_saldoaFavor_rep_hist( per_codi )
 }
 /*function save_edited(rol_codigo,div,url)
 {   if(confirm("¿Está seguro que desea editar la información del banco?"))
-	{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 		var data = new FormData();
 		data.append('event', 'edit');
 		data.append('banc_codigo', document.getElementById('banc_codigo').value);

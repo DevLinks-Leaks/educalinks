@@ -32,7 +32,7 @@ function js_verDeudasSinFacturas_to_excel_tipoDocumentoAutorizado( evento, tipo_
     document.getElementById( 'file_form' ).submit();
 }
 function js_verDeudasSinFacturas_carga_DSF(div)
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var fechavenc_ini = document.getElementById("txt_fecha_ini").value;
     var fechavenc_fin = document.getElementById("txt_fecha_fin").value;
     var data = new FormData();
@@ -222,7 +222,7 @@ function js_verDeudasSinFacturas_convertToFAC_followed2(  )
         letdoit = 'no'
     
     if ( letdoit === 'yes' )
-    {   document.getElementById( 'modal_convertToFac_step1' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div>';
+    {   document.getElementById( 'modal_convertToFac_step1' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div>';
         document.getElementById( 'modal_convertToFac_step1' ).style.display = 'inline';
         document.getElementById( 'btn_convertToFac_step1' ).style.display = 'none';
         

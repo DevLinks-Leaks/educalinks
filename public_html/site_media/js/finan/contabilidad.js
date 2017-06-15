@@ -94,7 +94,7 @@ var contabilidad_interval_carga_progress_bar_CONTIFICO = setInterval(function()
     }
 }, Math.round( 100 ) );
 function busca(busq,div,url)
-{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var data = new FormData();
     data.append('event', 'get_all_data');
     data.append('busq', busq);    
@@ -127,7 +127,7 @@ function busca(busq,div,url)
     xhr.send(data);
 }
 function buscaproducto(busq,div,url)
-{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var data = new FormData();
     data.append('event', 'get_all_data_producto');
     data.append('busq', busq);    
@@ -161,7 +161,7 @@ function buscaproducto(busq,div,url)
 }
 function del(codigo,div,url){
     if(confirm("¿Está seguro que desea eliminar el banco?"))
-    {   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+    {   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
         var data = new FormData();
         data.append('event', 'delete');
         data.append('banc_codigo', codigo);    
@@ -177,7 +177,7 @@ function del(codigo,div,url){
     }
 }
 function edit(codigo,div,url)
-{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var data = new FormData();
     data.append('event', 'get');
     data.append('banc_codigo', codigo);    
@@ -192,7 +192,7 @@ function edit(codigo,div,url)
 }
 function guardarcontifico(codigo,div,url)
 {   if(confirm("¿Está seguro que desea guardar la información?"))
-    {    document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';var e = document.getElementById("categorias");
+    {    document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';var e = document.getElementById("categorias");
         var strUser = e.options[e.selectedIndex].value;
         var data = new FormData();
         data.append('event', 'savecontifico');
@@ -213,7 +213,7 @@ function showRowInfo(elm)
 }
 function js_contabilidad_migrarfacturasindividuales(codigo,div,url,elm)
 {   var codigofactura=showRowInfo(elm);
-    document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+    document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     document.getElementById( 'span_sendpagoindividual_result_button' ).innerHTML = 
     '<button type="button" class="btn btn-primary" id="btn_sendpagoindividual" name="btn_sendpagoindividual"' +
     ' onclick="js_contabilidad_senddeudaindividual(document.getElementById(\'codigodeuda\').value,\'modal_pagosconfirmacion_body\','+
@@ -235,7 +235,7 @@ function js_contabilidad_migrarfacturasindividuales(codigo,div,url,elm)
 function js_contabilidad_actualizarfacturas(div,url)
 {   if ( document.getElementById('codigomes_paid_dnas') )
     {   var codigo = document.getElementById('codigomes_paid_dnas').value
-        document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+        document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
         var data = new FormData();
         data.append('event', 'actualizarfacturas');
         data.append('mes', codigo);
@@ -270,7 +270,7 @@ function js_contabilidad_actualizarfacturas(div,url)
 }
 function js_contabilidad_actualizar_DNAs( codigo, div, url )
 {   if ( proceso_corriendo === 0 )
-    {   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+    {   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
         document.getElementById('span_boton_headerdeudas').innerHTML = '';
         document.getElementById('footer_actualizar').innerHTML =
                 '<button type="button" class="btn btn-default" data-dismiss="modal">Ocultar</button></div>';
@@ -302,7 +302,7 @@ function js_contabilidad_actualizar_DNAs( codigo, div, url )
 function js_contabilidad_migrarfacturas( div, url )
 {   if ( document.getElementById('codigomes') )
     {   var codigo = document.getElementById('codigomes').value;
-        document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';var data = new FormData();
+        document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';var data = new FormData();
         data.append('event', 'migrarfacturas');
         data.append('mes', codigo);    
         data.append('anio', $("#cmb_periodo_anual_pagos option:selected").text());
@@ -330,7 +330,7 @@ function js_contabilidad_migrarfacturascontificos( url2, div, i, cc, ce,cd )
     var datosdeudasid=document.getElementById('jsondeudasid').innerHTML;
     var datosdeudasidpago=document.getElementById('jsondeudasidpago').innerHTML;
     var cantidad=document.getElementById('cantidad').value;
-    document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+    document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var valores = JSON.parse(datosdeudas); //
     var valoresid = JSON.parse(datosdeudasid);
     var valoresidpago = JSON.parse(datosdeudasidpago); //$$
@@ -423,7 +423,7 @@ function js_contabilidad_migrarfacturascontificos_followed( url2, div, indice, o
                     document.getElementById(div).innerHTML=
                     '<br>'+ 
                     '<div align="center" style="height:50%;">'+
-                        '<i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i>'+
+                        '<i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i>'+
                         '<br>'+
                         '<span style="font-size:small;">Envío de Pagos a Contífico... <span id="div_text_per_complete" name="div_text_per_complete">' + (per_complete) + '</span>% completado</span>'+
                         '<br>'+
@@ -466,7 +466,7 @@ function js_contabilidad_migrarfacturascontificos_followed( url2, div, indice, o
         {   document.getElementById(div).innerHTML=
                 '<br>'+ 
                 '<div align="center">'+
-                    '<i style="font-size:large;color:darkred;" class="fa fa-cog"></i>'+
+                    '<i style="font-size:large;color:#E55A2F;" class="fa fa-cog"></i>'+
                     '<br>'+ 
                     '<span style="font-size:small;">Envío de Pagos a Contífico... <span id="div_text_per_complete" name="div_text_per_complete">' + (per_complete - per_complete_first - 1) + '</span>% completado</span>'+
                     '<br>'+ 
@@ -488,7 +488,7 @@ function js_contabilidad_migrarfacturascontificos_followed( url2, div, indice, o
     }
 } 
 function js_contabilidad_envio_pagos_lote_resultadofinal( url, cc, ce, cd, div, indice, obj_len )
-{   document.getElementById( div ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div><br>Por favor, espere...<br>';
+{   document.getElementById( div ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div><br>Por favor, espere...<br>';
     var data = new FormData();
     data.append('event', 'resultado');
     data.append('contadorcorrectos', cc);    
@@ -612,7 +612,7 @@ function js_contabilidad_senddeudaact( url2, div, indice, obj_len, cc, ce, cd, s
                     '<div class="modal-body" id="modal_actualizar_body">'+
                         '<br>'+ 
                         '<div align="center" style="height:50%;">'+
-                            '<i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i>'+
+                            '<i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i>'+
                             '<br>'+
                             '<span style="font-size:small;">Actualización de DNA\s a Factura... <span id="div_text_per_complete" name="div_text_per_complete">' + (per_complete) + '</span>% completado</span>'+
                             '<br>'+
@@ -676,7 +676,7 @@ function js_contabilidad_senddeudaact( url2, div, indice, obj_len, cc, ce, cd, s
                 '<div class="modal-body" id="modal_actualizar_body">'+
                     '<br>'+ 
                     '<div align="center">'+
-                        '<i style="font-size:large;color:darkred;" class="fa fa-cog"></i>'+
+                        '<i style="font-size:large;color:#E55A2F;" class="fa fa-cog"></i>'+
                         '<br>'+ 
                         '<span style="font-size:small;">Actualización de DNA\s a Factura... <span id="div_text_per_complete" name="div_text_per_complete">' + (per_complete - per_complete_first - 1) + '</span>% completado</span>'+
                         '<br>'+ 
@@ -713,7 +713,7 @@ function js_contabilidad_continuar_envio_CONTIFICO( )
 {   proceso_corriendo = 1;
 }
 function js_contabilidad_resultadofinalact( url, cc, ce, cd, indice, obj_len )
-{   document.getElementById('modal_actualizar_body').innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div><br>Por favor, espere...<br>';
+{   document.getElementById('modal_actualizar_body').innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div><br>Por favor, espere...<br>';
     var data = new FormData();
     data.append('event', 'resultadoact');
     data.append('contadorcorrectos', cc);    
@@ -755,7 +755,7 @@ function js_contabilidad_resultadofinalact( url, cc, ce, cd, indice, obj_len )
 }
 function js_contabilidad_senddeudaindividualact(id,div,url2,mes){
     var deuda=document.getElementById('jsondeudas').innerHTML;
-    document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+    document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     //var data = new FormData();
     var url='https://www.contifico.com/sistema/api/v1/documento/';
     var apikey =document.getElementById('apikey').value;
@@ -793,7 +793,7 @@ function js_contabilidad_senddeudaindividual( id, div, div2, url2, mes )
     var deuda = document.getElementById('jsondeudas').innerHTML;
     document.getElementById( 'span_sendpagoindividual_result_button' ).innerHTML = '';
     var deudaid = document.getElementById('idcontifico').innerHTML;
-    document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+    document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     //var data = new FormData();
     var url = 'https://contifico.com/sistema/api/v1/documento/'+deudaid.trim()+'/cobro/';
     var apikey = document.getElementById('apikey').value;
@@ -844,7 +844,7 @@ function js_contabilidad_senddeudaindividual( id, div, div2, url2, mes )
     xhrr.send(deuda);
 }
 function js_contabilidad_carga_deudas( codigo, div, url )
-{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     console.log( codigo );
     var data = new FormData();
     data.append('event', 'migrar');
@@ -881,7 +881,7 @@ function js_contabilidad_carga_deudas( codigo, div, url )
     xhr.send(data);
 }
 function js_contabilidad_upddocumentoindividual( codigo_contifico, url, codigo, div, estado, cantidad )
-{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var data = new FormData();
     fact_procesadas=fact_procesadas+1;
     var contificoid=0;
@@ -905,7 +905,7 @@ function js_contabilidad_upddocumentoindividual( codigo_contifico, url, codigo, 
 }
 function guardarcontificoproducto(codigo,div,url)
 {   if(confirm("¿Está seguro que desea guardar la información?"))
-    {   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+    {   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
         var e = document.getElementById("productos");
         var strUser = e.options[e.selectedIndex].value;
         var data = new FormData();
@@ -923,7 +923,7 @@ function guardarcontificoproducto(codigo,div,url)
     }
 }
 function js_contabilidad_buscapagos(div,url)
-{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
    var data = new FormData();
     data.append('event', 'get_all_deuda');
     data.append('anio', $("#cmb_periodo_anual_pagos option:selected").text());    
@@ -960,7 +960,7 @@ function js_contabilidad_migrar(codigo,div,url)
     {   document.getElementById('span_boton_headerpagos').innerHTML = '';
         document.getElementById('footerpagos').innerHTML =
                 '<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button></div>';
-        document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+        document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
         var data = new FormData();
         data.append('event', 'migrar');
         data.append('mes', codigo);    
@@ -997,7 +997,7 @@ function js_contabilidad_migrar(codigo,div,url)
     }
 }
 function categorias(codigo,div,url)
-{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var data = new FormData();
     data.append('event', 'categorias');
     data.append('categoriacodigo', codigo);    
@@ -1011,7 +1011,7 @@ function categorias(codigo,div,url)
     xhr.send(data);
 }
 function productos(codigo,div,url)
-{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var data = new FormData();
     data.append('event', 'productos');
     data.append('productocodigo', codigo);    
@@ -1025,7 +1025,7 @@ function productos(codigo,div,url)
     xhr.send(data);
 }
 function getproducto(div,url2,codigo)
-{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var url='https://www.contifico.com/sistema/api/v1/producto/';
     var data = new FormData();
     var apikey = document.getElementById('apikey').value;
@@ -1040,7 +1040,7 @@ function getproducto(div,url2,codigo)
     xhr.send(data);
 }
 function getcategorias(div,url2,codigo)
-{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var url='https://www.contifico.com/sistema/api/v1/categoria/';
     var data = new FormData();
     var apikey =document.getElementById('apikey').value;
@@ -1055,7 +1055,7 @@ function getcategorias(div,url2,codigo)
     xhr.send(data);
 }
 function combocategorias(div,categorias,url,codigo)
-{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var data = new FormData();
     data.append('event', 'combocategorias');
     data.append('categorias', categorias);    
@@ -1070,7 +1070,7 @@ function combocategorias(div,categorias,url,codigo)
     xhr.send(data);
 }
 function comboproductos(div,productos,url,codigo)
-{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var data = new FormData();
     data.append('event', 'comboproductos');
     data.append('productos', productos);    
@@ -1086,7 +1086,7 @@ function comboproductos(div,productos,url,codigo)
 }
 function  migrar_caja(div,url)
 {   var datacaja=document.getElementById('jsoncaja').innerHTML;
-    document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+    document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var data = new FormData();
     data.append('Caja', datacaja);    
     var xhr = new XMLHttpRequest();
@@ -1100,7 +1100,7 @@ function  migrar_caja(div,url)
     xhr.send(data);
 }
 function addproductos(codigo,div,url)
-{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var data = new FormData();
     data.append('event', 'add');
     data.append('prod_codigo', codigo);
@@ -1136,7 +1136,7 @@ function guardarproductos(productos,codigo,url2,div)
     }
 }
 function saveproductos(codigo_contifico,url,codigo,div)
-{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
     var data = new FormData();
     data.append('event', 'setproductos');
     data.append('codigo_productos', codigo);
@@ -1152,7 +1152,7 @@ function saveproductos(codigo_contifico,url,codigo,div)
 }
 function save_edited(rol_codigo,div,url)
 {   if(confirm("¿Está seguro que desea editar la información del banco?"))
-    {   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+    {   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
         var data = new FormData();
         data.append('event', 'edit');
         data.append('banc_codigo', document.getElementById('banc_codigo').value);

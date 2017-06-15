@@ -74,7 +74,7 @@ $(document).ready(function() {
 function js_gestionFactura_envio_factura(codigo, div, url, envio, estadoFac )
 {   if( proceso_individual_corriendo === 0 )
 	{   proceso_individual_corriendo = 1;
-		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br><span style="font-size:small;">Enviando comprobante electrónico. Por favor, espere...</span></div>';
+		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br><span style="font-size:small;">Enviando comprobante electrónico. Por favor, espere...</span></div>';
 		var data = new FormData();
 		data.append('event', 'send_to_sri');
 		data.append('codigoDocumento', codigo);
@@ -98,7 +98,7 @@ function js_gestionFactura_envio_factura(codigo, div, url, envio, estadoFac )
 function js_gestionFactura_reenvio_factura(codigo, div, url, estadoFac ){
     if( proceso_individual_corriendo === 0 )
 	{   proceso_individual_corriendo = 1;
-		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br><span style="font-size:small;">Enviando comprobante electrónico. Por favor, espere...</span></div>';
+		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br><span style="font-size:small;">Enviando comprobante electrónico. Por favor, espere...</span></div>';
 		var data = new FormData();
 		data.append('event', 'resend_to_sri');
 		data.append('codigoDocumento', codigo);
@@ -119,7 +119,7 @@ function js_gestionFactura_reenvio_factura(codigo, div, url, estadoFac ){
 	}
 }
 function js_gestionFactura_editar(codigo,alum_codi,tipo_persona,div,url,url2,follow_next){
-    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();	
     data.append('event', 'editar_factura');
     data.append('codigofactura', codigo);
@@ -346,7 +346,7 @@ function js_gestionFactura_get_fac_pdtes_codi_json_followed ( div, url, evento, 
 						document.getElementById(div).innerHTML=
 						'<br>'+ 
 						'<div align="center" style="height:100%;">'+
-							'<i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i>'+
+							'<i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i>'+
 							'<br>'+ 
 							'<span style="font-size:small;">Envío de comprobantes electrónicos... <span id="div_text_per_complete" name="div_text_per_complete">' + (per_complete) + '</span>% completado</span>'+
 							'<br>'+ 
@@ -375,7 +375,7 @@ function js_gestionFactura_get_fac_pdtes_codi_json_followed ( div, url, evento, 
 				document.getElementById(div).innerHTML=
 					'<br>'+ 
 					'<div align="center" style="height:100%;">'+
-						'<i style="font-size:large;color:darkred;" class="fa fa-cog"></i>'+
+						'<i style="font-size:large;color:#E55A2F;" class="fa fa-cog"></i>'+
 						'<br>'+ 
 						'<span style="font-size:small;">Envío de comprobantes electrónicos... <span id="div_text_per_complete" name="div_text_per_complete">' + (per_complete - per_complete_first - 1) + '</span>% completado</span>'+
 						'<br>'+ 
@@ -457,7 +457,7 @@ function js_gestionFactura_envio_facturasPorLote( div, url )
 	{   document.getElementById(div).innerHTML=
 		'<br>'+
 		'<div align="center" style="height:100%;">'+
-			'<i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>'+
+			'<i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>'+
 			'<span style="font-size:small;">Enviando los comprobantes electrónicos al SRI. Por favor, espere...</span>'+
 		'</div>';
 		js_gestionFactura_limpiar_log_envio_lote(  );
@@ -471,7 +471,7 @@ function js_gestionFactura_autorizar_facturasPorLote( div, url )
 	{   document.getElementById(div).innerHTML=
 		'<br>'+
 		'<div align="center" style="height:100%;">'+
-			'<i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>'+
+			'<i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>'+
 			'<span style="font-size:small;">Enviando los comprobantes electrónicos al SRI. Por favor, espere...</span>'+
 		'</div>';
 		js_gestionFactura_limpiar_log_envio_lote(  );
@@ -508,7 +508,7 @@ function js_gestionFactura_to_excel_busquedaFacturas( evento, tipo_reporte )
 	document.getElementById( 'file_form' ).submit();
 }
 function js_gestionFactura_carga_busquedaFacturas(div)
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     $('#span_codigoDocumento_head1').removeClass('fa-check-square-o').addClass('fa-square-o');	
 	$('#span_codigoDocumento_head2').html("Marcar todos");
 	var tipoDocumentoAutorizado = 'FAC';

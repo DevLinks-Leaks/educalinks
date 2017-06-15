@@ -1,5 +1,10 @@
 // JavaScript Document
 $(document).ready(function(){
+    $(".clickable-row").click(function() {
+        window.location = $(this).data("href");
+    });
+    $(".clickable-row").css("cursor", "pointer");
+    
     $("#txt_fecha_debito").datepicker();
     $("#cmb_producto").select2();
     $( "#div_campos" ).sortable({
@@ -99,7 +104,7 @@ function remove_column(obj)
 }
 function carga_archivo(field, div, url)
 {   nuevo_formato();
-    document.getElementById(div + '_load_gif').innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Cargando formato. Por favor, espere...</div>';
+    document.getElementById(div + '_load_gif').innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Cargando formato. Por favor, espere...</div>';
     var data = new FormData();
     data.append('event', 'carga_formato');
     data.append('formatos_add', field);
@@ -125,7 +130,7 @@ function carga_archivo(field, div, url)
             document.getElementById('btn_choose_view').disabled = true;
             document.getElementById('cmb_vista').disabled = true;
             js_debtAut_carga_archivo_followed ( div, url, obj, 0, obj.form_debi_deta_codigos.length );
-			
+            
             var dataII = new FormData();
             dataII.append('event', 'cambiar_vista');
             dataII.append('vista', obj['vista']);
@@ -215,7 +220,7 @@ function js_debtAut_copiar_archivo_copy(codigo, div, url)
 function add_field(field, div, url, obj)
 {   var obj_id = obj.attributes["id"].value;
     document.getElementById(obj_id).disabled = true;
-    document.getElementById(div + '_load_gif').innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+    document.getElementById(div + '_load_gif').innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var combo=field;
     var valor=combo.value;
     var texto = combo.options[combo.selectedIndex].text;
@@ -268,7 +273,7 @@ function get_formatos_copy_paste(div,url)
 }
 function js_debtAut_del(codigo,div,url)
 {   if(confirm("¿Está seguro que desea eliminar el formato seleccionado? Una vez eliminado no se podrá recuperar más."))
-    {   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+    {   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
         var data = new FormData();
         data.append('event', 'delete');
         data.append('form_debi_codigo', codigo);
@@ -290,8 +295,8 @@ function js_debtAut_del(codigo,div,url)
     }
 }
 function js_debtAuto_mantenimiento_buscar_todos(div,url)
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
-    document.getElementById('menu3_loader').innerHTML = '<span title="Cargando consulta"><br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div></span>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
+    document.getElementById('menu3_loader').innerHTML = '<span title="Cargando consulta"><br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div></span>';
     var data = new FormData();
     data.append('event', 'get_maint');
     var xhrafe = new XMLHttpRequest();
@@ -363,12 +368,13 @@ function procesar_Archivo( div, url )
     var data = new FormData();
     data.append( 'event',   'procesar_archivo' );
     data.append( 'textook', document.getElementById( 'textook' ).value);
+	data.append( 'textonook', document.getElementById( 'textonook' ).value);
     data.append( 'codeuda', document.getElementById( 'coddeuda' ).options[document.getElementById( 'coddeuda' ).selectedIndex].text );
     data.append( 'estado',  document.getElementById( 'estado' ).options[document.getElementById( 'estado' ).selectedIndex].text );
     data.append( 'valor',   document.getElementById( 'valor' ).options[document.getElementById( 'valor' ).selectedIndex].text );
     data.append( 'fecha_debito', document.getElementById( 'fecha_debito' ).value );
-	data.append( 'id_formaPago', document.getElementById( 'cmb_formaPago' ).value );
-    document.getElementById( div ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Cargando pagos al sistema. Por favor, espere... Esta tarea puede tardar unos minutos.</div>';
+    data.append( 'id_formaPago', document.getElementById( 'cmb_formaPago' ).value );
+    document.getElementById( div ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Cargando pagos al sistema. Por favor, espere... Esta tarea puede tardar unos minutos.</div>';
     var xhrafe = new XMLHttpRequest();
     xhrafe.open('POST', url , true);
     xhrafe.onreadystatechange=function()
@@ -383,8 +389,8 @@ function js_debtAuto_get_procesar( )
     data.append( 'event', 'get_procesar' );
     data.append( 'filainicia', document.getElementById('filainicia').value );
     data.append( 'txt_fecha_debito', document.getElementById('txt_fecha_debito').value );
-	
-	document.getElementById( 'menu2' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Cargando archivo. Por favor, espere...</div>';
+    
+    document.getElementById( 'menu2' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Cargando archivo. Por favor, espere...</div>';
     var xhrafe = new XMLHttpRequest();
     xhrafe.open('POST', document.getElementById('ruta_html_finan').value + '/debitosAutomaticos/controller.php' , true);
     xhrafe.onreadystatechange=function()
@@ -399,15 +405,15 @@ function validasubirarchivo(formulario,div,url)
     return false;
 }
 function js_debitosAutomaticos_genera_file_ajax ()
-{	document.getElementById( 'menu2' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Cargando formato. Por favor, espere...</div>';
-	var data = new FormData();
+{   document.getElementById( 'menu2' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Cargando formato. Por favor, espere...</div>';
+    var data = new FormData();
     data.append( 'event', 'genera_file_ajax' );
     var xhrafe = new XMLHttpRequest();
     xhrafe.open('POST', document.getElementById('ruta_html_finan').value + '/debitosAutomaticos/controller.php' , true);
     xhrafe.onreadystatechange=function()
     {   if (xhrafe.readyState === 4 && xhrafe.status === 200 )
         {   document.getElementById( 'menu2' ).innerHTML = xhrafe.responseText;
-			$("#txt_fecha_debito").datepicker();
+            $("#txt_fecha_debito").datepicker();
         }
     };
     xhrafe.send(data);
@@ -415,7 +421,7 @@ function js_debitosAutomaticos_genera_file_ajax ()
 function js_debtAuto_subirarchivo( )
 {   if ( document.getElementById('hd_caja_abierta').value ==  'false' )
     {   document.getElementById('procesar').innerHTML='<button type="button" class="btn btn-warning" onclick="js_debitosAutomaticos_genera_file_ajax();"><li class="fa fa-chevron-left"></li> Volver</button><br><br>'+
-					'<div class="callout callout-info">'+
+                    '<div class="callout callout-info">'+
                         '<h4><strong><li class="fa fa-exclamation"></li> Carga de archivo de débito bancario</strong></h4>'+
                         ' Usuario debe estar <b>asignado a una caja</b> y/o'+
                         ' estar trabajando con una <b>caja abierta</b> para poder realizar esta operación.'+
@@ -443,21 +449,21 @@ function js_debtAuto_subirarchivo( )
 }
 function js_debtAuto_subirarchivo_followed( )
 {   $('#modal_ask_load_file').modal("hide");
-	var data = new FormData();
-	data.append('event', 'subir_archivo' );
-	data.append('fileToUpload', document.getElementById( 'fileToUpload' ).files[0] );
-	
-	document.getElementById( 'btn_formato_nuevo_generar' ).disabled = true;
-	
-	var xhrej = new XMLHttpRequest();
-	xhrej.open('POST', document.getElementById('ruta_html_finan').value + '/debitosAutomaticos/controller.php' , true);
-	xhrej.onreadystatechange=function()
-	{   if ( xhrej.readyState === 4 && xhrej.status === 200 )
-		{   console.log( xhrej.responseText );
-			js_debtAuto_get_procesar( );
-		}
-	};
-	xhrej.send(data);
+    var data = new FormData();
+    data.append('event', 'subir_archivo' );
+    data.append('fileToUpload', document.getElementById( 'fileToUpload' ).files[0] );
+    
+    document.getElementById( 'btn_formato_nuevo_generar' ).disabled = true;
+    
+    var xhrej = new XMLHttpRequest();
+    xhrej.open('POST', document.getElementById('ruta_html_finan').value + '/debitosAutomaticos/controller.php' , true);
+    xhrej.onreadystatechange=function()
+    {   if ( xhrej.readyState === 4 && xhrej.status === 200 )
+        {   console.log( xhrej.responseText );
+            js_debtAuto_get_procesar( );
+        }
+    };
+    xhrej.send(data);
 }
 function closeself()
 {    self.close;

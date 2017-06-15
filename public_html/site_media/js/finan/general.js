@@ -34,7 +34,7 @@ function get_box(box, url, div)
 	xhr.send(data);
 }
 function js_general_settings_get()
-{   document.getElementById( 'modal_configColecturia_body' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById( 'modal_configColecturia_body' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
     data.append('event', 'config');
     var xhr = new XMLHttpRequest();
@@ -77,7 +77,7 @@ function js_general_settings_change(usa_pp_dv,prontopago,iva,enviar_fac_sri_en_c
 	data.append('bgmpm', bgmpm);
 	data.append('bbppp', bbppp);
     data.append('event', 'set_settings');
-    document.getElementById( 'modal_configColecturia_body' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Procesando solicitud...</div>';
+    document.getElementById( 'modal_configColecturia_body' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Procesando solicitud...</div>';
 	var xhr = new XMLHttpRequest();
     xhr.open('POST', url , true);
     xhr.onreadystatechange=function()
@@ -119,7 +119,7 @@ function js_general_config_bdp_change()
 	data.append('puntVent_prefijo', document.getElementById('pto_prefijo_web').value);
 	data.append('puntVent_codigoSucursal', document.getElementById('pto_sucursal_web').value);
 	data.append('puntVent_secuencia', document.getElementById('pto_secuencia_web').value);
-	document.getElementById( 'modal_configBoton_body' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Procesando solicitud...</div>';
+	document.getElementById( 'modal_configBoton_body' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Procesando solicitud...</div>';
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', document.getElementById('ruta_html_finan').value + '/general/controller.php' , true);
 	xhr.onreadystatechange=function()
@@ -140,7 +140,7 @@ function js_general_config_bdp_change()
 }
 function js_general_config_bdp()
 {   $('#modal_configBoton').modal('show');
-	document.getElementById( 'modal_configBoton_body' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById( 'modal_configBoton_body' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
     data.append('event', 'config_pagoweb');
     var xhr = new XMLHttpRequest();
@@ -158,7 +158,7 @@ function js_general_config_bdp()
 }
 function cargaCursos(div, url)
 {   "use strict";
-    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var comboPeriodos = document.getElementById("periodos");
     var data = new FormData();
     data.append('cod_peri', comboPeriodos.value);
@@ -174,7 +174,7 @@ function cargaCursos(div, url)
 }
 function LimpiarCursos(div, url)
 {   "use strict";
-    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
     data.append('event', 'unset_curso');
     var xhr = new XMLHttpRequest();
@@ -188,7 +188,7 @@ function LimpiarCursos(div, url)
 }
 function cargaCursosPorNivelEconomico(div, url)
 {   "use strict";
-    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var comboPeriodos = document.getElementById("periodos");
     var comboNivelesEconomicos = document.getElementById("cmb_nivelesEconomicos");
     var data = new FormData();
@@ -206,7 +206,7 @@ function cargaCursosPorNivelEconomico(div, url)
 }
 function cargaNivelesEconomicos(div, url)
 {   "use strict";
-    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var comboPeriodos = document.getElementById("periodos");
     var data = new FormData();
     data.append('cod_peri', comboPeriodos.value);

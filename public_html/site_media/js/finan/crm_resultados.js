@@ -18,7 +18,7 @@ $(document).ready(function() {
 	});
 });
 function busca(busq,div,url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'get_all_data');
 	data.append('busq', busq);	
@@ -47,7 +47,7 @@ function busca(busq,div,url){
 	xhr.send(data);
 }
 function busca_detalles(codigo,div,url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'get_all_detalles');
 	data.append('crm_resu_codigo', codigo);
@@ -77,7 +77,7 @@ function busca_detalles(codigo,div,url){
 }
 function del(codigo,div,url){
 	if(confirm("¿Está seguro que desea eliminar el resultado?")){
-		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 		var data = new FormData();
 		data.append('event', 'delete');
 		data.append('crm_resu_codigo', codigo);	
@@ -97,7 +97,7 @@ function del(codigo,div,url){
 }
 function del_deta(codigo,div,url){
 	if(confirm("¿Está seguro que desea eliminar el detalle del resultado?")){
-		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 		var data = new FormData();
 		data.append('event', 'del_asign');
 		data.append('deta_crm_resu_codigo', codigo);	
@@ -113,7 +113,7 @@ function del_deta(codigo,div,url){
 	}
 }
 function edit(codigo,div,url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'get');
 	data.append('crm_resu_codigo', codigo);	
@@ -127,7 +127,7 @@ function edit(codigo,div,url){
 	xhr.send(data);
 }
 function carga_add(div,url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'agregar');	
 	var xhr = new XMLHttpRequest();
@@ -140,7 +140,7 @@ function carga_add(div,url){
 	xhr.send(data);
 }
 function asign(codigo,div,url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'asignar');
 	data.append('codigo', codigo);
@@ -158,7 +158,7 @@ function asign(codigo,div,url){
 	xhr.send(data);
 }
 function asign_deta(codigo,div,url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'asign');	
 	data.append('crm_resu_codigo',codigo);
@@ -177,7 +177,7 @@ function asign_deta(codigo,div,url){
 	xhr.send(data);
 }
 function add(div,url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'set');
 	data.append('crm_resu_descripcion', document.getElementById('descripcion_add').value);
@@ -193,7 +193,7 @@ function add(div,url){
 }
 function save_edited(codigo,div,url){
 	if(confirm("¿Está seguro que desea editar la información del resultado?")){
-		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 		var data = new FormData();
 		data.append('event', 'edit');
 		data.append('crm_resu_codigo', document.getElementById('codigo_mod').value);

@@ -44,7 +44,7 @@ function js_rep_antiquity_carga_reports_deudores( div, url, evento ) //PDF DE LA
 			window.open(url2);
 		}
 		else
-		{   document.getElementById('resultado').innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+		{   document.getElementById('resultado').innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 			var data = new FormData();
 			data.append('event', evento );
 			data.append('curs_codi', curso);

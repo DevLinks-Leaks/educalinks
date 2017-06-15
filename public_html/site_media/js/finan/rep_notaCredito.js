@@ -75,7 +75,7 @@ $(document).ready(function() {
 	});
 });
 function carga_reports_notaCredito(div,url,evento){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     //var cajeroObj = document.getElementById('cmb_cajero'); 
 	//var cajero = cajeroObj.options[cajeroObj.selectedIndex].innerHTML;
 	var cajero = document.getElementById('cmb_cajero').value; 

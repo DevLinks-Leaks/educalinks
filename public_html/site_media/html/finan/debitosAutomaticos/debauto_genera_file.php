@@ -2,11 +2,12 @@
     <ul class="nav nav-tabs" id="myTabs">
         <li {tab_class1}><a data-toggle="tab" href="#home">
             <div id='div_file_status_top' style='display:inline;font-size:small;text-align:left;vertical-align:middle;'></div>
-            <span class='glyphicon glyphicon-list-alt'></span> Crear formato</a></li>
-        <li {tab_class2}><a data-toggle="tab" href="#menu2"><span class='glyphicon glyphicon-import'></span> Importar archivo</a></li>
+            <span class='glyphicon glyphicon-list-alt'></span><span class='hidden-xs'> Crear formato</span></a></li>
+        <li {tab_class2}><a data-toggle="tab" href="#menu2"><span class='glyphicon glyphicon-import'></span><span class='hidden-xs'> Importar archivo</span></a></li>
         <li {tab_class3}><a data-toggle="tab" href="#menu3">
             <div id='menu3_loader' style='display:inline;font-size:small;text-align:left;vertical-align:middle;'></div>
-            </span><span class='glyphicon glyphicon-list'></span> Listado</a></li>
+            </span><span class='glyphicon glyphicon-list'></span><span class='hidden-xs'> Listado</span></a></li>
+		<li {tab_class4}><a data-toggle="tab" href="#menu4"><span class='fa fa-clipboard'></span><span class='hidden-xs'> Reportes de débito</span></a></li>
     </ul>
     <form id="file_form" action="{ruta_html_finan}/debitosAutomaticos/controller.php" enctype="multipart/form-data" method="post" target="_blank">
 		<!-- Modal cargar archivo-->
@@ -586,6 +587,51 @@
                         <div class='col-sm-12' id='div_tbl_format' name='div_tbl_format'>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div id="menu4" class="tab-pane fade {active4}">
+                <br/>
+				<table class='table table-hover table-striped'>
+					<tr class='clickable-row' data-href='../../../finan/rep_debito/'>
+						<td>Listado de alumnos con información de débito en el sistema</td>
+						<td>
+							<a href='../../../finan/rep_debito/' class="btn btn-link" type="button" style='color:green;'>
+								<span class='fa fa-file-excel-o fa-2x'></span>
+							</a>
+						</td>
+					</tr>
+					<tr class='clickable-row' data-href='url://'>
+						<td>Lista histórica de clientes sin liquidez</td>
+						<td>
+							<button class="btn btn-link" type="button"  style='color:green;'
+									onclick="return js_debtAuto_listado_clientes_sin_liquidez('div_tbl_format','{ruta_html_finan}/debitosAutomaticos/controller.php');"
+									data-placement="right">
+								<span class='fa fa-file-excel-o fa-2x'></span>
+							</button>
+						</td>
+					</tr>
+					<tr class='clickable-row' data-href='url://'>
+						<td></td>
+						<td></td>
+					</tr>
+				</table>
+                <div class="form-horizontal">
+                    <div class='form-group'>
+                        <div class='col-sm-7'>
+							
+                        </div>
+						<div class='col-sm-5'>
+							
+						</div>
+					</div>
+					<div class='form-group'>
+                        <div class='col-sm-7'>
+							.
+                        </div>
+						<div class='col-sm-5'>
+							
+						</div>
+					</div>
                 </div>
             </div>
         </div>

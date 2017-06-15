@@ -34,7 +34,7 @@ $(document).ready(function() {
 });
 // Consulta filtrada
 function busca(busq,div,url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'get_all_data');
 	data.append('busq', busq);	
@@ -51,7 +51,7 @@ function busca(busq,div,url){
 }
 // Carga el formulario para ingresar un nuevo registro
 function carga_add(div,url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'agregar');	
 	var xhr = new XMLHttpRequest();
@@ -68,7 +68,7 @@ function carga_add(div,url){
 // Realiza la actualizacion de los datos en la BD
 function edit(rol_codigo,div,url){
 	if(confirm("¿Está seguro que desea editar la información de la categoria?")){
-		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 		var data = new FormData();
 		data.append('event', 'edit');
 		data.append('codigo', document.getElementById('codigo_mod').value);
@@ -89,7 +89,7 @@ function edit(rol_codigo,div,url){
 }
 // Realiza el ingreso de un registro nuevo
 function add(div,url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'set');
 	data.append('nombre', document.getElementById('nombre_add').value);
@@ -109,7 +109,7 @@ function add(div,url){
 // Realiza las opciones de la tabla
 function caja_close(codigo,div,url){
 	if(confirm("¿Está seguro que desea cerrar la caja?")){
-		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 		var data = new FormData();
 		data.append('event', 'close_caja');
 		data.append('caja_codi', codigo);	
@@ -126,7 +126,7 @@ function caja_close(codigo,div,url){
 }
 function caja_reopen(codigo,div,url){
 	if(confirm("¿Está seguro que desea reabrir la caja?")){
-		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 		var data = new FormData();
 		data.append('event', 'reopen_caja');
 		data.append('caja_codi', codigo);	
@@ -142,7 +142,7 @@ function caja_reopen(codigo,div,url){
 }
 function carga_reports_item(codigo,div,url,evento){
 	carga_reports_fp(codigo,'modal_edit_body_fp',url,'print_fp');
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'printvisor');
 	data.append('codigo', codigo);	
@@ -159,7 +159,7 @@ function carga_reports_item(codigo,div,url,evento){
 }
 function carga_reports_fp(codigo,div,url,evento){
 	carga_reports_nc(codigo,'modal_edit_body_nc',url,'print_nc');
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'printvisor');
 	data.append('codigo', codigo);	
@@ -175,7 +175,7 @@ function carga_reports_fp(codigo,div,url,evento){
 	xhr.send(data);
 }
 function carga_reports_nc(codigo,div,url,evento){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'printvisor');
 	data.append('codigo', codigo);	

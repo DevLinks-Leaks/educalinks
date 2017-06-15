@@ -37,7 +37,7 @@
 });
 // Consulta filtrada
 function js_item_busca( busq, div, url )
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'get_all_data');
 	data.append('busq', busq);	
@@ -84,7 +84,7 @@ function js_item_busca( busq, div, url )
 }
 // Carga el formulario para ingresar un nuevo registro
 function carga_add(div,url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'agregar');	
 	var xhr = new XMLHttpRequest();
@@ -98,7 +98,7 @@ function carga_add(div,url){
 }
 // Carga el formulario para editar un registro
 function carga_edit(codigo,div,url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'get');
 	data.append('codigo', codigo);	
@@ -114,7 +114,7 @@ function carga_edit(codigo,div,url){
 // Realiza la actualizacion de los datos en la BD
 function edit(rol_codigo,div,url){
 	if(confirm("¿Está seguro que desea editar la información del producto?\n Recuerde que al modificar el campo 'PRECIO GENERAL' de un producto con precio, deberá asignarle nuevamente un precio.")){
-		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 		var data = new FormData();
 		data.append('event', 'edit');
 		data.append('codigo', document.getElementById('codigo_mod').value);
@@ -147,7 +147,7 @@ function edit(rol_codigo,div,url){
 }
 // Realiza el ingreso de un registro nuevo
 function add(div,url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'set');
 	data.append('nombre', document.getElementById('nombre_add').value);
@@ -180,7 +180,7 @@ function add(div,url){
 // Realiza la eliminacion del cliente en la BD
 function del(codigo,div,url)
 {   if(confirm("¿Está seguro que desea eliminar el producto actual?"))
-	{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 		var data = new FormData();
 		data.append('event', 'delete');
 		data.append('codigo', codigo);	
@@ -203,7 +203,7 @@ function del(codigo,div,url)
 }
 function js_item_cargaItem( div_resultado, combo_nombre, categoria_codi )
 {   "use strict";
-    document.getElementById( div_resultado ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+    document.getElementById( div_resultado ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 	var data = new FormData();
     data.append( 'categoria', categoria_codi );
     data.append( 'combo_nombre', combo_nombre );
