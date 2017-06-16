@@ -40,7 +40,7 @@
 						<?php if(permiso_activo(10))?> <li <? if($Menu==201) echo 'class="active"'; ?>><a href="cursos_paralelo_main.php" title='Bandeja principal de cursos abiertos'><span class='fa fa-university'></span> Lista cursos paralelo</a></li>
 						<li class='<? if (substr($Menu,1,1)==1) echo 'active'; ?>  treeview'><a href="#"><i class="fa fa-wrench"></i> <span>Configuración</span> <i class="fa fa-angle-left pull-right"></i></a>
 							<ul class="treeview-menu">
-								
+								<?php if(permiso_activo(17))?> <li <? if($Menu==417) echo 'class="active"'; ?>><a href="admin_periodos.php"><span class='fa fa-calendar'></span> Periodos lectivos</a> </li>
 								<?php if(permiso_activo(62))?> <li <? if($Menu==216) echo 'class="active"'; ?>><a href="cursos_cursos_main.php"><span class='fa fa-building'></span> Cursos</a></li>
 								<?php if(permiso_activo(14))?> <li <? if($Menu==215) echo 'class="active"'; ?>><a href="cursos_admin_paralelo_main.php"><span class='fa fa-list-alt'></span> Paralelos</a></li>
 								<?php if(permiso_activo(13))?> <li <? if($Menu==214) echo 'class="active"'; ?>><a href="cursos_aulas_main.php"><span class='fa fa-list-alt'></span> Aulas</a></li>
@@ -73,7 +73,7 @@
 					<ul class="treeview-menu">
 						<?php if(permiso_activo(18))?> <li <? if($Menu==404) echo 'class="active"'; ?>><a href="admin_auditoria.php"><span class='fa fa-wpforms'></span> Auditoria</a></li>
 						<?php if(permiso_activo(11))?> <li <? if($Menu==418) echo 'class="active"'; ?>><a href="admin_periodos_etapas.php?peri_codi=<? echo $_SESSION['peri_codi']; ?>" title='El Usuario Administrador puede activar ciertas funcionalidades del sistema, determinando un rango de tiempo en el cual el acceso a la misma será vigente para que los usuarios administrativos/docentes/representantes/alumnos puedan utilizar.'><span class='fa fa-clock-o'></span> Activar funciones</a></li>
-						<?php if(permiso_activo(17))?> <li <? if($Menu==217) echo 'class="active"'; ?>><a href="admin_periodos.php"><span class='fa fa-calendar'></span> Periodos lectivos</a> </li>
+						<?php if(permiso_activo(17))?> <li <? if($Menu==417) echo 'class="active"'; ?>><a href="admin_periodos.php"><span class='fa fa-calendar'></span> Periodos lectivos</a> </li>
 						<?php if(permiso_activo(84))?> <li <? if($Menu==403) echo 'class="active"'; ?>><a href="para_sistema_main.php"><span class='fa fa-toggle-on'></span> Parámetros sistema</a></li>
 					</ul>
 				</li>
