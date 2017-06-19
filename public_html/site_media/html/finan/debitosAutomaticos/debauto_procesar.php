@@ -87,12 +87,31 @@
 	<br>
 	<div class="row">
 		<div class="form-group" >
+			<div class='col-sm-6'>
+				<input type='checkbox' id='ckb_procesa_reprobados' name='ckb_procesa_reprobados' onclick='js_debitosAutomaticos_procesa_reprobados(this)'/>
+				&nbsp;<span style="font-size:small;">Marcar como con cuenta sin liquidez a los clientes que tengan la transacción reprobada.
+					<div id='EducaLinksHelperCliente' style='display:inline;font-size:x-small;text-align:left;vertical-align:middle;'>
+						<a tabindex="0" data-toggle="popover" 
+							title="Clientes con cuentas sin liquidez"
+							data-content="<div style='font-size:x-small'>Los clientes pasarán a la lista histórica de clientes sin liquidez.
+							<br>
+							<br>
+							Aparecerá un mensaje notificando que tiene una cuenta de liquidez la próxima vez que se intente exportar el archivo de débito.</div>"
+							data-placement='top'><span class='fa fa-info-circle'></span></a>
+					</div>
+				</span>
+			</div>
+		</div>
+	</div>
+	<br>
+	<div class="row">
+		<div class="form-group" >
 			<div class='col-sm-3'>
 				<input type="hidden" name="event" id="evento" value="subir_archivo" />
 				<label for="textonook" class='control-label'>Texto de reprobación</label>
 			</div>
 			<div class='col-sm-3'>
-				<input type="text" class="form-control" name="textonook" id="textonook" placeholder="Texto de reprobación" />
+				<input type="text" class="form-control" name="textonook" id="textonook" disabled='disabled' placeholder="Texto de reprobación" />
 			</div>
 		</div>
 	</div>

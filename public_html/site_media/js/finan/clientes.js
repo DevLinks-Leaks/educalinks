@@ -394,10 +394,7 @@ function carga_visorEstadoCuenta(codigo,div,url){
 										{className: "dt-body-center" , "targets": [9]},
 										{className: "dt-body-center" , "targets":[10]},
 										{className: "dt-body-center" , "targets":[13], "visible": false}
-									]/*,
-									"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-										$('td', nRow).css('background-color', '#d6f9da');
-									}*/
+									]
 								});	
 							}
 						};

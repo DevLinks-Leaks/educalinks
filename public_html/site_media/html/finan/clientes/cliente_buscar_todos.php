@@ -187,7 +187,7 @@
 								<label class="col-md-4 col-sm-3 control-label" style='text-align: right;' for='txt_ref_factura'>Período:</label>
 								<div class="col-md-8  col-sm-8"
 										data-placement="bottom"
-										title='Período en el que se generó la deuda'
+										title='Período lectivo en uso por el sistema.'
 										onmouseover='$(this).tooltip("show")'>
 									{cmb_periodo}
 								</div>

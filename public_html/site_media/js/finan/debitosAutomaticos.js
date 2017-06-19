@@ -21,14 +21,27 @@ $(document).ready(function(){
         document.getElementById('forma_descripccion_add').style.border = "1px solid #CCCCCC";
         document.getElementById('lbl_forma_descripccion_add').style.color = "black";
     });
+	/*$('#modal_exportarFormatoArchivo').on('hidden.bs.modal', function () {
+        document.getElementById('cmb_producto').style.border = "1px solid #CCCCCC";
+        document.getElementById('cmb_producto').style.color = "black";
+    });*/
+		
     $('#modal_cargarFormatoArchivo').on('show.bs.modal', function () {
         get_formatos('div_cmb_carga_formato',document.getElementById('ruta_html_finan').value + '/debitosAutomaticos/controller.php');
     });
     $('#modal_exportarFormatoArchivo').on('hidden.bs.modal', function () {
-        $(this).find("input,textarea").val('').end().find("input[type=checkbox], input[type=radio]").prop("checked", "").end();
+        $(this).find("input,textarea").end().find("input[type=checkbox], input[type=radio]").prop("checked", "").end();
         $(this).find(".collapse").collapse('hide').end();
         $(this).find("#cmb_tipo_formato").val('xlsx').end();
     });
+	$('#formatos_add').select2({
+		maximumSelectionLength: 1,
+		language: "es"
+	}).on('select2-opening', function(e) {
+		if ($(this).select2('val').length > 0) {
+			e.preventDefault();
+		}
+	});
 });
 var num_campos = 0;
 var num_total_campos = 0;
@@ -166,7 +179,7 @@ function js_debtAut_carga_archivo_followed(div, url, obj, indice, obj_len )
             {   var container = document.createElement("div");
                 container.innerHTML = xhraf.responseText;
                 document.getElementById(div).appendChild(container);
-                js_debtAut_carga_archivo_followed(div, url, obj, indice + 1, obj_len )
+                js_debtAut_carga_archivo_followed(div, url, obj, indice + 1, obj_len );
             }
         };
         xhraf.send(data);
@@ -254,7 +267,15 @@ function get_formatos(div,url)
     xhrafe.open('POST', url , true);
     xhrafe.onreadystatechange=function()
     {   if (xhrafe.readyState==4 && xhrafe.status==200)
-        {   document.getElementById(div).innerHTML = xhrafe.responseText;
+        {   document.getElementById(div).innerHTML = xhrafe.responseText;			
+			$('#formatos_add').select2({
+				maximumSelectionLength: 1,
+				language: "es"
+			}).on('select2-opening', function(e) {
+				if ($(this).select2('val').length > 0) {
+					e.preventDefault();
+				}
+			});
         }
     };
     xhrafe.send(data);
@@ -309,6 +330,7 @@ function js_debtAuto_mantenimiento_buscar_todos(div,url)
                 "bStateSave": false,
                 "bAutoWidth": false,
                 "bScrollAutoCss": true,
+				"bSort" : false,
                 "bProcessing": true,
                 "bRetrieve": true,
                 "sDom": '<"H"CTrf>t<"F"lip>',
@@ -320,14 +342,7 @@ function js_debtAuto_mantenimiento_buscar_todos(div,url)
                 paging: true,
                 lengthChange: true,
                 searching: true,
-                language: {url: '//cdn.datatables.net/plug-ins/1.10.8/i18n/Spanish.json'},
-                "columnDefs": [
-                    {className: "dt-body-center"  , "targets": [0]},
-                    {className: "dt-body-left"  , "targets": [1]},
-                    {className: "dt-body-center"  , "targets": [2]},
-                    {className: "dt-body-center"  , "targets": [3]},
-                    {className: "dt-body-center"  , "targets": [4]}
-                ]
+                language: {url: '//cdn.datatables.net/plug-ins/1.10.8/i18n/Spanish.json'}
             });
             var table = $('#table_formato').DataTable();
             table.column( '1:visible' ).order( 'asc' );
@@ -342,15 +357,19 @@ function js_debtAuto_mantenimiento_buscar_todos(div,url)
     };
     xhrafe.send(data);
 }
-function js_debtAut_toggle_readonly_tarj_banco( check, combo )
-{   var chk_tneto = document.getElementById(check).checked;
-    if(chk_tneto)
-    {   document.getElementById(combo).disabled = false;
-        document.getElementById(combo).value = "-1";
+function js_debtAut_toggle_readonly_tarj_banco(  )
+{   var rb_filtro = document.querySelector('input[id="rb_filtro"]:checked').value;
+    if( rb_filtro == 'banco' )
+    {   document.getElementById( 'cmb_banco' ).disabled = false;
+        document.getElementById( 'cmb_banco' ).value = "-1";
+		document.getElementById( 'cmb_tarjCredito' ).disabled = true;
+        document.getElementById( 'cmb_tarjCredito' ).value = "";
     }
-    else
-    {   document.getElementById(combo).disabled = true;
-        document.getElementById(combo).value = "";
+    if( rb_filtro == 'tarjeta' )
+    {   document.getElementById( 'cmb_tarjCredito' ).disabled = false;
+        document.getElementById( 'cmb_tarjCredito' ).value = "-1";
+		document.getElementById( 'cmb_banco' ).disabled = true;
+        document.getElementById( 'cmb_banco' ).value = "";
     }
 }
 function create_file_guardar(formulario, url)
@@ -396,6 +415,8 @@ function js_debtAuto_get_procesar( )
     xhrafe.onreadystatechange=function()
     {   if (xhrafe.readyState==4 && xhrafe.status==200)
         {   document.getElementById( 'menu2' ).innerHTML=xhrafe.responseText;
+			$('[data-toggle="popover"]').popover({html:true});
+			console.log("reaches");
         }
     };
     xhrafe.send(data);
@@ -423,8 +444,8 @@ function js_debtAuto_subirarchivo( )
     {   document.getElementById('procesar').innerHTML='<button type="button" class="btn btn-warning" onclick="js_debitosAutomaticos_genera_file_ajax();"><li class="fa fa-chevron-left"></li> Volver</button><br><br>'+
                     '<div class="callout callout-info">'+
                         '<h4><strong><li class="fa fa-exclamation"></li> Carga de archivo de débito bancario</strong></h4>'+
-                        ' Usuario debe estar <b>asignado a una caja</b> y/o'+
-                        ' estar trabajando con una <b>caja abierta</b> para poder realizar esta operación.'+
+                        ' Usuario debe ser un usuario con rol <a target=\'_blank\' href=\'../../../admin/usuarios_main.php\'><b>caja</b></a>, estar <a target="_blank" href="../../../finan/puntos_emision/"><b>asignado a una caja</b></a> y/o'+
+                        ' estar trabajando con una <a target="_blank" href="../../../finan/cierre_caja/"><b>caja abierta</b></a> para poder realizar esta operación.'+
                     '</div>';
     }
     else
@@ -615,45 +636,193 @@ function js_debtAuto_cmb_tipo_formato_onchange(obj, div)
 function js_debtAut_genera_archivo()
 {   if($('#span_status_disk').hasClass('glyphicon glyphicon-floppy-saved'))
     {   $('#modal_exportarFormatoArchivo').modal('show');
-        document.getElementById('chk_banco').checked = true;
-        document.getElementById('chk_tarjeta').checked = true;
-        document.getElementById('cmb_banco').disabled = false;
-        document.getElementById('cmb_tarjCredito').disabled = false;
+        document.getElementById('rb_filtro').checked = false;
         $("#cmb_banco option[value='']").remove();
         $("#cmb_tarjCredito option[value='']").remove();
-        document.getElementById('cmb_banco').value = -1;
-        document.getElementById('cmb_tarjCredito').value = -1;
-        document.getElementById('forma_descripccion_exp').innerHTML = "<small>Exportando archivo con el formato de '<b>" + document.getElementById('hd_nombreformato').value + "</b>'.</small>";
+        document.getElementById('cmb_banco').disabled = true;
+        document.getElementById('cmb_tarjCredito').disabled = true;
+        document.getElementById('cmb_banco').value = "";
+        document.getElementById('cmb_tarjCredito').value = "";
+        document.getElementById('forma_descripccion_exp').innerHTML = "'<b>" + document.getElementById('hd_nombreformato').value + "</b>'";
         document.getElementById('hd_id_formato_exp').value = document.getElementById('hd_id_cabecera').value;
+		
+		if( document.getElementById('cmb_vista').value == 'V_DatosAlumnosDebitos_Detalle' )
+			document.getElementById( 'div_filtros_debitoBancario' ).style.display='inline';
+		else
+			document.getElementById( 'div_filtros_debitoBancario' ).style.display='none';
     }
     else
-    {   alert("¡Debe guardar los cambios, primero!");
+    {   $.growl.error({title: 'Educalinks Informa', message: 'Debe guardar los cambios para realizar esta acción'});
     }
 }
 function js_debtAut_genera_archivo_followed(formulario)
-{   document.getElementById('evento').value='create_file';
-    var txt;
-    var r = confirm("¿Exportar formato ahora?");
-    if (r)
-    {   document.getElementById(formulario).submit();
-    }
+{   var bandera = 0; var counter = 0; var mensaje = "";
+	$('#cmb_producto :selected').each(function(i, selected){ 
+		bandera++;
+	});
+	$('#rb_filtro').each(function ()
+	{	counter++;
+	console.log(counter);
+        if (!$(this).find('input').is(':checked'))
+		    counter--;
+		console.log(counter);
+    });
+	if ( bandera === 0 )
+		mensaje = "Debe seleccionar el/los producto(s).<br>";
+	
+	if ( counter === 0 ) 
+		mensaje+= "Debe escoger entre banco o tarjeta.";
+	
+	document.getElementById( 'hd_exp_opc_ant' ).value
+	
+	if ( bandera > 0 )
+	{   
+		document.getElementById('evento').value='create_file';
+		
+		if ( document.getElementById( 'div_step_1' ).style.display == 'inline' )
+		{   if ( document.getElementById( 'hd_exp_opc_ant' ).value == 'S' )
+			{	
+				js_debtAut_genera_archivo_manage_divs ( 'none', 'inline', 'none');
+				js_debtAut_genera_archivo_ask_opc_ant( formulario );
+			}
+			else if ( document.getElementById( 'hd_exp_opc_ctas' ).value  == 'S' )
+			{
+				js_debtAut_genera_archivo_manage_divs ( 'none', 'none', 'inline');
+				js_debtAut_genera_archivo_ask_opc_ctas( formulario );
+			}
+			else
+			{   
+				if ( confirm( "¿Exportar formato ahora?" ) )
+					document.getElementById( formulario ).submit();
+			}
+		}
+		else if ( document.getElementById( 'div_step_2' ).style.display == 'inline' )
+		{
+			if ( document.getElementById( 'hd_exp_opc_ctas' ).value  == 'S' )
+			{
+				js_debtAut_genera_archivo_manage_divs ( 'none', 'none', 'inline');
+				js_debtAut_genera_archivo_ask_opc_ctas( formulario );
+			}
+			else
+			{   
+				if ( confirm( "¿Exportar formato ahora?" ) )
+				{
+					js_debtAut_genera_archivo_manage_divs ( 'inline', 'none', 'none' );
+					document.getElementById( formulario ).submit();
+				}
+			}
+		}
+		else if ( document.getElementById( 'div_step_3' ).style.display == 'inline' )
+		{
+			if ( confirm( "¿Exportar formato ahora?" ) )
+			{
+				js_debtAut_genera_archivo_manage_divs ( 'inline', 'none', 'none' );
+				document.getElementById( formulario ).submit();
+			}
+		}
+	}
+	else
+	{   $.growl.error({title: 'Educalinks Informa', message: mensaje});
+	}
 }
-function js_debtAut_genera_archivoind(codigo_formato)
+function js_debtAut_genera_archivo_manage_divs( div1 , div2 , div3 )
+{
+	document.getElementById( 'div_step_1' ).style.display = div1;
+	document.getElementById( 'div_step_2' ).style.display = div2;
+	document.getElementById( 'div_step_3' ).style.display = div3;
+}
+function js_debtAut_genera_archivo_ask_opc_ant ( formulario )
+{
+	//consulta deudores de cuentas antiguas.
+	$( '#btn_formato_exportar_followed' ).button( "loading" );
+	document.getElementById( 'div_step_2' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Verificando deudores con cuentas por cobrar antiguas. Por favor, espere...</div>';
+	var data = new FormData();
+    data.append( 'event', 'get_deudores_ctas_antiguas' );
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', document.getElementById('ruta_html_finan').value + '/debitosAutomaticos/controller.php' , true);
+    xhr.onreadystatechange=function()
+	{   if ( xhr.readyState === 4 && xhr.status === 200 )
+		{   
+			if( 1 === 1) //si tiene registros..
+			{
+				$( '#btn_formato_exportar_followed' ).button( "reset" );
+				//se queda aqui
+			}
+			else //caso contrario, cargar step 3.
+			{
+				if ( document.getElementById( 'hd_exp_opc_ctas' ).value  == 'S' )
+				{
+					js_debtAut_genera_archivo_manage_divs ( 'none', 'none', 'inline');
+					js_debtAut_genera_archivo_ask_opc_ctas( formulario );
+				}
+				else
+				{   
+					if ( confirm( "¿Exportar formato ahora?" ) )
+					{
+						js_debtAut_genera_archivo_manage_divs ( 'inline', 'none', 'none' );
+						document.getElementById( formulario ).submit();
+						$( '#btn_formato_exportar_followed' ).button( "reset" );
+					}
+				}
+			}
+        }
+    };
+    xhr.send(data);
+}
+function js_debtAut_genera_archivo_ask_opc_ctas( formulario )
+{
+	//consulta deudores con cuentas inliquidas.
+	$( '#btn_formato_exportar_followed' ).button( "loading" );
+	document.getElementById( 'div_step_3' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Verificando deudores con cuentas bancarias sin liquidez. Por favor, espere...</div>';
+	var data = new FormData();
+    data.append( 'event', 'get_deudores_ctas_inliquidas' );
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', document.getElementById('ruta_html_finan').value + '/debitosAutomaticos/controller.php' , true);
+    xhr.onreadystatechange=function()
+	{   if ( xhr.readyState === 4 && xhr.status === 200 )
+		{   
+			if( 1 === 1) //si tiene registros..
+			{
+				$( '#btn_formato_exportar_followed' ).button( "reset" );
+				//se queda aqui
+			}
+			else //caso contrario, cargar step 3.
+			{
+				if ( confirm( "¿Exportar formato ahora?" ) )
+				{
+					js_debtAut_genera_archivo_manage_divs ( 'inline', 'none', 'none' );
+					document.getElementById( formulario ).submit();
+					$( '#btn_formato_exportar_followed' ).button( "reset" );
+				}
+			}
+        }
+    };
+    xhr.send(data);
+}
+function js_debtAut_genera_archivoind( codigo_formato )
 {   $('#modal_exportarFormatoArchivo').modal('show');
-    document.getElementById('chk_banco').checked = true;
-    document.getElementById('chk_tarjeta').checked = true;
-    document.getElementById('cmb_banco').disabled = false;
-    document.getElementById('cmb_tarjCredito').disabled = false;
-    $("#cmb_banco option[value='']").remove();
-    $("#cmb_tarjCredito option[value='']").remove();
-    document.getElementById('cmb_banco').value = -1;
-    document.getElementById('cmb_tarjCredito').value = -1;
-        
+	document.getElementById('rb_filtro').checked = false;
+	$("#cmb_banco option[value='']").remove();
+	$("#cmb_tarjCredito option[value='']").remove();
+	document.getElementById('cmb_banco').disabled = true;
+	document.getElementById('cmb_tarjCredito').disabled = true;
+	document.getElementById('cmb_banco').value = "";
+	document.getElementById('cmb_tarjCredito').value = "";
     document.getElementById('cmb_formato_copyPaste').value = codigo_formato;
     var sel = document.getElementById('cmb_formato_copyPaste');
     var nombre_formato = sel.options[sel.selectedIndex].text;
-    document.getElementById('forma_descripccion_exp').innerHTML = "<small>Exportando archivo con el formato de '<b>" + nombre_formato + "</b>'.</small>";
+	document.getElementById('forma_descripccion_exp').innerHTML = "'<b>" + nombre_formato + "</b>'";
     document.getElementById('hd_id_formato_exp').value = codigo_formato;
+	
+	$('#table_formato tbody tr').each(function(){
+		if($(this).find('td').eq(0).attr('data-codigo') == codigo_formato )
+		{
+			if( $(this).find('td').eq(1).attr('data-source') == 'V_DatosAlumnosDebitos_Detalle' )
+				document.getElementById( 'div_filtros_debitoBancario' ).style.display='inline';
+			else
+				document.getElementById( 'div_filtros_debitoBancario' ).style.display='none';
+		}
+	});
 }
 function cambia_check(obj)
 {   "use strict";
@@ -724,9 +893,48 @@ function js_debtAut_change_view()
     };
     xhraf.send(data);
 }
-function disableizq()
+function js_debitosAutomaticos_procesa_reprobados( e )
 {
+	if( e.checked )
+		document.getElementById('textonook').disabled = false;
+	else
+		document.getElementById('textonook').disabled = true;
 }
-function disableder()
-{
+function js_debtAut_get_config()
+{   var data = new FormData();
+    data.append( 'event', 'get_debt_aut_settings' );
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', document.getElementById('ruta_html_finan').value + '/debitosAutomaticos/controller.php' , true);
+    xhr.onreadystatechange=function()
+	{   if ( xhr.readyState === 4 && xhr.status === 200 )
+		{   document.getElementById( 'modal_configSaf_body' ).innerHTML = xhr.responseText;	
+        }
+    };
+    xhr.send(data);
+}
+
+function js_debtAut_set_config ()
+{   var data = new FormData();
+	$( '#btn_debtAuto_set_config' ).button("loading");
+    data.append( 'event', 'set_debt_aut_settings' );
+	data.append( 'check_exp_opc_ant',  document.getElementById( 'check_exp_opc_ant' ).checked );
+	data.append( 'check_exp_opc_ctas', document.getElementById( 'check_exp_opc_ctas' ).checked );
+	var xhr = new XMLHttpRequest();
+    xhr.open('POST', document.getElementById('ruta_html_finan').value + '/debitosAutomaticos/controller.php' , true);
+    xhr.onreadystatechange=function()
+	{   if (xhr.readyState === 4 && xhr.status === 200)
+		{   $('#modal_configSaf').modal('hide');
+			var n = xhr.responseText.length;
+			if (n > 0)
+			{   valida_tipo_growl(xhr.responseText);
+				document.getElementById( 'hd_exp_opc_ctas' ).value = ( document.getElementById( 'check_exp_opc_ctas').checked ? 'S' : 'N' );
+				document.getElementById( 'hd_exp_opc_ant' ).value  = ( document.getElementById( 'check_exp_opc_ant' ).checked ? 'S' : 'N' );
+			}
+			else
+			{   $.growl.warning({ title: "Educalinks informa",message: "Hubo un problema al intentar comunicarse con el servicio." });
+			}
+			$( '#btn_debtAuto_set_config' ).button("reset");
+        }
+    };
+    xhr.send(data);
 }

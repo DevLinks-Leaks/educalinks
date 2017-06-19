@@ -6,12 +6,16 @@ const HTML_FILES="finan/debitosAutomaticos/debauto_";
 # controladores
 const SET 					= 'set';
 const SET_GET_ALL 			= 'set_get_all';
+const SET_DEBT_AUT_SETTINGS = 'set_debt_aut_settings';
 const GET 					= 'get';
 const GET_ALL 				= 'get_all';
 const GET_FORMATOS 			= 'get_formatos';
 const GET_FORMATOS_COPYPASTE= 'get_formatos_copy_paste';
 const GET_MAINT 			= 'get_maint';
 const GET_ALL_DATA 			= 'get_all_data';
+const GET_DEBT_AUT_SETTINGS = 'get_debt_aut_settings';
+const GET_DEUD_CTAS_INLIQ	= 'get_deudores_ctas_inliquidas';
+const GET_DEUD_CTAS_ANTIQ	= 'get_deudores_ctas_antiguas';
 const DELETE 				= 'delete';
 const EDIT 					= 'edit';
 const GET_CAMPOS			= 'get_campos';

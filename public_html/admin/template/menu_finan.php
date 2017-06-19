@@ -65,18 +65,21 @@
 				</li>
 				<?php //}?>
 				<?php if (permiso_activo(4)){?>
+				<li class="<? if (substr($Menu,0,1)==5) echo 'active'; ?> treeview"><!-- AQUI SERIA EL OPEN --><!--  -->
+					<a href="#"><i class="fa fa-users"></i> <span>Config. de usuario</span> <i class="fa fa-angle-left pull-right"></i></a>
+					<ul class="treeview-menu">
+						<?php if(permiso_activo(15))?> <li <? if($Menu==501) echo 'class="active"'; ?>><a href="roles_main.php"><span class='fa fa-briefcase'></span> Roles de usuario</a></li>
+						<?php if(permiso_activo(20))?> <li <? if($Menu==416) echo 'class="active"'; ?>><a href="admin_permisos.php"><span class='fa fa-lock'></span> Permisos de usuario</a></li>
+						<?php if(permiso_activo(16))?> <li <? if($Menu==502) echo 'class="active"'; ?>><a href="usuarios_main.php"><span class='fa fa-users'></span> Usuarios</a></li>
+						<?php if(permiso_activo(71))?> <li <? if($Menu==503) echo 'class="active"'; ?>><a href="reset_pass.php"><span class='fa fa-key'></span> Reseteo de Clave</a></li>
+					</ul>
+				</li>
 				<li class="<? if (substr($Menu,0,1)==4) echo 'active'; ?> treeview"><!-- AQUI SERIA EL OPEN --><!--  -->
 					<a href="#"><i class="fa fa-cogs"></i> <span>Administración</span> <i class="fa fa-angle-left pull-right"></i></a>
 					<ul class="treeview-menu">
-						<?php if(permiso_activo(15))?> <li <? if($Menu==401) echo 'class="active"'; ?>><a href="roles_main.php"><span class='fa fa-briefcase'></span> Roles </a></li>
-						<?php if(permiso_activo(16))?> <li <? if($Menu==402) echo 'class="active"'; ?>><a href="usuarios_main.php"><span class='fa fa-users'></span> Usuarios</a></li>
-						<?php if(permiso_activo(71))?> <li <? if($Menu==407) echo 'class="active"'; ?>><a href="reset_pass.php"><span class='fa fa-key'></span> Reseteo de Clave</a></li>
-						<?php if(permiso_activo(17))?> <li <? if($Menu==403) echo 'class="active"'; ?>><a href="admin_periodos.php"><span class='fa fa-circle-o'></span> Periodos</a> </li>
 						<?php if(permiso_activo(18))?> <li <? if($Menu==404) echo 'class="active"'; ?>><a href="admin_auditoria.php"><span class='fa fa-wpforms'></span> Auditoria</a></li>
-						<!--<?php if(permiso_activo(19))?> <li <? if($Menu==405) //echo 'class="active"'; ?>><a href="alumnos_blacklist_main.php"><span class='fa fa-circle-o'></span> Parámetros generales</a></li>-->
-						<?php if(permiso_activo(20))?> <li <? if($Menu==406) echo 'class="active"'; ?>><a href="admin_permisos.php"><span class='fa fa-lock'></span> Permisos</a></li>
-						<?php if(permiso_activo(84))?> <li <? if($Menu==410) echo 'class="active"'; ?>><a href="para_sistema_main.php"><span class='fa fa-toggle-on'></span> Parámetros sistema</a></li>
-						<?php if(permiso_activo(87))?> <li <? if($Menu==411) echo 'class="active"'; ?>><a href="usua_pass_main.php"><span class='fa fa-key'></span> Usuarios y Claves</a></li>
+						<?php if(permiso_activo(11))?> <li <? if($Menu==418) echo 'class="active"'; ?>><a href="admin_periodos_etapas.php?peri_codi=<? echo $_SESSION['peri_codi']; ?>" title='El Usuario Administrador puede activar ciertas funcionalidades del sistema, determinando un rango de tiempo en el cual el acceso a la misma será vigente para que los usuarios administrativos/docentes/representantes/alumnos puedan utilizar.'><span class='fa fa-clock-o'></span> Activar funciones</a></li>
+						<?php if(permiso_activo(84))?> <li <? if($Menu==403) echo 'class="active"'; ?>><a href="para_sistema_main.php"><span class='fa fa-toggle-on'></span> Parámetros sistema</a></li>
 					</ul>
 				</li>
 				<?php }?>
@@ -130,11 +133,7 @@
 				</li>
 				<?php //}?>
 				<li class="<? if ($Menu==700) echo 'active'; ?>">
-					<a href="mensajes.php"><i class="fa fa-envelope"></i> <span>Mensajes</span>
-						<span class="pull-right-container">
-							<span class="label label-success pull-right">4</span>
-						</span>
-					</a>
+					<a href="mensajes.php"><i class="fa fa-envelope"></i> <span>Mensajes</span></a>
 				</li>
 				<li><a href="../../../manuales/Manual_Educalinks_financiero_2016_04_11_v041.pdf" target='_blank'><i class="fa fa-info-circle"></i> <span>Manual de ayuda</span></a></li>
 				<li class="<? if ($Menu==800) echo 'active'; ?>"><a href="../../common/acerca/"><i class="icon icon-logo"></i> <span>Acerca de Educalinks</span></a></li>

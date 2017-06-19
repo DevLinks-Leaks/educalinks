@@ -8,8 +8,18 @@
             <div id='menu3_loader' style='display:inline;font-size:small;text-align:left;vertical-align:middle;'></div>
             </span><span class='glyphicon glyphicon-list'></span><span class='hidden-xs'> Listado</span></a></li>
 		<li {tab_class4}><a data-toggle="tab" href="#menu4"><span class='fa fa-clipboard'></span><span class='hidden-xs'> Reportes de débito</span></a></li>
+		<li class='pull-right'>
+			<a href="#" class="text-muted"
+				aria-hidden="true" data-toggle="modal" data-target="#modal_infoSaf"><i class="fa fa-info-circle" title='Ayuda' onmouseover='$(this).tooltip("show");'></i></a>
+		</li>
+		<li class='pull-right'>
+			<a href="#" class="text-muted" onclick="js_debtAut_get_config( );" 
+				aria-hidden="true" data-toggle="modal" data-target="#modal_configSaf"><i class="fa fa-gear" title='Opciones' onmouseover='$(this).tooltip("show");'></i></a>
+		</li>
     </ul>
     <form id="file_form" action="{ruta_html_finan}/debitosAutomaticos/controller.php" enctype="multipart/form-data" method="post" target="_blank">
+		<input type='hidden' id='hd_exp_opc_ant'  name='hd_exp_opc_ant' value='{hd_exp_opc_ant}'></input>
+		<input type='hidden' id='hd_exp_opc_ctas' name='hd_exp_opc_ctas' value='{hd_exp_opc_ctas}'></input>
 		<!-- Modal cargar archivo-->
 		<div class="modal fade bs-example-modal-sm" id="modal_ask_load_file" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-sm">
@@ -34,6 +44,52 @@
 			</div>
 		</div>
 		<!-- Modal cargar archivo-->
+		<!-- Modal Información-->
+		<div class="modal fade" id="modal_infoSaf" tabindex="-1" role="dialog" aria-labelledby="modal_rep_ModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="modal_rep_ModalLabel"><span class='fa fa-question-circle'></span>&nbsp;Acerca de débito bancarios/exportación de archivos</h4>
+					</div>
+					<div class="modal-body" id="modal_infoSaf_body">
+						<p>Esta ventana tiene la función de crear formatos que permitan al usuario obtener información del sitema respecto a.</p>
+						
+						<ul>
+							<li>Alumnos con débito bancario.</li>
+							<li>Alumnos/Clientes con deudas.</li>
+						</ul>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success" data-dismiss="modal">Entendido</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /. Modal Información-->
+		<!-- Modal Configuraciòn-->
+		<div class="modal fade" id="modal_configSaf" tabindex="-1" role="dialog" aria-labelledby="modal_rep_ModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="modal_rep_ModalLabel"><span class='fa fa-cog'></span>&nbsp;Configuración de exportación de archivos<h4>
+					</div>
+					<div class="modal-body" id="modal_configSaf_body">
+					
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" data-loading='Espere...'
+							id='btn_debtAuto_set_config' name='btn_debtAuto_set_config' onClick='js_debtAut_set_config( );'>
+							<span class='fa fa-floppy-o'></span>&nbsp;Guardar Cambios</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /. Modal Configuraciòn-->
 		<!-- Modal Guardar-->
 		<div class="modal fade" id="modal_formato" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
@@ -71,7 +127,7 @@
 						<div class="grid">
 							<div class="row">
 								<div class='col-sm-9'>
-									<label id='lbl_cmb_formatos_copyPaste' name='lbl_cmb_formatos_copyPaste' for="cmb_formatos_copyPaste" class='control-label'><b>Nombre del Formato anterior</b></label>
+									<label id='lbl_cmb_formatos_copyPaste' name='lbl_cmb_formatos_copyPaste' for="cmb_formatos_copyPaste" class='control-label'><b>Esriba el nombre del formato</b></label>
 									<div id="div_cmb_carga_formato" name="div_cmb_carga_formato">{cmb_carga_formato}</div>
 								</div>
 							</div>
@@ -148,28 +204,19 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="mymodal_exportarFormatoArchivo">Exportar archivo con información lista</h4>
+						<h4 class="modal-title" id="mymodal_exportarFormatoArchivo">
+							Exportando archivo con el formato de <span id='forma_descripccion_exp' name='forma_descripccion_exp'></span>
+						</h4>
 					</div>
 					<div class="modal-body" id="modal_exportarFormatoArchivo_body">
-						<div class="form-horizontal">
-							<div class="form-group" >
-								<div class='col-sm-12'>
-									<input type='hidden' id='hd_id_formato_exp' name='hd_id_formato_exp' value=''></input>
-									<label id='forma_descripccion_exp' name='forma_descripccion_exp'></label>
-								</div>
-							</div>
-							<div class="form-group" >
-								<div class='col-sm-12'>
-									<hr style="padding:3px;margin:0px;"/>
-									<br>
-								</div>
-							</div>
+						<div id='div_step_1' name='div_step_1' class="form-horizontal" style='display:inline'>
+							<input type='hidden' id='hd_id_formato_exp' name='hd_id_formato_exp' value=''></input>
 							<div class="form-group" >
 								<div class='col-sm-3'>
 									<label id='lbl_nombre_exp' name='lbl_nombre_exp' for="txt_nombre_exp" 
 											class='control-label'><small>Nombre de archivo</small></label>
 								</div>
-								<div class="form-group col-sm-8">
+								<div class="col-sm-7">
 									<input type="text" class="form-control" name="txt_nombre_exp" id="txt_nombre_exp"
 											placeholder="debitosAutomaticos"></input>
 								</div>
@@ -252,59 +299,125 @@
 									</div>
 								</div>
 							</div>
-							<div class="form-group">
+							<div id='div_filtros_debitoBancario' name='div_filtros_debitoBancario' style='display:none;'>
+								<div class="form-group">
+									<div class="col-sm-12">
+										<span style="font-size:small;font-weight:bold;">FILTROS</span>
+										<hr style="padding:3px;margin:0px;">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-3">
+										<span style="font-size:small;">Estado facturas</span>
+									</div>
+									<div class="col-sm-7">
+										<select class='form-control' id='cmb_fac_estado' name='cmb_fac_estado'>
+											<option value=''>- Seleccione estado -</option>
+											<option value='P'>Pagado</option>
+											<option value='PC' selected='selected'>Por cobrar</option>
+											<option value='PV'>Por validar</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-3">
+										<span style="font-size:small;">Producto</span>
+									</div>
+									<div class="col-sm-9">
+										{cmb_producto}
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-3">
+										<span style="font-size:small;">Banco</span>
+										<input type="radio" id='rb_filtro' name='rb_filtro' value='banco'
+											onclick="js_debtAut_toggle_readonly_tarj_banco( );"/>
+									</div>
+									<div class="col-sm-7">
+										{cmb_banco}
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-3">
+										<span style="font-size:small;">Tarjeta de crédito</span>
+										<input type="radio" id='rb_filtro' name='rb_filtro' value='tarjeta'
+											onclick="js_debtAut_toggle_readonly_tarj_banco(  );"/>
+									</div>
+									<div class="col-sm-7">
+										{cmb_tarjCredito}
+									</div>
+								</div>
+							</div>
+						</div>
+						<div id='div_step_2' name='div_step_2' class="form-horizontal" style='display:none'>
+							<div class="form-group" >
 								<div class="col-sm-12">
-									<span style="font-size:small;font-weight:bold;">FILTROS</span>
-									<hr style="padding:3px;margin:0px;">
+									<div class="alert alert-default" role="alert">
+										<p><span class="fa fa-upload" aria-hidden="true"></span>
+											¡Aviso!
+											<hr style="padding:3px;margin:0px;">
+											Parece ser que en el plan de cobros (Períodos anuales), éste no es el primer ítem de cobro. 
+											Hay items con fecha de inicio cobro menor, y hay alumno(s), los cuales, estás intentando obtener información para cobrar este ítem,
+											pero que tiene(n) deuda(s) pendiente(s) de items anteriores.
+										</p>
+									</div>
+								</div>
+							</div><div class="form-group" >
+								<div class="col-sm-12">
+									¿Qué desea hacer?
 								</div>
 							</div>
-							<div class="form-group">
-								<div class="col-sm-3">
-									<span style="font-size:small;">Estado facturas</span>
-								</div>
-								<div class="col-sm-7">
-									<select class='form-control' id='cmb_fac_estado' name='cmb_fac_estado'>
-										<option value=''>- Seleccione estado -</option>
-										<option value='P'>Pagado</option>
-										<option value='PC' selected='selected'>Por cobrar</option>
-										<option value='PV'>Por validar</option>
-									</select>
+							<div class="form-group" >
+								<div class="col-sm-12">
+									<ol type=”1” start=”11”>
+										<li> Ver la lista de plan de pago a la que hace referencia este mensaje, según el período actual. </li>
+										<li> Descargar lista de los alumnos con deudas vencidas con información de la deuda. </li>
+										<li> Exportar archivo, pero obtener la deuda más antigua de los alumnos deudores de ítems anteriores según el plan de pago. </li>
+										<li> Exportar archivo normalmente </li>
+										<li> Volver </li>
+									</ol>
 								</div>
 							</div>
-							<div class="form-group">
-								<div class="col-sm-3">
-									<span style="font-size:small;">Producto</span>
-								</div>
-								<div class="col-sm-9">
-									{cmb_producto}
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-sm-3">
-									<span style="font-size:small;">Banco</span>
-									<input type="checkbox" id='chk_banco' name='chk_banco' checked
-										onchange="js_debtAut_toggle_readonly_tarj_banco( 'chk_banco', 'cmb_banco' );">
-								</div>
-								<div class="col-sm-7">
-									{cmb_banco}
+						</div>
+						<div id="div_step_3" name="div_step_3" class="form-horizontal" style="display:none">
+							<div class="form-group" >
+								<div class="col-sm-12">
+									<div class="alert alert-default" role="alert">
+										<p><span class="fa fa-upload" aria-hidden="true"></span>
+											¡Aviso!
+											<hr style="padding:3px;margin:0px;">
+											Hay clientes con intento fallido de débito automático por falta de liquidez en la cuenta principal.<br>
+											<br>
+											Los clientes con intento fallido dejarán de generar este mensaje una vez que tengan un pago exitoso (ya sea caja, ventanilla, debito, etc.).
+										</p>
+									</div>
 								</div>
 							</div>
-							<div class="form-group">
-								<div class="col-sm-3">
-									<span style="font-size:small;">Tarjeta de crédito</span>
-									<input type="checkbox" id='chk_tarjeta' name='chk_tarjeta' checked
-										onchange="js_debtAut_toggle_readonly_tarj_banco( 'chk_tarjeta', 'cmb_tarjCredito' );">
+							<div class="form-group" >
+								<div class="col-sm-12">
+									¿Qué desea hacer?
 								</div>
-								<div class="col-sm-7">
-									{cmb_tarjCredito}
+							</div>
+							<div class="form-group" >
+								<div class="col-sm-12">
+									<ol type=”1” start=”11”>
+										<li> Ver listado de personas con intento fallido.</li>
+										<li> Generar archivo de débito de todos los clientes y a los deudores con intento fallido cobrar con la cuenta secundaria/siguiente.</li>
+										<li> Generar archivo de débito de todos los clientes y a los deudores con intento fallido cobrar con la cuenta principal.</li>
+										<li> Generar archivo de débito de sólo los deudores con intento fallido y cobrar con la cuenta cuenta secundaria/siguiente.</li>
+										<li> Generar archivo de débito de sólo los deudores con intento fallido y cobrar con la cuenta principal.</li>
+										<li> No volver a mostrar este mensaje de nuevo y exportar archivo normalmente ( esta opción inactivará seteará a los deudores a sus cuentas principales de nuevo ).</li>
+										<li> Volver </li>
+									</ol>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-						<button id='btn_formato_exportar_followed' name='btn_formato_exportar_followed' 
-								class="btn btn-info" type="button" 
+						<button id="btn_formato_exportar_followed" name="btn_formato_exportar_followed" 
+								class="btn btn-info" type="button"
+								style="display:inline"
 								onclick="return js_debtAut_genera_archivo_followed('file_form');">
 							<span class='glyphicon glyphicon-export'></span>&nbsp;Exportar archivo
 						</button>
@@ -565,13 +678,10 @@
                         <div class='col-sm-7'>
                             <div class='col-sm-7' style='display:inline;'>
                                     <button id='btn_maint_buscar_todos' name='btn_maint_buscar_todos' class="btn btn-link" type="button"
-                                            onclick="return js_debtAuto_mantenimiento_buscar_todos('div_tbl_format','{ruta_html_finan}/debitosAutomaticos/controller.php');"
-                                            data-placement="right"
-                                            title='Cargar listado de formatos.'
-                                            onfocus='$(this).tooltip("show")'
-                                            onmouseover='$(this).tooltip("show")'>
+                                            onclick="return js_debtAuto_mantenimiento_buscar_todos('div_tbl_format','{ruta_html_finan}/debitosAutomaticos/controller.php');">
                                         <span class='glyphicon glyphicon-folder-close'></span>
                                     </button>
+									 Cargar listado de formatos
                             </div>
                         </div>
                         <div class='col-sm-5' style='text-align:right;'>

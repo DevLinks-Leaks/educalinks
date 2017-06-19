@@ -36,7 +36,7 @@ function handler()
 			$periodo->get_all_selectFormat();
 			$data['{cmb_periodo}'] = array("elemento"  => "combo", 
 											"datos"     => $periodo->rows, 
-                                            "options"   => array("name"=>"periodos","id"=>"periodos", "class"=>"form-control input-sm",
+                                            "options"   => array("name"=>"periodos","id"=>"periodos", "class"=>"form-control input-sm","disabled"=>"disabled",
 																 "onChange"	=> "cargaNivelesEconomicos('resultadoNivelEcon','".$diccionario['rutas_head']['ruta_html_finan']."/general/controller.php');"),
 											"selected"  => $_SESSION['peri_codi']);
 			$grupEcon->getCategorias_selectFormat_with_all('');

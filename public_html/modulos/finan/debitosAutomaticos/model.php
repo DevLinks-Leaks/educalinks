@@ -47,7 +47,7 @@ class DebitosAutomaticos extends DBAbstractModel
         {   $this->mensaje="No existen categorias en la BD.";
             array_pop($rol);
             array_push($rol, array(0 => -1, 
-                                   1 => 'Seleccione...',
+                                   1 => '- Seleccione un formato -',
                                    3 => ''));
         }
         else
@@ -55,7 +55,7 @@ class DebitosAutomaticos extends DBAbstractModel
 
             array_pop($rol);
             array_push($rol, array(0 => -1, 
-                                   1 => 'Seleccione...',
+                                   1 => '- Seleccione un formato -',
                                    3 => ''));
             foreach($this->rows as $categorias)
             {    array_push($rol, array_values($categorias));
@@ -144,6 +144,29 @@ class DebitosAutomaticos extends DBAbstractModel
         }
         else
         {    $this->mensaje="¡Error! Hubo un problema al intentar guardar formato";
+        }
+		return $this;
+    }
+	public function set_debitoautomatico_config( $check_exp_opc_ant, $check_exp_opc_ctas )
+	{	$this->parametros = array( $check_exp_opc_ant, $check_exp_opc_ctas );
+        $this->sp = "str_consultaDebitoautomatico_config_upd";
+        $this->executeSPAccion();
+        if($this->filasAfectadas>0)
+		{	$this->mensaje="¡Exito! Su configuración ha sido cambiada.";
+        }
+		else
+		{	$this->mensaje="¡Error! Ocurrió un problema con el cambio de la configuración";
+        }
+    }
+	public function get_debitoautomatico_config()
+	{   $this->parametros = array();
+        $this->sp = "str_consultaDebitoautomatico_config_info";
+        $this->executeSPConsulta();
+        if(count($this->rows)>0)
+		{	$this->mensaje="OK";
+        }
+		else
+		{	$this->mensaje="KO";
         }
 		return $this;
     }
