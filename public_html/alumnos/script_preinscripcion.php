@@ -49,27 +49,11 @@ switch($opc){
 		echo $result;
 	break;
 	case 'res_add':
-		$alum_resp_form_banc_tarj_nume = $_POST['alum_resp_form_banc_tarj_nume'];
-		if($alum_resp_form_banc_tarj_nume==''){
-			$alum_resp_form_banc_tarj_nume_encrypt='';
 		
-		}else{
-			 if(strpos($alum_resp_form_banc_tarj_nume, 'X') ===false){
-				/*Codigo de encriptado de Número de tarjeta de crédito*/
-				$iv = base64_decode($_SESSION['clie_iv']);
-				$alum_resp_form_banc_tarj_nume_encrypt = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $_SESSION['clie_key'], $alum_resp_form_banc_tarj_nume, MCRYPT_MODE_CBC, $iv);
-				$alum_resp_form_banc_tarj_nume_encrypt =base64_encode($alum_resp_form_banc_tarj_nume_encrypt);
-				/*FIN*/
-			}else{
-				$alum_resp_form_banc_tarj_nume_encrypt=null;
-			}
-		}
 		$alum_fech_naci = substr($_POST['alum_fech_naci'],6,4)."".substr($_POST['alum_fech_naci'],3,2)."".substr($_POST['alum_fech_naci'],0,2);
 		$alum_genero = ($_POST['alum_genero']=='Hombre'?1:0);
-		$alum_resp_tarj_banco_emisor = ($_POST['alum_resp_tarj_banco_emisor']==0?'':$_POST['alum_resp_tarj_banco_emisor']);
-		$alum_resp_form_fech_vcto = substr($_POST['alum_resp_form_fech_vcto'],6,4)."".substr($_POST['alum_resp_form_fech_vcto'],3,2)."".substr($_POST['alum_resp_form_fech_vcto'],0,2);
-		$alum_resp_form_banc_tipo = ($_POST['alum_resp_form_banc_tipo'] =='CORRIENTE'?'C':'A');
-		$sql	= "{call preins_add(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+		
+		$sql	= "{call preins_add(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 		$params	= array($_SESSION['alum_codi'],
 						$_SESSION['alum_curs_para_codi'],
 						$_SESSION['peri_codi_dest'],
@@ -99,15 +83,6 @@ switch($opc){
 						$_POST['alum_parentesco_emerg'],
 						$_POST['alum_pers_emerg'],
 						$_POST['alum_tipo_sangre'],
-						$_POST['alum_resp_form_pago'],
-						$_POST['alum_resp_form_banc_tarj'],
-						$alum_resp_tarj_banco_emisor,
-						$alum_resp_form_banc_tarj_nume_encrypt,
-						$alum_resp_form_fech_vcto,
-						$alum_resp_form_banc_tipo,
-						$_POST['alum_resp_form_cedu'],
-						$_POST['alum_resp_form_tipo_iden'],
-						$_POST['alum_resp_form_nomb'],
 						$_POST['alum_prov_naci'],
 						$_POST['alum_ciud_naci'],
 						$_POST['alum_parr_naci'],
