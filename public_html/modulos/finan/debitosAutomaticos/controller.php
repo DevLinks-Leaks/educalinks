@@ -465,11 +465,19 @@ function handler()
 				$objReader = PHPExcel_IOFactory::createReader($inputFileType);
 				$primerafila=0;
 				$textook=0;
+				$textonook=0;
 				if($debito_data['textook']=='')
 				{	$textook='ok';
 				}
 				else
 				{	$textook=$debito_data['textook'];
+				}
+				
+				if($debito_data['textonook']=='')
+				{	$textonook='ko';
+				}
+				else
+				{	$textonook=$debito_data['textonook'];
 				}
 				
 				if($debito_data['filainicia']!='')
@@ -495,7 +503,7 @@ function handler()
 			$codigodeuda=0;$valor=0;
 			$columna=0;$columna2=0;$columna3=0;
 			$contador1=0;$contador2=0;$contador3=0;$rowcontador=0;
-		
+			$pago = $sinliquidez = 0;
 			//  Loop through each row of the worksheet in turn
 			$acu=0;
 			for ($i=$primerafila; $i<=$highestRow; $i++)
@@ -523,6 +531,9 @@ function handler()
 					if($params[$i][$columna3]==$textook &&  $j==$columna3)
 					{	$pago=$pago+1;
 					}
+					if($params[$i][$columna3]==$textonook &&  $j==$columna3)
+					{	$sinliquidez = $sinliquidez+1;
+					}
 					else if($params[$i][$columna3]!=$textook &&  $j==$columna3 && $params[$i][$columna3]!='')
 					{	$pago=$pago+0;
 						$contador2=$contador2+1;
@@ -538,11 +549,19 @@ function handler()
 					$contador1=$contador1+$rowcontador['contadorpagados'];
 					$contador3=$contador3+$rowcontador['contadorsaldoafavor'];
 				}
-				$pago=0;	
+				if($sinliquidez>0)
+				{
+					if ( $debito_data['id_formaPago'] == 8 ) //sólo si es débito bancario, registra cuenta sin liquidez.
+					{	$carga->setpagodebito_sinliquidez( $codigodeuda, str_replace(",", ".", $valor), $_SESSION['usua_codigo'], 
+															$nombrearchivo, $debito_data['fecha_debito'], $debito_data['id_formaPago'] );
+						$contador2 = $contador2 + 1;
+					}
+				}
+				$pago = $sinliquidez = 0;
 			}	
-			$data =	array(	"saldoafavor"	=> $contador3,
-							"pagado"		=> $contador1,
-							"nopagado"		=> $contador2,
+			$data =	array(	"saldoafavor"	=> $contador3 ,
+							"pagado"		=> $contador1 ,
+							"nopagado"		=> $contador2 ,
 					);
 			$data['active1']='';
 			$data['active2']='in active';
@@ -780,6 +799,24 @@ function handler()
 			}
 			$objWriter->save('php://output');
 			exit;
+			break;
+		case GET_DEUD_CTAS_ANTIQ :
+			$productos = json_decode($debito_data['cmb_producto'], true);
+			
+			$xml_productos='<?xml version="1.0" encoding="iso-8859-1"?><productos>';
+			foreach ( $productos as $producto )
+			{
+				$xml_productos.='<producto id="'.$producto.'" />';
+			}
+			$xml_productos.="</productos>";
+			
+			$formatos->get_deudores_ctas_antiguas(	$xml_productos , $_SESSION['peri_codi'] , $debito_data['hd_id_formato_exp'] , 
+													$debito_data['cmb_fac_estado'] , $debito_data['cmb_banco'] , $debito_data['cmb_tarjCredito'] );
+			print_r($formatos->rows[0]['ctas_antiguas']);
+			break;
+		case GET_DEUD_CTAS_INLIQ :
+			$formatos->get_deudores_ctas_inliquidas( $debito_data['hd_id_formato_exp'] , $_SESSION['peri_codi'] );
+			print_r($formatos->rows[0]['ctas_inliquidas']);
 			break;
 		case COPY_FILE :
 			//$global diccionario;

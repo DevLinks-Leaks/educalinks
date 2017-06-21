@@ -30,6 +30,16 @@ class DebitosAutomaticos extends DBAbstractModel
             unset($debito);
         }
     }
+    public function setpagodebito_sinliquidez ($codigo, $valor, $usuario, $nombredoc, $fecha_debito, $id_formaPago )
+	{	$this->parametros = array($codigo, $valor, $usuario, $nombredoc, $fecha_debito, $_SESSION['puntVent_codigo'], $_SESSION['caja_codi'], $id_formaPago );
+        $this->sp = "str_ingresaPagodebito_sinliquidez";
+        $this->executeSPConsulta();
+        if (count($this->rows)>=1)
+        {   foreach($this->rows[0] as $propiedad=>$valor)
+            {   $this->$propiedad=$valor;
+            }
+        }
+    }
     public function setpagodebito ($codigo, $valor, $usuario, $nombredoc, $fecha_debito, $id_formaPago )
 	{	$this->parametros = array($codigo, $valor, $usuario, $nombredoc, $fecha_debito, $_SESSION['puntVent_codigo'], $_SESSION['caja_codi'], $id_formaPago );
         $this->sp = "str_ingresaPagodebito";
@@ -170,6 +180,31 @@ class DebitosAutomaticos extends DBAbstractModel
         }
 		return $this;
     }
+	public function get_deudores_ctas_antiguas( $xml_productos , $peri_codi , $codcab , $fac_estado , $banco , $tarjCredito )
+	{   $this->parametros = array( $xml_productos , $peri_codi , $codcab , $fac_estado , $banco , $tarjCredito );
+        $this->sp = "str_consultaDebitoautomatico_get_ctas_antiguas";
+        $this->executeSPConsulta();
+        if(count($this->rows)>0)
+		{	$this->mensaje="OK";
+        }
+		else
+		{	$this->mensaje="KO";
+        }
+		return $this;
+    }
+	public function get_deudores_ctas_inliquidas( $codcab , $peri_codi )
+	{   $this->parametros = array( $codcab , $peri_codi );
+        $this->sp = "str_consultaDebitoautomatico_get_ctas_inliquidas";
+        $this->executeSPConsulta();
+        if(count($this->rows)>0)
+		{	$this->mensaje="OK";
+        }
+		else
+		{	$this->mensaje="KO";
+        }
+		return $this;
+    }
+	
     # Método constructor
     function __construct() {
         //$this->db_name = 'URBALINKS_FINAN';

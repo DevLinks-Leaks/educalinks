@@ -194,6 +194,31 @@ class Rep_debito extends DBAbstractModel
             unset($producto);
         }
     }
+	
+	public function get_deudores_ctas_antiguas_report( $xml_productos , $peri_codi , $codcab , $fac_estado , $banco , $tarjCredito )
+	{   $this->parametros = array( $xml_productos , $peri_codi , $codcab , $fac_estado , $banco , $tarjCredito );
+        $this->sp = "str_consultaDebitoautomatico_get_ctas_antiguas_report";
+        $this->executeSPConsulta();
+        if(count($this->rows)>0)
+		{	$this->mensaje="OK";
+        }
+		else
+		{	$this->mensaje="KO";
+        }
+		return $this;
+    }
+	public function get_deudores_ctas_inliquidas_report( $codcab )
+	{   $this->parametros = array( $codcab , $peri_codi );
+        $this->sp = "str_consultaDebitoautomatico_get_ctas_inliquidas_report";
+        $this->executeSPConsulta();
+        if(count($this->rows)>0)
+		{	$this->mensaje="OK";
+        }
+		else
+		{	$this->mensaje="KO";
+        }
+		return $this;
+    }
     # Método constructor
     function __construct() {
         //$this->db_name = 'URBALINKS_FINAN';

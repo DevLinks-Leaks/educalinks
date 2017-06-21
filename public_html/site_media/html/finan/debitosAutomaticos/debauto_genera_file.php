@@ -299,34 +299,34 @@
 									</div>
 								</div>
 							</div>
+							<div class="form-group">
+								<div class="col-sm-12">
+									<span style="font-size:small;font-weight:bold;">FILTROS</span>
+									<hr style="padding:3px;margin:0px;">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-3">
+									<span style="font-size:small;">Estado facturas</span>
+								</div>
+								<div class="col-sm-7">
+									<select class='form-control' id='cmb_fac_estado' name='cmb_fac_estado'>
+										<option value=''>- Seleccione estado -</option>
+										<option value='P'>Pagado</option>
+										<option value='PC' selected='selected'>Por cobrar</option>
+										<option value='PV'>Por validar</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-3">
+									<span style="font-size:small;">Producto</span>
+								</div>
+								<div class="col-sm-9">
+									{cmb_producto}
+								</div>
+							</div>
 							<div id='div_filtros_debitoBancario' name='div_filtros_debitoBancario' style='display:none;'>
-								<div class="form-group">
-									<div class="col-sm-12">
-										<span style="font-size:small;font-weight:bold;">FILTROS</span>
-										<hr style="padding:3px;margin:0px;">
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-sm-3">
-										<span style="font-size:small;">Estado facturas</span>
-									</div>
-									<div class="col-sm-7">
-										<select class='form-control' id='cmb_fac_estado' name='cmb_fac_estado'>
-											<option value=''>- Seleccione estado -</option>
-											<option value='P'>Pagado</option>
-											<option value='PC' selected='selected'>Por cobrar</option>
-											<option value='PV'>Por validar</option>
-										</select>
-									</div>
-								</div>
-								<div class="form-group">
-									<div class="col-sm-3">
-										<span style="font-size:small;">Producto</span>
-									</div>
-									<div class="col-sm-9">
-										{cmb_producto}
-									</div>
-								</div>
 								<div class="form-group">
 									<div class="col-sm-3">
 										<span style="font-size:small;">Banco</span>

@@ -634,7 +634,9 @@ function js_debtAuto_cmb_tipo_formato_onchange(obj, div)
     }
 }
 function js_debtAut_genera_archivo()
-{   if($('#span_status_disk').hasClass('glyphicon glyphicon-floppy-saved'))
+{   js_debtAut_genera_archivo_manage_divs ( 'inline', 'none', 'none' );
+    $( '#btn_formato_exportar_followed' ).button( "reset" );
+	if($('#span_status_disk').hasClass('glyphicon glyphicon-floppy-saved'))
     {   $('#modal_exportarFormatoArchivo').modal('show');
         document.getElementById('rb_filtro').checked = false;
         $("#cmb_banco option[value='']").remove();
@@ -656,77 +658,105 @@ function js_debtAut_genera_archivo()
     }
 }
 function js_debtAut_genera_archivo_followed(formulario)
-{   var bandera = 0; var counter = 0; var mensaje = "";
-	$('#cmb_producto :selected').each(function(i, selected){ 
-		bandera++;
-	});
-	$('#rb_filtro').each(function ()
-	{	counter++;
-	console.log(counter);
-        if (!$(this).find('input').is(':checked'))
-		    counter--;
-		console.log(counter);
-    });
-	if ( bandera === 0 )
-		mensaje = "Debe seleccionar el/los producto(s).<br>";
-	
-	if ( counter === 0 ) 
-		mensaje+= "Debe escoger entre banco o tarjeta.";
-	
-	document.getElementById( 'hd_exp_opc_ant' ).value
-	
-	if ( bandera > 0 )
-	{   
-		document.getElementById('evento').value='create_file';
+{   console.log(document.getElementById('hd_id_formato_exp').value);
+	var bandera = 0; var counter = 0; var mensaje = "";
+	if ( document.getElementById( 'div_filtros_debitoBancario' ).style.display == 'none' ) /*none: ventanilla; inline: debito bancario. */
+	{
+		$('#cmb_producto :selected').each(function(i, selected){ 
+			bandera++;
+		});
 		
-		if ( document.getElementById( 'div_step_1' ).style.display == 'inline' )
-		{   if ( document.getElementById( 'hd_exp_opc_ant' ).value == 'S' )
-			{	
-				js_debtAut_genera_archivo_manage_divs ( 'none', 'inline', 'none');
-				js_debtAut_genera_archivo_ask_opc_ant( formulario );
-			}
-			else if ( document.getElementById( 'hd_exp_opc_ctas' ).value  == 'S' )
-			{
-				js_debtAut_genera_archivo_manage_divs ( 'none', 'none', 'inline');
-				js_debtAut_genera_archivo_ask_opc_ctas( formulario );
-			}
-			else
-			{   
-				if ( confirm( "¿Exportar formato ahora?" ) )
-					document.getElementById( formulario ).submit();
-			}
+		if ( bandera === 0 )
+			mensaje = "Debe seleccionar el/los producto(s).";
+		
+		if ( bandera > 0 )
+		{   
+			document.getElementById( formulario ).submit();
 		}
-		else if ( document.getElementById( 'div_step_2' ).style.display == 'inline' )
-		{
-			if ( document.getElementById( 'hd_exp_opc_ctas' ).value  == 'S' )
-			{
-				js_debtAut_genera_archivo_manage_divs ( 'none', 'none', 'inline');
-				js_debtAut_genera_archivo_ask_opc_ctas( formulario );
+		else
+		{   $.growl.error({title: 'Educalinks Informa', message: mensaje});
+		}
+	}
+	else
+	{   
+        $('#cmb_producto :selected').each(function(i, selected){ 
+			bandera++;
+		});
+		$('#rb_filtro').each(function ()
+		{	counter++;
+		console.log(counter);
+			if (!$(this).find('input').is(':checked'))
+				counter--;
+			console.log(counter);
+		});
+		if ( bandera === 0 )
+			mensaje = "Debe seleccionar el/los producto(s).<br>";
+		
+		if ( counter === 0 ) 
+			mensaje+= "Debe escoger entre banco o tarjeta.";
+		
+		document.getElementById( 'hd_exp_opc_ant' ).value
+		
+		if ( bandera > 0 )
+		{   
+			document.getElementById('evento').value='create_file';
+			
+			if ( document.getElementById( 'div_step_1' ).style.display == 'inline' )
+			{   if ( document.getElementById( 'hd_exp_opc_ant' ).value == 'S' )
+				{	
+					js_debtAut_genera_archivo_manage_divs ( 'none', 'inline', 'none');
+					js_debtAut_genera_archivo_ask_opc_ant( formulario );
+				}
+				else if ( document.getElementById( 'hd_exp_opc_ctas' ).value  == 'S' )
+				{
+					js_debtAut_genera_archivo_manage_divs ( 'none', 'none', 'inline');
+					js_debtAut_genera_archivo_ask_opc_ctas( formulario );
+				}
+				else
+				{   
+					if ( confirm( "¿Exportar formato ahora?" ) )
+						document.getElementById( formulario ).submit();
+					else
+						js_debtAut_genera_archivo_manage_divs ( 'inline', 'none', 'none' );
+				}
 			}
-			else
-			{   
+			else if ( document.getElementById( 'div_step_2' ).style.display == 'inline' )
+			{
+				if ( document.getElementById( 'hd_exp_opc_ctas' ).value  == 'S' )
+				{
+					js_debtAut_genera_archivo_manage_divs ( 'none', 'none', 'inline');
+					js_debtAut_genera_archivo_ask_opc_ctas( formulario );
+				}
+				else
+				{   
+					if ( confirm( "¿Exportar formato ahora?" ) )
+					{
+						js_debtAut_genera_archivo_manage_divs ( 'inline', 'none', 'none' );
+						document.getElementById( formulario ).submit();
+					}
+					else
+						js_debtAut_genera_archivo_manage_divs ( 'inline', 'none', 'none' );
+				}
+			}
+			else if ( document.getElementById( 'div_step_3' ).style.display == 'inline' )
+			{
 				if ( confirm( "¿Exportar formato ahora?" ) )
 				{
 					js_debtAut_genera_archivo_manage_divs ( 'inline', 'none', 'none' );
 					document.getElementById( formulario ).submit();
 				}
+				else
+					js_debtAut_genera_archivo_manage_divs ( 'inline', 'none', 'none' );
 			}
 		}
-		else if ( document.getElementById( 'div_step_3' ).style.display == 'inline' )
-		{
-			if ( confirm( "¿Exportar formato ahora?" ) )
-			{
-				js_debtAut_genera_archivo_manage_divs ( 'inline', 'none', 'none' );
-				document.getElementById( formulario ).submit();
-			}
+		else
+		{   $.growl.error({title: 'Educalinks Informa', message: mensaje});
 		}
 	}
-	else
-	{   $.growl.error({title: 'Educalinks Informa', message: mensaje});
-	}
+	console.log(document.getElementById('hd_id_formato_exp').value);
 }
 function js_debtAut_genera_archivo_manage_divs( div1 , div2 , div3 )
-{
+{	$( '#btn_formato_exportar_followed' ).button( "reset" );
 	document.getElementById( 'div_step_1' ).style.display = div1;
 	document.getElementById( 'div_step_2' ).style.display = div2;
 	document.getElementById( 'div_step_3' ).style.display = div3;
@@ -738,15 +768,25 @@ function js_debtAut_genera_archivo_ask_opc_ant ( formulario )
 	document.getElementById( 'div_step_2' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Verificando deudores con cuentas por cobrar antiguas. Por favor, espere...</div>';
 	var data = new FormData();
     data.append( 'event', 'get_deudores_ctas_antiguas' );
+	var productos = []; 
+	$('#cmb_producto :selected').each(function(i, selected){ 
+	  productos[i] = $(selected).val(); 
+	});
+	data.append('cmb_producto', JSON.stringify( productos ) );
+	data.append('hd_id_formato_exp', document.getElementById( 'hd_id_formato_exp' ).value );
+	
+	data.append('cmb_fac_estado', 	document.getElementById( 'cmb_fac_estado' ).value );
+	data.append('cmb_banco', 		document.getElementById( 'cmb_banco' ).value );
+	data.append('cmb_tarjCredito', 	document.getElementById( 'cmb_tarjCredito' ).value );
+	
     var xhr = new XMLHttpRequest();
     xhr.open('POST', document.getElementById('ruta_html_finan').value + '/debitosAutomaticos/controller.php' , true);
     xhr.onreadystatechange=function()
 	{   if ( xhr.readyState === 4 && xhr.status === 200 )
-		{   
-			if( 1 === 1) //si tiene registros..
+		{   if( xhr.responseText > 0 ) //si tiene registros de ctas. antiguas pendientes...
 			{
 				$( '#btn_formato_exportar_followed' ).button( "reset" );
-				//se queda aqui
+				get_div_step_2_body();
 			}
 			else //caso contrario, cargar step 3.
 			{
@@ -763,28 +803,64 @@ function js_debtAut_genera_archivo_ask_opc_ant ( formulario )
 						document.getElementById( formulario ).submit();
 						$( '#btn_formato_exportar_followed' ).button( "reset" );
 					}
+					else
+					js_debtAut_genera_archivo_manage_divs ( 'inline', 'none', 'none' );
 				}
 			}
         }
     };
     xhr.send(data);
 }
+function get_div_step_2_body()
+{
+	document.getElementById( 'div_step_2' ).innerHTML = '<div class="form-group" >'+
+								'<div class="col-sm-12">'+
+									'<div class="alert alert-default" role="alert">'+
+										'<p><span class="fa fa-upload" aria-hidden="true"></span>'+
+											'¡Aviso!'+
+											'<hr style="padding:3px;margin:0px;">'+
+											'Parece ser que en el plan de cobros (Períodos anuales), éste no es el primer ítem de cobro. '+
+											'Hay items con fecha de inicio cobro menor, y hay alumno(s), los cuales, estás intentando obtener información para cobrar este ítem,'+
+											'pero que tiene(n) deuda(s) pendiente(s) de items anteriores.'+
+										'</p>'+
+									'</div>'+
+								'</div>'+
+							'</div><div class="form-group" >'+
+								'<div class="col-sm-12">'+
+									'¿Qué desea hacer?'+
+								'</div>'+
+							'</div>'+
+							'<div class="form-group" >'+
+								'<div class="col-sm-12">'+
+									'<ol type=”1” start=”11”>'+
+										'<li> Ver la lista de plan de pago a la que hace referencia este mensaje, según el período actual. </li>'+
+										'<li> Descargar lista de los alumnos con deudas vencidas con información de la deuda. </li>'+
+										'<li> Exportar archivo, pero obtener la deuda más antigua de los alumnos deudores de ítems anteriores según el plan de pago. </li>'+
+										'<li> Exportar archivo normalmente </li>'+
+										'<li> Volver </li>'+
+									'</ol>'+
+								'</div>'+
+							'</div>';
+}
 function js_debtAut_genera_archivo_ask_opc_ctas( formulario )
 {
 	//consulta deudores con cuentas inliquidas.
 	$( '#btn_formato_exportar_followed' ).button( "loading" );
 	document.getElementById( 'div_step_3' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Verificando deudores con cuentas bancarias sin liquidez. Por favor, espere...</div>';
+	
 	var data = new FormData();
     data.append( 'event', 'get_deudores_ctas_inliquidas' );
+	data.append('hd_id_formato_exp', document.getElementById( 'hd_id_formato_exp' ).value );
+	
     var xhr = new XMLHttpRequest();
     xhr.open('POST', document.getElementById('ruta_html_finan').value + '/debitosAutomaticos/controller.php' , true);
     xhr.onreadystatechange=function()
 	{   if ( xhr.readyState === 4 && xhr.status === 200 )
 		{   
-			if( 1 === 1) //si tiene registros..
+			if( xhr.responseText > 0 ) //si tiene registro activo de de historico de personas que tuvieron cuentas sin liquidez...
 			{
 				$( '#btn_formato_exportar_followed' ).button( "reset" );
-				//se queda aqui
+				get_div_step_3_body();
 			}
 			else //caso contrario, cargar step 3.
 			{
@@ -794,13 +870,50 @@ function js_debtAut_genera_archivo_ask_opc_ctas( formulario )
 					document.getElementById( formulario ).submit();
 					$( '#btn_formato_exportar_followed' ).button( "reset" );
 				}
+				else
+					js_debtAut_genera_archivo_manage_divs ( 'inline', 'none', 'none' );
 			}
         }
     };
     xhr.send(data);
 }
+function get_div_step_3_body()
+{
+	document.getElementById( 'div_step_3' ).innerHTML = '<div class="form-group" >'+
+								'<div class="col-sm-12">'+
+									'<div class="alert alert-default" role="alert">'+
+										'<p><span class="fa fa-upload" aria-hidden="true"></span>'+
+											'¡Aviso!'+
+											'<hr style="padding:3px;margin:0px;">'+
+											'Hay clientes con intento fallido de débito automático por falta de liquidez en la cuenta principal.<br>'+
+											'<br>'+
+											'Los clientes con intento fallido dejarán de generar este mensaje una vez que tengan un pago exitoso (ya sea caja, ventanilla, debito, etc.).'+
+										'</p>'+
+									'</div>'+
+								'</div>'+
+							'</div><div class="form-group" >'+
+								'<div class="col-sm-12">'+
+									'¿Qué desea hacer?'+
+								'</div>'+
+							'</div>'+
+							'<div class="form-group" >'+
+								'<div class="col-sm-12">'+
+									'<ol type=”1” start=”11”>'+
+										'<li> Ver listado de personas con intento fallido.</li>'+
+										'<li> Generar archivo de débito de todos los clientes y a los deudores con intento fallido cobrar con la cuenta secundaria/siguiente.</li>'+
+										'<li> Generar archivo de débito de todos los clientes y a los deudores con intento fallido cobrar con la cuenta principal.</li>'+
+										'<li> Generar archivo de débito de sólo los deudores con intento fallido y cobrar con la cuenta cuenta secundaria/siguiente.</li>'+
+										'<li> Generar archivo de débito de sólo los deudores con intento fallido y cobrar con la cuenta principal.</li>'+
+										'<li> No volver a mostrar este mensaje de nuevo y exportar archivo normalmente ( esta opción inactivará seteará a los deudores a sus cuentas principales de nuevo ).</li>'+
+										'<li> Volver </li>'+
+									'</ol>'+
+								'</div>'+
+							'</div>';
+}
 function js_debtAut_genera_archivoind( codigo_formato )
-{   $('#modal_exportarFormatoArchivo').modal('show');
+{   js_debtAut_genera_archivo_manage_divs ( 'inline', 'none', 'none' );
+	$( '#btn_formato_exportar_followed' ).button( "reset" );
+	$('#modal_exportarFormatoArchivo').modal('show');
 	document.getElementById('rb_filtro').checked = false;
 	$("#cmb_banco option[value='']").remove();
 	$("#cmb_tarjCredito option[value='']").remove();
