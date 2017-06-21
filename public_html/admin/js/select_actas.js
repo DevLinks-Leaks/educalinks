@@ -156,6 +156,17 @@ function getURLCuadroCalificacionesHTML()
      window.open(direccion);
    }
 }
+function getURLCuadroCalificacionesParcialesFinalesExcel()
+{
+   if (Validar())
+   {
+     var direccion;
+     direccion="actas/cuadro_cali_parc_final_excel.php?curs_para_codi=";
+     direccion=direccion+document.getElementById('sl_paralelos').value+"&curs_para_mate_codi="+document.getElementById('sl_asignatura').value+"&peri_dist_codi="+document.getElementById('sl_periodo_dist').value;
+     //window.location.href=direccion;
+     window.open(direccion);
+   }
+}
 function getURLCuadroCalificacionesFinalesExcel()
 {
    if (Validar())

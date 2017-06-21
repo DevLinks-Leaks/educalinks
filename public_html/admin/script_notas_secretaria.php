@@ -82,7 +82,7 @@ function consNotas ($alum_curs_para_mate_codi_in, $peri_dist_codi_in, $nota_refe
 				$row["nota"]='0.0000';
 			/*FIN*/
 			if ($row["peri_dist_nota_tipo"]=="IN")
-				$td.="<input class='cls_validar' onchange='TEXTVALI(this,".($row["nota"]==''?0:$row["nota"]).",".peri_nota_max($_SESSION['peri_codi']).")' id='n_".$i."' data-peri_dist_abre='".$row["peri_dist_abre"]."' data-peri_dist_codi_in='".$row["peri_dist_codi_in"]."' type='text' value='".($row["nota"]==''?0:$row["nota"])."' style='width:50px'/>";
+				$td.="<input class='form-control cls_validar' onchange='TEXTVALI(this,".($row["nota"]==''?0:$row["nota"]).",".peri_nota_max($_SESSION['peri_codi']).")' id='n_".$i."' data-peri_dist_abre='".$row["peri_dist_abre"]."' data-peri_dist_codi_in='".$row["peri_dist_codi_in"]."' type='text' value='".($row["nota"]==''?0:$row["nota"])."' style='width:80%'/>";
 			else
 				$td.=$row["nota"];
 			
@@ -91,7 +91,7 @@ function consNotas ($alum_curs_para_mate_codi_in, $peri_dist_codi_in, $nota_refe
 			case 'D':
 			$td.= "<td>";
 			if ($row["peri_dist_nota_tipo"]=="IN")
-			{	$td.= "<select id='n_".$i."' data-peri_dist_codi_in='".$row["peri_dist_codi_in"]."'>";
+			{	$td.= "<select class='form-control' style='width: 50%' id='n_".$i."' data-peri_dist_codi_in='".$row["peri_dist_codi_in"]."'>";
 				foreach ($notas_cual as $key=>$value)
 				{	if ($value["nota_peri_cual_refe"]!='')
 						$td.= "<option value='".$value["nota_peri_cual_fin"]."' ".(substr($row["nota"],0,-2)==$value["nota_peri_cual_fin"]?'selected':'').">".$value["nota_peri_cual_refe"]."</option>";
@@ -107,7 +107,7 @@ function consNotas ($alum_curs_para_mate_codi_in, $peri_dist_codi_in, $nota_refe
 			case 'P':
 			$td.= "<td>";
 			if ($row["peri_dist_nota_tipo"]=="IN")
-			{	$td.= "<select id='n_".$i."' data-peri_dist_codi_in='".$row["peri_dist_codi_in"]."'>";
+			{	$td.= "<select class='form-control' style='width: 50%' id='n_".$i."' data-peri_dist_codi_in='".$row["peri_dist_codi_in"]."'>";
 				foreach ($notas_cual as $key=>$value)
 				{	if ($value["nota_peri_cual_refe"]!='')
 						$td.= "<option value='".$value["nota_peri_cual_fin"]."' ".(substr($row["nota"],0,-2)==$value["nota_peri_cual_fin"]?'selected':'').">".$value["nota_peri_cual_refe"]."</option>";
@@ -123,7 +123,7 @@ function consNotas ($alum_curs_para_mate_codi_in, $peri_dist_codi_in, $nota_refe
 			case 'I':
 			$td.= "<td>";
 			if ($row["peri_dist_nota_tipo"]=="IN")
-			{	$td.= "<select id='n_".$i."' data-peri_dist_codi_in='".$row["peri_dist_codi_in"]."'>";
+			{	$td.= "<select class='form-control' style='width: 50%' id='n_".$i."' data-peri_dist_codi_in='".$row["peri_dist_codi_in"]."'>";
 				foreach ($notas_cual as $key=>$value)
 				{	if ($value["nota_peri_cual_refe"]!='')
 						$td.= "<option value='".$value["nota_peri_cual_fin"]."' ".(substr($row["nota"],0,-2)==$value["nota_peri_cual_fin"]?'selected':'').">".$value["nota_peri_cual_refe"]."</option>";
@@ -139,7 +139,7 @@ function consNotas ($alum_curs_para_mate_codi_in, $peri_dist_codi_in, $nota_refe
 			case 'IP':
 			$td.= "<td>";
 			if ($row["peri_dist_nota_tipo"]=="IN")
-			{	$td.= "<select id='n_".$i."' data-peri_dist_codi_in='".$row["peri_dist_codi_in"]."'>";
+			{	$td.= "<select class='form-control' style='width: 50%' id='n_".$i."' data-peri_dist_codi_in='".$row["peri_dist_codi_in"]."'>";
 				foreach ($notas_cual as $key=>$value)
 				{	if ($value["nota_peri_cual_refe"]!='')
 						$td.= "<option value='".$value["nota_peri_cual_fin"]."' ".(substr($row["nota"],0,-2)==$value["nota_peri_cual_fin"]?'selected':'').">".$value["nota_peri_cual_refe"]."</option>";
@@ -155,7 +155,7 @@ function consNotas ($alum_curs_para_mate_codi_in, $peri_dist_codi_in, $nota_refe
 			case 'DI':
 			$td.= "<td>";
 			if ($row["peri_dist_nota_tipo"]=="IN")
-			{	$td.= "<select id='n_".$i."' data-peri_dist_codi_in='".$row["peri_dist_codi_in"]."'>";
+			{	$td.= "<select class='form-control' style='width: 50%' id='n_".$i."' data-peri_dist_codi_in='".$row["peri_dist_codi_in"]."'>";
 				foreach ($notas_cual as $key=>$value)
 				{	if ($value["nota_peri_cual_refe"]!='')
 						$td.= "<option value='".$value["nota_peri_cual_fin"]."' ".($row["nota"]==$value["nota_peri_cual_fin"]?'selected':'').">".$value["nota_peri_cual_refe"]."</option>";
@@ -171,7 +171,7 @@ function consNotas ($alum_curs_para_mate_codi_in, $peri_dist_codi_in, $nota_refe
 		}
 		$i++;
 	}
-	print "<table class='table_striped' style='width:550px'>";
+	print "<table class='table-striped' style='width:100%'>";
 	print "<thead>";
 	print "<tr>";
 	print $th;

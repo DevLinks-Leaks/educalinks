@@ -128,7 +128,7 @@ echo '
 						</tr>';
 				}
 				if ($row_curs_para_mate_info['nota_refe_cab_tipo']=='C') 
-				{	echo "<tr><td>&nbsp;</td><td>&nbsp;</td>";
+				{	echo "<tr><td>&nbsp;asd</td><td>&nbsp;</td>";
 					$CC_COLUM_index =0; 
 					while($CC_COLUM_index <= $CC_COLUM )
 					{	echo '<td align="right">&nbsp;
