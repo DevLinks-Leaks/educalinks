@@ -177,19 +177,19 @@ function handler() {
 					$_SESSION['id_commerce_diners_pay'] = '';
 					$_SESSION['local_id_diners_pay'] = 'GN01';
 					break;
-				case  "dev.educalinks.com.ec":
+				case  "local.educalinks.com.ec":
 					$_SESSION['llaveactiva']=$llavedesarrollo;
 					$_SESSION['passllaveactiva']=$clavellavedesarrollo;
 					$_SESSION['rutallave']=$rutallavedesarrollo;
 					$_SESSION['ambiente']=1;
 					$_SESSION['correofacturas']='malvear@redlinks.com.ec';
-					$_SESSION['visor']='dev.educalinks.com.ec/finan/visor';
+					$_SESSION['visor']='local.educalinks.com.ec/finan/visor';
 					$_SESSION['dir_logo_cliente']=$ruta_logo_desarrollo;
 					$_SESSION['dir_logo_cliente_bg']=$ruta_logo_desarrollo_bg;
 					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_liceopanamericano;
 					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_liceopanamericano_bg;
 					$_SESSION['id_commerce_pagos_web'] = '7940';
-					$_SESSION['id_commerce_diners_acquireid'] = 'http://dev.educalinks.com.ec/alumnos/pagos/';
+					$_SESSION['id_commerce_diners_acquireid'] = 'http://local.educalinks.com.ec/alumnos/pagos/';
 					$_SESSION['id_commerce_diners_pay'] = '0992336919001';
 					$_SESSION['local_id_diners_pay'] = 'GN01';
 					break;
@@ -556,71 +556,44 @@ function handler() {
 			
             
             $llaveVPOSCryptoPub_diners = "-----BEGIN PUBLIC KEY-----\n".
-			"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCMEHg0R08b6SynYlich36KEnxe\n".
-			"JRjRGG9thQpQOjy5j8qOVowx2NuD+Ew7ZC/dRtnpdh5rZGI3WMAymLd/zDa+mawA\n".
-			"8Wg/8fa14ePumKhGhsfVXWPfBTAjo0gizKIIpinsF4LiDh+5zgv+2CtaaZloPqRC\n".
-			"bO9en7FG4Xa7hnCoHQIDAQAB\n".
+			"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDxG0F0bXJ2ZDdWy0/peLU+GhKf\n".
+			"Aqobs7hRB6+17i3118kJz7DRmdLQckcelLQijtTCjQ6drbM54jIm8BWZUKakfPo2\n".
+			"ZSkxjNmHLQ/+tm4kFzIrQc+AenN9JtYmQH6tOSL4w6VrBatWC4vVPvbkn2tdz10A\n".
+			"9E6O8RwUyHnn6gUMEwIDAQAB\n".
 			"-----END PUBLIC KEY-----";
-			
+			//Firma privada del establecimiento
             $llaveComercioFirmaPriv_diners = "-----BEGIN RSA PRIVATE KEY-----\n".
-			"MIICXQIBAAKBgQDDUnsVZqvVsYuhTmRM6Q1ePktIBn5Nnl3OqV30Cmf/Q1j8JGSa\n".
-			"yORvintItmLYC9xZcAi9fP4s1bUb5phkN9w8ZHC5wKnEA0SEhLe/H47dw92KAc9S\n".
-			"H0ElIDSDDhSFfWHe3gOGKJ3+aq1VYuybpuBImlLZyfaBp6ozjBykbsbupQIDAQAB\n".
-			"AoGBAJnM19iZOROSs2U4Cii5lmowWS0E1+2clzdFDBM/InbQ/D/HFGUBbUcbX0p5\n".
-			"O0ntxPu0CV3UD30UZoDqyfKYPdT73TBxgUG7AAD7dn3ndW0tGj+Sdjva1SjdqbFt\n".
-			"Dbp5NBJfCz6NcyBfO8n6AskJLdU2vdHyN8u6iP/HqL6ORj2hAkEA5mbkcVRGzIMb\n".
-			"iW2sLdavwDjBAMZFvEpv8G8W/+TwfC7SPsiMvMrt1eHnJYPfXSvCL1gW9QJyV3bx\n".
-			"uFtX39X9LQJBANkF2SVlrMbAtzXg53GNN2b+5N681GdxdVKaVR489WcKhaJaQ4lV\n".
-			"KV0Hqwevbll+9PNgHasKitCQ8cl5SaBf0lkCQHdZ44qlaot0eyZErsWMCbzcaXZa\n".
-			"PzObp8L3+QUT9lON+ZFWWDlQMcXy4Mc5OdLM4SmfSz0eSFbwoaSrhKjJ8/0CQQDN\n".
-			"NEpuogUMqYyS1WYCaJTKPpoKQmJUrWNSB7wUK2+fTsOtD8xsPqot3OJLEgY1eWYD\n".
-			"+g4TfJRlQahd6OFFU1WBAkBk/S6KpzjQXnnE/GBbVChFw/moEonqHbhfZbxHKKSE\n".
-			"J8zci75Ai6SA+8SPOcLTKsb0XPQFlIyGCt7eoGXbSGhj\n".
+			"MIICXQIBAAKBgQCRhGg3dpZKmbNa1HFTe7UT+Q0D2gMscUaRppFIvj7N2o62BuVs\n".
+			"XAyq0GWnwUWUwg7R9rg7B0i2/RPHX4JEkAEH0zIgRrqiwvoKlkvUpIXpDl5O5JvQ\n".
+			"zl2EOa6oH3XFq2t3X0Zf2CFa4wMiTbKBrX1oDyIfrvtjGgDwRY6hKfeEdwIDAQAB\n".
+			"AoGAKMZtXX1BR84hz8XPq5DygJI872NbmEx1dcKy2ytT9eLUMnVkPCTe985Fbehe\n".
+			"Uvy9ol/756521a+8pxVAL24am2ZkLdEII/Ae2oCoJtiIgHdALJlbSjAJP2ThrnF2\n".
+			"Iel0GhE+2mfgR5pMFWfO6sbzMt11FhZTRiuMi06VxCV8gsECQQDLn1dLpXwV5ovX\n".
+			"pFeV6D6UhlGD020avwxOsUfKL7Bdk+Wdy5pMgcFx67myDmHk3mIZszgIKkqFokKB\n".
+			"2cVptjWZAkEAtvLNl5PFewT16dUNadm09mfM2CtQ+am9enLRpuZ2HIViSL5b84Zn\n".
+			"DaxoKdPuaK8rMrcth1kzzrbMKqB3q4C0jwJAVJ2YhyTzlZ5CipAOnYrvRoUyppdb\n".
+			"hXvSv3jIHmsG3TwydQpAyn45Rv/wIN/9KkCHf6qMJEh+w12USaWXdcB0MQJBAKlB\n".
+			"iSOq+xENTdW/3mEHoXw2HDYCHTBd8YbPo1cd8DgCzyMtujRbLAxibRwFjpQbO4P4\n".
+			"JI8L3/pm9Ayb2Rs6P9ECQQCZYf85XUknA04xT1te0L8HCHxDkaWld49dkjU7ASTe\n".
+			"x9ljSuOJ8v6sdVNtFIUNS6l/wiRqkFRv8Wyh5SSF0xEM\n".
 			"-----END RSA PRIVATE KEY-----";
 			
             //Monto incluido con impuestos
-            
-			$e = $plugin->setLocalID( $LocalID );
-			if($e!= "")
-				echo "Error: $e";
-			$e = $plugin->setTransacctionID( $row['pon_code'] );
-			if($e!= "")
-				echo "Error: $e";
-			$e = $plugin->setTransacctionValue( $deud_totalPendiente*100 );
-			if($e!= "")
-				echo "Error: $e";
-			$e = $plugin->setTaxValue1(000);
-			if($e!= "")
-				echo "Error: $e";
-			$e = $plugin->setTaxValue2(000);
-			if($e!= "")
-				echo "Error: $e";
-			$e = $plugin->setTipValue(000);
-			if($e!= "")
-				echo "Error: $e";
-			$e = $plugin->setCurrencyID($moneda);
-			if($e!= "")
-				echo "Error: $e";
-			$e = $plugin->setReferencia1("");
-			if($e!= "")
-				echo "Error: $e";
-			$e = $plugin->setReferencia2("");
-			if($e != "")
-				echo "Error: $e";
-			$e = $plugin->setReferencia3("");
-			if($e!= "")
-				echo "Error: $e";
-			$e = $plugin->setReferencia4("");
-			if($e!= "")
-				echo "Error: $e";
-			$e = $plugin->setReferencia5("");
-			if($e!= "")
-				echo "Error: $e";
-			$e = $plugin->setIV( $vector_diners );
-			if($e!= "")
-				echo "Error: $e";
 			try
 			{
+				$plugin->setLocalID( $LocalID );
+				$plugin->setTransacctionID( $row['pon_code'] );
+				$plugin->setTransacctionValue( $deud_totalPendiente*100 );
+				$plugin->setTaxValue1("000");
+				$plugin->setTaxValue2("000");
+				$plugin->setTipValue ("000");
+				$plugin->setCurrencyID($moneda);
+				$plugin->setReferencia1("Referencia de prueba PHP");
+				$plugin->setReferencia2("");
+				$plugin->setReferencia3("");
+				$plugin->setReferencia4("");
+				$plugin->setReferencia5("");
+				$plugin->setIV( $vector_diners );
 				$plugin->setSignPrivateKey( $llaveComercioFirmaPriv_diners );
 				$plugin->setCipherPublicKey( $llaveVPOSCryptoPub_diners );
 				$xmlGenerateKeyI = $plugin->CreateXMLGENERATEKEY();
@@ -678,12 +651,10 @@ function handler() {
 			break;
 		case GET_DEBT_ANS_DINERS:
 			global $diccionario;
+			
 			$_SESSION['IN']="OK";
 			if( empty( $_SESSION['sidebar_status'] ) )
 				$_SESSION['sidebar_status']='';
-			
-			include_once("../../../includes/common/PlugInClient/PlugInClientSend.php");
-			include_once("../../../includes/common/PlugInClient/RSAEncryption.php");
 			
 			$periodo->get_all();
 			$cmb_sidebar_periodo = '<div class="btn-group-vertical" style="text-align:center;">';
@@ -706,7 +677,7 @@ function handler() {
 				'usua_codigoRol'=>$general->usua_codigoRol,
 				'puntVent_codigo'=>$general->puntVent_codigo,
 				'cmb_sidebar_periodo' => $cmb_sidebar_periodo );
-				
+			
 			$_SESSION['ui_skin']='skin-blue';
 			$_SESSION['toggle_fullscreen']='false';
 			$_SESSION['usua_codigo']=$data['usua_codigo'];
@@ -804,6 +775,22 @@ function handler() {
 					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_liceopanamericanosur_bg;
 					$_SESSION['id_commerce_pagos_web'] = '7056';
 					break;
+				case  "local.educalinks.com.ec":
+					$_SESSION['llaveactiva']=$llavedesarrollo;
+					$_SESSION['passllaveactiva']=$clavellavedesarrollo;
+					$_SESSION['rutallave']=$rutallavedesarrollo;
+					$_SESSION['ambiente']=1;
+					$_SESSION['correofacturas']='malvear@redlinks.com.ec';
+					$_SESSION['visor']='local.educalinks.com.ec/finan/visor';
+					$_SESSION['dir_logo_cliente']=$ruta_logo_desarrollo;
+					$_SESSION['dir_logo_cliente_bg']=$ruta_logo_desarrollo_bg;
+					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_liceopanamericano;
+					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_liceopanamericano_bg;
+					$_SESSION['id_commerce_pagos_web'] = '7940';
+					$_SESSION['id_commerce_diners_acquireid'] = 'http://local.educalinks.com.ec/alumnos/pagos/';
+					$_SESSION['id_commerce_diners_pay'] = '0992336919001';
+					$_SESSION['local_id_diners_pay'] = 'GN01';
+					break;
 				case  "delfos.educalinks.com.ec":
 					$_SESSION['llaveactiva']=$llavedelfos;
 					$_SESSION['passllaveactiva']=$clavellavedelfos;
@@ -856,155 +843,208 @@ function handler() {
 				break;
 			}
 			
-			$firmaPrivada_comercio = "-----BEGIN PUBLIC KEY-----\n".
-				"MIICXAIBAAKBgQCG2SM+eNoJwyYW5EbFgHk/Mw8K2PHIjBHBaCMR4V+xbw14mdGo\n".
-				"1TklGIpJb1SKiNiqJa6i0YzTLQVZsU9ylCtFh+FOTQ5g56LozLY10ImhSWxxP9Cq\n".
-				"5r7aC4q7wM8qT2/4sURcWZ/PFRNrqt+LsUZ0Lj13Kl/G76ldBMmeeRUs/QIDAQAB\n".
-				"AoGARgnLo2vzm3RveR5Rn80trGShoHmzgv01T6X96RCMukS603PZEH7Gsny/forD\n".
-				"dzzChAUUYl7CbQCKMd7FK/bHThGsOxIkHpZ5P9ZWwQICz2q7C9dTPjqceee6D8bx\n".
-				"KZlMhqBcOGhlMqWKyjAj6CDG4AIhjYQt1Saco1sJiINCJQECQQDBrQgozyfNL9Qa\n".
-				"mGkm6rrm8oDC+e5/lu2d4Tz93ETUx88cjPsCD/UBCwpcqZQQFTpAtd40foWe2C/Q\n".
-				"S5Go5F69AkEAsj3lHuQHLvPRvcbVgkAx61vQefUtCQsGWdpDf2mhZ7BDS5uhWrVl\n".
-				"Mx7RDrCGJLVO0/wgj+7blhHwNNbUKxMLQQJAOGvD+L+AhNHuJGFKIMA4+pai1Coj\n".
-				"RKAfUOMQ9ZN5qdMbjuGzLgKgCVHCDwSH0bedZMSWmwxQuNmZ9EBPirgcsQJAa983\n".
-				"vkVE766SHmeqqgSN8aIEfvraAaIReum0dfUIwQcVAzoyIgKsN48L+PbuiGLOTU9G\n".
-				"qbVmYeGDXYcyqssAwQJBAKJX6O4xvTFze0ujcH2oJigZjwodVMVu4Su/QSi1ypwR\n".
-				"Qzyf7Kgs2KXdga7R29gnQxYDPmHWdcz1LoNu1nhmRbg=\n".
+			$cifradoPrivado_comercio = "-----BEGIN RSA PRIVATE KEY-----\n".
+				"MIICWwIBAAKBgQCRXjfyX/nn8xyA01hezGIa5eEcMxqDL/WI/ANUIZfwCqq8gTU8\n".
+				"ArtP2AsI0SuYtENj2UupJZziS97At3t33tfx6i5JusyZcIypm+d/xzUu3ypExY83\n".
+				"0GpM2tkOsIUX59Zj0+YZQ3sCINTY2fJahd76Ord++r/ElGDyshIOqRCbYwIDAQAB\n".
+				"AoGANAn7kzvCdcN1D7UY7I7UC/cBOBwfQJlZl5lIA8Um5Bqddm/2w63iqjmX8acX\n".
+				"qUnW2ha+3CWH3Qb2Dh1hCM9wlDID8CvdrBm11VFVXVsMe5MBLU5fVUh3gb82Rcjg\n".
+				"7seNdKG1wLqCONxd70likWe+s6GyuNwRke8yFXZT/NZ6oQECQQDRLkxcyaMHXlWJ\n".
+				"vhht4tCMVWTXEu817jzttuJKC1wCOtoorMQTg32cdK2DTfsslIPhqW6F1Mf3kXC+\n".
+				"yriMAL/jAkEAseeOaz/LuFMOlVAv96cUjhLyuftxE8VPb4R6KqC24hScvaC6PO43\n".
+				"gbGQSk1w5wASrQGCfI0q73SuoRvDmMCOgQJARNtNrbl+Hd3SoG3f0sQ3zAoMELQd\n".
+				"5A3RJprt8Fu+5MkEqSD9xkKhZZAO0csopCsbInxIcmtxi6/nghZvGz7f6wJAH1WQ\n".
+				"gRVYdVuzqtrXx//Wn/t4YweFcB0Fk7e6qL1r2MAWp1Oi2c5/WkmDB4NCSn15zJ0C\n".
+				"dZuLn2dmxpuURNhNgQJAQ7gKw91MrYgVk2fKW+3baV1v2gVsQO8R3bk9JxUw8uYi\n".
+				"8kRC6glnutJAuYJAE38aEjc7SnpoOKxARUbc8NIf4w==\n".
+				"-----END RSA PRIVATE KEY-----";
+			
+			$firmaPublica_diners = "-----BEGIN PUBLIC KEY-----\n".
+				"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCYI9HTg+zXBWCjnLnTDtTY6DrZ\n".
+				"QfMrs/2bu/x4zOKtIl+zmZc1aUhIRV+0GF5p+n5zge+ub2beBw3KouxzYjTf2nrO\n".
+				"v2tOSFN4XbJ2MtqcMhJe6R3CGMK8jCwbbrLdtFleL+cdVPz5aZZ7HpPjCJOpqrxY\n".
+				"IkMDCSAbH/DbuDDIrQIDAQAB\n".
 				"-----END PUBLIC KEY-----";
 			
-			$firmaPublica_diners = '-----BEGIN RSA PRIVATE KEY-----\n'.
-				'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCM6iId+CeR/CmgXJ5IbHLbtnZv\n'.
-				'zbk/HGDowFdOVQZaa2ZFklTV+bmuhAfrwNJSDeakzT0OqnQgYc73Xfb5y6Kn8TFs\n'.
-				'Hq9YW+/TCuMNdA6gQXO1lDxHTIAVgkHUaRJ5Gy/fvWzJuzqVWYFBo/WyPslO274h\n'.
-				'1DYv/IbnU/IEmyq3hQIDAQAB\n'.
-				'-----END RSA PRIVATE KEY-----';
-			
-			$plugin = new PlugInClientSend(); 
 			$AdquirerID = $_SESSION['id_commerce_diners_pay'];
 			$MerchantID = $_SESSION['id_commerce_diners_pay'];
 			$LocalID = $_SESSION['local_id_diners_pay']; 
 			
 			$moneda = "840";
+			
 			$URL_Tecnico = $_SESSION['id_commerce_diners_acquireid'];
 			
-			$vector_diners = "mV6VoYVJ54A=";
 			$simetrica_diners = "g0yoaxPT4GQmvKIf7wcCV3Uv1SDgp9n0";
 			
+			include_once("../../../includes/common/PlugInClient/PlugInClientRecive.php");
+			include_once("../../../includes/common/PlugInClient/RSAEncryption.php");
+			
+			$vector_diners = "mV6VoYVJ54A=";
 			$xmlGenerateKey = $_POST["XMLGENERATEKEY"];
 			$pluginr = new PlugInClientRecive();
-			$pluginr->setIV($vector);
-			
+			$pluginr->setIV($vector_diners);
 			$pluginr->setSignPublicKey( $firmaPublica_diners );
-			$pluginr->setCipherPrivateKey( $firmaPrivada_comercio );
-			$error = $pluginr->setXMLGENERATEKEY($xmlGenerateKey);
-			$resultado = "";
-			if($error != "")
+			$pluginr->setCipherPrivateKey( $cifradoPrivado_comercio );
+			$pluginr->setXMLGENERATEKEY($xmlGenerateKey);
+			$cadeEnc = $_POST["XMLRESPONSE"];
+			try
 			{
-				$resultado = "Error:" . $error;
-				return;
-				 $general->set_operacion_auditoria(
+				$firmaCorrecta = $pluginr->XMLProcess($cadeEnc , $_POST["XMLDIGITALSIGN"]);
+				if($firmaCorrecta != 1)
+				{
+					$data['datos_deuda'] =  "<b>Los datos han sido alterados.</b><br>".$_POST["XMLDIGITALSIGN"].$_POST["XMLGENERATEKEY"].$_POST["XMLRESPONSE"];
+					$general->set_operacion_auditoria(
+													$pluginr->getAuthorizationCode(), $pluginr->getAuthorizationState(),
+													$pluginr->getErrorCode() ,  $pluginr->getErrorDetails() ,
+													'', '',
+													$pluginr->getTransacctionID(), $pluginr->getTransacctionValue(),
+													'' );
+					
+					$general->set_operacion_respuesta(
+													$pluginr->getAuthorizationCode(), $pluginr->getAuthorizationState(),
+													$pluginr->getErrorCode() ,  $pluginr->getErrorDetails() ,
+													'', '',
+													$pluginr->getTransacctionID(), $pluginr->getTransacctionValue(),
+													'');
+					
+					if ( $pluginr->getAuthorizationState() == 'N' )
+						$data['frm_pago_sbmt'] = "
+						<div class='bs-callout bs-callout-danger'>
+							<h4>Error</h4>
+						</div>";
+					if ( $pluginr->getAuthorizationState() == 'Y' )
+						$data['frm_pago_sbmt'] = "
+						<div class='bs-callout bs-callout-info'>
+							<h4>Éxito</h4>
+						</div>";
+				}
+				else
+				{
+					$resultado = "Error:" . $error;
+					$general->set_operacion_auditoria(
+													$pluginr->getAuthorizationCode(), $pluginr->getAuthorizationState(),
+													$pluginr->getErrorCode() ,  $pluginr->getErrorDetails() ,
+													'', '',
+													$pluginr->getTransacctionID(), $pluginr->getTransacctionValue(),
+													'' );
+					
+					$general->set_operacion_respuesta(
+													$pluginr->getAuthorizationCode(), $pluginr->getAuthorizationState(),
+													$pluginr->getErrorCode() ,  $pluginr->getErrorDetails() ,
+													'', '',
+													$pluginr->getTransacctionID(), $pluginr->getTransacctionValue(),
+													'');
+
+					$resultado = '<TABLE id="Table16" style="WIDTH: 456px; HEIGHT: 249px" height="249" cellSpacing="1" cellPadding="1" width="456" border="0">
+						<TR>
+							<TD style="WIDTH: 128px" width="128"></TD>
+							<TD>Transaccion ID Session Portal <? ?></TD>
+							<TD>'.$pluginr->getTransacctionID().'</TD>
+						</TR>
+						<TR>
+							<TD style="WIDTH: 128px" width="128"></TD>
+							<TD>Impuesto 1</TD>
+							<TD>'.$pluginr->getTaxValue1().'</TD>
+						</TR>
+						<TR>
+							<TD style="WIDTH: 128px" width="128"></TD>
+							<TD>Impuesto 2</TD>
+							<TD>'.$pluginr->getTaxValue2().'</TD>
+						</TR>
+						<TR>
+							<TD style="WIDTH: 128px" width="128"></TD>
+							<TD>Propina</TD>
+							<TD>'.$pluginr->getTipValue().'</TD>
+						</TR>
+						<TR>
+							<TD style="WIDTH: 128px" width="128"></TD>
+							<TD>Valor</TD>
+							<TD>'.$pluginr->getTransacctionValue().'</TD>
+						</TR>
+						<TR>
+							<TD style="WIDTH: 128px" width="128"></TD>
+							<TD>ESTADO</TD>
+							<TD>'.$pluginr->getAuthorizationState().'</TD>
+						</TR>
+						<TR>
+							<TD style="WIDTH: 128px" width="128"></TD>
+							<TD>NUMERO AUTORIZACION</TD>
+							<TD>'.$pluginr->getAuthorizationCode().'</TD>
+						</TR>
+					</TABLE>'; 
+					
+					$hide='
+					<TABLE>
+						<TR>
+							<TD style="WIDTH: 128px" width="128"></TD>
+							<TD>Referencia 1</TD>
+							<TD>'.$pluginr->getReferencia1().'</TD>
+						</TR>
+						<TR>
+							<TD style="WIDTH: 128px" width="128"></TD>
+							<TD>Referencia 2</TD>
+							<TD>'.$pluginr->getReferencia2().'</TD>
+						</TR>
+						<TR>
+							<TD style="WIDTH: 128px" width="128"></TD>
+							<TD>Referencia 3</TD>
+							<TD>'.$pluginr->getReferencia3().'</TD>
+						</TR>
+						<TR>
+							<TD style="WIDTH: 128px" width="128"></TD>
+							<TD>Referencia 4</TD>
+							<TD>'.$pluginr->getReferencia4().'</TD>
+						</TR>
+						<TR>
+							<TD style="WIDTH: 128px" width="128"></TD>
+							<TD>Referencia 5</TD>
+							<TD>'.$pluginr->getReferencia5().'</TD>
+						</TR>
+					</TABLE>';
+					$data['datos_deuda'] = $resultado;
+					
+					if ( $pluginr->getAuthorizationState() == 'N' )
+						$data['frm_pago_sbmt'] = "
+						<div class='bs-callout bs-callout-danger'>
+							<h4>Error</h4>
+						</div>";
+					if ( $pluginr->getAuthorizationState() == 'Y' )
+						$data['frm_pago_sbmt'] = "
+						<div class='bs-callout bs-callout-info'>
+							<h4>Éxito</h4>
+						</div>";
+					
+				}
+			}
+			catch(Exception $e)
+			{
+				$data['datos_deuda'] =  "<b><br>ERROR: " . $e->getMessage();
+				$general->set_operacion_auditoria(
 												$pluginr->getAuthorizationCode(), $pluginr->getAuthorizationState(),
-												$_POST['ERRORCODE'],  $error,
+												$pluginr->getErrorCode() ,  $pluginr->getErrorDetails() ,
 												'', '',
 												$pluginr->getTransacctionID(), $pluginr->getTransacctionValue(),
 												'' );
+				
 				$general->set_operacion_respuesta(
 												$pluginr->getAuthorizationCode(), $pluginr->getAuthorizationState(),
-												$_POST['ERRORCODE'],  $error,
+												$pluginr->getErrorCode() ,  $pluginr->getErrorDetails() ,
 												'', '',
 												$pluginr->getTransacctionID(), $pluginr->getTransacctionValue(),
 												'');
-				$data['datos_deuda'] = "Error durante el proceso de interpretación de la respuesta. "
-					."Verificar los componentes de seguridad: Vector Hexadecimal y Llaves.";
-				
-				$data['frm_pago_sbmt'] = "
-				<div class='bs-callout bs-callout-danger'>
-					<h4>Error</h4>
-					Verificar los componentes de seguridad.
-				</div>";
-			}
-			$cadeEnc = $_POST["XMLRESPONSE"];
-			$firmaCorrecta = $pluginr->XMLProcess($cadeEnc, $_POST["XMLDIGITALSIGN"]);
-			if($firmaCorrecta == 0)
-			{
-				//echo "<b>Los datos han sido alterados.</b><br>";
-				return;
-			}
-			else
-			{
-				/*if($firmaCorrecta != 1)
-				{
-				$resultado = "<br><br>Error: $firmaCorrecta";
-				return;
-				}
-				else 
-					$resultado = "<b>Los datos no han sido alterados.</b><br>";*/
-				$resultado = '<TABLE id="Table16" style="WIDTH: 456px; HEIGHT: 249px" height="249" cellSpacing="1" cellPadding="1" width="456" border="0">
-					<TR>
-						<TD style="WIDTH: 128px" width="128"></TD>
-						<TD>Transaccion ID Session Portal <? ?></TD>
-						<TD>'.$pluginr->getTransacctionID().'</TD>
-					</TR>
-					<TR>
-						<TD style="WIDTH: 128px" width="128"></TD>
-						<TD>Impuesto 1</TD>
-						<TD>'.$pluginr->getTaxValue1().'</TD>
-					</TR>
-					<TR>
-						<TD style="WIDTH: 128px" width="128"></TD>
-						<TD>Impuesto 2</TD>
-						<TD>'.$pluginr->getTaxValue2().'</TD>
-					</TR>
-					<TR>
-						<TD style="WIDTH: 128px" width="128"></TD>
-						<TD>Propina</TD>
-						<TD>'.$pluginr->getTipValue().'</TD>
-					</TR>
-					<TR>
-						<TD style="WIDTH: 128px" width="128"></TD>
-						<TD>Valor</TD>
-						<TD>'.$pluginr->getTransacctionValue().'</TD>
-					</TR>
-					<TR>
-						<TD style="WIDTH: 128px" width="128"></TD>
-						<TD>ESTADO</TD>
-						<TD>'.$pluginr->getAuthorizationState().'</TD>
-					</TR>
-					<TR>
-						<TD style="WIDTH: 128px" width="128"></TD>
-						<TD>NUMERO AUTORIZACION</TD>
-						<TD>'.$pluginr->getAuthorizationCode().'</TD>
-					</TR>
-					<TR>
-						<TD style="WIDTH: 128px" width="128"></TD>
-						<TD>Referencia 1</TD>
-						<TD>'.$pluginr->getReferencia1().'</TD>
-					</TR>
-					<TR>
-						<TD style="WIDTH: 128px" width="128"></TD>
-						<TD>Referencia 2</TD>
-						<TD>'.$pluginr->getReferencia2().'</TD>
-					</TR>
-					<TR>
-						<TD style="WIDTH: 128px" width="128"></TD>
-						<TD>Referencia 3</TD>
-						<TD>'.$pluginr->getReferencia3().'</TD>
-					</TR>
-					<TR>
-						<TD style="WIDTH: 128px" width="128"></TD>
-						<TD>Referencia 4</TD>
-						<TD>'.$pluginr->getReferencia4().'</TD>
-					</TR>
-					<TR>
-						<TD style="WIDTH: 128px" width="128"></TD>
-						<TD>Referencia 5</TD>
-						<TD>'.$pluginr->getReferencia5().'</TD>
-					</TR>
-				</TABLE>';	
+				if ( $pluginr->getAuthorizationState() == 'N' )
+					$data['frm_pago_sbmt'] = "
+					<div class='bs-callout bs-callout-danger'>
+						<h4>Error</h4>
+					</div>";
+				if ( $pluginr->getAuthorizationState() == 'Y' )
+					$data['frm_pago_sbmt'] = "
+					<div class='bs-callout bs-callout-info'>
+						<h4>Éxito</h4>
+					</div>";
 			}
 			
-			
-			if(VPOSResponse($arrayIn,$arrayOut,$llaveVPOSFirmaPub,$llaveComercioCryptoPriv,$vector))
+			/*if(VPOSResponse($arrayIn,$arrayOut,$llaveVPOSFirmaPub,$llaveComercioCryptoPriv,$vector))
 			{   $general->set_operacion_auditoria(
 												$arrayOut['authorizationCode'], $arrayOut['authorizationResult'],
 												$arrayOut['errorCode'], $arrayOut['errorMessage'],
@@ -1063,7 +1103,7 @@ function handler() {
             }
 			else
 			{ $data['datos_deuda'] =  'Error al recibir respuesta del servico web de pagos Diners Club. Por favor, intente de nuevo.';
-            }
+            }*/
 			//$_SESSION['dominio_debt_ans'] = '';
 			retornar_vista_general(VIEW_DEBT_ANS, $data);
 			break;
@@ -1168,7 +1208,7 @@ function handler() {
 					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_ecobab_bg;
 					$_SESSION['id_commerce_pagos_web'] = '6924';
 					break;
-				case  "dev.educalinks.com.ec":
+				case  "local.educalinks.com.ec":
 					$_SESSION['llaveactiva']=$llavedesarrollo;
 					$_SESSION['passllaveactiva']=$clavellavedesarrollo;
 					$_SESSION['rutallave']=$rutallavedesarrollo;

@@ -166,7 +166,7 @@ class PlugInClientRecive
 			$cadena = $d3->decrypt($cadena, $this->xmlGenerateKey, $this->IV);
 
 			$this->xmlResponse = $cadena;
-			$sbDatos = split(";" , $cadena);
+			$sbDatos = explode(";" , $cadena);
 
 			$num = count($sbDatos);
 			if ($num > 0)

@@ -65,7 +65,7 @@ function handler() {
 			$conta->get_all($mydate[year]);
 			$opcionesdeudas["Migrar"] = "<span  onclick='js_contabilidad_migrar(".'"{codigo}"'.",".'"modal_pagos_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/contabilidad/controller.php"'.")' class='btn_opc_lista_migrar glyphicon glyphicon-send cursorlink cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_edit' id='{codigo}' 	id='".'"#{codigo}"'."_migrar_deuda'  onmouseover='$(this).tooltip(".'"show"'.")' title='Migrar pagos'>&nbsp;</span>";
 			$data['{tabla_pagos}'] = array( "elemento"=>"tabla",
-											"clase"=>"table table-bordered table-hover",
+											"clase"=>"table table-striped table-hover",
 											"id"=>"tablapagos",
 											"datos"=>$conta->rows,
 											"encabezado" => array("Mes",
@@ -80,7 +80,7 @@ function handler() {
 			$conta->get_all_paid_dnas( $mydate[year] );
 			$opcionespaiddnas["Migrar"] = "<span onclick='js_contabilidad_actualizar_DNAs(".'"{codigo}"'.",".'"modal_actualizar_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/contabilidad/controller.php"'.")' class='btn_opc_lista_migrar glyphicon glyphicon-send cursorlink cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_actualizar' id='{codigo}' onmouseover='$(".'"#{codigo}"'.").tooltip(".'"show"'.")' title=\"Actualizar DNA's\">&nbsp;</span>";
 			$data['{tabla_paidDNAs}']=array("elemento"	=>"tabla",
-											"clase"		=>"table table-bordered table-hover",
+											"clase"		=>"table table-striped table-hover",
 											"id"		=>"tablapagos",
 											"datos"		=>$conta->rows,
 											"encabezado"=>array("Mes",
@@ -127,7 +127,7 @@ function handler() {
 			}
 			$opcionesdeudas["Migrar"] = "<span onclick='js_aniosPeriodo_carga_deudas(".'"{codigo}"'.",".'"modal_deudas_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/aniosPeriodo/controller.php"'.")' class='btn_opc_lista_migrar glyphicon glyphicon-send cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_deudas' id='{codigo}_eliminar' onmouseover='$(this).tooltip(".'"show"'.")' title='Migrar deuda'>&nbsp;</span>";
 			$data['{tabla}']= array("elemento"=>"tabla",
-                                    "clase"=>"table table-bordered table-hover",
+                                    "clase"=>"table table-striped table-hover",
                                     "id"=>$tabla,
                                     "datos"=> $anioPeriodo->rows,
                                     "encabezado" => array("Codigo Producto",
@@ -139,7 +139,7 @@ function handler() {
                                     "options"=>array($opciones),
                                     "campo"=>"codigoProducto");
 			$data['{tabla_deuda}']= array("elemento"=>"tabla",
-                                    "clase"=>"table table-bordered table-hover",
+                                    "clase"=>"table table-striped table-hover",
                                     "id"=>"tabladeuda",
                                     "datos"=> $curso->rows,
                                     "encabezado" => array("Mes",
@@ -187,7 +187,7 @@ function handler() {
             {   $data['disabled_generar_deuda_lote']="disabled='disabled'";
             }
             $data['{tabla}']= array("elemento"=>"tabla",
-                                    "clase"=>"table table-bordered table-hover",
+                                    "clase"=>"table table-striped table-hover",
                                     "id"=>$tabla,
                                     "datos"=>$anioPeriodo->rows,
                                     "encabezado" => array("Codigo Producto",
@@ -207,7 +207,7 @@ function handler() {
 			$opcionesdeudas["Migrar"] = "<span onclick='js_aniosPeriodo_carga_deudas(".'"{codigo}"'.",".'"modal_deudas_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/aniosPeriodo/controller.php"'.")' class='btn_opc_lista_migrar glyphicon glyphicon-send cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_deudas' id='{codigo}_eliminar' onmouseover='$(this).tooltip(".'"show"'.")' title='Migrar deuda'>&nbsp;</span>";
 
 			$data['{tabla_deuda}']= array("elemento"=>"tabla",
-										"clase"=>"table table-bordered table-hover",
+										"clase"=>"table table-striped table-hover",
 										"id"=>"tabladeuda",
 										"datos"=> $curso->rows,
 										"encabezado" => array("Mes",
@@ -251,7 +251,7 @@ function handler() {
 							  );
 			
 			$data['{tabladeudasmigrar}'] =array("elemento"=>"tabla",
-												"clase"=>"table table-bordered table-hover",
+												"clase"=>"table table-striped table-hover",
 												"id"=>"tabladeudamigrar",
 												"datos"=> $curso->rows,
 												"encabezado" => array("Codigo Deuda",

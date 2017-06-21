@@ -37,21 +37,24 @@
 	</div>
 </div>
 <!-- Modal Aprobar-->
-<div class="box-body">
-	<div class="col-lg-4 col-sm-6 input-group input-group-sm">
-		<span id="span_cheq_filtro" name="span_cheq_filtro" class="input-group-addon">Ver</span>
-		<select id='cmb_mostrarCheq' name='cmb_mostrarCheq' class='form-control'>
-			<option selected='selected' value='PV'>- Cheques por validar -</option>
-			<option value='PF'>- Cheques posfechados -</option>
-			<option value='PR'>- Cheques protestados -</option>
-			<option value='AP'>- Cheques aprobados -</option>
-		</select>
-		<span class="input-group-btn">
-			<button type="button" class="btn btn-info btn-flat" onClick='js_validacheques_filter();'>Ir</button>
-		</span>
+<div class="box box-default">
+	<div class="box-header with-border">
+		<div class="col-lg-4 col-sm-6 input-group input-group-sm">
+			<span id="span_cheq_filtro" name="span_cheq_filtro" class="input-group-addon">Ver</span>
+			<select id='cmb_mostrarCheq' name='cmb_mostrarCheq' class='form-control'>
+				<option selected='selected' value='PV'>- Cheques por validar -</option>
+				<option value='PF'>- Cheques posfechados -</option>
+				<option value='PR'>- Cheques protestados -</option>
+				<option value='AP'>- Cheques aprobados -</option>
+			</select>
+			<span class="input-group-btn">
+				<button type="button" class="btn btn-info btn-flat" onClick='js_validacheques_filter();'>Ir</button>
+			</span>
+		</div>
 	</div>
-	<br>
-	<div id="resultado">
-		{tabla}
+	<div class="box-body">
+		<div id="resultado">
+			{tabla}
+		</div>
 	</div>
 </div>

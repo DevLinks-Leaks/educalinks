@@ -78,7 +78,7 @@ function handler() {
 
 		    $data["mensaje"] = "";
 			$data['opciones_cliente']= " ";
-			if($_SESSION['caja_fecha']< date('Ymd') or $_SESSION['caja_codi']==0){
+			if(( $_SESSION['caja_fecha']< date('Ymd') or $_SESSION['caja_codi']==0) or empty($_SESSION['puntVent_codigo'])){
 				$data['disabled_caja']="disabled='disabled'";
 				$data['mensaje'] = "Caja de hoy: cerrada/o mantiene caja abierta de días atrás.";
 				retornar_vista(VIEW_CAJA_CERRADA, $data);

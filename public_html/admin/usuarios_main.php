@@ -4,7 +4,14 @@
     <body class="hold-transition skin-blue sidebar-mini <?php echo $_SESSION['sidebar_status']; ?>">
 		<div class="wrapper">
 			<?php include ('template/header.php');?>
-			<?php $Menu=502;include("template/menu.php");?>
+			<?php $Menu=502;
+				if($_SESSION['modulo'] == 'acad')
+					include("template/menu.php");
+				if($_SESSION['modulo'] == 'finan')
+					include("template/menu_finan.php");
+				if($_SESSION['modulo'] == 'medic')
+					include("../medic/template/menu.php");
+			?>
 			<div class="content-wrapper">
 				<section class="content-header">
 					<?php

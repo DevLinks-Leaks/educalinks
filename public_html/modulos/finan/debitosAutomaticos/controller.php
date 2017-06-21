@@ -13,6 +13,7 @@ function handler()
 {	$debito 	= get_mainObject('DebitosAutomaticos');
 	$formatos 	= get_mainObject('DebitosAutomaticos');
 	$carga		= get_mainObject('DebitosAutomaticos');
+	$settings	= get_mainObject('DebitosAutomaticos');
 	$para_sist	= get_mainObject('General');
 	$item 		= get_mainObject('Item');
     $event 		= get_actualEvents(array(VIEW_CARGA_FILE,VIEW_MAINT,VIEW_GENERA_FILE,UPLOAD,CREATE_FILE,GET_FORMATOS,VIEW_MENSAJE), VIEW_GENERA_FILE);
@@ -27,27 +28,20 @@ function handler()
 			if($_SESSION['IN']!="OK"){$_SESSION['IN']="KO";$_SESSION['ERROR_MSG']="Por favor inicie sesión";header("Location:".$domain);}
             
 			$debito->get_all_campos( 'V_DatosAlumnosDebitos_Detalle' );
-			$formatos->get_all_formatos();
 			$item->get_item_selectFormat('');
 			$item->rows[0][1]='- Todos -';
 			$banco->get_bancofromCatologoSelectFormat( 1 ); //1 para que traiga opción 'todos'
 			$tarjCredito->get_tarjetasfromCatologoSelectFormat( 1 ); //1 para que traiga opción 'todos'
+			$settings->get_debitoautomatico_config();
+			
 			$data = array(	'{combo_campos_file}' =>array("elemento"=> "combo", 
                                                       	"datos"     => $debito->rows, 
                                                       	"options"   => array("name"=>"campos_add","id"=>"campos_add","required"=>"required","class"=>"form-control"),
                                                       	"selected"  => 0),
-							'{cmb_carga_formato}' => array("elemento"  => "combo", 
-                                                      	"datos"     => $formatos->rows, 
-                                                      	"options"   => array("name"=>"formatos_add","id"=>"formatos_add","required"=>"required","class"=>"form-control"),
-                                                      	"selected"  => 0),
 						    '{cmb_copyPaste_formato}' => array(  	"elemento"  => "combo", 
 																	"datos"     => $formatos->rows, 
 																	"options"   => array("name"=>"formatos_add","id"=>"formatos_add","required"=>"required","class"=>"form-control","disabled"=>"disabled"),
-																	"selected"  => 0),
-							/*'{cmb_producto}' 			=> array(  "elemento"   => "combo", 
-																	"datos"     => $item->rows, 
-																	"options"   => array("name"=>"cmb_producto","id"=>"cmb_producto", "class"=>"form-control"),
-																	"selected"  => -1),	*/										
+																	"selected"  => 0),								
 							'{cmb_banco}' => array( "elemento"  => "combo",
 													"datos"     => $banco->rows,
 													"options"   => array(	"name" => "cmb_banco",
@@ -60,7 +54,9 @@ function handler()
 																			"class" => "form-control",
 																			"id" => "cmb_tarjCredito"),
 													"selected"  => 0),
-							'mensaje'=>$debito->mensaje);
+							'hd_exp_opc_ant' 	=> $settings->rows[0]['check_exp_opc_ant'],
+							'hd_exp_opc_ctas'	=>$settings->rows[0]['check_exp_opc_ctas'],
+							'mensaje'			=>$debito->mensaje);
 			
 			$item->get_item_selectFormat('');
 			$select = "<select multiple='multiple' id=\"cmb_producto\" name=\"cmb_producto[]\" class='form-control' data-placeholder='- Seleccione producto -' style='width:320px;'>";
@@ -72,6 +68,15 @@ function handler()
 			}
 			$select.= "</select>";
 			
+			$formatos->get_all_formatos();
+			$combo = "<select multiple='multiple' class='select2-select form-control' id='formatos_add' name='formatos_add[]' style='width: 400px;'>";
+			foreach( $formatos->rows as $rows)
+			{ 	if( !empty( $rows ) ) 
+					$combo.= "<option value='".$rows['form_debi_codigo']."'>".$rows['form_debi_descripcion']."</option>";
+			}	
+			$combo.= "</select>";
+			$data['cmb_carga_formato'] = $combo;
+			
 			$data['cmb_producto'] = $select;
 			$data['active1']='';
 			$data['active2']='';
@@ -79,7 +84,7 @@ function handler()
 			$data['tab_class1']='';
 			$data['tab_class2']='';
 			$data['tab_class3']='class="active"';
-			if($_SESSION['caja_fecha']< date('Ymd') or $_SESSION['caja_codi']==0)
+			if(( $_SESSION['caja_fecha']< date('Ymd') or $_SESSION['caja_codi']==0) or empty($_SESSION['puntVent_codigo']))
 			{   $data['hd_caja_abierta']='false';
 			}
 			else
@@ -87,8 +92,41 @@ function handler()
 			}
 			retornar_vista(VIEW_GENERA_FILE, $data);
 			break;
+		case GET_DEBT_AUT_SETTINGS:
+			if($_SESSION['IN']!="OK"){$_SESSION['IN']="KO";$_SESSION['ERROR_MSG']="Por favor inicie sesión";header("Location:".$domain);}
+			$settings->get_debitoautomatico_config();
+			echo '<label>Al momento de exportar:</label>
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" id="check_exp_opc_ant" 
+									name="check_exp_opc_ant" '.($settings->rows[0]['check_exp_opc_ant'] == 'S' ? 'checked': '' ).'> Preguntar por clientes con deudas antiguas por pagar.
+							</label>
+						</div>
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" id="check_exp_opc_ctas" 
+									name="check_exp_opc_ctas" '.($settings->rows[0]['check_exp_opc_ctas'] == 'S' ? 'checked': '' ).'> Preguntar por clientes con intentos fallidos de débito.
+							</label>
+						</div>';
+			break;
+		case SET_DEBT_AUT_SETTINGS:
+			$check_exp_opc_ant = $check_exp_opc_ctas = "";
+			
+			if ( $debito_data['check_exp_opc_ant'] == 'true' )
+				$check_exp_opc_ant = 'S';
+			else
+				$check_exp_opc_ant = 'N';
+			
+			if ( $debito_data['check_exp_opc_ctas'] == 'true' )
+				$check_exp_opc_ctas = 'S';
+			else
+				$check_exp_opc_ctas = 'N';
+			
+			$settings->set_debitoautomatico_config( $check_exp_opc_ant , $check_exp_opc_ctas );
+			print_r($settings->mensaje);
+			break;
 		case VIEW_GENERA_FILE_AJAX:
-			if($_SESSION['caja_fecha']< date('Ymd') or $_SESSION['caja_codi']==0)
+			if(( $_SESSION['caja_fecha']< date('Ymd') or $_SESSION['caja_codi']==0) or empty($_SESSION['puntVent_codigo']))
 			{   $data['hd_caja_abierta']='false';
 			}
 			else
@@ -98,33 +136,63 @@ function handler()
 			break;
 		case GET_MAINT:
 			global $diccionario;
+			$url = '"'.$diccionario['rutas_head']['ruta_html_finan'].'/debitosAutomaticos/controller.php"';
 			$formatos->get_all_formatos_maint();
 			
-			$opciones["Exportar"] = "<span onclick='js_debtAut_genera_archivoind(".'"{codigo}"'.");' class='btn_opc_lista_exportar glyphicon glyphicon-export cursorlink' aria-hidden='true' id='{codigo}_genera_archivo' onmouseover='$(".'"#{codigo}_genera_archivo"'.").tooltip(".'"show"'.")' data-placement='left' title='Exportar formato'></span>&nbsp;&nbsp;";
-			$opciones["Copiar"] = "<span onclick='js_debtAut_copiar_archivo_open_modal(".'"{codigo}"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/debitosAutomaticos/controller.php"'.")' class='btn_opc_lista_copiar glyphicon glyphicon-copy cursorlink' aria-hidden='true' id='{codigo}_copiar_archivo' onmouseover='$(".'"#{codigo}_copiar_archivo"'.").tooltip(".'"show"'.")' data-placement='bottom' title='Copiar formato'></span>&nbsp;&nbsp;";
-			$opciones["Eliminar"] = "<span onclick='js_debtAut_del(".'"{codigo}"'.",".'"div_tbl_format"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/debitosAutomaticos/controller.php"'.")' class='btn_opc_lista_eliminar glyphicon glyphicon-trash cursorlink' aria-hidden='true'id='{codigo}_del' onmouseover='$(".'"#{codigo}_del"'.").tooltip(".'"show"'.")' data-placement='top' title='Eliminar formato'></span>";
-			$data = array('{tbl_formato}' => array(   "elemento"=>"tabla",
-											  "clase"=>"table table-bordered table-hover",
-											  "id"=>"table_formato",
-											  "datos"=>$formatos->rows,
-											  "encabezado" => array("Código",
-																	"Nombre del formato",
-																	"Fecha creación",
-																	"Usuario creación",
-																	"Opciones"),
-											  "options"=>array($opciones),
-											  "campo"=>"ref"));
+			$body.="<table class='table table-striped table-hover' id='table_formato' name='table_formato'>
+						<thead style='background-color:#E55A2F;color:white;'>
+							<tr>
+								<th>Lista de formatos creados</th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>";
+			foreach ($formatos->rows as $rows)
+			{
+				if( !empty( $rows ) )
+				{
+					$body.="<tr>
+								<td data-codigo='".$rows['ref']."'>
+									<span title='Haz click aquí para exportar formato' onclick='js_debtAut_genera_archivoind(".$rows['ref'].");'  style='font-size:large;cursor:pointer;'><b><i style='color:#17ca34' class='fa fa-file-excel-o'></i> ".$rows['name']."</b></span><br><span style='font-size:x-small;'><b>Ref.:</b> ".$rows['ref']." | <b>Usuario creador:</b> ".$rows['user'].
+									" | <b>Fecha creación:</b> ".$rows['date']."</span>
+								</td>
+								<td span style='font-size:small;' data-source='".$rows['form_debi_vista']."'>
+									<span style='font-size:medium;'>Información: <span style='color:#797B7D'>".$rows['fuente_datos']."</span></span>".
+									"<br><span style='font-size:x-small;'>".$rows['numero_campos']." columnas ".($rows['secuencial'] == 1 ? '(incluída secuencial)' : '' )."</span></td>
+								<td style='vertical-align:middle'>
+									<span onclick='js_debtAut_genera_archivoind(".$rows['ref'].");' 
+										class='btn_opc_lista_exportar glyphicon glyphicon-export cursorlink' 
+										aria-hidden='true' id='".$rows['ref']."_genera_archivo' onmouseover='$(this).tooltip(".'"show"'.")' 
+										data-placement='left' title='Exportar formato'></span>&nbsp;&nbsp;
+									<span onclick='js_debtAut_copiar_archivo_open_modal(".$rows['ref'].",".$url.")'
+										class='btn_opc_lista_copiar glyphicon glyphicon-copy cursorlink' 
+										aria-hidden='true' id='".$rows['ref']."_copiar_archivo' onmouseover='$(this).tooltip(".'"show"'.")' 
+										data-placement='bottom' title='Copiar formato'></span>&nbsp;&nbsp;
+									<span onclick='js_debtAut_del(".$rows['ref'].",".'"div_tbl_format"'.",".$url.")'
+										class='btn_opc_lista_eliminar glyphicon glyphicon-trash cursorlink' 
+										aria-hidden='true'id='".$rows['ref']."_del' onmouseover='$(this).tooltip(".'"show"'.")'
+										data-placement='top' title='Eliminar formato'></span>
+								</td>
+							</tr>";
+				}
+			}
+			$body.="	</tbody>
+					</table>";
+			
+			$data['tbl_formato'] = $body;
 			retornar_formulario(VIEW_MAINT, $data);
 			break;
 		case GET_FORMATOS:
             global $diccionario;
 			$formatos->get_all_formatos();
-			$data = array('{cmb_carga_formato}' => array("elemento"  => "combo", 
-                                                      	"datos"     => $formatos->rows, 
-                                                      	"options"   => array("name"=>"formatos_add","id"=>"formatos_add","required"=>"required","class"=>"form-control"),
-                                                      	"selected"  => 0),
-							'mensaje'=>$debito->mensaje);
-			
+			$combo = "<select multiple='multiple' class='js-example-basic-single' id='formatos_add' name='formatos_add[]' style='width: 400px;'>";
+			foreach( $formatos->rows as $rows)
+			{ 	if( !empty( $rows ) ) 
+					$combo.= "<option value='".$rows[0]."'>".$rows[1]."</option>";
+			}
+			$combo.= "</select>";
+			$data['cmb_carga_formato'] = $combo;
 			retornar_result($data);
             break;
 		case GET_FORMATOS_COPYPASTE:
@@ -188,6 +256,7 @@ function handler()
 			echo json_encode($data, true);
 			break;
 		case UPLOAD:
+			if($_SESSION['IN']!="OK"){$_SESSION['IN']="KO";$_SESSION['ERROR_MSG']="Por favor inicie sesión"; echo "KO";}
 			require_once('../../../includes/common/PHPExcel/Classes/PHPExcel/IOFactory.php');
 			$target_dir= "../../../uploads/";
 			
@@ -201,40 +270,40 @@ function handler()
 			if(isset($_POST["submit"]))
 			{	$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
 				if($check !== false)
-				{	echo "File is an image - " . $check["mime"] . ".";
+				{	//echo "File is an image - " . $check["mime"] . ".";
 					$uploadOk = 1;
 				}
 				else
-				{	echo "File is not an image.";
+				{	//echo "File is not an image.";
 					$uploadOk = 0;
 				}
 			}
 			// Check if file already exists
 			if (file_exists($target_file))
-			{	echo "El archivo ya existe y ser&aacute; reemplzado.";
+			{	//echo "El archivo ya existe y ser&aacute; reemplzado.";
 				$uploadOk = 1;
 			}
 			// Check file size
 			if ($_FILES["fileToUpload"]["size"] > 500000)
-			{	echo "El archivo es demasiado pesado.";
+			{	//echo "El archivo es demasiado pesado.";
 				$uploadOk = 0;
 			}
 			// Allow certain file formats
 			if($imageFileType != "xlsx" && $imageFileType != "xls" )
-			{	echo "Solo xlsx, xls archivos son permitidos.";
+			{	//echo "Solo xlsx, xls archivos son permitidos.";
 				$uploadOk = 0;
 			}
 			// Check if $uploadOk is set to 0 by an error
 			if ($uploadOk == 0)
-			{	echo "El archivo no se pudo cargar.";
+			{	//echo "El archivo no se pudo cargar.";
 			// if everything is ok, try to upload file
 			}
 			else 
 			{	if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file))
-				{	echo "El archivo ". basename( $_FILES["fileToUpload"]["name"]). " fue cargado.";
+				{	//echo "El archivo ". basename( $_FILES["fileToUpload"]["name"]). " fue cargado.";
 				}
 				else
-				{	echo "Ha habido un error cargando el archivo.";
+				{	//echo "Ha habido un error cargando el archivo.";
 				}
 			}
 			break;
@@ -396,11 +465,19 @@ function handler()
 				$objReader = PHPExcel_IOFactory::createReader($inputFileType);
 				$primerafila=0;
 				$textook=0;
+				$textonook=0;
 				if($debito_data['textook']=='')
 				{	$textook='ok';
 				}
 				else
 				{	$textook=$debito_data['textook'];
+				}
+				
+				if($debito_data['textonook']=='')
+				{	$textonook='ko';
+				}
+				else
+				{	$textonook=$debito_data['textonook'];
 				}
 				
 				if($debito_data['filainicia']!='')
@@ -426,7 +503,7 @@ function handler()
 			$codigodeuda=0;$valor=0;
 			$columna=0;$columna2=0;$columna3=0;
 			$contador1=0;$contador2=0;$contador3=0;$rowcontador=0;
-		
+			$pago = $sinliquidez = 0;
 			//  Loop through each row of the worksheet in turn
 			$acu=0;
 			for ($i=$primerafila; $i<=$highestRow; $i++)
@@ -454,6 +531,9 @@ function handler()
 					if($params[$i][$columna3]==$textook &&  $j==$columna3)
 					{	$pago=$pago+1;
 					}
+					if($params[$i][$columna3]==$textonook &&  $j==$columna3)
+					{	$sinliquidez = $sinliquidez+1;
+					}
 					else if($params[$i][$columna3]!=$textook &&  $j==$columna3 && $params[$i][$columna3]!='')
 					{	$pago=$pago+0;
 						$contador2=$contador2+1;
@@ -469,11 +549,19 @@ function handler()
 					$contador1=$contador1+$rowcontador['contadorpagados'];
 					$contador3=$contador3+$rowcontador['contadorsaldoafavor'];
 				}
-				$pago=0;	
+				if($sinliquidez>0)
+				{
+					if ( $debito_data['id_formaPago'] == 8 ) //sólo si es débito bancario, registra cuenta sin liquidez.
+					{	$carga->setpagodebito_sinliquidez( $codigodeuda, str_replace(",", ".", $valor), $_SESSION['usua_codigo'], 
+															$nombrearchivo, $debito_data['fecha_debito'], $debito_data['id_formaPago'] );
+						$contador2 = $contador2 + 1;
+					}
+				}
+				$pago = $sinliquidez = 0;
 			}	
-			$data =	array(	"saldoafavor"	=> $contador3,
-							"pagado"		=> $contador1,
-							"nopagado"		=> $contador2,
+			$data =	array(	"saldoafavor"	=> $contador3 ,
+							"pagado"		=> $contador1 ,
+							"nopagado"		=> $contador2 ,
 					);
 			$data['active1']='';
 			$data['active2']='in active';
@@ -711,6 +799,24 @@ function handler()
 			}
 			$objWriter->save('php://output');
 			exit;
+			break;
+		case GET_DEUD_CTAS_ANTIQ :
+			$productos = json_decode($debito_data['cmb_producto'], true);
+			
+			$xml_productos='<?xml version="1.0" encoding="iso-8859-1"?><productos>';
+			foreach ( $productos as $producto )
+			{
+				$xml_productos.='<producto id="'.$producto.'" />';
+			}
+			$xml_productos.="</productos>";
+			
+			$formatos->get_deudores_ctas_antiguas(	$xml_productos , $_SESSION['peri_codi'] , $debito_data['hd_id_formato_exp'] , 
+													$debito_data['cmb_fac_estado'] , $debito_data['cmb_banco'] , $debito_data['cmb_tarjCredito'] );
+			print_r($formatos->rows[0]['ctas_antiguas']);
+			break;
+		case GET_DEUD_CTAS_INLIQ :
+			$formatos->get_deudores_ctas_inliquidas( $debito_data['hd_id_formato_exp'] , $_SESSION['peri_codi'] );
+			print_r($formatos->rows[0]['ctas_inliquidas']);
 			break;
 		case COPY_FILE :
 			//$global diccionario;

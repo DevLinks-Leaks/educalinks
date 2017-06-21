@@ -59,7 +59,7 @@ function js_clientes_externo_add_return_btn ( )
 }
 function js_clientes_buscar( div, url )
 {   $("#desplegable_busqueda").show(200);
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 	document.getElementById( 'span_button_save_person' ).innerHTML='';
 	document.getElementById( 'span_button_return' ).innerHTML='Cliente externo';
     var data = new FormData();
@@ -113,7 +113,7 @@ function js_clientes_buscar( div, url )
 }
 // Carga el formulario para ingresar un nuevo registro
 function carga_add(div,url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'agregar');	
 	var xhr = new XMLHttpRequest();
@@ -127,7 +127,7 @@ function carga_add(div,url){
 }
 // Carga el formulario para asignar la residencia al usuario
 function js_clientes_carga_asignacion( codigo, div, url )
-{   document.getElementById( div ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById( div ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'asignarDescuento');	
 	data.append('codigo', codigo);	
@@ -161,7 +161,7 @@ function js_clientes_externos_descuento_delete ( codigo, div, url, codigo_client
 }
 // Carga el combo de las manzanas
 function carga_porcentaje(valor,div, url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('desc_codigo', valor);	
 	data.append('event', 'get_porcentaje');	
@@ -176,7 +176,7 @@ function carga_porcentaje(valor,div, url){
 }
 // Carga el formulario para editar un registro
 function edit(codigo,div,url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'get');
 	data.append('codigo', codigo);	
@@ -193,7 +193,7 @@ function edit(codigo,div,url){
 /*
 function save_edited(rol_codigo,div,url)
 {   if(confirm("¿Está seguro que desea editar la información del cliente?"))
-	{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 		var data = new FormData();
 		data.append('event', 'edit');
 		data.append('codigo', document.getElementById('codigo').value);
@@ -255,7 +255,7 @@ function js_clientes_save_asign( cod_cliente, div, url )
 }
 // Realiza el ingreso de un registro nuevo
 function add(div,url)
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'set');
 	data.append('tipoPersona', document.getElementById('tipoPersona_add').value);
@@ -280,7 +280,7 @@ function add(div,url)
 // Realiza la eliminacion del cliente en la BD
 function del(codigo,div,url){
 	if(confirm("¿Está seguro que desea eliminar el cliente?")){
-		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 		var data = new FormData();
 		data.append('event', 'delete');
 		data.append('codigo', codigo);	
@@ -297,7 +297,7 @@ function del(codigo,div,url){
 
 /* carga el formulario de filtro para la generación del estado de cuenta */
 function carga_visorEstadoCuenta(codigo,div,url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'estadoCuenta');	
 	data.append('codigoEstudiante', codigo);	
@@ -438,7 +438,7 @@ function validaFiltros(control, div, url){
 
 /* carga el formulario para la asignación de un grupo económico */
 function js_clientes_carga_asignacionGrupoEconomico( codigo, div,url )
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'asignarGrupoEconomico');	
 	data.append('codigoEstudiante', codigo);	
@@ -495,7 +495,7 @@ function eliminarDeuda(codigo, div, url) {
 	if( totalAbonado <= 0.00){
 		if(estado == "POR COBRAR"){
 			if(confirm("¿Está seguro que desea eliminar la deuda seleccionada?")){
-				document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+				document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 				var data = new FormData();
 				data.append('event', 'delete_deuda');	
 				data.append('codigoDeuda', codigo);	
@@ -611,7 +611,7 @@ function consultaDeudas( div, url )
 	var fechaInicio = ( document.getElementById("chk_fecha").checked==true ? $("#txt_fecha_ini").val() : "");
 	var fechaFin = ( document.getElementById("chk_fecha").checked==true ? $("#txt_fecha_fin").val() : "");
 
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'get_deudas');	
 	data.append('codigoEstudiante', codigoAlumno);	
@@ -714,7 +714,7 @@ function consultaDeudas( div, url )
 	xhr.send(data);
 }
 function carga_cliente_opciones(codigoCliente,div)
-{	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event','get_cliente_opciones');
 	data.append('codigoCliente',codigoCliente);

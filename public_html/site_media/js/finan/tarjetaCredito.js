@@ -18,7 +18,7 @@ $(document).ready(function()
 	table.column( '1:visible' ).order( 'desc' );
 });
 function js_tarjetaCredito_busca( busq, div, url )
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'get_all_data');
 	data.append('busq', busq);	
@@ -41,7 +41,7 @@ function js_tarjetaCredito_busca( busq, div, url )
 }
 function js_tarjetaCredito_del(codigo, div, url )
 {   if(confirm("¿Está seguro que desea eliminar la tarjeta de crédito?"))
-	{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 		var data = new FormData();
 		data.append('event', 'delete');
 		data.append('tarjeta_codigo', codigo);	
@@ -64,7 +64,7 @@ function js_tarjetaCredito_del(codigo, div, url )
 	}
 }
 function js_tarjetaCredito_edit( codigo, div, url )
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'get');
 	data.append('tarjeta_codigo', codigo);	
@@ -79,7 +79,7 @@ function js_tarjetaCredito_edit( codigo, div, url )
 	xhr.send(data);
 }
 function js_tarjetaCredito_carga_add( div, url )
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'agregar');	
 	var xhr = new XMLHttpRequest();
@@ -93,7 +93,7 @@ function js_tarjetaCredito_carga_add( div, url )
 	xhr.send(data);
 }
 function asign(codigo,div,url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'asignar');	
 	var xhr = new XMLHttpRequest();
@@ -114,7 +114,7 @@ function asign(codigo,div,url){
 	xhr.send(data);
 }
 function asign_user(codigo,div,url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'asign');
 	data.append('usua_codigo', codigo);
@@ -137,7 +137,7 @@ function asign_user(codigo,div,url){
 }
 function del_user_asigned(codigo,div,url){
 	if(confirm("¿Está seguro de eliminar el usuario al punto de emisión?")){
-		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 		var data = new FormData();
 		data.append('event', 'del_asign');
 		data.append('usuaPvta_codigo', codigo);
@@ -152,7 +152,7 @@ function del_user_asigned(codigo,div,url){
 	}
 }
 function show_asigned(codigo,div,url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'asignados');
 	data.append('puntVent_codigo', codigo);	
@@ -172,7 +172,7 @@ function show_asigned(codigo,div,url){
 	xhr.send(data);
 }
 function js_tarjetaCredito_add( div, url )
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'set');
 	data.append('tarjCred_nombre', document.getElementById('tarjetaCredito_add').value);
@@ -189,7 +189,7 @@ function js_tarjetaCredito_add( div, url )
 }
 function js_tarjetaCredito_save_edited( rol_codigo, div, url )
 {   if(confirm("¿Está seguro que desea editar la información de la Tarjeta de Crédito?"))
-	{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 		var data = new FormData();
 		data.append('event', 'edit');
 		data.append('tarjCred_codigo', document.getElementById('tarjeta_codigo').value);

@@ -53,7 +53,7 @@ function js_clientes_check_opc_avanzadas()
 	}
 }
 function js_clientes_buscar( div, url, view )
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'get_all_data');
 	data.append('cod_estudiante', document.getElementById("alum_codi_in").value);
@@ -120,7 +120,7 @@ function js_clientes_buscar( div, url, view )
 }
 // Carga el formulario para ingresar un nuevo registro
 function carga_add(div,url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'agregar');	
 	var xhr = new XMLHttpRequest();
@@ -134,7 +134,7 @@ function carga_add(div,url){
 }
 // Carga el formulario para asignar la residencia al usuario
 function js_clientes_carga_asignacion( codigo, div, url )
-{   document.getElementById( div ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById( div ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'asignarDescuento');	
 	data.append('codigo', codigo);	
@@ -168,7 +168,7 @@ function js_clientes_descuento_alumno_delete ( codigo, div, url, codigo_alumno )
 }
 // Carga el combo de las manzanas
 function carga_porcentaje(valor,div, url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('desc_codigo', valor);	
 	data.append('event', 'get_porcentaje');	
@@ -183,7 +183,7 @@ function carga_porcentaje(valor,div, url){
 }
 // Carga el formulario para editar un registro
 function edit(codigo,div,url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'get');
 	data.append('codigo', codigo);	
@@ -199,7 +199,7 @@ function edit(codigo,div,url){
 // Realiza la actualizacion de los datos en la BD
 function save_edited(rol_codigo,div,url)
 {   if(confirm("¿Está seguro que desea editar la información del cliente?"))
-	{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 		var data = new FormData();
 		data.append('event', 'edit');
 		data.append('codigo', document.getElementById('codigo').value);
@@ -261,7 +261,7 @@ function js_clientes_save_asign( cod_cliente, div, url )
 }
 // Realiza el ingreso de un registro nuevo
 function add(div,url)
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'set');
 	data.append('tipoPersona', document.getElementById('tipoPersona_add').value);
@@ -286,7 +286,7 @@ function add(div,url)
 // Realiza la eliminacion del cliente en la BD
 function del(codigo,div,url){
 	if(confirm("¿Está seguro que desea eliminar el cliente?")){
-		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 		var data = new FormData();
 		data.append('event', 'delete');
 		data.append('codigo', codigo);	
@@ -303,7 +303,7 @@ function del(codigo,div,url){
 
 /* carga el formulario de filtro para la generación del estado de cuenta */
 function carga_visorEstadoCuenta(codigo,div,url){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'estadoCuenta');	
 	data.append('codigoEstudiante', codigo);	
@@ -394,10 +394,7 @@ function carga_visorEstadoCuenta(codigo,div,url){
 										{className: "dt-body-center" , "targets": [9]},
 										{className: "dt-body-center" , "targets":[10]},
 										{className: "dt-body-center" , "targets":[13], "visible": false}
-									],
-									"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-										$('td', nRow).css('background-color', '#d6f9da');
-									}
+									]
 								});	
 							}
 						};
@@ -461,7 +458,7 @@ function validaFiltros(control, div, url){
 
 /* carga el formulario para la asignación de un grupo económico */
 function js_clientes_carga_asignacionGrupoEconomico( codigo, div,url )
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'asignarGrupoEconomico');	
 	data.append('codigoEstudiante', codigo);	
@@ -518,7 +515,7 @@ function eliminarDeuda(codigo, div, url) {
 	if( totalAbonado <= 0.00){
 		if(estado == "POR COBRAR"){
 			if(confirm("¿Está seguro que desea eliminar la deuda seleccionada?")){
-				document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+				document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 				var data = new FormData();
 				data.append('event', 'delete_deuda');	
 				data.append('codigoDeuda', codigo);	
@@ -634,7 +631,7 @@ function consultaDeudas( div, url )
 	var fechaInicio = ( document.getElementById("chk_fecha").checked==true ? $("#txt_fecha_ini").val() : "");
 	var fechaFin = ( document.getElementById("chk_fecha").checked==true ? $("#txt_fecha_fin").val() : "");
 
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'get_deudas');	
 	data.append('codigoEstudiante', codigoAlumno);	
@@ -737,7 +734,7 @@ function consultaDeudas( div, url )
 	xhr.send(data);
 }
 function carga_cliente_opciones(codigoCliente,div)
-{	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event','get_cliente_opciones');
 	data.append('codigoCliente',codigoCliente);

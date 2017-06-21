@@ -46,7 +46,7 @@ $(document).ready(function() {
 	});
 });
 function js_cobranza_buscar( div, url )
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'get_all_data');
 	data.append('id_titular', document.getElementById("txt_id_titular").value);
@@ -206,7 +206,7 @@ function js_cobranza_buscar( div, url )
 	xhr.send(data);
 }
 function carga_detalle_resultado(crm_resu_codigo,div,url)
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'carga_detalles_resultados');
 	data.append('crm_resu_codigo', crm_resu_codigo);	
@@ -220,7 +220,7 @@ function carga_detalle_resultado(crm_resu_codigo,div,url)
 	xhr.send(data);
 }
 function edit(codigo,div,url)
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'get');
 	data.append('clie_codigo', codigo);	
@@ -234,7 +234,7 @@ function edit(codigo,div,url)
 	xhr.send(data);
 }
 function js_cobranza_save_acerca( codigo, div, url )
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'acercamiento');
 	

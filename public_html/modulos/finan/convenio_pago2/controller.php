@@ -428,7 +428,7 @@ function handler() {
 		case GET_QUERY_BANCOS:
 			$factura->get_query_bancos('BANCO','9','10');
             $data['{querybanco1}'] = array("elemento"=>"tabla",
-                                      "clase"=>"table table-bordered table-hover",
+                                      "clase"=>"table table-striped table-hover",
                                       "id"=>'tbl_querybanco1',
                                       "datos"=>$factura->rows,
                                       "encabezado" => array("valor factura",
@@ -444,7 +444,7 @@ function handler() {
 			$factura2 = new Factura();
 			$factura2->get_query_bancos('TARJETA','9','10');
 			$data['{querybanco2}'] = array("elemento"=>"tabla",
-                                      "clase"=>"table table-bordered table-hover",
+                                      "clase"=>"table table-striped table-hover",
                                       "id"=>'tbl_querybanco2',
                                       "datos"=>$factura2->rows,
                                       "encabezado" => array("valor factura",
@@ -700,7 +700,7 @@ function tablaFactura($tabla, $factura, $permiso, $estadoFac = 'P')
 	$opciones="";
 	$construct_table="
 				<br>
-				<table class='table table-bordered table-hover' id='".$tabla."'>
+				<table class='table table-striped table-hover' id='".$tabla."'>
 					<thead><tr id='tr_row_head' name='tr_row_head'>
 						<th id='select_deud_codigo_box' name='select_deud_codigo_box'>
 							<div style='font-size:x-small;text-align:center;' >

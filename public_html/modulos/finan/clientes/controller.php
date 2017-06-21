@@ -36,7 +36,7 @@ function handler()
 			$periodo->get_all_selectFormat();
 			$data['{cmb_periodo}'] = array("elemento"  => "combo", 
 											"datos"     => $periodo->rows, 
-                                            "options"   => array("name"=>"periodos","id"=>"periodos", "class"=>"form-control input-sm",
+                                            "options"   => array("name"=>"periodos","id"=>"periodos", "class"=>"form-control input-sm","disabled"=>"disabled",
 																 "onChange"	=> "cargaNivelesEconomicos('resultadoNivelEcon','".$diccionario['rutas_head']['ruta_html_finan']."/general/controller.php');"),
 											"selected"  => $_SESSION['peri_codi']);
 			$grupEcon->getCategorias_selectFormat_with_all('');
@@ -420,7 +420,7 @@ function handler()
                           'clie_nombres'     => $cliente->nombres,
                           'clie_apellidos'   => $cliente->apellidos,
                           '{tabla_descuentos}' =>array( "elemento"=>"tabla",
-                                                        "clase"=>"table table-bordered table-hover",
+                                                        "clase"=>"table table-striped table-hover",
                                                         "datos"=>$cliente_descuentos_activos->rows,
                                                         "id"=>"tabla_descuentos_cliente",
                                                         "encabezado" => array("Ref.","Motivo","Porcentaje","Días validez","Período","Asignado el","Inactivar"),
@@ -428,7 +428,7 @@ function handler()
 														"campo"=>"desc_alum_codigo"
                             ),
                           '{tabla_descuentos_inactivos}'=>array( "elemento"=>"tabla",
-																"clase"=>"table table-bordered table-hover",
+																"clase"=>"table table-striped table-hover",
 																"datos"=>$cliente_descuentos_inactivos->rows,
 																"id"=>"tabla_descuentos_inactivos_cliente",
 																"encabezado" => array("Ref.","Motivo","Porcentaje","Días validez","Período","Inactivado el","Eliminar"),
@@ -882,15 +882,16 @@ function construct_table_pagos($cod_alum, $fini, $ffin, $periodo, $deuda )
 	$pago->get_PagosRealizados( '', $fechavenc_ini, $fechavenc_fin, '', '', '', 
 								$cod_alum, '', '', '', '', '', '', '', 
 								'', '0', '0', '-1', $periodo,'-1','-1','-1', $deuda );
-	$construct_table="
-				<table class='table table-bordered table-hover' id='pagosRealizados_table'>
-					<thead><tr>".
+	$construct_table="<br>
+				<table class='table table-striped table-hover' id='pagosRealizados_table' style='width:100%;'>
+					<thead style='background-color:#81d4fa;'><tr>".
 			"<th style='font-size:small;text-align:center;'>Ref.</th>".
 			"<th style='font-size:small;text-align:center;'>Total Pago</th>".
 			"<th style='font-size:small;text-align:center;'>Forma de Pago</th>".
 			"<th style='font-size:small;text-align:center;'>Fecha pago</th>".
 			"<th style='font-size:small;text-align:center;'>PDF</th>".
 			"<th style='font-size:small;text-align:center;'>HTML</th>".
+			"<th style='font-size:small;text-align:center;'>Revertir</th>".
 						"</tr>
 					</thead>";
 	
@@ -942,8 +943,10 @@ function construct_table_pagos($cod_alum, $fini, $ffin, $periodo, $deuda )
 			}
 			$spanHTML="<span class='glyphicon glyphicon-print cursorlink' id='".$codigo."_ver_pago' onmouseover='$(this).tooltip(".'"show"'.")' title='Formato impresi&oacute;n grande.' data-placement='left'></span>";
 			$spanPDF="<span class='glyphicon glyphicon-print cursorlink' id='".$codigo."_ver_pago_PDF' onmouseover='$(this).tooltip(".'"show"'.")' title='Formato impresi&oacute;n punto de venta.' data-placement='left'></span>";
+			$spanRevertir="<div align='center' style='display:inline-block;'><span   onclick='js_Pago_revertir(".'"'.$codigo.'"'.",".'"modal_revert_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/pagos/controller.php"'.")'    class='btn_opc_lista_eliminar fa fa-history cursorlink'  aria-hidden='true' id='".$codigo."_revertir'   onmouseover='$(this).tooltip(".'"show"'.")' data-placement='left' title='Revertir y borrar pago.'></span></div>";
 			$body.="<td style='text-align:center'><a href='".$diccionario['ruta_html_finan']."/finan/PDF/imprimir/pago/".$codigo."' target='_blank'>".$spanPDF."</a></td>";
 			$body.="<td style='text-align:center'><a href='".$diccionario['ruta_html_finan']."/finan/documento/imprimir/pago/".$codigo."' target='_blank'>".$spanHTML."</a></td>";
+			$body.="<td style='text-align:center'>".$spanRevertir."</td>";
 		}
 		$body.="</tr>";
 		$c++;
@@ -1009,7 +1012,7 @@ function tabla_deudas( $tablacliente )
 				if ( $x == 9 )
 				{   $codigoAlumno = $column;
 					if ( !empty( $row['numeroFactura'] ) )
-						$data.="<td><div style='font-size:x-small;'>".$column." <br>[<a href='/documentos/autorizados/".$_SESSION['directorio']."/".$titularID."/FAC".$numeroFactura.".PDF' target='_blank' onmouseover='$(this).tooltip(".'"show"'.")' title='FAC ".$numeroFactura."' data-placement='left'>A</a>]</div></td>";
+						$data.="<td><div style='font-size:x-small;'>".$column." <br>[<a href='/documentos/autorizados/".$_SESSION['directorio']."/".$titularID."/FAC".$numeroFactura.".PDF' target='_blank' onmouseover='$(this).tooltip(".'"show"'.")' title='FAC ".$numeroFactura."' data-placement='left'>FACTURA</a>]</div></td>";
 					else
 						$data.="<td><div style='font-size:x-small;'>".$column."</div></td>";
 				}

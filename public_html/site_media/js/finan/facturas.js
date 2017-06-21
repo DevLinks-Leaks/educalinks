@@ -13,7 +13,7 @@ var hay_descuento = 0;
 var metodo_descuento = "";
 var JSON_descuento = JSON.parse('[]');
 function carga_busquedaCliente(div,url)
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
     data.append('event', 'buscar_clientes');    
     var xhr = new XMLHttpRequest();
@@ -143,7 +143,7 @@ function carga_adicionarProducto(div, url)
 }
 // Consulta los productos de una categoria especifica
 function cargaProductos(div, url){
-    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var comboCategoria = document.getElementById("codigoCategoria_busq");
     var data = new FormData();
     data.append('codigoCategoria', comboCategoria.options[comboCategoria.selectedIndex].value);    
@@ -172,7 +172,7 @@ function mostrar_mensaje_error_cambio_metodo( div )
 	//console.log( document.getElementById( div ).innerHTML );
 }
 function js_facturas_buscaPrecio(url)
-{   document.getElementById('precio_busq').innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById('precio_busq').innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var comboProducto = document.getElementById("codigoProducto_busq");
     var codigocliente = document.getElementById("codigoCliente");
     var total = 0;
@@ -393,7 +393,7 @@ function AddItemToDetail(url)
 // Carga el formulario que contendra los datos de una linea especifica del detalle para ser modificada la cantidad
 function cargaEditProducto(idDetalle, div, url)
 {   if($('#codigoCliente').val() !== "")
-    {   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+    {   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
         var nombreCategoria = '', codigoCategoria = '', nombreProducto  = '', codigoProducto  = '';
         var precio = '', cantidad = '', descuento = '', aplicaIVA = '0', iva = '', subtotal = '';    
         $('#detalleFactura_table tbody tr').each(function()
@@ -660,7 +660,7 @@ function generaFactura_followed(div, url)
 		var codigoCliente = document.getElementById('codigoCliente').value;
 		var numeroIdentificacionCliente = document.getElementById('numeroIdentificacionCliente').value;
 		var nombresCliente = document.getElementById('nombresCliente').value;
-		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 		var data = new FormData();
 		data.append('event', 'set_factura');
 		data.append('datosFactura', JSON.stringify(datosFactura));

@@ -63,7 +63,7 @@ function handler() {
                     $data['disabled_agregar_banco']="disabled='disabled'";
                 }
 				$data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$banco->rows,
                                         "encabezado" => array("Código de Banco","Nombre","Opciones"),
@@ -109,7 +109,7 @@ function handler() {
                     $data['disabled_agregar_banco']="disabled='disabled'";
                 }
 				$data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$banco->rows,
                                         "encabezado" => array("Código de Banco","Nombre"),
@@ -152,7 +152,7 @@ function handler() {
                     $data['disabled_agregar_banco']="disabled='disabled'";
                 }
 				$data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$banco->rows,
                                         "encabezado" => array("Código de Banco","Nombre","Opciones"),
@@ -198,7 +198,7 @@ function handler() {
                 }
 
 				$data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$banco->rows,
                                         "encabezado" => array("Código de Banco","Nombre","Opciones"),
@@ -220,7 +220,7 @@ function handler() {
 					$opciones = array("Editar"=>"<span onclick='edit(".'"{codigo}"'.",".'"modal_edit_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/bancos/controller.php"'.")' class='btn_opc_lista_editar glyphicon glyphicon-pencil cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_edit' data-placement='left'>&nbsp;</span>",
                                       "Eliminar"=>"<span onclick='del(".'"{codigo}"'.",".'"resultado"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/bancos/controller.php"'.")' class='btn_opc_lista_eliminar glyphicon glyphicon-trash cursorlink' aria-hidden='true'>&nbsp;</span>");
 				$data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$banco->rows,
        								    "encabezado" => array("Código de Banco","Nombre","Opciones"),

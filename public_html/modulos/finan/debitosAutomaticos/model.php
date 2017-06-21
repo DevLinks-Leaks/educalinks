@@ -30,6 +30,16 @@ class DebitosAutomaticos extends DBAbstractModel
             unset($debito);
         }
     }
+    public function setpagodebito_sinliquidez ($codigo, $valor, $usuario, $nombredoc, $fecha_debito, $id_formaPago )
+	{	$this->parametros = array($codigo, $valor, $usuario, $nombredoc, $fecha_debito, $_SESSION['puntVent_codigo'], $_SESSION['caja_codi'], $id_formaPago );
+        $this->sp = "str_ingresaPagodebito_sinliquidez";
+        $this->executeSPConsulta();
+        if (count($this->rows)>=1)
+        {   foreach($this->rows[0] as $propiedad=>$valor)
+            {   $this->$propiedad=$valor;
+            }
+        }
+    }
     public function setpagodebito ($codigo, $valor, $usuario, $nombredoc, $fecha_debito, $id_formaPago )
 	{	$this->parametros = array($codigo, $valor, $usuario, $nombredoc, $fecha_debito, $_SESSION['puntVent_codigo'], $_SESSION['caja_codi'], $id_formaPago );
         $this->sp = "str_ingresaPagodebito";
@@ -47,7 +57,7 @@ class DebitosAutomaticos extends DBAbstractModel
         {   $this->mensaje="No existen categorias en la BD.";
             array_pop($rol);
             array_push($rol, array(0 => -1, 
-                                   1 => 'Seleccione...',
+                                   1 => '- Seleccione un formato -',
                                    3 => ''));
         }
         else
@@ -55,7 +65,7 @@ class DebitosAutomaticos extends DBAbstractModel
 
             array_pop($rol);
             array_push($rol, array(0 => -1, 
-                                   1 => 'Seleccione...',
+                                   1 => '- Seleccione un formato -',
                                    3 => ''));
             foreach($this->rows as $categorias)
             {    array_push($rol, array_values($categorias));
@@ -147,6 +157,54 @@ class DebitosAutomaticos extends DBAbstractModel
         }
 		return $this;
     }
+	public function set_debitoautomatico_config( $check_exp_opc_ant, $check_exp_opc_ctas )
+	{	$this->parametros = array( $check_exp_opc_ant, $check_exp_opc_ctas );
+        $this->sp = "str_consultaDebitoautomatico_config_upd";
+        $this->executeSPAccion();
+        if($this->filasAfectadas>0)
+		{	$this->mensaje="¡Exito! Su configuración ha sido cambiada.";
+        }
+		else
+		{	$this->mensaje="¡Error! Ocurrió un problema con el cambio de la configuración";
+        }
+    }
+	public function get_debitoautomatico_config()
+	{   $this->parametros = array();
+        $this->sp = "str_consultaDebitoautomatico_config_info";
+        $this->executeSPConsulta();
+        if(count($this->rows)>0)
+		{	$this->mensaje="OK";
+        }
+		else
+		{	$this->mensaje="KO";
+        }
+		return $this;
+    }
+	public function get_deudores_ctas_antiguas( $xml_productos , $peri_codi , $codcab , $fac_estado , $banco , $tarjCredito )
+	{   $this->parametros = array( $xml_productos , $peri_codi , $codcab , $fac_estado , $banco , $tarjCredito );
+        $this->sp = "str_consultaDebitoautomatico_get_ctas_antiguas";
+        $this->executeSPConsulta();
+        if(count($this->rows)>0)
+		{	$this->mensaje="OK";
+        }
+		else
+		{	$this->mensaje="KO";
+        }
+		return $this;
+    }
+	public function get_deudores_ctas_inliquidas( $codcab , $peri_codi )
+	{   $this->parametros = array( $codcab , $peri_codi );
+        $this->sp = "str_consultaDebitoautomatico_get_ctas_inliquidas";
+        $this->executeSPConsulta();
+        if(count($this->rows)>0)
+		{	$this->mensaje="OK";
+        }
+		else
+		{	$this->mensaje="KO";
+        }
+		return $this;
+    }
+	
     # Método constructor
     function __construct() {
         //$this->db_name = 'URBALINKS_FINAN';

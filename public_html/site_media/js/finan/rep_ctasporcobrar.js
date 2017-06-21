@@ -44,7 +44,7 @@ function js_rep_ctasporcobrar_carga_rpte( div, url,evento )
 		var periodos = document.getElementById('periodos').value;
 		var productos = $("#cmb_producto").val();
 		
-		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 		
 		var data = new FormData();
 		data.append('event', 'printvisor');
@@ -97,7 +97,7 @@ function js_rep_ctasporcobrar_carga_rpte_xls( div, url,evento )
 		var periodos = document.getElementById('periodos').value;
 		var productos = $("#cmb_producto").val();
 		
-		//document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+		//document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 		
 		var data = new FormData();
 		data.append('event', 'printvisor');

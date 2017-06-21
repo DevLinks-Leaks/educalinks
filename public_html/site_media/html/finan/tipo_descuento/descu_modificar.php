@@ -11,7 +11,7 @@
           <span class="input-group-addon" id="basic-addon2">%</span>
         </div>
     </div>
-	<div class="form-group">
+	<div class="form-group" style="display:none;">
     	<label for="porcentaje_add">Tipo de descuento
 			<div id='EducaLinksHelperCliente' style='display:inline;font-size:small;text-align:left;vertical-align:middle;'>
 				<a tabindex="0" data-toggle="popover" data-placement='right' title="Tipo de descuento" data-content="<div style='font-size:x-small'>Una vez creado el descuento, el tipo de descuento no se puede modificar. Por favor, elimínelo y créelo nuevamente.</div>" data-placement='bottom'><span class='fa fa-info-circle'></span></a>

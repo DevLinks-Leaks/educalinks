@@ -75,7 +75,7 @@ $(document).ready(function() {
 	});
 });
 function carga_reports_cobranza_crm(div,url,evento){
-	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     usuaFinan= document.getElementById('cmb_usuaFinan').value;
 	fecha_ini= document.getElementById('txt_fecha_ini').value;
 	fecha_fin= document.getElementById('txt_fecha_fin').value;

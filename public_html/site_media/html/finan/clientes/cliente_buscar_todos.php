@@ -187,7 +187,7 @@
 								<label class="col-md-4 col-sm-3 control-label" style='text-align: right;' for='txt_ref_factura'>Período:</label>
 								<div class="col-md-8  col-sm-8"
 										data-placement="bottom"
-										title='Período en el que se generó la deuda'
+										title='Período lectivo en uso por el sistema.'
 										onmouseover='$(this).tooltip("show")'>
 									{cmb_periodo}
 								</div>
@@ -306,10 +306,8 @@
 </form>
 <div class="box box-default">
 	<div class="box-header with-border">
-	    <div class="box-header with-border">
 			<h3 class="box-title">Bandeja de alumnos</h3>
 			 <div class="box-tools pull-right">
-				<h3 class="box-title">
 					<div class="btn-group hidden-sm hidden-xs">
 						<button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false"
 							title='Opciones de vista'>
@@ -320,11 +318,9 @@
 						<li><a href="#" onclick="js_clientes_buscar('resultado','{ruta_html_finan}/clientes/controller.php', 3)"><i class='fa fa-print'></i> Mostrar cuadrícula para impresión</a></li>
 						</ul>
 					</div>
-				</h3>
 			</div>
 			<input type='hidden' id='tipo_bandeja' name='tipo_bandeja' value=''/>
 		</div><!-- /.box-header -->
-	</div><!-- /.box-header -->
 	<div class="box-body">
 		<div id="resultado">
 			{tabla}

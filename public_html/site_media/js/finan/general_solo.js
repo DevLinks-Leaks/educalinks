@@ -142,7 +142,7 @@ function selectionHandler(e){
 
 function js_general_cargaDeudores( div, url )
 {   "use strict";
-    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var comboCursos = document.getElementById("curso");
     var comboNivelEcon = document.getElementById("cmb_nivelesEconomicos");
     var comboPeriodos = document.getElementById("periodos");

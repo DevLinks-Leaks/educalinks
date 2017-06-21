@@ -66,10 +66,12 @@
 								</p>
 							</li>
 						  <!-- Menu Footer-->
+						  <!--onclick="document.getElementById('event').value='password';document.frm_menu.submit();"-->
+						  <!--onclick="document.getElementById('event').value='datos';document.frm_menu.submit();"--> 
 							<li class="user-footer">
 								<div class="pull-left">
-									<a href="#" onclick="document.getElementById('event').value='password';document.frm_menu.submit();" class="btn btn-default btn-flat">Contraseña</a>
-									<a href="#" onclick="document.getElementById('event').value='datos';document.frm_menu.submit();" class="btn btn-default btn-flat">Perfil</a>
+									<a href="../../../admin/admin_pass.php" class="btn btn-default btn-flat" >Contraseña</a>
+									<a href="../../../admin/admin_info.php" href="#" class="btn btn-default btn-flat">Perfil</a>
 								</div>
 								<div class="pull-right">
 									<a href="../../../salir.php" class="btn btn-default btn-flat">Salir</a>

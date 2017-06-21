@@ -35,7 +35,7 @@ $(document).ready(function() {
     });
 });
 function js_tipo_descuento_busca( busq, div )
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
     data.append('event', 'get_all_data');
     data.append('busq', busq);    
@@ -76,7 +76,7 @@ function js_tipo_descuento_busca( busq, div )
 }
 function js_tipo_descuento_del(codigo,div,url)
 {   if(confirm("¿Está seguro que desea eliminar la descuento?"))
-    {   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+    {   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
         var data = new FormData();
         data.append('event', 'delete');
         data.append('desc_codigo', codigo);    
@@ -96,7 +96,7 @@ function js_tipo_descuento_del(codigo,div,url)
     }
 }
 function js_tipo_descuento_edit(codigo,div,url)
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
     data.append('event', 'get');
     data.append('desc_codigo', codigo);    
@@ -115,7 +115,7 @@ function js_tipo_descuento_edit(codigo,div,url)
     xhr.send(data);
 }
 function js_tipo_descuento_carga_add(div,url)
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
     data.append('event', 'agregar');    
     var xhr = new XMLHttpRequest();
@@ -147,7 +147,7 @@ function js_tipo_descuento_add(div,url)
         $.growl.warning({ title: "Educalinks informa",message: "Porcentaje no puede ser mayor a 100%." });
     }
     if ( bandera === 1 )
-    {   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+    {   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
         var data = new FormData();
         data.append('event', 'set');
         data.append('desc_porcentaje', document.getElementById('porcentaje_add').value);
@@ -186,7 +186,7 @@ function js_tipo_descuento_save_edited( rol_codigo, div, url )
     }
     if ( bandera === 1 )
     {   if(confirm("¿Está seguro que desea editar la información de la descuento?"))
-        {   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+        {   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
             var data = new FormData();
             data.append('event', 'edit');
             data.append('desc_codigo', document.getElementById('codigo_mod').value);

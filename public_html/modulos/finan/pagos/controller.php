@@ -1477,7 +1477,7 @@ function construct_table_pagos($user_data)
 		$nombre_extendido = "_".$num_factura;
 	$construct_table="
 				<table class='table table-hover table-striped' id='pagosRealizados_table".$nombre_extendido."'>
-					<thead style='background-color:#3C8DBC;color:white;'><tr>".
+					<thead style='background-color:rgba(60, 176, 188, 0.53);color:black;'><tr>".
 			"<th style=\"text-align:center;vertical-align:middle\"></th>".
 			"<th style='font-size:small;text-align:center;'>Ref.</th>".
 			"<th style='font-size:small;text-align:center;'>Datos</th>".

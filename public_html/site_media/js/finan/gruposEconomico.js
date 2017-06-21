@@ -19,7 +19,7 @@ $(document).ready(function()
 });
 // Consulta filtrada
 function js_gruposEconomico_busca( busq, div, url )
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
     data.append('event', 'get_all_data');
     data.append('busq', busq);    
@@ -51,7 +51,7 @@ function js_gruposEconomico_busca( busq, div, url )
 }
 // Carga el formulario para ingresar un nuevo registro
 function js_gruposEconomico_carga_add( div, url )
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';var data = new FormData();
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';var data = new FormData();
     data.append('event', 'agregar');    
     var xhr = new XMLHttpRequest();
     xhr.open('POST', url , true);
@@ -66,7 +66,7 @@ function js_gruposEconomico_carga_add( div, url )
 }
 // Carga el formulario para editar un registro
 function js_gruposEconomico_carga_edit( codigo, div,url )
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
     data.append('event', 'get');
     data.append('codigo', codigo);    
@@ -86,7 +86,7 @@ function js_gruposEconomico_add( div, url )
 {   if ( document.getElementById('txt_rango_ini_add').value > document.getElementById('txt_rango_fin_add').value )
         $.growl.warning({ title: "Educalinks informa",message: "Rango inicial no puede ser mayor." });
     else
-    {   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+    {   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
         var data = new FormData();
         data.append('event', 'set');
         data.append('nombre', document.getElementById('nombre_add').value);
@@ -117,7 +117,7 @@ function js_gruposEconomico_edit( rol_codigo, div, url )
         $.growl.warning({ title: "Educalinks informa",message: "Rango inicial no puede ser mayor." });
     else
     {   if(confirm("¿Está seguro que desea editar la información del grupo economico?"))
-        {   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+        {   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
             var data = new FormData();
             data.append('event', 'edit');
             data.append('codigo', document.getElementById('codigo_mod').value);
@@ -147,7 +147,7 @@ function js_gruposEconomico_edit( rol_codigo, div, url )
 }
 function js_gruposEconomico_del( codigo, div, url )
 {   if(confirm("¿Está seguro que desea eliminar el grupo economico actual?"))
-    {   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+    {   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
         var data = new FormData();
         data.append('event', 'delete');
         data.append('codigo', codigo);    

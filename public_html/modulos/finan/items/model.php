@@ -148,10 +148,10 @@ class Item extends DBAbstractModel{
         $this->sp = "str_consultaItem_del";
         $this->executeSPAccion();
         if($this->filasAfectadas>0)
-		{   $this->mensaje="¡Exito! Precio eliminado exitosamente.";
+		{   $this->mensaje="¡Exito! Item eliminado exitosamente.";
         }
 		else
-		{   $this->mensaje="¡Error! No se ha eliminado el precio.";
+		{   $this->mensaje="¡Error! No se ha eliminado el item.";
         }
 		return $this;
     }

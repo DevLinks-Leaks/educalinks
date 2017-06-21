@@ -69,7 +69,7 @@ function handler() {
                 {   $data['disabled_agregar_sucursal']="disabled='disabled'";
                 }
 				$data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$sucursal->rows,
                                         "encabezado" => array("Código de Sucursal","Descripción","Dirección","Prefijo","Opciones"),
@@ -107,7 +107,7 @@ function handler() {
                 {   $data['disabled_agregar_sucursal']="disabled='disabled'";
                 }
 				$data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$sucursal->rows,
                                         "encabezado" => array("Código de Sucursal","Descripción","Dirección","Prefijo","Opciones"),
@@ -148,7 +148,7 @@ function handler() {
                 }
 
 				$data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$sucursal->rows,
                                         "encabezado" => array("Código de Sucursal","Descripción","Dirección","Prefijo","Opciones"),
@@ -170,7 +170,7 @@ function handler() {
 				$opciones = array("Editar"=>"<span onclick='edit(".'"{codigo}"'.",".'"modal_edit_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/sucursales/controller.php"'.")' class='btn_opc_lista_editar glyphicon glyphicon-pencil cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_edit' id='{codigo}_editar' onmouseover='$(".'"#{codigo}_editar"'.").tooltip(".'"show"'.");' title='Editar' data-placement='left'>&nbsp;</span>",
                                       "Eliminar"=>"<span onclick='del(".'"{codigo}"'.",".'"resultado"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/sucursales/controller.php"'.")' class='btn_opc_lista_eliminar glyphicon glyphicon-trash cursorlink' aria-hidden='true' id='{codigo}_eliminar' onmouseover='$(this).tooltip(".'"show"'.")'  title='Eliminar'>&nbsp;</span>");
 				$data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$sucursal->rows,
                                         "encabezado" => array("Código de Sucursal","Descripción","Dirección","Prefijo","Opciones"),

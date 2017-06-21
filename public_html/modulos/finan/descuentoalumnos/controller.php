@@ -51,7 +51,7 @@ function handler() {
 				{	$data['disabled_agregar_item']="disabled='disabled'";
 				}
 				$data['{tabla}']= array("elemento"=>"tabla",
-								  "clase"=>"table table-bordered table-hover",
+								  "clase"=>"table table-striped table-hover",
 								  "id"=>$tabla,
 								  "datos"=>$descuentoalumnos->rows,
 								  "encabezado" => array("Código",
@@ -90,7 +90,7 @@ function handler() {
                 {	$data['disabled_agregar_item']="disabled='disabled'";
                 }
                 $data['{tabla}']= array("elemento"=>"tabla",
-                                        "clase"=>"table table-bordered table-hover",
+                                        "clase"=>"table table-striped table-hover",
                                         "id"=>$tabla,
                                         "datos"=>$descuentoalumnos->rows,
                                         "encabezado" => array(	"Código",

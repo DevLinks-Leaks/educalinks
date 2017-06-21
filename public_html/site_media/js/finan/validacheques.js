@@ -22,7 +22,7 @@ $(document).ready(function() {
 	table.column( '4:visible' ).order( 'desc' );
 });
 function js_validacheques_busca( div )
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'get_all');
 	data.append('filtro', document.getElementById( 'cmb_mostrarCheq' ).value );
@@ -59,7 +59,7 @@ function js_validacheques_aprobar( codigo, div, url )
 {   document.getElementById( 'hd_aprove_cheq_codigo' ).value = codigo;
 }
 function js_validacheques_aprobar_followed( codigo, div, url )
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 	var data = new FormData();
 	data.append('event', 'aprobar');
 	data.append('cheq_codigo', codigo);	
@@ -80,7 +80,7 @@ function js_validacheques_aprobar_followed( codigo, div, url )
 	xhr.send(data);
 }
 function js_validacheques_protestar( codigo, div, url )
-{	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'protestar');
 	data.append('cheq_codigo', codigo);	
@@ -103,7 +103,7 @@ function js_validacheques_protestar( codigo, div, url )
 	xhr.send(data);
 }
 function js_validacheques_protestar_add( codigo, div, url )
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
 	data.append('event', 'agregar');	
 	var xhr = new XMLHttpRequest();

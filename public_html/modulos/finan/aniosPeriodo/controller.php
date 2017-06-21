@@ -77,7 +77,7 @@ function handler() {
 			}
 			$opcionesdeudas["Migrar"] = "<span onclick='js_aniosPeriodo_carga_deudas(".'"{codigo}"'.",".'"modal_deudas_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/aniosPeriodo/controller.php"'.")' class='btn_opc_lista_migrar glyphicon glyphicon-send cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_deudas' id='{codigo}_eliminar' onmouseover='$(".'"#{codigo}_migrar"'.").tooltip(".'"show"'.")' title='Eliminar'>&nbsp;</span>";
 			$data['{tabla}']= array("elemento"=>"tabla",
-                                    "clase"=>"table table-bordered table-hover",
+                                    "clase"=>"table table-striped table-hover",
                                     "id"=>$tabla,
                                     "datos"=> $anioPeriodo->rows,
                                     "encabezado" => array("Ref.",
@@ -89,7 +89,7 @@ function handler() {
                                     "options"=>array($opciones),
                                     "campo"=>"codigoProducto");
 			$data['{tabla_deuda}']= array("elemento"=>"tabla",
-                                    "clase"=>"table table-bordered table-hover",
+                                    "clase"=>"table table-striped table-hover",
                                     "id"=>"tabladeuda",
                                     "datos"=> $curso->rows,
                                     "encabezado" => array("Mes",
@@ -137,7 +137,7 @@ function handler() {
             {   $data['disabled_generar_deuda_lote']="disabled='disabled'";
             }
             $data['{tabla}']= array("elemento"=>"tabla",
-                                    "clase"=>"table table-bordered table-hover",
+                                    "clase"=>"table table-striped table-hover",
                                     "id"=>$tabla,
                                     "datos"=>$anioPeriodo->rows,
                                     "encabezado" => array("Ref.",
@@ -157,7 +157,7 @@ function handler() {
 			$opcionesdeudas["Migrar"] = "<span onclick='js_aniosPeriodo_carga_deudas(".'"{codigo}"'.",".'"modal_deudas_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/aniosPeriodo/controller.php"'.")' class='btn_opc_lista_migrar glyphicon glyphicon-send cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_deudas' id='{codigo}_eliminar' onmouseover='$(this).tooltip(".'"show"'.")' title='Migrar'>&nbsp;</span>";
 
 			$data['{tabla_deuda}']= array("elemento"=>"tabla",
-										"clase"=>"table table-bordered table-hover",
+										"clase"=>"table table-striped table-hover",
 										"id"=>"tabladeuda",
 										"datos"=> $curso->rows,
 										"encabezado" => array("Mes",
@@ -190,7 +190,7 @@ function handler() {
 			$data = array('mes' => $user_data['mes']);
 			
 			$data['{tabladeudasmigrar}'] =array("elemento"=>"tabla",
-												"clase"=>"table table-bordered table-hover",
+												"clase"=>"table table-striped table-hover",
 												"id"=>"tabladeudamigrar",
 												"datos"=> $curso->rows,
 												"encabezado" => array("Codigo Deuda",

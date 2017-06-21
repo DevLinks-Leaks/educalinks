@@ -3,7 +3,7 @@ $(document).ready(function(){
     $("#txt_fecha_fin").datepicker();
 });
 function js_rep_facturas_carga_reports_descuentos( div, url, evento )
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var cajero = document.getElementById("caja").value;
     var fecha_ini= document.getElementById('txt_fecha_ini').value;
     var fecha_fin= document.getElementById('txt_fecha_fin').value;

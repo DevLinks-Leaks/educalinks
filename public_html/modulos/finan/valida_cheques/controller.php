@@ -48,7 +48,7 @@ function handler() {
 			
 			if(count($validacheque->rows)>0)
 			{	global $diccionario;
-				$html.= '<table class="table table-bordered table-hover" id="'.$tabla.'" name="'.$tabla.'">';
+				$html.= '<table class="table table-striped table-hover" id="'.$tabla.'" name="'.$tabla.'">';
 					$html.= '	<thead><tr>';
 					$html.= '		<th>Ref.</th>';
 					$html.= '		<th>Cod. Alumno</th>';
@@ -107,7 +107,7 @@ function handler() {
 			
 			if(count($validacheque->rows)>0)
 			{	global $diccionario;
-				$html.= '<table class="table table-bordered table-hover" id="'.$tabla.'" name="'.$tabla.'">';
+				$html.= '<table class="table table-striped table-hover" id="'.$tabla.'" name="'.$tabla.'">';
 					$html.= '	<thead><tr>';
 					$html.= '		<th>Ref.</th>';
 					$html.= '		<th>Cod. Alumno</th>';

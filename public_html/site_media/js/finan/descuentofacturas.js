@@ -86,7 +86,7 @@ function js_descuentofactura_busca(div,url)
 			document.getElementById( "ruta_html_finan" ).value + 
 			'/descuentofacturas/controller.php\')"><i class="fa fa-refresh"></i>&nbsp;Refrescar deudas</button>';
     document.getElementById( 'span_button_save_deud_changes' ).innerHTML = '';
-    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     document.getElementById( 'div_total_deudas' ).innerHTML = '<span class="input-group-addon"><strong>T. Deudas: </strong>$</span>' + 
                             '<input type="text" disabled="true" class="form-control" name="totalDeudasPendientes" id="totalDeudasPendientes" placeholder="00.00" required="required">';
     var data = new FormData();
@@ -210,7 +210,7 @@ function js_descuentofactura_busca(div,url)
 // Carga el formulario para buscar a un cliente especifico
 function js_descuentofactura_carga_busquedaCliente(div,url){
     var spanish_in="//cdn.datatables.net/plug-ins/f2c75b7247b/i18n/Spanish.json";
-    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
     data.append('event', 'buscar_clientes');    
     var xhr = new XMLHttpRequest();
@@ -233,7 +233,7 @@ function js_descuentofactura_carga_busquedaCliente(div,url){
     xhr.send(data);
 }
 function js_descuentofactura_carga_asignacion( codigo, div, url )
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     document.getElementById( 'div_total_deudas' ).innerHTML = '';
     var data = new FormData();
     data.append('event', 'asignarDescuento');    
@@ -640,7 +640,7 @@ function justificaMensajeNoData(tabla){
 
 
 function cargaFormularioEditarPago(url, idPago)
-{   document.getElementById('modal_editarPago_body').innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById('modal_editarPago_body').innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
     data.append('event', 'editarPago');
     data.append('idPago', idPago);
@@ -698,7 +698,7 @@ function limpiaPaginanoq(albedrio)
 }
 
 function mostrarDetalleDeuda(codigoDeuda, div, url)
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
     data.append('event', 'detalleDeuda');    
     data.append('codigoDeuda', codigoDeuda);    
@@ -720,7 +720,7 @@ function mostrarDetalleDeuda(codigoDeuda, div, url)
     xhr.send(data);
 }
 function mostrarPagosDeuda(codigoDeuda, div, url)
-{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var data = new FormData();
     data.append('event', 'detallePagosDeuda');    
     data.append('codigoDeuda', codigoDeuda);    
@@ -750,7 +750,7 @@ function js_descuentofactura_carga_porcentaje( valor, div, url )
     else
         v_readonly = 1;
     
-    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
+    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     
     data.append('desc_codigo', valor );
     data.append('readonly', v_readonly );
@@ -925,7 +925,7 @@ function js_descuentofacturas_previsualizar (  )
 		{   $.growl.warning({ title: "Educalinks informa", message: "Debe seleccionar una fecha para visualizar los valores." });
 		}
         else
-        {   document.getElementById( "div_previsualizacion" ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div>';
+        {   document.getElementById( "div_previsualizacion" ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div>';
             var data = new FormData();
             data.append('event', 'get_previsualizacion');
             data.append('deuda_xml', JSON.stringify( deuda_xml ) );
@@ -1013,7 +1013,7 @@ function js_descuentofactura_save_followed(  )
         $.growl.warning({ title: "Educalinks informa", message: "Porcentajes de descuento superan el 100%." });
     else
     {   if (js_general_compare_dates( document.getElementById('fechaInicio_add').value, document.getElementById('fechaFin_add').value ) == 'OK' )
-		{   document.getElementById( 'modal_save_changes_body' ).innerHTML = '<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i><br>Por favor, espere<br><br><br></div>';
+		{   document.getElementById( 'modal_save_changes_body' ).innerHTML = '<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere<br><br><br></div>';
 			var data = new FormData();
 			data.append('event', 'set_changes');
 			data.append('deuda_xml', JSON.stringify( deuda_xml ) );
