@@ -20,12 +20,12 @@
 		if ($_GET['nive_codi']==4 or $_GET['nive_codi']==5)
 		{
 			/*Archivo.php para libretas de inicial*/
-			$url_libreta="cursos_paralelo_notas_alum_observaciones_inicial_";
+			$url_libreta="nota_obse_inicial";
 		}
 		else
 		{
 			/*Archivo.php para las demás libretas*/
-			$url_libreta="cursos_paralelo_notas_alum_observaciones_";
+			$url_libreta="nota_obse";
 		}
 ?>
 
@@ -82,8 +82,8 @@
             </table>
           </td>
           <td>
-			  <button type='button' class="btn btn-default"
-				onClick="window.location='<?= $url_libreta.$_SESSION['directorio'] ?>.php?peri_dist_codi=' + selectvalue(document.getElementById('peri_dist_codi')) +'&alum_codi=<?= $row_alum_curs_para_view["alum_codi"]; ?>&curs_para_codi=<?= $curs_para_codi; ?>'">
+			  <button type='button' class="btn btn-default" 
+				onClick="window.open('<?= $url_libreta?>.php?peri_dist_codi=' + selectvalue(document.getElementById('peri_dist_codi')) +'&alum_codi=<?= $row_alum_curs_para_view["alum_codi"]; ?>&curs_para_codi=<?= $curs_para_codi; ?>','_blank')">
 				<span class='fa fa-edit btn_opc_lista_editar'></span> Editar
 			</button>
           </td>

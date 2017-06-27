@@ -184,7 +184,8 @@
 				$aux_col[$i][2] = $row['mate_tipo'];
 				$aux_col[$i][3] = $row['mate_padr'];
 				$aux_col[$i][4] = $row['mate_orde'];
-				
+				$aux_col[$i][5] = $row['nota_refe_cab_codi'];
+
 				// $aux_sub_col[$i][0] = $row['peri_dist_codi'];
 				// $aux_sub_col[$i][1] = $row['peri_dist_deta'];
 				
@@ -206,6 +207,36 @@
 		foreach ($columnas as $key => $row) 
 		{	$aux[$key] = $row[4];//se guarda en el arreglo auxiliar sólo la columna por la que quieres ordenar.
 		}
+		$array_rend=array();
+		//Consulta cabeceras
+		$params = array($curs_para_codi,$peri_dist_codi);
+		$sql="{call alum_nota_libreta_modelos(?,?)}";
+		$alum_nota_libreta_modelos = sqlsrv_query($conn, $sql, $params);
+		while($row_alum_nota_libreta_modelos= sqlsrv_fetch_array($alum_nota_libreta_modelos)){
+			
+			$array_temp=array();
+			$array=array();
+
+			$params = array($peri_dist_codi, $row_alum_nota_libreta_modelos['nota_refe_cab_cod']);
+			$sql="{call alum_nota_libreta_cabecera(?,?)}";
+			$alum_nota_libreta_cabecera = sqlsrv_query($conn, $sql, $params);
+			$k=0;
+			while($row_alum_nota_libreta_cabecera= sqlsrv_fetch_array($alum_nota_libreta_cabecera)){
+				$array_temp[$k][0] = $row_alum_nota_libreta_cabecera['peri_dist_codi'];
+				$array_temp[$k][1] = $row_alum_nota_libreta_cabecera['peri_dist_deta'];
+				$array_temp[$k][2] = $row_alum_nota_libreta_cabecera['peri_dist_nota_tipo'];
+				$k++;
+				if($row_alum_nota_libreta_cabecera['peri_dist_nota_tipo']=='PM'){
+					$array_rend[0][0] = $row_alum_nota_libreta_cabecera['peri_dist_codi'];
+					$array_rend[0][1] = $row_alum_nota_libreta_cabecera['peri_dist_deta'];
+					$array_rend[0][2] = $row_alum_nota_libreta_cabecera['peri_dist_nota_tipo'];
+				}
+
+			}
+			$array = arrayUnique ($array_temp);
+			$modelos[$row_alum_nota_libreta_modelos['nota_refe_cab_cod']]=$array;
+				
+		}
 		
 		//Consulta cabeceras
 		$params = array($peri_dist_codi, 'C');
@@ -220,12 +251,12 @@
 		}
 
 		//Subcolumnas finales
-		$subcolumnas =arrayUnique ($aux_sub_col);
+		$subcolumnas =arrayUnique ($array_rend);
 		
 		//ancho de subcolumnas, en base al valor de la variable global.
-		$ancho_para_firmas=($ancho_para_firmas/count($subcolumnas));
-		if ($ancho_para_firmas < 2)
-			$ancho_para_firmas = 2;
+		$ancho_para_rend=($ancho_para_firmas/count($subcolumnas));
+		if ($ancho_para_rend < 2)
+			$ancho_para_rend = 2;
 		
 		//Filas finales
 		$filas = arrayUnique ($aux_fil);
@@ -330,10 +361,16 @@
 		//...Luego, las otras materias del quimestre.
 		for ($i=0;$i<count($columnas);$i++)
 		{	if ($columnas[$i][1]!='COMPORTAMIENTO')
-			{	genera_detalle($objPHPExcel, $w, 7, $columnas[$i][1], count($subcolumnas),$styleArray);
+			{	//nota_refe_cab_codi $columnas[$i][5]
+				$temp=$columnas[$i][5];
+				$count=count($modelos[$temp]);
+				$ancho_para_firmas_var=($ancho_para_firmas/$count);
+				if ($ancho_para_firmas_var < 2)
+					$ancho_para_firmas_var = 2;
+				genera_detalle($objPHPExcel, $w, 7, $columnas[$i][1], $count,$styleArray);
 				listado_rotar_texto_celda($objPHPExcel, $w, 7, 0);
-				setear_ancho_subcolumnas($objPHPExcel, $w, count($subcolumnas), $ancho_para_firmas);
-				$w+=count($subcolumnas);
+				setear_ancho_subcolumnas($objPHPExcel, $w, $count, $ancho_para_firmas_var);
+				$w+=$count;
 				if ($columnas[$i][2]=='C' and $columnas[$i][3]==-1)
 				{	$materias_cuantitativas_count++;
 				}
@@ -342,10 +379,15 @@
 		//Pone en primer lugar COMPORTAMIENTO...
 		for ($i=0;$i<count($columnas);$i++)
 		{	if ($columnas[$i][1]=='COMPORTAMIENTO')
-		{	genera_detalle($objPHPExcel, $w, 7, $columnas[$i][1], count($subcolumnas),$styleArray);
+		{	$temp=$columnas[$i][5];
+			$count=count($modelos[$temp]);
+			$ancho_para_firmas_var=($ancho_para_firmas/$count);
+			if ($ancho_para_firmas_var < 2)
+				$ancho_para_firmas_var = 2;
+			genera_detalle($objPHPExcel, $w, 7, $columnas[$i][1], $count,$styleArray);
 		listado_rotar_texto_celda($objPHPExcel, $w, 7, 0);
-		setear_ancho_subcolumnas($objPHPExcel, $w, count($subcolumnas), $ancho_para_firmas);
-		$w+=count($subcolumnas);
+		setear_ancho_subcolumnas($objPHPExcel, $w, $count, $ancho_para_firmas_var);
+		$w+=$count;
 		if ($columnas[$i][2]=='C' and $columnas[$i][3]==-1)
 		{	$materias_cuantitativas_count++;
 		}
@@ -354,7 +396,7 @@
 		//PROMEDIO RENDIMIENTO
 		genera_detalle($objPHPExcel, $w, 7, pasarMayusculas(show_this_phrase(20000014)),4,$styleArrayPromedioRendimiento);
 		listado_rotar_texto_celda($objPHPExcel, $w, 7, 0);
-		setear_ancho_subcolumnas($objPHPExcel, $w, count($subcolumnas), $ancho_para_firmas);
+		// setear_ancho_subcolumnas($objPHPExcel, $w, count($subcolumnas), $ancho_para_rend);
 		//Define largo de la cabecera, después de dar primera vuelta a la primera línea de los rubros.
 		$largo_head=$w+count($subcolumnas)-1;
 		///////////////////////////////////////////////////////////////////////////////////////
@@ -362,7 +404,8 @@
 		///////////////////////////////////////////////////////////////////////////////////////
 		$w=2;
 		for ($i=0;$i<count($columnas);$i++)
-		{	foreach ($subcolumnas as $subcol)
+		{	$temp=$columnas[$i][5];
+			foreach ($modelos[$temp] as $subcol)
 			{	if ($columnas[$i][1]!='COMPORTAMIENTO')
 				{	listado($objPHPExcel, $w, 8, $subcol[1], $styleArray, true, true);
 					listado_rotar_texto_celda($objPHPExcel, $w, 8, 90);
@@ -372,7 +415,8 @@
 		}
 		//Pone en primer lugar COMPORTAMIENTO...
 		for ($i=0;$i<count($columnas);$i++)
-		{	foreach ($subcolumnas as $subcol)
+		{	$temp=$columnas[$i][5];
+			foreach ($modelos[$temp] as $subcol)
 		{	if ($columnas[$i][1]=='COMPORTAMIENTO')
 		{	listado($objPHPExcel, $w, 8, $subcol[1], $styleArray, true, true);
 		listado_rotar_texto_celda($objPHPExcel, $w, 8, 90);
@@ -417,7 +461,12 @@
 			$promedio_rendimiento=array();
             for ($j=0;$j<count($columnas);$j++) 
             {	$aux=0;
-				foreach ($subcolumnas as $subcol)
+            	$temp=$columnas[$j][5];
+				// $count=count($modelos[$temp]);
+				// $ancho_para_firmas_var=($ancho_para_firmas/$count);
+				// if ($ancho_para_firmas_var < 2)
+				// 	$ancho_para_firmas_var = 2;
+				foreach ($modelos[$temp] as $subcol)
 				{	
 					$params = array($columnas[$j][0]);
 					$sql="{call curs_para_mate_info(?)}";
@@ -438,7 +487,7 @@
 							}else
 							{	listado($objPHPExcel, $w, $i+9, $nota, $styleArray, true, false);
 							}
-							if ($columnas[$j][3]==-1 and ($subcol[1]!='EX. SUPLETORIO' and $subcol[1]!='EX. REMEDIAL' and $subcol[1]!='MEJORAMIENTO' and $subcol[1]!='EX. GRACIA'))
+							if ($columnas[$j][3]==-1 and ($subcol[1]!='EX. SUPLETORIO' and $subcol[1]!='EX. REMEDIAL' and $subcol[1]!='MEJORAMIENTO' and $subcol[1]!='EX. GRACIA') and $subcol[3]=='PM')
 							{   
 								
 								$promedio_rendimiento[$j][$aux]=truncar($nota);
@@ -460,7 +509,8 @@
             }
             //COMPORTAMIENTO
             for ($j=0;$j<count($columnas);$j++)
-            {	foreach ($subcolumnas as $subcol)
+            {	$temp=$columnas[$j][5];
+            	foreach ($modelos[$temp] as $subcol)
             	{	$params = array($columnas[$j][0]);
             		$sql="{call curs_para_mate_info(?)}";
 					$curs_peri_info = sqlsrv_query($conn, $sql, $params);
@@ -491,7 +541,7 @@
 				$x=0;
 				foreach ($subcolumnas as $subcol)
 				{
-					if ($subcol[1]!='EX. SUPLETORIO' and $subcol[1]!='EX. REMEDIAL' and $subcol[1]!='MEJORAMIENTO' and $subcol[1]!='EX. GRACIA')
+					if ($subcol[1]!='EX. SUPLETORIO' and $subcol[1]!='EX. REMEDIAL' and $subcol[1]!='MEJORAMIENTO' and $subcol[1]!='EX. GRACIA'  and $subcol[3]=='PM')
 					{
 					$p_r_total[$x]=$p_r_total[$x]+truncar($promedio_rendimiento[$y][$x]);
 					$x++;
@@ -501,7 +551,7 @@
 			$z=0;
 			foreach ($subcolumnas as $subcol)
 			{	
-				if ($subcol[1]!='EX. SUPLETORIO' and $subcol[1]!='EX. REMEDIAL' and $subcol[1]!='MEJORAMIENTO' and $subcol[1]!='EX. GRACIA')
+				if ($subcol[1]!='EX. SUPLETORIO' and $subcol[1]!='EX. REMEDIAL' and $subcol[1]!='MEJORAMIENTO' and $subcol[1]!='EX. GRACIA'  and $subcol[3]=='PM')
 				{
 				$p_r_total[$z]=truncar(truncar($p_r_total[$z])/$filas[$i][4]);
 				$z++;
@@ -668,28 +718,33 @@
 			//...Luego, las otras materias del quimestre.
 			for ($j=0;$j<count($columnas);$j++)
 			{	if ($columnas[$j][1]!='COMPORTAMIENTO')
-				{	$curs_para_mate_codi=$columnas[$j][0];
+				{	$temp=$columnas[$j][5];
+					$count=count($modelos[$temp]);
+					
+					$curs_para_mate_codi=$columnas[$j][0];
 					$params = array($curs_para_mate_codi);
 					$sql="{call prof_curs_para_mate_cons (?)}";
 					$dat_profesor = sqlsrv_query($conn, $sql, $params);  
 					$prof_row=sqlsrv_fetch_array($dat_profesor);
 					$profesor=rtrim($prof_row['prof_apel']).' '.rtrim($prof_row['prof_nomb']);
-					genera_detalle($objPHPExcel, $w, ($i+10), $profesor, count($subcolumnas),$styleArrayFirmas);
+					genera_detalle($objPHPExcel, $w, ($i+10), $profesor, $count ,$styleArrayFirmas);
 					$objPHPExcel->getActiveSheet()->getStyle(PHPExcel_Cell::stringFromColumnIndex($w).($i+10))->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_BOTTOM);
-					$w+=count($subcolumnas);
+					$w+=$count;
 				}
 			}
 			for ($j=0;$j<count($columnas);$j++)
 			{	if ($columnas[$j][1]=='COMPORTAMIENTO')
-			{	$curs_para_mate_codi=$columnas[$j][0];
-			$params = array($curs_para_mate_codi);
-			$sql="{call prof_curs_para_mate_cons (?)}";
-					$dat_profesor = sqlsrv_query($conn, $sql, $params);
-			$prof_row=sqlsrv_fetch_array($dat_profesor);
-			$profesor=rtrim($prof_row['prof_apel']).' '.rtrim($prof_row['prof_nomb']);
-			genera_detalle($objPHPExcel, $w, ($i+10), $profesor, count($subcolumnas),$styleArrayFirmas);
-			$objPHPExcel->getActiveSheet()->getStyle(PHPExcel_Cell::stringFromColumnIndex($w).($i+10))->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_BOTTOM);
-			$w+=count($subcolumnas);
+			{	$temp=$columnas[$j][5];
+				$count=count($modelos[$temp]);
+				$curs_para_mate_codi=$columnas[$j][0];
+				$params = array($curs_para_mate_codi);
+				$sql="{call prof_curs_para_mate_cons (?)}";
+						$dat_profesor = sqlsrv_query($conn, $sql, $params);
+				$prof_row=sqlsrv_fetch_array($dat_profesor);
+				$profesor=rtrim($prof_row['prof_apel']).' '.rtrim($prof_row['prof_nomb']);
+				genera_detalle($objPHPExcel, $w, ($i+10), $profesor, $count,$styleArrayFirmas);
+				$objPHPExcel->getActiveSheet()->getStyle(PHPExcel_Cell::stringFromColumnIndex($w).($i+10))->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_BOTTOM);
+				$w+=$count;
 			}
 			}
 			//BLOQUE EN BLANCO

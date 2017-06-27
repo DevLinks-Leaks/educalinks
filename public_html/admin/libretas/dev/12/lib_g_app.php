@@ -1,8 +1,41 @@
-<?
+﻿<?
 require_once('../../../../framework/tcpdf/tcpdf.php');
-require_once('../../../../framework/dbconf.php'); 
-require_once('../../../../framework/funciones.php');
-session_start();
+/*Conexión a la BD*/
+$serverName = "certuslinks.com";
+$db = "Educalinks_moderna"; 
+$uid = "sa";
+$pwd = "$3cur!ty@@";
+$charset = "UTF-8";
+$connectionInfo = array("Database"=>$db, "UID"=>$uid, "PWD"=>$pwd, "CharacterSet"=>$charset);
+$conn = sqlsrv_connect($serverName, $connectionInfo);
+if(!$conn)
+{	echo "La conexión no se pudo establecer.<br/>";
+	die( print_r( sqlsrv_errors(), true));
+}
+
+if (!function_exists('para_sist')) {
+	function para_sist($para_sist_codi){
+		$params = array($para_sist_codi);
+		$sql="{call para_sist_info(?)}";
+		$para_sist_info = sqlsrv_query($GLOBALS['conn'], $sql, $params);  
+		$row_para_sist_info = sqlsrv_fetch_array($para_sist_info);
+		return $row_para_sist_info['para_sist_valu'];
+	}
+}
+if (!function_exists('notas_prom_quali')) {
+	function notas_prom_quali($peri_codi,$mate_tipo,$prom){
+		$params_permi = array($peri_codi,$mate_tipo,$prom);		
+		$sql_permi="{call nota_peri_cual_prom_value(?,?,?)}";
+		$nota_peri_cual_prom_value = sqlsrv_query($GLOBALS['conn'], $sql_permi, $params_permi); 
+		$row_nota_peri_cual_prom_value = sqlsrv_fetch_array($nota_peri_cual_prom_value);	 
+		return $row_nota_peri_cual_prom_value['nota_peri_cual_refe'];
+	}
+}
+if (!function_exists('truncar')) {
+	function truncar($numero){
+		return number_format(substr($numero,0,strpos($numero,".")+(para_sist(41)+1)),2);
+	}
+}
 /*Variables GET*/
 /*peri_dist_codi*/
 if(isset($_GET['peri_dist_codi']))
@@ -19,6 +52,9 @@ if(isset($_GET['alum_codi']))
 	$alum_codi = $_GET['alum_codi'];
 else
 	$alum_codi = 0;
+/*peri_codi*/
+if(isset($_GET['peri_codi']))
+	$peri_codi = $_GET['peri_codi'];
 
 class MYPDF extends TCPDF 
 {	private $codigo;
@@ -29,24 +65,26 @@ class MYPDF extends TCPDF
 	private $foto;
 	
 	public function Header() 
-	{	$logo_cole = '../../../'.$_SESSION['ruta_foto_logo_index'];
+	{	$logo_cole = '../../../../imagenes/clientes/moderna/logo_inicial_long.png';
 		$this->Image($logo_cole, 5, 12, 45, 12, 'PNG', '', 'C', false, 300, '', false, false, 0, false, false, false);
 		$this->Image($this->foto, 185, 8, 16, 18, 'JPG', '', 'C', false, 300, '', false, false, 0, false, false, false);
+		$this->SetFont('helvetica', 'B', 7);
 		$this->SetFont('helvetica', 'B', 7);
 		$this->MultiCell(70, 10, '', 0, 'C', 0, 1, '', '', true);
 		$this->MultiCell(70, 4, 'BOLETÍN DE CALIFICACIONES', 0, 'L', 0, 1, 55, '', true);
 		$this->MultiCell(0, 4, mb_strtoupper($this->periodo,'utf8'), 0, 'L', 0, 1, 55, '', true);
 		$this->MultiCell(0, 4, mb_strtoupper($this->curso,'utf8'), 0, 'L', 0, 1, 55, '', true);
 		$this->MultiCell(0, 4, mb_strtoupper(substr($this->nombre.' '.$this->apellido,0,45),'utf8'), 0, 'L', 0, 1, 55, '', true);
-		$this->MultiCell(0, 4, 'AÑO LECTIVO '.$_SESSION['peri_deta'], 0, 'L', 0, 1, 55, '', true);
+		
 		$this->SetFont('helvetica', 'B', 9);
 		$this->MultiCell(0, 0, $this->codigo, 0, 'L', 0, 1, 185, 26, true);
 	}
 	public function Footer()
 	{	$this->SetY(-15);
 		$this->SetFont('helvetica', 'I', 8);
-		$this->Cell(0, 10, 'Fecha y hora: '.date('d-M-Y, H:i'), 0, false, 'L', 0, '', 0, false, 'T', 'M');
-		$this->Cell(0, 10, 'Impreso por '.$_SESSION['usua_codi'], 0, false, 'R', 0, '', 0, false, 'T', 'M');
+		$this->Cell(0, 0, 'Fecha y hora: '.date('d-M-Y, H:i'), 0, false, 'L', 0, '', 0, false, 'T', 'M');
+		$this->SetFont('helvetica', 'B', 8);
+		$this->Cell(0, 0, 'CREADO DESDE LA APLICACIÓN MÓVIL "EDUCALINKS" ', 0, false, 'R', 0, '', 0, false, 'T', 'M');
 	}
 	public function setCodigo($value)
 	{	$this->codigo=$value;
@@ -72,12 +110,13 @@ $pdf->SetMargins(5, 27, 5);
 $pdf->SetAutoPageBreak(TRUE, 2);
 $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 /*Foto del estudiante*/
-$file_exi = '../../../'.$_SESSION['ruta_foto_alumno'].$alum_codi.'.jpg';
+/*Foto del estudiante*/
+$file_exi = '../../../../fotos/moderna/alumnos/'.$peri_codi.'/'.$alum_codi.'.jpg';
 if (file_exists($file_exi))
 {	$pp=$file_exi;
 } 
 else 
-{	$pp='../../../../fotos/'.$_SESSION['directorio'].'/alumnos/0.jpg';
+{	$pp='../../../../fotos/moderna/alumnos/0.jpg';
 }
 $pdf->setFoto($pp);
 /*Consultas a la BD*/
@@ -101,13 +140,12 @@ $sql = "{call repr_info_vida(?,?)}";
 $params = array($alum_codi, "R");
 $stmt = sqlsrv_query($conn, $sql, $params);
 $repr_info =sqlsrv_fetch_array($stmt);
-
 /*Equivalencia Comportamiento*/
 $tabla_comportamiento = '<table width="100%" border="1" cellpadding="1" cellspacing="0">';
 $tabla_comportamiento.= '<tr>';
 $tabla_comportamiento.= '<td class="cabecera_notas centrar"><b>COMPORTAMIENTO</b></td>';
 $tabla_comportamiento.= '</tr>';
-$params = array('D', $_SESSION['peri_codi']);
+$params = array('D', $peri_codi);
 $sql="{call nota_peri_cual_tipo_view(?,?)}";
 $nota_peri_cual_tipo_view = sqlsrv_query($conn, $sql, $params);
 while ($row_nota_peri_cual_tipo_view = sqlsrv_fetch_array($nota_peri_cual_tipo_view))
@@ -121,7 +159,7 @@ $tabla_cuantitativa = '<table width="100%" border="1" cellpadding="1" cellspacin
 $tabla_cuantitativa.= '<tr>';
 $tabla_cuantitativa.= '<td class="cabecera_notas centrar" colspan="3"><b>EQUIVALENCIAS CUALITATIVAS DEL APRENDIZAJE</b></td>';
 $tabla_cuantitativa.= '</tr>';
-$params = array('C', $_SESSION['peri_codi']);
+$params = array('C', $peri_codi);
 $sql="{call nota_peri_cual_tipo_view(?,?)}";
 $nota_peri_cual_tipo_view = sqlsrv_query($conn, $sql, $params);	
 while ($row_nota_peri_cual_tipo_view = sqlsrv_fetch_array($nota_peri_cual_tipo_view))
@@ -138,7 +176,7 @@ $tabla_inasistencias.= '<tr>';
 $tabla_inasistencias.= '<td class="cabecera_notas centrar" colspan="2"><b>INASISTENCIAS Y ATRASOS</b></td>';
 $tabla_inasistencias.= '</tr>';
 $sql_falt="{call falt_grup_tipo_alum_view(?,?,?,?)}";
-$params_falt = array($_SESSION['peri_codi'], $peri_dist_codi,$curs_para_codi, $alum_codi);
+$params_falt = array($peri_codi, $peri_dist_codi,$curs_para_codi, $alum_codi);
 $stmt_falt = sqlsrv_query($conn, $sql_falt, $params_falt);
 if( $stmt_falt === false )
 {	echo "Error in executing statement .\n";
@@ -168,14 +206,6 @@ $tabla_observaciones.='<tr>';
 $tabla_observaciones.='<td class="tabla_informativa" height="49" rowspan="4"> '.$observaciones['nota_obse_deta'].'</td>';
 $tabla_observaciones.='</tr>';
 $tabla_observaciones.='</table>';
-/*Firmas*/
-$tabla_firmas = '<table width="100%">';
-$tabla_firmas.= '<tr>';
-$tabla_firmas.= '<td class="firmas centrar">_______________________________<br/>'.para_sist(5).'<br/>'.para_sist(33).'</td>';
-$tabla_firmas.= '<td class="firmas centrar">_______________________________<br/>Tutor(a)</td>';
-$tabla_firmas.= '<td class="firmas centrar">_______________________________<br/>Representante</td>';
-$tabla_firmas.= '</tr>';
-$tabla_firmas.= '</table>';
 /*Contraseñas*/
 if (para_sist(7))
 {	$tabla_contraseñas = '<table width="100%" border="1" cellpadding="1" cellspacing="0">';
@@ -287,10 +317,10 @@ if($cab_row['peri_dist_nive']==2) {
                             $calificaciones .= (truncar($row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]) <= 0) ? '' : truncar($row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]);
                             break;
                         case "D":
-                            $calificaciones .= notas_prom_quali($_SESSION['peri_codi'], 'D', $row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]);
+                            $calificaciones .= notas_prom_quali($peri_codi, 'D', $row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]);
                             break;
                         case "P":
-                            $calificaciones .= notas_prom_quali($_SESSION['peri_codi'], 'P', $row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]);
+                            $calificaciones .= notas_prom_quali($peri_codi, 'P', $row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]);
                             break;
                     }
                 }
@@ -324,7 +354,7 @@ if($cab_row['peri_dist_nive']==2) {
                 $calificaciones .= '</td>';
                 $CC_COLUM_index += 1;
             }
-            $calificaciones .= '<td class="cuerpo_notas centrar">' . notas_prom_quali($_SESSION['peri_codi'], 'C', $prom_rend) . '</td>';
+            $calificaciones .= '<td class="cuerpo_notas centrar">' . notas_prom_quali($peri_codi, 'C', $prom_rend) . '</td>';
             $calificaciones .= '</tr>';
         }
         $calificaciones .= '</table>';
@@ -355,92 +385,91 @@ if($cab_row['peri_dist_nive']==2) {
     <tr>
 	<td class="cabecera_notas" width="2%"></td>
 	<td class="cabecera_notas" align="center" width="'.$asign_ancho.'%">ASIGNATURAS</td>';
-    $cabecera = array();
-    while($row_peri_dist_padr_view= sqlsrv_fetch_array($peri_dist_padr_view))
-    {   $calificaciones.='<td class="cabecera_notas centrar" width="6%">'.$row_peri_dist_padr_view['peri_dist_abre'].'</td>';
-        if( $row_peri_dist_padr_view['peri_dist_nota_tipo'] == 'VW' )
-        {   $cabecera[] = str_replace('%', '', $row_peri_dist_padr_view['peri_dist_abre'] );
-        }else
-        {	$cabecera[] = 100;
-        }
-    }
-    $calificaciones.='<td class="cabecera_notas centrar" width="6%">CUAL.</td>';
-    $calificaciones.='</tr>';
-    while ($row_alum_nota_peri_dist_view= sqlsrv_fetch_array($alum_nota_peri_dist_view))
-    { 	$cc +=1;
-        $calificaciones.='<tr><td class="cuerpo_notas centrar">';
+$cabecera = array();
+while($row_peri_dist_padr_view= sqlsrv_fetch_array($peri_dist_padr_view)) 
+{   $calificaciones.='<td class="cabecera_notas centrar" width="6%">'.$row_peri_dist_padr_view['peri_dist_abre'].'</td>';
+	if( $row_peri_dist_padr_view['peri_dist_nota_tipo'] == 'VW' )
+	{   $cabecera[] = str_replace('%', '', $row_peri_dist_padr_view['peri_dist_abre'] );
+	}else
+	{	$cabecera[] = 100;
+	}
+}
+$calificaciones.='<td class="cabecera_notas centrar" width="6%">CUAL.</td>';
+$calificaciones.='</tr>';
+while ($row_alum_nota_peri_dist_view= sqlsrv_fetch_array($alum_nota_peri_dist_view)) 
+{ 	$cc +=1;
+	$calificaciones.='<tr><td class="cuerpo_notas centrar">';
+	if ($row_alum_nota_peri_dist_view["mate_prom"] =='A')
+		$calificaciones.='*';
+	$calificaciones.='</td>';
+	$calificaciones.='<td class="cuerpo_notas">';
+    if ($row_alum_nota_peri_dist_view["mate_padr"] >0)
+		$calificaciones.='   ';
+		if ($row_alum_nota_peri_dist_view["mate_padr"]>0)
+		{	$calificaciones.= ucwords(mb_strtolower($row_alum_nota_peri_dist_view['mate_deta'],'UTF-8'));
+		}
+		else
+		{	$calificaciones.= ' '.mb_strtoupper($row_alum_nota_peri_dist_view['mate_deta'],'UTF-8');
+		} 
+    $calificaciones.='</td>';
+    $CC_COLUM_index =0; 
+	while($CC_COLUM_index <= $CC_COLUM )  
+	{   $calificaciones.='<td width="6%" class="cuerpo_notas centrar ';
+		if ($row_alum_nota_peri_dist_view['mate_tipo']=='C')
+		{	$perc = (int)$cabecera[ $CC_COLUM_index ];
+			$mayor_aceptable = ( ( 7 * $perc ) / 100 );
+			if(($row_alum_nota_peri_dist_view[$CC_COLUM_index + 12] ) < $mayor_aceptable )
+			{   $calificaciones.= ' mala_nota';
+			}
+		}
+		$calificaciones.= '">';
+		if ($row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]>=0 and $row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]<>null)
+		{	switch ($row_alum_nota_peri_dist_view['mate_tipo'])
+			{	case "C":
+				$calificaciones.= (truncar($row_alum_nota_peri_dist_view[$CC_COLUM_index + 12])<=0)?'':truncar($row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]);
+				break;
+				case "D":
+                                if ($row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]>0)
+				$calificaciones.= notas_prom_quali($peri_codi,'D',$row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]);
+				break;
+				case "P":
+                                if ($row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]>0)
+				$calificaciones.= notas_prom_quali($peri_codi,'P',$row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]);
+				break;
+			}
+		}
+	            
         if ($row_alum_nota_peri_dist_view["mate_prom"] =='A')
-            $calificaciones.='*';
-        $calificaciones.='</td>';
-        $calificaciones.='<td class="cuerpo_notas">';
-        if ($row_alum_nota_peri_dist_view["mate_padr"] >0)
-            $calificaciones.='   ';
-        if ($row_alum_nota_peri_dist_view["mate_padr"]>0)
-        {	$calificaciones.= ucwords(mb_strtolower($row_alum_nota_peri_dist_view['mate_deta'],'UTF-8'));
-        }
-        else
-        {	$calificaciones.= ' '.mb_strtoupper($row_alum_nota_peri_dist_view['mate_deta'],'UTF-8');
-        }
-        $calificaciones.='</td>';
-        $CC_COLUM_index =0;
-        while($CC_COLUM_index <= $CC_COLUM )
-        {   $calificaciones.='<td width="6%" class="cuerpo_notas centrar ';
-            if ($row_alum_nota_peri_dist_view['mate_tipo']=='C')
-            {	$perc = (int)$cabecera[ $CC_COLUM_index ];
-                $mayor_aceptable = ( ( 7 * $perc ) / 100 );
-                if(($row_alum_nota_peri_dist_view[$CC_COLUM_index + 12] ) < $mayor_aceptable )
-                {   $calificaciones.= ' mala_nota';
-                }
-            }
-            $calificaciones.= '">';
-            if ($row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]>=0 and $row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]<>null)
-            {	switch ($row_alum_nota_peri_dist_view['mate_tipo'])
-            {	case "C":
-                    $calificaciones.= (truncar($row_alum_nota_peri_dist_view[$CC_COLUM_index + 12])<=0)?'':truncar($row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]);
-                    break;
-                case "D":
-                    if ($row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]>0)
-                        $calificaciones.= notas_prom_quali($_SESSION['peri_codi'],'D',$row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]);
-                    break;
-                case "P":
-                    if ($row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]>0)
-                        $calificaciones.= notas_prom_quali($_SESSION['peri_codi'],'P',$row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]);
-                    break;
-            }
-            }
-
-            if ($row_alum_nota_peri_dist_view["mate_prom"] =='A')
-            {	$prom_cc[$CC_COLUM_index] =  $prom_cc[$CC_COLUM_index] + 1;
-                $prom[$CC_COLUM_index] =  $prom[$CC_COLUM_index] + truncar($row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]);
-            }
-            $calificaciones.='</td>';
-            $CC_COLUM_index+=1;
-        }
-        $calificaciones.='<td class="cuerpo_notas centrar" width="6%">'.$row_alum_nota_peri_dist_view['nota_peri_cual_refe'].'</td>';
-        $calificaciones.='</tr>';
-
-    }
-    /*Promedios en columna*/
-    $calificaciones.='<tr><td class="cuerpo_notas"></td>';
-    $calificaciones.='<td class="cuerpo_notas"> <b>PROMEDIO</b></td>';
-    $CC_COLUM_index =0;
-    while($CC_COLUM_index <= $CC_COLUM )
-    {	$calificaciones.='<td class="cuerpo_notas centrar';
-        $perc = (int)$cabecera[ $CC_COLUM_index ];
-        $mayor_aceptable = ( ( 7 * $perc ) / 100 );
-        if( ( $row_alum_nota_peri_dist_view[$CC_COLUM_index + 12] ) < $mayor_aceptable )
-        {   $calificaciones.=' mala_nota_escuela_liceopanamericano';
-        }
-        $calificaciones.='">';
-        $calificaciones.= (truncar(($prom[$CC_COLUM_index]/$prom_cc[$CC_COLUM_index]))<0)?'':truncar(($prom[$CC_COLUM_index]/$prom_cc[$CC_COLUM_index]));
-        $prom_rend=$prom[$CC_COLUM_index]/$prom_cc[$CC_COLUM_index];
+		{	$prom_cc[$CC_COLUM_index] =  $prom_cc[$CC_COLUM_index] + 1; 
+			$prom[$CC_COLUM_index] =  $prom[$CC_COLUM_index] + truncar($row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]);
+         }
         $calificaciones.='</td>';
         $CC_COLUM_index+=1;
-    }
-    $calificaciones.='<td class="cuerpo_notas centrar">'.notas_prom_quali($_SESSION['peri_codi'],'C',$prom_rend).'</td>';
-    $calificaciones.='</tr>';
-    $calificaciones.='</table>';
-    $main_calificaciones=$calificaciones;
+	}
+    $calificaciones.='<td class="cuerpo_notas centrar" width="6%">'.$row_alum_nota_peri_dist_view['nota_peri_cual_refe'].'</td>';
+	$calificaciones.='</tr>';
+}
+/*Promedios en columna*/
+$calificaciones.='<tr><td class="cuerpo_notas"></td>';
+$calificaciones.='<td class="cuerpo_notas"> <b>PROMEDIO</b></td>';
+$CC_COLUM_index =0; 
+while($CC_COLUM_index <= $CC_COLUM )  
+{	$calificaciones.='<td class="cuerpo_notas centrar';
+	$perc = (int)$cabecera[ $CC_COLUM_index ];
+	$mayor_aceptable = ( ( 7 * $perc ) / 100 );
+	if( ( $row_alum_nota_peri_dist_view[$CC_COLUM_index + 12] ) < $mayor_aceptable )
+	{   $calificaciones.=' mala_nota_escuela_liceopanamericano';
+	}
+	$calificaciones.='">';
+	$calificaciones.= (truncar(($prom[$CC_COLUM_index]/$prom_cc[$CC_COLUM_index]))<0)?'':truncar(($prom[$CC_COLUM_index]/$prom_cc[$CC_COLUM_index]));
+	$prom_rend=$prom[$CC_COLUM_index]/$prom_cc[$CC_COLUM_index];
+	$calificaciones.='</td>';
+	$CC_COLUM_index+=1;
+}
+$calificaciones.='<td class="cuerpo_notas centrar">'.notas_prom_quali($peri_codi,'C',$prom_rend).'</td>';
+$calificaciones.='</tr>';
+$calificaciones.='</table>';
+$main_calificaciones=$calificaciones;
 }
 
 $pdf->setCodigo($row_alum_info['alum_codi']);
@@ -504,10 +533,8 @@ $tbl=<<<EOF
 <td>{$tabla_contraseñas}</td>
 </tr>
 </table> 
-<br/><br/><br/>
-{$tabla_firmas}
 EOF;
 $pdf->writeHTML($tbl, true, false, false, false, '');
-$pdf->Output($alum_codi.'.pdf', 'I');
+$pdf->Output($alum_codi.'.pdf', 'FI');
 header("Content-type:application/pdf");
 header("Content-Disposition:attachment;filename='".$alum_codi.".pdf'");

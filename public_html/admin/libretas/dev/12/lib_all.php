@@ -229,36 +229,39 @@ while ($alumno = sqlsrv_fetch_array($alumnos_view))
 
                     /*Calificaciones*/
                     $calificaciones = '
-            <table width="100%" border="0.3" cellpadding="1" cellspacing="0">
-              <tr>
+        <table width="100%" border="0.3" cellpadding="1" cellspacing="0">';
+                    if ($row_alum_nota_libreta_modelos['nota_refe_cab_tipo']=='C') {
+                        $calificaciones.='<tr>
                 <td class="cabecera_notas" width="2%"></td>
-                <td class="cabecera_notas" align="center" width="' . $asign_ancho . '%">ASIGNATURAS'.$row_alum_nota_libreta_modelos['nota_refe_cab_deta'].'</td>';  //'.$row_alum_nota_libreta_modelos['nota_refe_cab_deta'].'
-                    $cabecera = array();
-                    while ($row_peri_dist_padr_view = sqlsrv_fetch_array($peri_dist_padr_view)) {
-                        if ($row_peri_dist_padr_view['peri_dist_nota_tipo'] == 'PM') {
-                            $cont = 1;
-                            while ($cont <= $diff_cols) {
-                                $calificaciones .= '<td class="cabecera_notas centrar" width="6%">  </td>';
-                                $cont++;
+                <td class="cabecera_notas" align="center" width="' . $asign_ancho . '%">ASIGNATURAS '.$row_alum_nota_libreta_modelos['nota_refe_cab_deta'].'</td>';  //'.$row_alum_nota_libreta_modelos['nota_refe_cab_deta'].'
+                        $cabecera = array();
+                        while ($row_peri_dist_padr_view = sqlsrv_fetch_array($peri_dist_padr_view)) {
+
+                            if ($row_peri_dist_padr_view['peri_dist_nota_tipo'] == 'PM') {
+                                $cont = 1;
+                                while ($cont <= $diff_cols) {
+                                    $calificaciones .= '<td class="cabecera_notas centrar" width="6%">  </td>';
+                                    $cont++;
+                                }
+                            }
+                            $calificaciones .= '<td class="cabecera_notas centrar" width="6%">' . $row_peri_dist_padr_view['peri_dist_abre'] . '</td>';
+                            if ($row_peri_dist_padr_view['peri_dist_nota_tipo'] == 'VW') {
+                                $cabecera[] = str_replace('%', '', $row_peri_dist_padr_view['peri_dist_abre']);
+                            } else {
+                                $cabecera[] = 100;
                             }
                         }
-                        $calificaciones .= '<td class="cabecera_notas centrar" width="6%">' . $row_peri_dist_padr_view['peri_dist_abre'] . '</td>';
-                        if ($row_peri_dist_padr_view['peri_dist_nota_tipo'] == 'VW') {
-                            $cabecera[] = str_replace('%', '', $row_peri_dist_padr_view['peri_dist_abre']);
-                        } else {
-                            $cabecera[] = 100;
-                        }
 
+                        $calificaciones .= '<td class="cabecera_notas centrar" width="6%">CUAL.</td>';
+                        $calificaciones .= '</tr>';
                     }
-                    $calificaciones .= '<td class="cabecera_notas centrar" width="6%">CUAL.</td>';
-                    $calificaciones .= '</tr>';
                     while ($row_alum_nota_peri_dist_view = sqlsrv_fetch_array($alum_nota_peri_dist_view)) {
                         $cc += 1;
-                        $calificaciones .= '<tr><td class="cuerpo_notas centrar">';
+                        $calificaciones .= '<tr><td width="2%" class="cuerpo_notas centrar">';
                         if ($row_alum_nota_peri_dist_view["mate_prom"] == 'A')
                             $calificaciones .= '*';
                         $calificaciones .= '</td>';
-                        $calificaciones .= '<td class="cuerpo_notas">';
+                        $calificaciones .= '<td width="' . $asign_ancho . '%" class="cuerpo_notas">';
                         if ($row_alum_nota_peri_dist_view["mate_padr"] > 0)
                             $calificaciones .= '   ';
                         if ($row_alum_nota_peri_dist_view["mate_padr"] > 0) {
@@ -299,35 +302,38 @@ while ($alumno = sqlsrv_fetch_array($alumnos_view))
                                 }
                             }
 
-                            if ($row_alum_nota_peri_dist_view["mate_prom"] == 'A') {
-                                $prom_cc[$CC_COLUM_index] = $prom_cc[$CC_COLUM_index] + 1;
-                                $prom[$CC_COLUM_index] = $prom[$CC_COLUM_index] + truncar($row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]);
-                            }
                             $calificaciones .= '</td>';
                             $CC_COLUM_index += 1;
+                        }
+                        if ($row_alum_nota_peri_dist_view["mate_prom"] =='A')
+                        {	$prom_cc =  $prom_cc + 1;
+                            $prom =  $prom + truncar($row_alum_nota_peri_dist_view['PM']);
                         }
                         $calificaciones .= '<td class="cuerpo_notas centrar" width="6%">' . $row_alum_nota_peri_dist_view['nota_peri_cual_refe'] . '</td>';
                         $calificaciones .= '</tr>';
                     }
-                    /*Promedios en columna*/
-                    /*$calificaciones .= '<tr><td class="cuerpo_notas"></td>';
-                    $calificaciones .= '<td class="cuerpo_notas"> <b>PROMEDIO</b></td>';
-                    $CC_COLUM_index = 0;
-                    while ($CC_COLUM_index <= $CC_COLUM) {
-                        $calificaciones .= '<td class="cuerpo_notas centrar';
-                        $perc = (int)$cabecera[$CC_COLUM_index];
-                        $mayor_aceptable = ((7 * $perc) / 100);
-                        if (($row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]) < $mayor_aceptable) {
-                            $calificaciones .= ' mala_nota_escuela_liceopanamericano';
+                    if($row_alum_nota_libreta_modelos['nota_refe_cab_tipo']=='D') {
+                        /*Promedios en columna*/
+                        $calificaciones .= '<tr><td class="cuerpo_notas"></td>';
+                        $calificaciones .= '<td class="cuerpo_notas"> <b>PROMEDIO</b></td>';
+                        $CC_COLUM_index = 0;
+                        while ($CC_COLUM_index <= $CC_COLUM) {
+                            $calificaciones .= '<td class="cuerpo_notas centrar';
+                            $perc = (int)$cabecera[$CC_COLUM_index];
+                            $mayor_aceptable = ((7 * $perc) / 100);
+                            if (($row_alum_nota_peri_dist_view[$CC_COLUM_index + 12]) < $mayor_aceptable) {
+                                $calificaciones .= ' mala_nota_escuela_liceopanamericano';
+                            }
+                            $calificaciones .= '">';
+                            if($CC_COLUM_index==$CC_COLUM)
+                                $calificaciones .= (truncar(($prom/ $prom_cc)) < 0) ? '' : truncar(($prom / $prom_cc));
+                            $prom_rend = $prom / $prom_cc;
+                            $calificaciones .= '</td>';
+                            $CC_COLUM_index += 1;
                         }
-                        $calificaciones .= '">';
-                        $calificaciones .= (truncar(($prom[$CC_COLUM_index] / $prom_cc[$CC_COLUM_index])) < 0) ? '' : truncar(($prom[$CC_COLUM_index] / $prom_cc[$CC_COLUM_index]));
-                        $prom_rend = $prom[$CC_COLUM_index] / $prom_cc[$CC_COLUM_index];
-                        $calificaciones .= '</td>';
-                        $CC_COLUM_index += 1;
+                        $calificaciones .= '<td class="cuerpo_notas centrar">' . notas_prom_quali($_SESSION['peri_codi'], 'C', $prom_rend) . '</td>';
+                        $calificaciones .= '</tr>';
                     }
-                    $calificaciones .= '<td class="cuerpo_notas centrar">' . notas_prom_quali($_SESSION['peri_codi'], 'C', $prom_rend) . '</td>';
-                    $calificaciones .= '</tr>';*/
                     $calificaciones .= '</table>';
                     $main_calificaciones .= $calificaciones . '</td></tr>';
                     $i++;
