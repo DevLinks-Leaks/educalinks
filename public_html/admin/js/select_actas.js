@@ -156,6 +156,7 @@ function getURLCuadroCalificacionesHTML()
      window.open(direccion);
    }
 }
+// Cuadro de calificaciones parciales finales
 function getURLCuadroCalificacionesParcialesFinalesExcel()
 {
    if (Validar())
@@ -167,6 +168,7 @@ function getURLCuadroCalificacionesParcialesFinalesExcel()
      window.open(direccion);
    }
 }
+// Cuadro de calificaciones Quimestrales y periodo final - Finales
 function getURLCuadroCalificacionesFinalesExcel()
 {
    if (Validar())
@@ -253,11 +255,19 @@ function divOpciones(div, validar, html, acta)
 	}
 	else if(div=='acta_004')
 	{
-		div_1= div+"_cf";
-		var TITULO="Cuadro de calificaciones" + acta + " finales";
-		var EXCEL="JavaScript:getURLCuadroCalificacionesFinalesExcel();";
-		var EXCEL_OPC="<a href='"+EXCEL+"' ><img src='../imagenes/report_to_excel.png' style='width:45px;' "+img_over+"  border='0'></a>";
-		var HTML="JavaScript:getURLCuadroCalificacionesFinalesHTML();";
+    if(acta==' parciales'){
+      div_1= div+"_cf";
+      var TITULO="Cuadro de calificaciones" + acta + " finales";
+      var EXCEL="JavaScript:getURLCuadroCalificacionesParcialesFinalesExcel();";
+      var EXCEL_OPC="<a href='"+EXCEL+"' ><img src='../imagenes/report_to_excel.png' style='width:45px;' "+img_over+"  border='0'></a>";
+      var HTML="JavaScript:getURLCuadroCalificacionesFinalesHTML();";
+    }else{
+      div_1= div+"_cf";
+      var TITULO="Cuadro de calificaciones" + acta + " finales";
+      var EXCEL="JavaScript:getURLCuadroCalificacionesFinalesExcel();";
+      var EXCEL_OPC="<a href='"+EXCEL+"' ><img src='../imagenes/report_to_excel.png' style='width:45px;' "+img_over+"  border='0'></a>";
+      var HTML="JavaScript:getURLCuadroCalificacionesFinalesHTML();";
+    }
 	}
 	var div_2= div+"_titulo";
 	var div_3= div+"_opc";
