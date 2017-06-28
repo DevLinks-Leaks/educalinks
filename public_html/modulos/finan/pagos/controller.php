@@ -1477,21 +1477,22 @@ function construct_table_pagos($user_data)
 		$nombre_extendido = "_".$num_factura;
 	$construct_table="
 				<table class='table table-hover table-striped' id='pagosRealizados_table".$nombre_extendido."'>
-					<thead style='background-color:rgba(60, 176, 188, 0.53);color:black;'><tr>".
-			"<th style=\"text-align:center;vertical-align:middle\"></th>".
-			"<th style='font-size:small;text-align:center;'>Ref.</th>".
-			"<th style='font-size:small;text-align:center;'>Datos</th>".
-			"<th style='font-size:small;text-align:center;'>Total Pago</th>".
-			"<th style='font-size:small;text-align:center;'>Forma de Pago</th>".
-			"<th style='font-size:small;text-align:center;'>Cliente</th>".
-			"<th style='font-size:small;text-align:center;'>Id.</th>".
-			"<th style='font-size:small;text-align:center;'>Nombres cliente</th>".
-			"<th style='font-size:small;text-align:center;'>Curso Paralelo</th>".
-			"<th style='font-size:small;text-align:center;'>Fecha pago</th>".
-			"<th style='font-size:small;text-align:center;'>Cajero</th>".
-			"<th style='font-size:small;text-align:center;'>PDF</th>".
-			"<th style='font-size:small;text-align:center;'>HTML</th>".
-			"<th style='font-size:small;text-align:center;'>Revertir</th>
+					<thead>
+						<tr style='background-color:rgba(60, 176, 188, 0.53);color:black;'>".
+							"<th style=\"text-align:center;vertical-align:middle\"></th>".
+							"<th style='font-size:small;text-align:center;'>Ref.</th>".
+							"<th style='font-size:small;text-align:center;'>Datos</th>".
+							"<th style='font-size:small;text-align:center;'>Total Pago</th>".
+							"<th style='font-size:small;text-align:center;'>Forma de Pago</th>".
+							"<th style='font-size:small;text-align:center;'>Cliente</th>".
+							"<th style='font-size:small;text-align:center;'>Id.</th>".
+							"<th style='font-size:small;text-align:center;'>Nombres cliente</th>".
+							"<th style='font-size:small;text-align:center;'>Curso Paralelo</th>".
+							"<th style='font-size:small;text-align:center;'>Fecha pago</th>".
+							"<th style='font-size:small;text-align:center;'>Cajero</th>".
+							"<th style='font-size:small;text-align:center;'>PDF</th>".
+							"<th style='font-size:small;text-align:center;'>HTML</th>".
+							"<th style='font-size:small;text-align:center;'>Revertir</th>
 						</tr>
 					</thead>";
 	//}
@@ -1503,6 +1504,12 @@ function construct_table_pagos($user_data)
 	$archivoXML = "";
 	$codigo="";
 	$cedula="";
+	$permiso_179 	= new General();
+	$permiso_181 	= new General();
+	$permiso 		= new General();
+	$permiso_179->permiso_activo($_SESSION['usua_codigo'], 179);
+	$permiso->permiso_activo($_SESSION['usua_codigo'], 180);
+	$permiso_181->permiso_activo($_SESSION['usua_codigo'], 181);
 	foreach($pago->rows as $row)
 	{	$aux++;
 	}
@@ -1536,6 +1543,19 @@ function construct_table_pagos($user_data)
 								"<span class='detalle' id='".$codigo."_cliente_direccion' onmouseover='$(this).tooltip(".'"show"'.")' title='".$datos."' data-placement='bottom'>".
 									"<span class='glyphicon glyphicon-search'></span></span></td>";
 				}
+				elseif( $x == 9 )
+				{	$opc = get_cliente_opciones( $permiso,$row['codigoAlumno'],'span',
+												 $permiso_179->rows[0]['veri'],
+												 $permiso->rows[0]['veri'],
+												 $permiso_181->rows[0]['veri'] );
+					$body .= '<td style="font-size:small;">
+						<div class="btn-group">
+							<a href="#/" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+								'.$column.'
+							</a>
+							'.$opc.'
+						</div></td>';
+				}
 				elseif( $x==13 || $x==14 )
 				{	//do nothing;
 				}
@@ -1561,4 +1581,27 @@ function construct_table_pagos($user_data)
 	$construct_table.=$body;
 	$construct_table.="</table>";
 	return $construct_table;
+}
+function get_cliente_opciones($permiso, $codigoCliente, $type='span', $permiso_179, $permiso_180, $permiso_181 )
+{	global $diccionario;
+	if($type=='span'){$tag=''; $space='&nbsp;';}
+	$client_options = array();
+	$opciones = '<ul class="dropdown-menu">';
+	if ($permiso_180 == 1 )
+	{	$opciones.= "<li><a href='#/' onclick='carga_visorEstadoCuenta(\"".$codigoCliente."\",".'"modal_showDebtState_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/clientes/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_showDebtState'  id='".$codigoCliente."_verEstadoCuenta' onmouseover='$(this).tooltip(".'"show"'.")' style='cursor:pointer;' data-placement='left'><span style='color:#DBBCDB;' class='fa fa-file'></span> Ver estado de cuenta</a></li>";
+	}
+	if ($permiso_179 == 1 )
+	{	$opciones.= "<li><a href='#/' onclick='js_clientes_carga_asignacion(\"".$codigoCliente."\",".'"modal_asign_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/clientes/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_asign'  id='".$codigoCliente."_asignar' 
+	onmouseover='$(this).tooltip(".'"show"'.");' data-placement='left' style='cursor:pointer;' 
+	><span style='color:#3a3b45;' class='fa fa-percent'></span> Asignar Descuentos</a></li>";
+	}
+	if ( $permiso_181 == 1 )
+	{	$opciones.= "<li><a href='#/' onclick='js_clientes_carga_asignacionGrupoEconomico(\"".$codigoCliente."\",".'"modal_showSetGrupoEconomico_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/clientes/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_showSetGrupoEconomico'  id='".$codigoCliente."_asignarGrupoEconomico' onmouseover='$(this).tooltip(".'"show"'.");'
+	style='cursor:pointer;' data-placement='top'><span style='color:#D89C3F;' class='fa fa-group'></span>Asignar Grupo Económico</a></li>";
+	}
+	$opciones.= "<li><a href='#/'
+	onclick='carga_tabla_asign_repr(\"".$codigoCliente."\",".'"div_asign_repr"'.",".'"'.$diccionario['rutas_head']['ruta_html_common'].'/representantes/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_asign_repr'  id='".$codigoCliente."_asignar_repr' 
+	style='cursor:pointer;' onmouseover='$(this).tooltip(".'"show"'.");' data-placement='top'><span style='color:#E55A2F;' class='fa fa-heart-o'></span> Asignar representante</a></li>";
+
+	return $opciones."</ul>";
 }

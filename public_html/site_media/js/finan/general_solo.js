@@ -35,41 +35,25 @@ $(document).ready(function() {
     });
     $("#desplegable_busqueda").show();
     
-    $('#tabla_rptDeudores').DataTable({
-        dom: 'Bfrtip',
-        buttons: [ 
-            { extend: 'copy', text: 'Copiar <i class="fa fa-copy"></i>' },
-            { extend: 'csv', text: 'CSV <i style="color:green" class="fa fa-file-excel-o"></i>' },
-            { extend: 'excel', text: 'Excel <i style="color:green" class="fa fa-file-excel-o"></i>' },
-            { extend: 'print', text: 'Imprimir <i style="color:#428bca" class="fa fa-print"></i>' },
-            ],
-        //"iDisplayLength": -1,
-        "bPaginate": true,
-        "bStateSave": false,
-        "bAutoWidth": false,
-        //true
-        "bScrollAutoCss": true,
-        "bProcessing": true,
-        "bRetrieve": true,
-        //"bJQueryUI": true,
-        //"sDom": 't',
-        "aLengthMenu": [[10,25, 50, 100, -1], [10,25, 50, 100, "Todos"]],
-        "sScrollXInner": "110%",
-        "fnInitComplete": function() {
-            this.css("visibility", "visible");
-        },
-        paging: true,
-        lengthChange: true,
-        searching: true,
-        language: {url: '//cdn.datatables.net/plug-ins/1.10.8/i18n/Spanish.json'},
-        "columnDefs": [
-            { "sWidth": "150px", "targets": [0] },
-            { "sWidth": "300px", "targets": [2] },
-            {className: "dt-body-center", "targets": [0]},
-            {className: "dt-body-center", "targets": [1]},
-            {className: "dt-body-left"  , "targets": [2]}
-        ]
-    });
+    $('#tabla_rptDeudores').addClass( 'nowrap' ).DataTable({
+		dom: '<"toolbar">Bfrtip',
+		buttons: [
+			{ text: '<i style="color:#3c8dbc" class="fa fa-search"></i>',
+			  action: function ( e, dt, node, config ) {
+				js_general_cargaDeudores('deudas_tablas',document.getElementById('ruta_html_finan').value + '/general/controller.php');
+			  }
+			},
+			{ text: '<span class="hidden-sm hidden-xs">PDF </span><i style="color:red;" class="fa fa-file-pdf-o"></i>',
+			  action: function ( e, dt, node, config ) {
+				carga_reports_deudores('modal-deudoresbody',document.getElementById('ruta_html_finan').value + '/general/controller.php','print_deudores');
+			  }
+			},
+			{ extend: 'excel', 	text: '<span class="hidden-sm hidden-xs">Excel </span><i style="color:green" class="fa fa-file-excel-o"></i>' },
+			{ extend: 'copy', 	text: '<span class="hidden-sm hidden-xs">Copiar </span><i class="fa fa-copy"></i>' },
+			{ extend: 'print', 	text: '<span class="hidden-sm hidden-xs">Imprimir </span><i style="color:#428bca" class="fa fa-print"></i>' },
+			{ extend: 'colvis', text: '<span class="hidden-sm hidden-xs">Columnas </span><i class="fa fa-eye"></i>' },
+		]
+	});
     $('#tbl_reportes_generales').DataTable({
         lengthChange: false,
         searching: false,
@@ -139,10 +123,12 @@ function selectionHandler(e){
 	$select2.data('preserved-order', order); // store it for later
 	select2_renderSelections($select2);
 }
-
 function js_general_cargaDeudores( div, url )
 {   "use strict";
-    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
+	$('#li_deudas_reportes').removeClass('active');
+	$('#li_deudas_tablas').addClass('active');
+	document.getElementById('div_cmb_producto').style.display = 'block';
+	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var comboCursos = document.getElementById("curso");
     var comboNivelEcon = document.getElementById("cmb_nivelesEconomicos");
     var comboPeriodos = document.getElementById("periodos");
@@ -171,40 +157,52 @@ function js_general_cargaDeudores( div, url )
     xhr.onreadystatechange=function(){
         if (xhr.readyState === 4 && xhr.status === 200)
         {   document.getElementById(div).innerHTML=xhr.responseText;
-            $('#tabla_rptDeudores').DataTable({
-                dom: 'Bfrtip',
-                buttons: [ 
-                    { extend: 'copy', text: 'Copiar <i class="fa fa-copy"></i>' },
-                    { extend: 'csv', text: 'CSV <i style="color:green" class="fa fa-file-excel-o"></i>' },
-                    { extend: 'excel', text: 'Excel <i style="color:green" class="fa fa-file-excel-o"></i>' },
-                    { extend: 'print', text: 'Imprimir <i style="color:#428bca" class="fa fa-print"></i>' },
-                    ],
-                //"iDisplayLength": -1,
-                "bPaginate": true,
-                "bStateSave": false,
-                "bAutoWidth": false,
-                //true
-                "bScrollAutoCss": true,
-                "bProcessing": true,
-                "bRetrieve": true,
-                //"bJQueryUI": true,
-                //"sDom": 't',
-                "aLengthMenu": [[10,25, 50, 100, -1], [10,25, 50, 100, "Todos"]],
-                "sScrollXInner": "110%",
-                "fnInitComplete": function() {
-                    this.css("visibility", "visible");
-                },
-                paging: true,
-                lengthChange: true,
-                searching: true,
-                language: {url: '//cdn.datatables.net/plug-ins/1.10.8/i18n/Spanish.json'},
-                "columnDefs": [
-                    { "sWidth": "150px", "targets": [0] },
-                    { "sWidth": "300px", "targets": [2] },
-                    {className: "dt-body-center", "targets": [0]},
-                    {className: "dt-body-center", "targets": [1]},
-                    {className: "dt-body-left"  , "targets": [2]}
-                ]
+            $('#tabla_rptDeudores').addClass( 'nowrap' ).DataTable({
+                dom: '<"toolbar">Bfrtip',
+				buttons: [
+					{ text: '<i style="color:#3c8dbc" class="fa fa-search"></i>',
+					  action: function ( e, dt, node, config ) {
+						js_general_cargaDeudores('deudas_tablas',document.getElementById('ruta_html_finan').value + '/general/controller.php');
+					  }
+					},
+					{ text: '<span class="hidden-sm hidden-xs">PDF </span><i style="color:red;" class="fa fa-file-pdf-o"></i>',
+					  action: function ( e, dt, node, config ) {
+						carga_reports_deudores('modal-deudoresbody',document.getElementById('ruta_html_finan').value + '/general/controller.php','print_deudores');
+					  }
+					},
+					{ extend: 'excel', 	text: '<span class="hidden-sm hidden-xs">Excel </span><i style="color:green" class="fa fa-file-excel-o"></i>' },
+					{ extend: 'copy', 	text: '<span class="hidden-sm hidden-xs">Copiar </span><i class="fa fa-copy"></i>' },
+					{ extend: 'print', 	text: '<span class="hidden-sm hidden-xs">Imprimir </span><i style="color:#428bca" class="fa fa-print"></i>' },
+					{ extend: 'colvis', text: '<span class="hidden-sm hidden-xs">Columnas </span><i class="fa fa-eye"></i>' },
+				],
+				"bPaginate": true,
+				"bStateSave": false,
+				"bAutoWidth": false,
+				"bScrollAutoCss": true,
+				"bProcessing": true,
+				"bRetrieve": true,
+				"aLengthMenu": [[10,25, 50, 100, -1], [10,25, 50, 100, "Todos"]],
+				"sScrollXInner": "110%",
+				"sScrollY": "450px",
+				"fnInitComplete": function() {
+					this.css("visibility", "visible");
+				},
+				paging: true,
+				lengthChange: true,
+				searching: true,
+				lengthChange: false,
+				responsive: true,
+				orderClasses: true,
+				"bFilter": false,
+				"sScrollX": "100%",
+				language: {url: '//cdn.datatables.net/plug-ins/1.10.8/i18n/Spanish.json'},
+				"columnDefs": [
+					{ "sWidth": "150px", "targets": [0] },
+					{ "sWidth": "300px", "targets": [2] },
+					{className: "dt-body-center", "targets": [0]},
+					{className: "dt-body-center", "targets": [1]},
+					{className: "dt-body-left"  , "targets": [2]}
+				]
             });
             
             $("#boton_columnas").click(function(){
@@ -350,4 +348,28 @@ function carga_reports_deudores_rept_xls(div,url,evento)
     var quienes = document.querySelector('input[id="rdb_quienes"]:checked').value;
     var url2=url+'?event=print_deuda_rept_xls&eventox='+evento+'&curs_codi='+curso+'&nivelEcon_codi='+nivelEcon+'&peri_codi='+periodos+'&fechavenc_ini='+fecha_ini+'&fechavenc_fin='+fecha_fin+'&quienes='+quienes;
     window.open(url2);
+}
+
+function js_general_close_and_open_cash()
+{   var prev = document.getElementById( 'div_caja_antigua_abierta' ).innerHTML;
+
+	document.getElementById( 'div_caja_antigua_abierta' ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:white;" class="fa fa-cog fa-spin"></i></div>';
+    var data = new FormData();
+    data.append('event', 'close_and_open_cash' );
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', document.getElementById('ruta_html_finan').value + '/general/controller.php' , true);
+    xhr.onreadystatechange=function()
+	{   if (xhr.readyState === 4 && xhr.status === 200)
+		{   if( xhr.responseText == 'OK' )
+			{   document.getElementById( 'div_caja_antigua_abierta' ).style.display = 'none';
+				$.growl.notice({title: 'Educalinks Informa', message: 'Caja anterior cerrada y caja de hoy abierta'});
+			}
+			if( xhr.responseText == 'KO' )
+			{
+				document.getElementById( 'div_caja_antigua_abierta' ).innerHTML = prev;
+				$.growl.error({title: 'Educalinks Informa', message: 'No se pudo realizar el proceso'});
+			}
+        }
+    };
+    xhr.send(data);
 }

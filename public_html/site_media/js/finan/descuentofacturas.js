@@ -277,11 +277,12 @@ function js_descuentofactura_carga_asignacion( codigo, div, url )
             var tnum_detalle= document.getElementById( 'hd_total_numero_detalle' ).value;
             
             var codigo_descto = 0;
-            
+            var aux_desc = 1;
             $('#tabla_descuentos_cliente tbody tr').each(function(){
                 codigo_descto = $(this).find('td').eq(0).attr('data-codigo');
-                $("#txt_desc_per_" + codigo_descto ).numeric({ decimal : ".",  negative : false, scale: 2, precision: 3 });
-                $("#txt_desc_dias_" + codigo_descto ).numeric({ decimal : false,  negative : false, precision: 3 });
+                $("#txt_desc_per_" + aux_desc ).numeric({ decimal : ".",  negative : false, scale: 2, precision: 4 });
+                $("#txt_desc_dias_" + aux_desc ).numeric({ decimal : false,  negative : false, precision: 3 });
+				aux_desc++;
             });
             for (var i = 1; i <= tnum_detalle; i++ )
             {   $("#txt_per_IVA_" + i ).numeric({ decimal : ".",  negative : false, scale: 2 });
@@ -809,7 +810,7 @@ function js_descuentofacturas_agregar_descuento()
                 nuevaLinea += "</tr>";
 
                 $('#tabla_descuentos_cliente tbody').append(nuevaLinea);
-                $("#txt_desc_per_" + i ).numeric({ decimal : ".",  negative : false, scale: 2 });
+                $("#txt_desc_per_" + i ).numeric({ decimal : ".",  negative : false, scale: 2, precision: 4  });
                 $("#txt_desc_dias_" + i ).numeric({ decimal : false,  negative : false, precision: 3 });
                 
                 $("#modal_addDiscount").modal("hide");

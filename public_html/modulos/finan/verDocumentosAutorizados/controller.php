@@ -509,16 +509,17 @@ function tablaFacturaAutorizada_por_pago($tabla, $factura, $permiso, $tipo_docum
 	$opciones="";
 	$construct_table="
 				<table class='table table-striped table-hover' id='".$tabla.$tabla_subnombre."' style='font-size:11px;text-align:center;vertical-align:middle;'>
-					<thead style='background-color:#E55A2F;color:white;'>
-					<tr>
-						<th style='font-size:11px;text-align:center;'>Referencia</th>
-						<th style='font-size:11px;text-align:center;'>Datos</th>
-						<th style='font-size:11px;text-align:center;'>Total Neto</th>
-						<th style='font-size:11px;text-align:center;'>F. Emisión</th>
-						<th style='font-size:11px;text-align:center;'>Estado</th>
-						<th style='font-size:11px;text-align:center;'>PDF</th>
-						<th style='font-size:11px;text-align:center;'>HTML</th>
-					</tr></thead>";
+					<thead>
+						<tr style='background-color:#E55A2F;color:white;'>
+							<th style='font-size:11px;text-align:center;'>Referencia</th>
+							<th style='font-size:11px;text-align:center;'>Datos</th>
+							<th style='font-size:11px;text-align:center;'>Total Neto</th>
+							<th style='font-size:11px;text-align:center;'>F. Emisión</th>
+							<th style='font-size:11px;text-align:center;'>Estado</th>
+							<th style='font-size:11px;text-align:center;'>PDF</th>
+							<th style='font-size:11px;text-align:center;'>HTML</th>
+						</tr>
+					</thead>";
 	$body="<tbody>";
 	$c=0;
 	$aux=0;
@@ -539,11 +540,18 @@ function tablaFacturaAutorizada_por_pago($tabla, $factura, $permiso, $tipo_docum
 			$datos="";
 			foreach($row as $column)
 			{	if($x==1)
-				{	$datos.="<div style=\"text-align:left;\">".
-								"<table><tr><td style=\"vertical-align:top;\"><b>Titular:&nbsp;</b></td><td>". $column."</td></tr>";
+				{	$datos.="
+						<div class='form-horizontal'>".
+							"<div class='row'>
+								<div class='col-sm-6' style='text-align:right;'><b>Titular:</b></div>
+								<div class='col-sm-6' style='text-align:left;'>". $column."</div>
+							</div>";
 				}
 				elseif($x==2)
-				{	$datos.="<tr><td><b>C&eacute;dula:&nbsp;</b></td><td>". $column."</td></tr>";
+				{	$datos.="<div class='row'>
+								<div class='col-sm-6' style='text-align:right;'><b>C&eacute;dula:&nbsp;</b></div>
+								<div class='col-sm-6' style='text-align:left;'>". $column."</div>
+							</div>";
 					$cedula = $column;
 				}
 				elseif($x==3)
@@ -557,7 +565,11 @@ function tablaFacturaAutorizada_por_pago($tabla, $factura, $permiso, $tipo_docum
 						$dontprint = 'true';
 					
 					$archivo.= "-" . $column;
-					$datos.="<tr><td><b>".$tipo_documento.":&nbsp;</b></td><td>". $archivo."</td></tr></table></div>";
+					$datos.="<div class='row'>
+								<div class='col-sm-6' style='text-align:right;'><b>".$tipo_documento.":&nbsp;</b></div>
+								<div class='col-sm-6' style='text-align:left;'>". $archivo."</div>
+							</div>
+						</div>";
 				}
 				elseif($x==6)
 				{	if ( $dontprint == 'true' )
@@ -625,20 +637,22 @@ function tablaFacturaAutorizada($tabla, $factura, $permiso, $tipo_documento, $co
 	$construct_table="
 				<br>
 				<table class='table table-striped table-hover' id='".$tabla.$tabla_subnombre."'>
-					<thead style='background-color:#E55A2F;color:white;'><tr style='font-size:small;text-align:center;'>
-						".$anidado."
-						<th >Ref.</th>
-						<th>Datos</th>
-						<th>T. Neto</th>
-						<th>C&oacute;digo</th>
-						<th>Estudiante</th>
-						<th>F. Emisión</th>
-						<th>Estado</th>
-						<th>Mail</th>
-						<th>XML</th>
-						<th>PDF</th>
-						<th>HTML</th>
-					</tr></thead>";
+					<thead>
+						<tr style='font-size:small;text-align:center; background-color:#E55A2F;color:white;'>
+							".$anidado."
+							<th >Ref.</th>
+							<th>Datos</th>
+							<th>T. Neto</th>
+							<th>C&oacute;digo</th>
+							<th>Estudiante</th>
+							<th>F. Emisión</th>
+							<th>Estado</th>
+							<th>Mail</th>
+							<th>XML</th>
+							<th>PDF</th>
+							<th>HTML</th>
+						</tr>
+					</thead>";
 	$body="<tbody>";
 	$c=0;
 	$aux=0;
@@ -648,6 +662,12 @@ function tablaFacturaAutorizada($tabla, $factura, $permiso, $tipo_documento, $co
 	$codigo="";
 	$cedula="";
 	$dontprint = "false";
+	$permiso_179 	= new General();
+	$permiso_181 	= new General();
+	$permiso 		= new General();
+	$permiso_179->permiso_activo($_SESSION['usua_codigo'], 179);
+	$permiso->permiso_activo($_SESSION['usua_codigo'], 180);
+	$permiso_181->permiso_activo($_SESSION['usua_codigo'], 181);
 	foreach($factura->rows as $row)
 	{	$aux++;
 	}
@@ -692,6 +712,19 @@ function tablaFacturaAutorizada($tabla, $factura, $permiso, $tipo_documento, $co
 					
 					$body.="<td>".$column."</td>";
 				}
+				elseif( $x == 8 )
+				{	$opc = get_cliente_opciones( $permiso,$row['codigoAlumno'],'span',
+												 $permiso_179->rows[0]['veri'],
+												 $permiso->rows[0]['veri'],
+												 $permiso_181->rows[0]['veri'] );
+					$body .= '<td style="font-size:small;">
+						<div class="btn-group">
+							<a href="#/" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+								'.$column.'
+							</a>
+							'.$opc.'
+						</div></td>';
+				}
 				elseif($x==10)
 				{	if ( $dontprint == 'true' )
 						$body.="<td>DEUDA SIN FACTURA</td>";
@@ -729,4 +762,27 @@ function tablaFacturaAutorizada($tabla, $factura, $permiso, $tipo_documento, $co
 	$construct_table.=$body;
 	$construct_table.="</tbody></table>";
 	return $construct_table;
+}
+function get_cliente_opciones($permiso, $codigoCliente, $type='span', $permiso_179, $permiso_180, $permiso_181 )
+{	global $diccionario;
+	if($type=='span'){$tag=''; $space='&nbsp;';}
+	$client_options = array();
+	$opciones = '<ul class="dropdown-menu">';
+	if ($permiso_180 == 1 )
+	{	$opciones.= "<li><a href='#/' onclick='carga_visorEstadoCuenta(\"".$codigoCliente."\",".'"modal_showDebtState_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/clientes/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_showDebtState'  id='".$codigoCliente."_verEstadoCuenta' onmouseover='$(this).tooltip(".'"show"'.")' style='cursor:pointer;' data-placement='left'><span style='color:#DBBCDB;' class='fa fa-file'></span> Ver estado de cuenta</a></li>";
+	}
+	if ($permiso_179 == 1 )
+	{	$opciones.= "<li><a href='#/' onclick='js_clientes_carga_asignacion(\"".$codigoCliente."\",".'"modal_asign_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/clientes/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_asign'  id='".$codigoCliente."_asignar' 
+	onmouseover='$(this).tooltip(".'"show"'.");' data-placement='left' style='cursor:pointer;' 
+	><span style='color:#3a3b45;' class='fa fa-percent'></span> Asignar Descuentos</a></li>";
+	}
+	if ( $permiso_181 == 1 )
+	{	$opciones.= "<li><a href='#/' onclick='js_clientes_carga_asignacionGrupoEconomico(\"".$codigoCliente."\",".'"modal_showSetGrupoEconomico_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/clientes/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_showSetGrupoEconomico'  id='".$codigoCliente."_asignarGrupoEconomico' onmouseover='$(this).tooltip(".'"show"'.");'
+	style='cursor:pointer;' data-placement='top'><span style='color:#D89C3F;' class='fa fa-group'></span>Asignar Grupo Económico</a></li>";
+	}
+	$opciones.= "<li><a href='#/'
+	onclick='carga_tabla_asign_repr(\"".$codigoCliente."\",".'"div_asign_repr"'.",".'"'.$diccionario['rutas_head']['ruta_html_common'].'/representantes/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_asign_repr'  id='".$codigoCliente."_asignar_repr' 
+	style='cursor:pointer;' onmouseover='$(this).tooltip(".'"show"'.");' data-placement='top'><span style='color:#E55A2F;' class='fa fa-heart-o'></span> Asignar representante</a></li>";
+	
+	return $opciones."</ul>";
 }

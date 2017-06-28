@@ -17,45 +17,71 @@
 	</div>
 </div>
 <!-- Modal Editar-->
-<div class="form-inline">
-	<table width='50%'>
-		<tr>
-			<td>
-				<table class="table table-striped table-hover" width='100%'>
-					<tr>
-						<td width='30%'><label class="codigoPeriodo_busq" for="cursos">Per&iacute;odo:</label></td>
-						<td><div id="comboPeriodo">
-							   {combo_periodo}
+<div class='panel panel-info dismissible' id='panel_search' name='panel_search'>
+	<div class="panel-heading">
+		<h3 class="panel-title">
+			<a href="#/" class="boton_busqueda" style='text-decoration:none;'><span class="fa fa-search"></span>&nbsp;Búsqueda</a>
+			<div class="pull-right">
+				<a href="#/" class="boton_busqueda" style='text-decoration:none;'><span class='fa fa-minus'></span></a>
+			</div>
+		</h3>
+	</div>
+	<div class="panel-body" id="desplegable_busqueda" name="desplegable_busqueda">
+		<div class="form-horizontal" role="form">
+			<div class='col-md-7 col-sm-12'>
+				<div class='row'>
+					<div class='col-md-12 col-sm-12'>
+						<div class='form-group'>
+							<label class="col-md-4 col-sm-3 control-label" style='text-align: right;' for='txt_nom_cliente'>Per&iacute;odo:</label>
+							<div class="col-md-8 col-sm-8">
+								<div id="comboPeriodo">
+								   {combo_periodo}
+								</div>
 							</div>
-						</td>
-					</tr>
-					<tr>
-						<td><label class="codigoNivel_busq" for="cursos">Niveles Econ&oacute;micos:</label></td>
-						<td><div id="comboNIvelesEconomicos">
-							   {combo_nivel}
+						</div>
+					</div>
+					<div class='col-md-12 col-sm-12'>
+						<div class='form-group'>
+							<label class="col-md-4 col-sm-3 control-label" style='text-align: right;' for='txt_nom_cliente'>Nivel Econ&oacute;mico:</label>
+							<div class="col-md-8 col-sm-8">
+								<div id="comboNIvelesEconomicos">
+								   {combo_nivel}
+								</div>
 							</div>
-						</td>
-					</tr>
-					<tr>
-						<td><label class="codigoCurso_busq" for="cursos">Cursos:</label></td>
-						<td><div id="comboCursos">
-							   {combo_curso}
+						</div>
+					</div>
+					<div class='col-md-12 col-sm-12'>
+						<div class='form-group'>
+							<label class="col-md-4 col-sm-3 control-label" style='text-align: right;' for='txt_nom_cliente'>Cursos:</label>
+							<div class="col-md-8 col-sm-8">
+								<div id="comboCursos">
+								   {combo_curso}
+								</div>
 							</div>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<div class="div_button" >
-					<button type="button" 
-							style="float:right" 
-							class="btn btn-default" aria-hidden="true" data-toggle="modal"  data-target="#modal_edit" 
-							onclick="js_rep_saldoafavor_reporte('modal_edit_body','{ruta_html_finan}/rep_saldosafavor/controller.php','print_saldosafavor')">
-							<span style='color:red;' class="fa fa-file-pdf-o"></span>&nbsp;PDF</button>
+						</div>
+					</div>
 				</div>
-			</td>
-		</tr>
-	</table>
+			</div>
+			<div class='col-md-5 col-sm-12' style='text-align:center;'>
+				<button type="button" 
+					class="btn btn-primary" aria-hidden="true" data-toggle="modal"  data-target="#modal_edit" 
+					onclick="js_rep_saldoafavor_reporte('modal_edit_body','{ruta_html_finan}/rep_saldosafavor/controller.php','print_saldosafavor')">
+					<span class="fa fa-print"></span>&nbsp;PDF</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="box box-info">
+	<div class="box-header with-border">
+		<h3 class="box-title">
+			<a class="btn btn-info" href='../../finan/saldoaFavor/'>
+				<span class="fa fa-balance-scale"></span>&nbsp;Ir a Saldos a favor</a>
+		</h3>
+		<div class="box-tools pull-right">
+			<!--<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>-->
+		</div>
+	</div>
+	<div class="box-body">
+		
+	</div>
 </div>

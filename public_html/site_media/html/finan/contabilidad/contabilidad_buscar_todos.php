@@ -91,39 +91,23 @@
 	</div>
 </div>
 <!-- Modal  Migrar Confirmacion-->
-<div class="box box-default">
-	<div class="box-header">
-	</div>
-	<div class="box-body">
-		<div class="nav-tabs-custom">
-			<!-- Nav tabs -->
-			<ul class="nav nav-tabs" role="tablist">
-				<li role="presentation" class="active"><a href="#Categorias" aria-controls="Categorias" role="tab" data-toggle="tab">Categorias</a></li>
-				<li role="presentation"><a href="#Productos" aria-controls="Productos" role="tab" data-toggle="tab">Productos</a></li>
-			</ul>
-			<div class="tab-content">
-				<div role="tabpanel" class="tab-pane active" id="Categorias">
-					<div class="form-medium">
-						<div class="col-sm-12">
-							<br>
-						</div>
-					</div>
-					<div class="form-medium">
-						<div class="col-sm-12" id="resultado">
-							{tabla_categoria}
-						</div>
+<div class="nav-tabs-custom">
+	<ul class="nav nav-tabs">
+		<li role="presentation" class="active"><a href="#Categorias" aria-controls="Categorias" role="tab" data-toggle="tab"><span class="fa fa-tags"></span> Categor&iacute;as</a></li>
+		<li role="presentation"><a href="#Productos" aria-controls="Productos" role="tab" data-toggle="tab"><span class="fa fa-shopping-cart"></span> Productos</a></li>
+
+		<div class="tab-content">
+			<div class="tab-pane active" id="Categorias">
+				<div class="form-medium">
+					<div class="col-sm-12" id="resultado">
+						{tabla_categoria}
 					</div>
 				</div>
-				<div role="tabpanel" class="tab-pane" id="Productos">
-					<div class="form-medium">
-						<div class="col-sm-12">
-							<br>
-						</div>
-					</div>
-					<div class="form-medium">
-						<div class="col-sm-12" id="resultadoproductos">
-							{tabla_productos}
-						</div>
+			</div>
+			<div class="tab-pane" id="Productos">
+				<div class="form-medium">
+					<div class="col-sm-12" id="resultadoproductos">
+						{tabla_productos}
 					</div>
 				</div>
 			</div>

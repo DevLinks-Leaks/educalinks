@@ -89,7 +89,7 @@ function js_tipo_descuento_del(codigo,div,url)
                     valida_tipo_growl(xhr.responseText);
                 else
                     $.growl.warning({ title: "Educalinks informa", message: "Sin mensaje de confirmación. Por favor, verificar que todo esté en orden." });
-                js_tipo_descuento_busca( document.getElementById('cmb_mostrarDes').value, div );
+                js_tipo_descuento_busca( 0, div );
             } 
         };
         xhr.send(data);
@@ -164,7 +164,7 @@ function js_tipo_descuento_add(div,url)
                     valida_tipo_growl(xhr.responseText);
                 else
                     $.growl.warning({ title: "Educalinks informa", message: "Sin mensaje de confirmación. Por favor, verificar que todo esté en orden." });
-                js_tipo_descuento_busca( document.getElementById('cmb_mostrarDes').value, div );
+                js_tipo_descuento_busca( 0, div );
             }
         }
         xhr.send(data);
@@ -205,7 +205,7 @@ function js_tipo_descuento_save_edited( rol_codigo, div, url )
                         valida_tipo_growl(xhr.responseText);
                     else
                         $.growl.warning({ title: "Educalinks informa", message: "Sin mensaje de confirmación. Por favor, verificar que todo esté en orden." });
-                    js_tipo_descuento_busca( document.getElementById('cmb_mostrarDes').value, div );
+                    js_tipo_descuento_busca( 0, div );
                 } 
             };
             xhr.send(data);

@@ -1,6 +1,3 @@
-// JavaScript Document
-
-
 $(document).ready(function() {
 	var table = $('#cobr_table').DataTable({
 		"language": {
@@ -11,6 +8,10 @@ $(document).ready(function() {
 		columnDefs: [ { "orderable": false, "targets": 0 },{ "orderable": false, "targets": 5 } ],
 		"order": [[5, 'asc'],[4, 'asc'],[3, 'desc'],[2, 'asc']]
 	});
+	$(".boton_busqueda").click(function(){
+		$("#desplegable_busqueda").slideToggle(200);
+	});
+	$("#desplegable_busqueda").show();
 	table.page.len(10).draw();
 	// Add event listener for opening and closing details
 	$('#cobr_table tbody').on('click', 'td.details-control', function () {		

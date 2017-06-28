@@ -1,10 +1,9 @@
 $(document).ready(function() {
 	$("#txt_fecha_fin").datepicker();
 	
-	$("#boton_busqueda").click(function()
-	{   $("#desplegable_busqueda").slideToggle(200);
+	$(".boton_busqueda").click(function(){
+		$("#desplegable_busqueda").slideToggle(200);
 	});
-	
 	$("#desplegable_busqueda").show();
 });
 

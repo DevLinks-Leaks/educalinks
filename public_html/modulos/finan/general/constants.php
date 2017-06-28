@@ -26,6 +26,7 @@ const PRINTREP_DEUDORES_CURSO_DETA_XLS =  'print_deudores_curso_detalle_xls';
 const CHANGE_PERIODO = 'change_periodo';
 const CHANGE_LOGO = 'change_logo';
 const CHANGE_STATUS_BAR = 'change_status_bar';
+const CLOSE_AND_OPEN_CASH = 'close_and_open_cash';
 # vistas
 const VIEW_MAIN = 'main';
 const VIEW_HOME = 'inicio';

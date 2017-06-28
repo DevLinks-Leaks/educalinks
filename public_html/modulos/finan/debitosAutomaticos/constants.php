@@ -16,6 +16,7 @@ const GET_ALL_DATA 			= 'get_all_data';
 const GET_DEBT_AUT_SETTINGS = 'get_debt_aut_settings';
 const GET_DEUD_CTAS_ANTIQ	= 'get_deudores_ctas_antiguas';
 const GET_DEUD_CTAS_INLIQ	= 'get_deudores_ctas_inliquidas';
+const RESET_CTAS_INL		= 'reset_ctas_inl';
 const DELETE 				= 'delete';
 const EDIT 					= 'edit';
 const GET_CAMPOS			= 'get_campos';

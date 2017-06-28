@@ -41,7 +41,7 @@ function handler()
 												 "selected"  => 0),
 						'{combo_periodo}' => array(	"elemento"  => "combo", 
 													"datos"     => $periodo->rows, 
-													"options"   => array("name"=>"periodos","id"=>"periodos","required"=>"required", "class"=>"form-control input-sm",
+													"options"   => array("name"=>"periodos","id"=>"periodos","required"=>"required", "class"=>"form-control",
 													"onChange"=>"cargaNivelesEconomicos('resultadoNivelEcon','".$diccionario['rutas_head']['ruta_html_finan']."/general/controller.php');"),
 													"selected"  => $_SESSION['peri_codi'] ),
 						'{combo_cursos}' => array("elemento"  => "combo", 
@@ -49,7 +49,7 @@ function handler()
 																				  1 => '- Seleccione curso -',
 																				  3 => ''), 
 																	   1=> array()),
-												  "options"   => array("name"=>"curso","id"=>"curso","required"=>"required", "class"=>"form-control input-sm",
+												  "options"   => array("name"=>"curso","id"=>"curso","required"=>"required", "class"=>"form-control",
 												  "onChange"=>"cargaDeudores('resultado','".$diccionario['rutas_head']['ruta_html_finan']."/general/controller.php')"),
 												  "selected"  => -1)
 						);
@@ -61,7 +61,7 @@ function handler()
 										"options"   => 	array(	"name"=>"cmb_nivelesEconomicos",
 																"id"=>"cmb_nivelesEconomicos",
 																"required"=>"required",
-																"class"=>"form-control input-sm",
+																"class"=>"form-control",
 																"onChange"	=>	"cargaCursosPorNivelEconomico('resultadoCursos','".$diccionario['rutas_head']['ruta_html_finan']."/general/controller.php')"));
 			$data['tabla'] = "<span style='font-size:small'>Haga clic en buscar para realizar una consulta.</span>";
 			retornar_vista(VIEW_GET_ALL, $data);

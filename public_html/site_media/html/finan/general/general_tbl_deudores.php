@@ -1,7 +1,7 @@
 <div class="grid" 
 	style= "display: inline-block; overflow: hidden; vertical-align: middle; width: 100%;">
 	<br />
-	<div class="row">
+	<!--<div class="row">
 		<div class="col-sm-12">
 			<div class="panel-group">  
 				<div class="panel panel-default">
@@ -14,7 +14,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>-->
 	<div class="row">
 		<div class="col-sm-12">
 			<div id='div_tbl_deudores_resultado'>
