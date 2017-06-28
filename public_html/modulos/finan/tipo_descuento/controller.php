@@ -57,7 +57,7 @@ function handler() {
                 $opciones["Opciones"].="<div class='btn-group'>";
                 if ($permiso->rows[0]['veri']==1)
                 {
-				  $opciones["Opciones"].= "<button type='button' onclick='js_tipo_descuento_edit(".'"{codigo}"'.",".'"modal_edit_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/tipo_descuento/controller.php"'.")' class='btn btn-default btn-sm' aria-hidden='true' data-toggle='modal' data-target='#modal_edit' id='{codigo}_editar'onmouseover='$(".'"#{codigo}_editar"'.").tooltip(".'"show"'.")' title='Editar información' data-placement='left'><span class='btn_opc_lista_editar fa fa-pencil cursorlink'></span><span class='hidden-sm hidden-xs hidden-md'> Editar</span></button>";
+				  $opciones["Opciones"].= "<span onclick='js_tipo_descuento_edit(".'"{codigo}"'.",".'"modal_edit_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/tipo_descuento/controller.php"'.")' class='btn_opc_lista_editar fa fa-pencil cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_edit' id='{codigo}_editar'onmouseover='$(".'"#{codigo}_editar"'.").tooltip(".'"show"'.")' title='Editar' data-placement='left'>&nbsp;</span>";
                 }
                 else
                 {
@@ -67,7 +67,7 @@ function handler() {
                 $permiso->permiso_activo($_SESSION['usua_codigo'], 118);
                 if ($permiso->rows[0]['veri']==1)
                 {
-                  $opciones["Opciones"].= "<button type='button' onclick='js_tipo_descuento_del(".'"{codigo}"'.",".'"resultado"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/tipo_descuento/controller.php"'.")' class='btn btn-default btn-sm' aria-hidden='true'id='{codigo}_del'onmouseover='$(".'"#{codigo}_del"'.").tooltip(".'"show"'.")' title='Eliminar registro'><span class='btn_opc_lista_eliminar fa fa-trash cursorlink'></span><span class='hidden-sm hidden-xs hidden-md'> Eliminar</span></button>";
+                  $opciones["Opciones"].= "<span onclick='js_tipo_descuento_del(".'"{codigo}"'.",".'"resultado"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/tipo_descuento/controller.php"'.")' class='btn_opc_lista_eliminar glyphicon glyphicon-trash cursorlink' aria-hidden='true'id='{codigo}_del'onmouseover='$(".'"#{codigo}_del"'.").tooltip(".'"show"'.")' title='Eliminar'>&nbsp;</span>";
                 }
                 else
                 {
@@ -102,10 +102,9 @@ function handler() {
 			if(count($descuento->rows)>0){
 				global $diccionario;
 				$permiso->permiso_activo($_SESSION['usua_codigo'], 117);
-				$opciones["Opciones"].="<div class='btn-group'>";
                 if ($permiso->rows[0]['veri']==1)
                 {
-				  $opciones["Opciones"].= "<button type='button' onclick='js_tipo_descuento_edit(".'"{codigo}"'.",".'"modal_edit_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/tipo_descuento/controller.php"'.")' class='btn btn-default btn-sm' aria-hidden='true' data-toggle='modal' data-target='#modal_edit' id='{codigo}_editar'onmouseover='$(".'"#{codigo}_editar"'.").tooltip(".'"show"'.")' title='Editar información' data-placement='left'><span class='btn_opc_lista_editar fa fa-pencil cursorlink'></span><span class='hidden-sm hidden-xs hidden-md'> Editar</span></button>";
+				  $opciones["Opciones"].= "<span onclick='js_tipo_descuento_edit(".'"{codigo}"'.",".'"modal_edit_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/tipo_descuento/controller.php"'.")' class='btn_opc_lista_editar glyphicon glyphicon-pencil cursorlink' aria-hidden='true'  data-toggle='modal' data-target='#modal_edit' id='{codigo}_editar'onmouseover='$(".'"#{codigo}_editar"'.").tooltip(".'"show"'.")' title='Editar' data-placement='left'>&nbsp;</span>";
                 }
                 else
                 {
@@ -115,13 +114,12 @@ function handler() {
                 $permiso->permiso_activo($_SESSION['usua_codigo'], 118);
                 if ($permiso->rows[0]['veri']==1)
                 {
-                  $opciones["Opciones"].= "<button type='button' onclick='js_tipo_descuento_del(".'"{codigo}"'.",".'"resultado"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/tipo_descuento/controller.php"'.")' class='btn btn-default btn-sm' aria-hidden='true'id='{codigo}_del'onmouseover='$(".'"#{codigo}_del"'.").tooltip(".'"show"'.")' title='Eliminar registro'><span class='btn_opc_lista_eliminar fa fa-trash cursorlink'></span><span class='hidden-sm hidden-xs hidden-md'> Eliminar</span></button>";
+                  $opciones["Opciones"].= "<span onclick='js_tipo_descuento_del(".'"{codigo}"'.",".'"resultado"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/tipo_descuento/controller.php"'.")' class='btn_opc_lista_eliminar glyphicon glyphicon-trash cursorlink' aria-hidden='true'id='{codigo}_del'onmouseover='$(".'"#{codigo}_del"'.").tooltip(".'"show"'.")' title='Eliminar'>&nbsp;</span>";
                 }
                 else
                 {
                   $opciones["Opciones"].="";
                 }
-				$opciones["Opciones"].="</div>";
                 $permiso->permiso_activo($_SESSION['usua_codigo'], 116);
                 if ($permiso->rows[0]['veri']==1)
                 {
@@ -154,7 +152,7 @@ function handler() {
 				$permiso->permiso_activo($_SESSION['usua_codigo'], 117);
                 if ($permiso->rows[0]['veri']==1)
                 {
-                  $opciones["Editar"] = "<span onclick='js_tipo_descuento_edit(".'"{codigo}"'.",".'"modal_edit_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/tipo_descuento/controller.php"'.")' class='btn_opc_lista_editar glyphicon glyphicon-pencil cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_edit' id='{codigo}_editar'onmouseover='$(".'"#{codigo}_editar"'.").tooltip(".'"show"'.")' title='Editar información' data-placement='left'>&nbsp;</span>";
+                  $opciones["Opciones"].= "<span onclick='js_tipo_descuento_edit(".'"{codigo}"'.",".'"modal_edit_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/tipo_descuento/controller.php"'.")' class='btn_opc_lista_editar fa fa-pencil cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_edit' id='{codigo}_editar'onmouseover='$(".'"#{codigo}_editar"'.").tooltip(".'"show"'.")' title='Editar' data-placement='left'>&nbsp;</span>";
                 }
                 else
                 {
@@ -164,7 +162,7 @@ function handler() {
                 $permiso->permiso_activo($_SESSION['usua_codigo'], 118);
                 if ($permiso->rows[0]['veri']==1)
                 {
-                  $opciones["Eliminar"] = "<span onclick='js_tipo_descuento_del(".'"{codigo}"'.",".'"resultado"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/tipo_descuento/controller.php"'.")' class='btn_opc_lista_eliminar glyphicon glyphicon-trash cursorlink' aria-hidden='true'id='{codigo}_del'onmouseover='$(".'"#{codigo}_del"'.").tooltip(".'"show"'.")' title='Eliminar registro'></span>";
+                  $opciones["Eliminar"] = "<span onclick='js_tipo_descuento_del(".'"{codigo}"'.",".'"resultado"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/tipo_descuento/controller.php"'.")' class='btn_opc_lista_eliminar glyphicon glyphicon-trash cursorlink' aria-hidden='true'id='{codigo}_del'onmouseover='$(".'"#{codigo}_del"'.").tooltip(".'"show"'.")' title='Eliminar'>&nbsp;</span>";
                 }
                 else
                 {

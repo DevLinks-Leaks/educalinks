@@ -1,3 +1,114 @@
+<!-- Modal Cargando-->
+<div class="modal modal-transparent fade" id="modal_msg" tabindex="-1"  data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body" id="modal_msg_body" style='text-align:center;font-size:small;'>
+                <div align="center" style="height:100%;">
+					Por favor, espere
+					<br>
+					<br>
+					<i style="color:darkred;" class="fa fa-cog fa-spin"></i>
+				</div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Cargando-->
+<div class="modal modal-transparent fade modal-warning" id="modal_acad" tabindex="-1"  data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel" >Educalinks</h4>
+			</div>
+			<div class="modal-body" id="modal_acad_body" style='text-align:center;font-size:small;'>
+                ¿Ir al módulo académico?
+				<input type='hidden' id='hd_url_acad' name='hd_url_acad' value=''/>
+            </div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-outline pull-left"
+					onclick="js_clientes_go_to_courses_followed()"><span class='fa fa-university'></span>&nbsp;Ir</button>
+				<button type="button" class="btn btn-outline pull-right" data-dismiss='modal'>En otro momento</button>
+			</div>
+        </div>
+    </div>
+</div>
+<!-- Modal Visor Estado de cuenta-->
+<div class="modal fade bs-example-modal-lg" id="modal_showDebtState" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="false" >
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header" style="background-color:#f4f4f4">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel" >Estado de cuenta</h4>
+			</div>
+			<div class="modal-body" id="modal_showDebtState_body" style="background-color:#f4f4f4;">
+			...
+			</div>
+			<div class="modal-footer" style="background-color:#f4f4f4;">
+				<button type="button" class="btn btn-success"
+					onclick="print_cert_pdf('{ruta_html_finan}/clientes/controller.php')"><i class='fa fa-file-pdf-o'></i>&nbsp;Certificado financiero</button>
+				<button type="button" class="btn btn-primary"
+					onclick="print_pdf('{ruta_html_finan}/clientes/controller.php')"><i class='fa fa-file-pdf-o'></i>&nbsp;Estado de cuenta</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /. Modal Visor Estado de cuenta-->
+<!-- Modal Revertir deuda y borrar pago-->
+<div class="modal fade" id="modal_revert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style='background-color:#3C8DBC;color:white;'>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Revertir deuda y borrar pago</h4>
+            </div>
+            <div class="modal-body" id="modal_revert_body">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Revertir deuda y borrar pago-->
+<!-- Modal Asignar-->
+<div class="modal fade" id="modal_asign" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div id="modal_asign_body">
+			...
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Modal Asignar-->
+<!-- Modal Asignar Grupo Economico-->
+<div class="modal fade" id="modal_showSetGrupoEconomico" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-md">
+		<div class="modal-content">
+			<div id="modal_showSetGrupoEconomico_body">
+			...
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Modal Asignar Grupo Economico-->
+<!-- Modal Asignar representante-->
+<div class="modal fade" id="modal_asign_repr" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Asignar representante</h4>
+			</div>
+			<div class="modal-body" id='div_asign_repr' name='div_asign_repr'>
+			...
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Modal Asignar representante-->
 <!-- Modal Información-->
 <div class="modal fade" id="modal_infoSaf" tabindex="-1" role="dialog" aria-labelledby="modal_rep_ModalLabel" aria-hidden="true">
 	<div class="modal-dialog">

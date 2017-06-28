@@ -106,8 +106,8 @@ class DebitosAutomaticos extends DBAbstractModel
         }
 		return $this;
     }
-	public function get_all_deudas($campos, $ultcol, $xml_productos, $fac_estado, $banco, $tarjCredito, $peri_codi)
-	{	$this->parametros = array($campos, $ultcol, $xml_productos, $fac_estado, $banco, $tarjCredito, $peri_codi);
+	public function get_all_deudas($campos , $ultcol , $xml_productos , $fac_estado , $banco , $tarjCredito , $peri_codi , $opc_ctas_ant, $opc_ctas_inl )
+	{	$this->parametros = array( $campos , $ultcol , $xml_productos , $fac_estado , $banco , $tarjCredito , $peri_codi , $opc_ctas_ant, $opc_ctas_inl );
         $this->sp = "str_consultaDebitosAutomaticos_deudas";
         $this->executeSPConsulta();
         if(count($this->rows)>0)
@@ -201,6 +201,18 @@ class DebitosAutomaticos extends DBAbstractModel
         }
 		else
 		{	$this->mensaje="KO";
+        }
+		return $this;
+    }
+	public function reset_deudores_ctas_inliquidas( $usuario )
+	{   $this->parametros = array( $usuario );
+        $this->sp = "str_consultaDebitoautomatico_reset_ctas_inliquidas";
+        $this->executeSPConsulta();
+        if(count($this->rows)>0)
+		{	$this->mensaje="¡Exito! Deudores fueron inactivados para uso de cuenta secundaria";
+        }
+		else
+		{	$this->mensaje="¡Error! No se pudo completar la transacción";
         }
 		return $this;
     }

@@ -764,3 +764,37 @@ function js_alumnos_lista_general()
 {	document.getElementById( 'file_form' ).action = '../../../admin/listado_all_xls.php';
 	document.getElementById( 'file_form' ).submit();
 }
+function js_clientes_revertir( codigo, div, url )
+{   $('#modal_revert').modal('show');
+	document.getElementById(div).innerHTML = '<div class="row"><div class="col-md-12">¿Está seguro de revertir el pago de esta factura? La deuda volverá a estado "Por cobrar" y el pago se anulará.</div></div><br>'+
+	'<div class="row"><div class="col-md-12" style="text-align:center"><button class="btn btn-info" id="btn_modal_revert_followed" name="btn_modal_revert_followed" onclick="js_clientes_revertir_followed( \''+codigo+'\' );" ><i class="fa fa-history"></i>&nbsp;Revertir</button>'+
+	'<button class="btn btn-warning" id="btn_modal_revert_followed" name="btn_modal_revert_followed" onclick="js_Pago_revertir_followed_keep_e_info( \''+codigo+'\' );" ><i class="fa fa-history"></i>&nbsp;Revertir pero mantener información electrónica</button>'+
+	'<button class="btn btn-default" id="btn_modal_revert_dismiss" name="btn_modal_revert_dismiss" data-dismiss="modal"'+
+	' title="Hacer click aquí si desea que el proceso de reverso de pago no borre el número secuencial de factura, estado electrónico, clave de acceso y toda la información'+
+	' relacionada con facturación electrónica"><i style="color:red;" class="fa fa-ban"></i>&nbsp;No revertir</button></div></div>';
+}
+function js_clientes_revertir_followed( codigo )
+{   document.getElementById('modal_revert_body').innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
+    var data = new FormData();
+	data.append('event', 'revert_factura');
+	data.append('codigoDocumento', codigo);
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', document.getElementById( 'ruta_html_finan' ).value + '/pagos/controller.php' , true);
+	xhr.onreadystatechange=function()
+	{   if ( xhr.readyState === 4 && xhr.status === 200 )
+		{   var resultado = js_general_resultado_sql(xhr.responseText);
+			var class_callout = "";
+			if( resultado === 'exito' ) class_callout = 'success';
+			else if( resultado === 'error' ) class_callout = 'danger';
+			else if( resultado === 'advertencia' ) class_callout = 'warning';
+			else class_callout = 'info';
+			var mensaje = '<div class="callout callout-' + class_callout + '">'+
+							'<h4><strong><li class="fa fa-exclamation"></li></strong></h4>'+
+							xhr.responseText + '</div>';
+			document.getElementById('modal_revert_body').innerHTML = mensaje;
+			$('#modal_showDebtState').modal('hide');
+			//js_Pago_carga_PagosRealizados( 'resultadoPagos', document.getElementById( 'ruta_html_finan' ).value + '/pagos/controller.php' );
+		}
+	};
+	xhr.send(data);	
+}

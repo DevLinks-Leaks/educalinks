@@ -96,7 +96,7 @@ function handler()
 			if($_SESSION['IN']!="OK"){$_SESSION['IN']="KO";$_SESSION['ERROR_MSG']="Por favor inicie sesión";header("Location:".$domain);}
 			$settings->get_debitoautomatico_config();
 			echo '<label>Al momento de exportar:</label>
-						<div class="checkbox">
+						<div class="checkbox" style="display:none;">
 							<label>
 								<input type="checkbox" id="check_exp_opc_ant" 
 									name="check_exp_opc_ant" '.($settings->rows[0]['check_exp_opc_ant'] == 'S' ? 'checked': '' ).'> Preguntar por clientes con deudas antiguas por pagar.
@@ -415,7 +415,7 @@ function handler()
                                                       	"selected"  => 0),
 					);
 			
-			if ( $error_espacio == 1 )
+			if ( $error_espacio >0  )
 			{	$data['txt_mensaje'] = '<div class="alert alert-danger" role="alert">
 					<p><span class="fa fa-times-circle" aria-hidden="true"></span>
 						Educalinks Informa
@@ -502,7 +502,7 @@ function handler()
 			$highestColumn = PHPExcel_Cell::columnIndexFromString($objPHPExcel->getActiveSheet()->getHighestColumn());
 			$codigodeuda=0;$valor=0;
 			$columna=0;$columna2=0;$columna3=0;
-			$contador1=0;$contador2=0;$contador3=0;$rowcontador=0;
+			$contador1 = $contador2 = $contador3 = $contador4 = $contador5 = $rowcontador=0;
 			$pago = $sinliquidez = 0;
 			//  Loop through each row of the worksheet in turn
 			$acu=0;
@@ -534,10 +534,10 @@ function handler()
 					if($params[$i][$columna3]==$textonook &&  $j==$columna3)
 					{	$sinliquidez = $sinliquidez+1;
 					}
-					else if($params[$i][$columna3]!=$textook &&  $j==$columna3 && $params[$i][$columna3]!='')
+					else if($params[$i][$columna3]!=$textook && $params[$i][$columna3]!=$textonook && $j==$columna3 && $params[$i][$columna3]!='')
 					{	$pago=$pago+0;
-						$contador2=$contador2+1;
-						$hola=$params[$i][$columna3];
+						$contador4 = $contador4 + 1;
+						//$hola=$params[$i][$columna3];
 					}
 					else
 					{ 	$pago=$pago+0;
@@ -545,23 +545,26 @@ function handler()
 				}
 				if($pago>0)
 				{	$carga->setpagodebito( $codigodeuda, str_replace(",", ".", $valor), $_SESSION['usua_codigo'], $nombrearchivo, $debito_data['fecha_debito'], $debito_data['id_formaPago'] );
-					$rowcontador=$carga->rows[0];
-					$contador1=$contador1+$rowcontador['contadorpagados'];
-					$contador3=$contador3+$rowcontador['contadorsaldoafavor'];
+					$rowcontador = $carga->rows[0];
+					$contador1 = $contador1 + $rowcontador['contadorpagados'];
+					$contador2 = $contador2 + $rowcontador['contadorabonados'];
+					$contador3 = $contador3 + $rowcontador['contadorsaldoafavor'];
 				}
 				if($sinliquidez>0)
 				{
 					if ( $debito_data['id_formaPago'] == 8 ) //sólo si es débito bancario, registra cuenta sin liquidez.
 					{	$carga->setpagodebito_sinliquidez( $codigodeuda, str_replace(",", ".", $valor), $_SESSION['usua_codigo'], 
 															$nombrearchivo, $debito_data['fecha_debito'], $debito_data['id_formaPago'] );
-						$contador2 = $contador2 + 1;
+						$contador5 = $contador5 + 1;
 					}
 				}
 				$pago = $sinliquidez = 0;
 			}	
 			$data =	array(	"saldoafavor"	=> $contador3 ,
 							"pagado"		=> $contador1 ,
-							"nopagado"		=> $contador2 ,
+							"abonado"		=> $contador2 ,
+							"nonada"		=> $contador4,
+							"sinliquidez"	=> $contador5
 					);
 			$data['active1']='';
 			$data['active2']='in active';
@@ -747,7 +750,7 @@ function handler()
 			$xml_productos.="</productos>";
 			
 			$debito->get_all_deudas($cabecera_completa,$debito_data['hd_id_formato_exp'], $xml_productos,
-									$debito_data['cmb_fac_estado'], $debito_data['cmb_banco'], $debito_data['cmb_tarjCredito'], $_SESSION['peri_codi'] );
+									$debito_data['cmb_fac_estado'], $debito_data['cmb_banco'], $debito_data['cmb_tarjCredito'], $_SESSION['peri_codi'] , $debito_data['hd_opc_ctas_ant'] , $debito_data['hd_opc_ctas_inl'] );
 			$debitos_datos=$debito->rows;
 			$i_deta_fila=2;
 			$latestBLColumn = $objPHPExcel->getActiveSheet()->getHighestDataColumn();
@@ -813,6 +816,10 @@ function handler()
 			$formatos->get_deudores_ctas_antiguas(	$xml_productos , $_SESSION['peri_codi'] , $debito_data['hd_id_formato_exp'] , 
 													$debito_data['cmb_fac_estado'] , $debito_data['cmb_banco'] , $debito_data['cmb_tarjCredito'] );
 			print_r($formatos->rows[0]['ctas_antiguas']);
+			break;
+		case RESET_CTAS_INL :
+			$formatos->reset_deudores_ctas_inliquidas( $_SESSION['usua_codigo'] );
+			print_r($formatos->mensaje);
 			break;
 		case GET_DEUD_CTAS_INLIQ :
 			$formatos->get_deudores_ctas_inliquidas( $debito_data['hd_id_formato_exp'] , $_SESSION['peri_codi'] );

@@ -43,7 +43,6 @@
 				</div>
 			</div>
 		</div>
-		<!-- Modal cargar archivo-->
 		<!-- Modal Información-->
 		<div class="modal fade" id="modal_infoSaf" tabindex="-1" role="dialog" aria-labelledby="modal_rep_ModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
@@ -54,7 +53,7 @@
 						<h4 class="modal-title" id="modal_rep_ModalLabel"><span class='fa fa-question-circle'></span>&nbsp;Acerca de débito bancarios/exportación de archivos</h4>
 					</div>
 					<div class="modal-body" id="modal_infoSaf_body">
-						<p>Esta ventana tiene la función de crear formatos que permitan al usuario obtener información del sitema respecto a.</p>
+						<p>Esta ventana tiene la función de crear formatos que permitan al usuario exportar información del sistema relacionada a:</p>
 						
 						<ul>
 							<li>Alumnos con débito bancario.</li>
@@ -211,6 +210,8 @@
 					<div class="modal-body" id="modal_exportarFormatoArchivo_body">
 						<div id='div_step_1' name='div_step_1' class="form-horizontal" style='display:inline'>
 							<input type='hidden' id='hd_id_formato_exp' name='hd_id_formato_exp' value=''></input>
+							<input type='hidden' id='hd_opc_ctas_ant' name='hd_opc_ctas_ant' value='2'></input>
+							<input type='hidden' id='hd_opc_ctas_inl' name='hd_opc_ctas_inl' value='2'></input>
 							<div class="form-group" >
 								<div class='col-sm-3'>
 									<label id='lbl_nombre_exp' name='lbl_nombre_exp' for="txt_nombre_exp" 
@@ -374,7 +375,7 @@
 										<li> Descargar lista de los alumnos con deudas vencidas con información de la deuda. </li>
 										<li> Exportar archivo, pero obtener la deuda más antigua de los alumnos deudores de ítems anteriores según el plan de pago. </li>
 										<li> Exportar archivo normalmente </li>
-										<li> Volver </li>
+										<li onclick="js_debtAut_genera_archivo_manage_divs ( 'inline', 'none', 'none' );"><span class='fa fa-arrow-left'></span> Volver.</li>
 									</ol>
 								</div>
 							</div>
@@ -401,13 +402,18 @@
 							<div class="form-group" >
 								<div class="col-sm-12">
 									<ol type=”1” start=”11”>
-										<li> Ver listado de personas con intento fallido.</li>
-										<li> Generar archivo de débito de todos los clientes y a los deudores con intento fallido cobrar con la cuenta secundaria/siguiente.</li>
-										<li> Generar archivo de débito de todos los clientes y a los deudores con intento fallido cobrar con la cuenta principal.</li>
-										<li> Generar archivo de débito de sólo los deudores con intento fallido y cobrar con la cuenta cuenta secundaria/siguiente.</li>
-										<li> Generar archivo de débito de sólo los deudores con intento fallido y cobrar con la cuenta principal.</li>
-										<li> No volver a mostrar este mensaje de nuevo y exportar archivo normalmente ( esta opción inactivará seteará a los deudores a sus cuentas principales de nuevo ).</li>
-										<li> Volver </li>
+										<li>Generar archivo de débito de todos los clientes y a los deudores con intento fallido de débito, obtener información de cuenta secundaria.
+										<li>Generar archivo de débito de todos los clientes y a los deudores con intento fallido de débito, obtener información de cuenta principal.
+										<li>Generar archivo de débito sólo de deudores con intento fallido de débito, con información de cuenta secundaria.
+										<li>Generar archivo de débito sólo de deudores con intento fallido de débito, con información de cuenta principal.
+										<li>Generar archivo de débito sólo de deudores SIN intento fallido de débito
+										<li>Borrar lista de deudores con cuentas impagas pendientes de confirmar pago para que no vuelvan a generar este aviso
+											<div id='EducaLinksHelperCliente' style='display:inline;font-size:x-small;text-align:left;vertical-align:middle;'>
+												<a href='#' data-placement="top" onmouseover='$(this).tooltip("show")'
+													title='Si en una futura importación de datos hay deudores con intentos de débito fallido, este mensaje volverá a aparecer.' data-placement='right'><span class='glyphicon glyphicon-question-sign'></span></a>
+											</div>
+										<li>Ver listado de personas con historial de cuentas sin liquidez que tienen una operación pendiente con una cuenta secundaria.
+										<li onclick="js_debtAut_genera_archivo_manage_divs ( 'inline', 'none', 'none' );"><span class='fa fa-arrow-left'></span> Volver al primer paso.</li>
 									</ol>
 								</div>
 							</div>
@@ -425,6 +431,32 @@
 				</div>
 			</div>
 		</div>
+		<!-- Modal cargar archivo-->
+		<div class="modal fade bs-example-modal-sm" id="modal_delete_ctas_inl" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header" style="background-color:#dd4b39">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<h4 class="modal-title" style='color:white;'><span class="fa fa-eraser"></span> Educalinks informa</h4>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-md-12" style='text-align:center;'>
+								¿Borrar lista de deudores con cuentas impagas pendientes de confirmar pago?<br>
+								<br>
+								De ahora en adelante, a los deudores de esta lista se les exportará información de la cuenta principal.
+							</div>
+						</div>
+						<input type='hidden' id='hd_del_mes_codi' name='hd_del_mes_codi' value=''></input>
+					</div>
+					<div class="modal-footer" style='text-align:center;'>
+						<button class="btn btn-danger" type="button" onclick="js_debtAuto_reset_ctas_inl_pdtes_confirm( )"><span class='fa fa-eraser'></span> Confirmar</button>
+						<button class="btn btn-default" data-dismiss="modal"><li style="color:red;" class="fa fa-ban"></li> No borrar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- Modal cargar archivo-->
 		<!-- /.Modal Exportar-->
         <div class="tab-content">
             <div id="home" class="tab-pane fade {active1}">

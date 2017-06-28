@@ -76,7 +76,20 @@ class General extends DBAbstractModel{
 		{	//$this->mensaje=$this->login_mensaje;
         }
 	}
-	
+	public function cierre_y_apertura_caja( $codigo = '', $usua_cierre = '' )
+	{   $this->parametros = array( $usua_cierre, $codigo );
+		$this->sp = "str_consultaCajaCierre_close_and_open_new";
+		$this->executeSPConsulta();
+		if (count($this->rows)>1)
+		{	foreach($this->rows[0] as $propiedad=>$valor)
+			{	$this->$propiedad=$valor;
+            }
+            //$this->mensaje="OK";
+        }
+		else
+		{	//$this->mensaje=$this->login_mensaje;
+        }
+	}
 	public function get_datos_home(){
         $this->parametros = array();
         $this->sp = "str_consulta_finan_main";

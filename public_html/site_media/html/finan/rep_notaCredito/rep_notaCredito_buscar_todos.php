@@ -17,42 +17,59 @@
 	</div>
 </div>
 <!-- Modal Editar-->
-<div class="grid">
-	<div class="row">
-		<div id="div_comboCajeros" class='col-sm-1'>
-			<label class="control-label" for="comboUsuarios">Cajero</label>
-		</div>
-		<div id="div_comboCajeros" class='col-sm-3'>
-			{combo_cajero}
-		</div>
-		<div class="col-sm-6" id="div_fini" name="div_fini" >
-			<div class="input-group" id="div_fini" name="div_fini" data-placement="top"
-				 title='Fecha de emisión, desde, hasta.'
-				 onmouseover='$(this).tooltip("show")'>
-				<span class="input-group-addon">
-					<input type="checkbox" id='chk_fecha' name='chk_fecha' onclick='check_fecha();' checked>
-				</span>
-				<span class="input-group-addon">
-					<span style="text-align:left;font-size:small;font-weight:bold;">F. emisi&oacute;n</span>
-				</span>				
-				<span class="input-group-addon">
-					<small>Inicio</small></span>
-				<input type="text" class="form-control" name="txt_fecha_ini" id="txt_fecha_ini" 
-							value="{txt_fecha_ini}" placeholder="dd/mm/yyyy" required="required">
-			
-				<span class="input-group-addon">
-					<small>Fin</small></span>
-				<input type="text" class="form-control" name="txt_fecha_fin" id="txt_fecha_fin" 
-							value="{txt_fecha_fin}" placeholder="dd/mm/yyyy" required="required">
+<div class='panel panel-info dismissible' id='panel_search' name='panel_search'>
+	<div class="panel-heading">
+		<h3 class="panel-title">
+			<a href="#/" class="boton_busqueda" style='text-decoration:none;'><span class="fa fa-search"></span>&nbsp;Búsqueda</a>
+			<div class="pull-right">
+				<a href="#/" class="boton_busqueda" style='text-decoration:none;'><span class='fa fa-minus'></span></a>
 			</div>
-		</div>
-		<div class='col-sm-2'>
-			<div class="div_button" >
+		</h3>
+	</div>
+	<div class="panel-body" id="desplegable_busqueda" name="desplegable_busqueda">
+		<div class="form-horizontal" role="form">
+			<div class='col-md-7 col-sm-12'>
+				<div class='row'>
+					<div class='col-md-12 col-sm-12'>
+						<div class="form-group">
+							<label class="col-md-4 col-sm-3 control-label"
+								style='text-align: right; '>
+								F. emisi&oacute;n inicio:
+							</label>
+							<div class="col-md-7 col-sm-7">
+								<input type="text" class="form-control input-sm" name="txt_fecha_ini" id="txt_fecha_ini" 
+												value="{txt_fecha_ini}" placeholder="dd/mm/yyyy">
+							</div>
+							<div class="col-md-1 col-sm-1" style='text-align: right;'>
+								<input type="checkbox" id='chk_fecha' name='chk_fecha' onclick='check_fecha();' checked>
+							</div>
+						</div>
+					</div>
+					<div class='col-md-12 col-sm-12'>
+						<div class="form-group">
+							<label class="col-md-4 col-sm-3 control-label" style='text-align: right;'>F. emisi&oacute;n fin:</label>
+							<div class="col-md-7 col-sm-7">
+								<input type="text" class="form-control input-sm" name="txt_fecha_fin" id="txt_fecha_fin" 
+												value="{txt_fecha_fin}" placeholder="dd/mm/yyyy">
+							</div>
+						</div>
+					</div>
+					
+					<div class='col-md-12 col-sm-12'>
+						<div class='form-group'>
+							<label class="col-md-4 col-sm-3 control-label" style='text-align: right;' for='txt_nom_cliente'>Cajero:</label>
+							<div class="col-md-7 col-sm-7">
+								{combo_cajero}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class='col-md-5 col-sm-12' style='text-align:center;'>
 				<button type="button" 
-						style="float:right " 
-						class="btn btn-primary" aria-hidden="true" data-toggle="modal"  data-target="#modal_edit" 
-						onclick=" carga_reports_notaCredito('modal_edit_body','{ruta_html_finan}/rep_notaCredito/controller.php','print_rep_notaCredito')" >
-						<span class="glyphicon glyphicon-print"></span>&nbsp;Imprimir</button>
+					class="btn btn-primary" aria-hidden="true" data-toggle="modal"  data-target="#modal_edit" 
+					onclick=" carga_reports_notaCredito('modal_edit_body','{ruta_html_finan}/rep_notaCredito/controller.php','print_rep_notaCredito')" >
+					<span class="fa fa-print"></span>&nbsp;</button>
 			</div>
 		</div>
 	</div>

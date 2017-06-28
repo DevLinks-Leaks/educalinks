@@ -193,15 +193,18 @@ function handler()
 															$body.= '<span style=\'color:#e24b4b\'>'.$row["esta_deta"].'</span>'; 
 														else
 															$body.= $row["esta_deta"];
-													$body.="</small> |&nbsp<small><b style='color:#2d3c4a;'>Curso:</b>&nbsp;";
-													if( $permiso_10->rows[0]['veri'] )
-														$body.= "<a href='#' onclick='js_clientes_go_to_courses(\"../../../admin/cursos_paralelo_main.php?curs_para_codi=".$row['curs_para_codi']."\");' 
-																	data-toggle='modal' data-target='#modal_acad'
-																	title='Ver información del curso ".$row["curso"]."'>".$row["curso"]."</a>";
-													else
-														$body.= $row["curs_deta"]." - ".$row["para_deta"];
-													$body.="</small>
-												</div>
+													if ( $row["esta_deta"] != 'ADMITIDO' ) 
+													{													
+														$body.="</small> |&nbsp<small><b style='color:#2d3c4a;'>Curso:</b>&nbsp;";
+														if( $permiso_10->rows[0]['veri'] )
+															$body.= "<a href='#' onclick='js_clientes_go_to_courses(\"../../../admin/cursos_paralelo_main.php?curs_para_codi=".$row['curs_para_codi']."\");' 
+																		data-toggle='modal' data-target='#modal_acad'
+																		title='Ver información del curso ".$row["curso"]."'>".$row["curso"]."</a>";
+														else
+															$body.= $row["curso"];
+														$body.="</small>";
+													}
+												$body.="</div>
 												<div class='col-lg-6 col-md-6 col-sm-12 col-sm-12' style='text-align:center'>".
 													$opciones_print["EstadoCuenta"].' '.get_cliente_opciones($permiso, $row["codigo"], 'button',
 																											 $permiso_179->rows[0]['veri'],
@@ -943,7 +946,7 @@ function construct_table_pagos($cod_alum, $fini, $ffin, $periodo, $deuda )
 			}
 			$spanHTML="<span class='glyphicon glyphicon-print cursorlink' id='".$codigo."_ver_pago' onmouseover='$(this).tooltip(".'"show"'.")' title='Formato impresi&oacute;n grande.' data-placement='left'></span>";
 			$spanPDF="<span class='glyphicon glyphicon-print cursorlink' id='".$codigo."_ver_pago_PDF' onmouseover='$(this).tooltip(".'"show"'.")' title='Formato impresi&oacute;n punto de venta.' data-placement='left'></span>";
-			$spanRevertir="<div align='center' style='display:inline-block;'><span   onclick='js_Pago_revertir(".'"'.$codigo.'"'.",".'"modal_revert_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/pagos/controller.php"'.")'    class='btn_opc_lista_eliminar fa fa-history cursorlink'  aria-hidden='true' id='".$codigo."_revertir'   onmouseover='$(this).tooltip(".'"show"'.")' data-placement='left' title='Revertir y borrar pago.'></span></div>";
+			$spanRevertir="<div align='center' style='display:inline-block;'><span   onclick='js_clientes_revertir(".'"'.$codigo.'"'.",".'"modal_revert_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/pagos/controller.php"'.")'    class='btn_opc_lista_eliminar fa fa-history cursorlink'  aria-hidden='true' id='".$codigo."_revertir'   onmouseover='$(this).tooltip(".'"show"'.")' data-placement='left' title='Revertir y borrar pago.'></span></div>";
 			$body.="<td style='text-align:center'><a href='".$diccionario['ruta_html_finan']."/finan/PDF/imprimir/pago/".$codigo."' target='_blank'>".$spanPDF."</a></td>";
 			$body.="<td style='text-align:center'><a href='".$diccionario['ruta_html_finan']."/finan/documento/imprimir/pago/".$codigo."' target='_blank'>".$spanHTML."</a></td>";
 			$body.="<td style='text-align:center'>".$spanRevertir."</td>";
@@ -971,7 +974,7 @@ function get_cliente_opciones($permiso, $codigoCliente, $type='button', $permiso
 	if ( $permiso_181 == 1 )
 	{	$opciones.= "<".$type." type='".$tag."' style='color:#D89C3F;' onclick='js_clientes_carga_asignacionGrupoEconomico(\"".$codigoCliente."\",".'"modal_showSetGrupoEconomico_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/clientes/controller.php"'.")' class='btn btn-default btn-sm' aria-hidden='true' data-toggle='modal' data-target='#modal_showSetGrupoEconomico'  id='".$codigoCliente."_asignarGrupoEconomico' onmouseover='$(this).tooltip(".'"show"'.");' title='Asignar Grupo Económico'  data-placement='top'><span class='fa fa-group'></span></".$type.">";
 	}
-	$opciones.= "<".$type." type='".$tag."' style='color:red;' onclick='carga_tabla_asign_repr(\"".$codigoCliente."\",".'"div_asign_repr"'.",".'"'.$diccionario['rutas_head']['ruta_html_common'].'/representantes/controller.php"'.")' class='btn btn-default btn-sm' aria-hidden='true' data-toggle='modal' data-target='#modal_asign_repr'  id='".$codigoCliente."_asignar_repr' onmouseover='$(this).tooltip(".'"show"'.");'  title='Asignar representante' data-placement='top'><span class='fa fa-heart-o'></span></".$type.">";
+	$opciones.= "<".$type." type='".$tag."' style='color:#E55A2F;' onclick='carga_tabla_asign_repr(\"".$codigoCliente."\",".'"div_asign_repr"'.",".'"'.$diccionario['rutas_head']['ruta_html_common'].'/representantes/controller.php"'.")' class='btn btn-default btn-sm' aria-hidden='true' data-toggle='modal' data-target='#modal_asign_repr'  id='".$codigoCliente."_asignar_repr' onmouseover='$(this).tooltip(".'"show"'.");'  title='Asignar representante' data-placement='top'><span class='fa fa-heart-o'></span></".$type.">";
 	
 	return $opciones;
 }

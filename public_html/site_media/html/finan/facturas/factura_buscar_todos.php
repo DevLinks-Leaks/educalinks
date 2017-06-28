@@ -1,5 +1,5 @@
 <!-- Modal Visor Estado de cuenta-->
-<div class="modal fade bs-example-modal-lg" id="modal_showDebtState" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade bs-example-modal-lg" id="modal_showDebtState" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="false" >
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header" style="background-color:#f4f4f4">
@@ -19,6 +19,20 @@
 	</div>
 </div>
 <!-- /. Modal Visor Estado de cuenta-->
+<!-- Modal Revertir deuda y borrar pago-->
+<div class="modal fade" id="modal_revert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style='background-color:#3C8DBC;color:white;'>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Revertir deuda y borrar pago</h4>
+            </div>
+            <div class="modal-body" id="modal_revert_body">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Revertir deuda y borrar pago-->
 <!-- Modal Buscar cliente -->
 <div class="modal fade" id="modal_busquedaCliente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">

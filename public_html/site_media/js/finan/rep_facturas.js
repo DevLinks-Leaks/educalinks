@@ -1,6 +1,10 @@
 $(document).ready(function(){
     $("#txt_fecha_ini").datepicker();
     $("#txt_fecha_fin").datepicker();
+	$(".boton_busqueda").click(function(){
+		$("#desplegable_busqueda").slideToggle(200);
+	});
+	$("#desplegable_busqueda").show();
 });
 function js_rep_facturas_carga_reports_descuentos( div, url, evento )
 {   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
