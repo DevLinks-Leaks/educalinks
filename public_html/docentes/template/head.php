@@ -53,6 +53,8 @@
 		<!-- Slick Carousel -->
 		<link href="../includes/common/slick/slick.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" type="text/css" href="../includes/common/slick/slick-theme.css"/>
+		<!-- Time Picker -->
+		<link rel="stylesheet" href="../../includes/common/plugins/timepicker/bootstrap-timepicker.min.css">
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>

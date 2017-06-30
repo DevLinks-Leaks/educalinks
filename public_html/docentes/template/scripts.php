@@ -68,7 +68,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
     <script src="../includes/common/plugins/fullcalendar/fullcalendar.min.js"></script>
     <script src='../includes/common/plugins/fullcalendar/locale/es.js'></script>
-		
+		<!-- Time Picker -->
+    <script type="text/javascript" src="../includes/common/plugins/timepicker/bootstrap-timepicker.js">
+
 	<script src="js/posts.js?<?= $rand?>"></script>
 	<script src="js/agenda.js?<?= $rand?>"></script>
 	<script type="text/javascript" src="js/general.js?<?= $rand?>"></script>

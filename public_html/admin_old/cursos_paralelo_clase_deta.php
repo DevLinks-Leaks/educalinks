@@ -148,9 +148,11 @@
                                             <table class="table_striped" id="agendas_table" data-page-length='10'>
                                                 <thead>
                                                 <tr>
-                                                    <th width="60%">Detalle</th>
-                                                    <th width="20%">Fecha</th>
-                                                    <th width="20%">Estado</th>
+                                                    <th width="10%">Tipo</th>
+                                                    <th width="50%">Detalle</th>
+                                                    <th width="15%">Fecha</th>
+                                                    <th width="10%">Estado</th>
+                                                    <th width="8%">Opciones</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -158,12 +160,28 @@
                                                 while ($row_agend_view = sqlsrv_fetch_array($stmp_agend)) {
                                                     ?>
                                                     <tr>
+                                                        <td>
+                                                            <?= $row_agend_view['agen_tipo_deta']; ?>
+                                                        </td>
                                                         <td><h4><?= $row_agend_view['agen_titu']; ?></h4>
                                                             <?= $row_agend_view['agen_deta']; ?>
                                                         </td>
                                                         <td><?= $row_agend_view['agen_fech_regi']; ?></td>
                                                         <td>
                                                             <?= $row_agend_view['agen_esta']; ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php if($row_agend_view['mater_codi']!=null){ ?>
+                                                              <a  class="btn btn-default" target="_blank" title='Descargar Material Adjunto' onmouseover='$(this).tooltip("show")'
+                                                                  href="<?= $_SESSION['ruta_materiales_carga'].$row_agend_view['mater_file'];?>">
+                                                                  <span class="fa fa-download"></span>
+                                                              </a>
+                                                            <?}?>
+                                                            <?php if($row_agend_view['agen_tipo_codi']==2){ ?>
+                                                            <a title='Imprimir formato planificación de tareas' href="reportes_generales/planificacion_tareas.php?agen_codi=<?=$row_agend_view['agen_codi'];?>&curs_para_mate_prof_codi=<?=$_GET['curs_para_mate_prof_codi'];?>" target="_blank" class="btn btn-default">
+                                                                <span class="fa fa-print"> </span>
+                                                            </a>
+                                                            <?}?>
                                                         </td>
                                                     </tr>
                                                     <?

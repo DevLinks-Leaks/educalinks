@@ -25,30 +25,40 @@ function agen_add(div,url,curs_para_mate_prof_codi,curs_para_mate_codi)
     else
         mater_codi=null;
 
+    var agen_codi=$('#hd_agen_codi').val();
+    var hd_mater_codi=$('#hd_mater_codi').val();
+    if (agen_codi>0){
+        data.append('opc', 'agen_edit');
+        data.append('agen_codi', agen_codi);
+        data.append('mater_codi_edit',hd_mater_codi);
+	}
+    else
+        data.append('opc', 'agen_add');
 	data.append('curs_para_mate_prof_codi', curs_para_mate_prof_codi);
 	data.append('agen_fech_ini', fecha_ini);
 	data.append('agen_fech_fin', fecha_fin);
 	data.append('agen_deta', document.getElementById('agen_deta').value);
 	data.append('agen_titu', document.getElementById('agen_titu').value);
     data.append('agen_tipo_codi', $('#agen_tipo_codi').val());
-		data.append('agen_tiempo', ($('.agen_tiempo').val()=='00.00')? '' : $('.agen_tiempo').val());
+	data.append('agen_tiempo', ($('#agen_tiempo').val()=='00.00')? '' : $('#agen_tiempo').val());
     data.append('agen_mater', (document.getElementById('agen_mater').value=='' ? '' : document.getElementById('agen_mater').value));
     data.append('agen_crit', (document.getElementById('agen_crit').value=='' ? '' : document.getElementById('agen_crit').value));
     data.append('agen_indi', (document.getElementById('agen_indi').value=='' ? '' : document.getElementById('agen_indi').value));
     data.append('agen_retr', (document.getElementById('agen_retr').value=='' ? '' : document.getElementById('agen_retr').value));
     data.append('mater_codi', mater_codi);
-	data.append('opc', 'agen_add');
-		
+
+    var tipo = $('#tipo').val();
+
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', url , true);
 	xhr.onreadystatechange=function(){
 		if (xhr.readyState==4 && xhr.status==200){
 			if(xhr.responseText=="OK"){
 				$.growl.notice({ title: "Informacion: ",message: "¡Se agend&oacute; correctamente!" });
-				agen_view(div,url,curs_para_mate_prof_codi,curs_para_mate_codi,'T');
+				agen_view(div,url,curs_para_mate_prof_codi,curs_para_mate_codi,'A');
 			}else{
 				$.growl.error({ title: "Informacion: ",message: "Ocurri&oacute; un error al agendar" });
-				agen_view(div,url,curs_para_mate_prof_codi,curs_para_mate_codi,'T');
+				agen_view(div,url,curs_para_mate_prof_codi,curs_para_mate_codi,'A');
 			}
 		}
 	}
@@ -114,7 +124,12 @@ function carga_agenda(div,url,curs_para_mate_prof_codi)
     xhr.send(data);
 
 }
-
+function refresh_modal_agenda(){
+    $("#agen_fech_ini").val(obtener_fecha('hoy'));
+    $("#agen_fech_fin").val(obtener_fecha('hoy'));
+    $('#agen_titu').val('');
+    $('#agen_deta').val('');
+}
 function cambiar_por_tipo(value){
 	if(value==2)
     	$('#div_dynamic').show();
@@ -122,9 +137,8 @@ function cambiar_por_tipo(value){
         $('#div_dynamic').hide();
 }
 
-
-function print(value)
-{
+function load_modal_content(div,agen_codi){
+    // document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
     if (window.XMLHttpRequest)
     {// code for IE7+, Firefox, Chrome, Opera, Safari
         xmlhttp=new XMLHttpRequest();
@@ -133,28 +147,23 @@ function print(value)
     {// code for IE6, IE5
         xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
     }
-
-    var data = new FormData();
-    data.append('opc', 'alum_upd');
-    data.append('alum_mail', document.getElementById('alum_mail').value);
-    data.append('alum_celu', document.getElementById('alum_celu').value);
-
     xmlhttp.onreadystatechange=function()
     {
-        if (xmlhttp.readyState==4 && xmlhttp.status==200)
-        {
-            var json = JSON.parse(xmlhttp.responseText);
-            if (json.state=="success"){
-                $.growl.notice({ title: "Educalinks informa:",message: json.result });
-                window.open('index.php','_self')
-            }else{
-                $.growl.error({ title: "Educalinks informa:",message: json.result });
-                console.log(json.console);
-            }
+        if (xmlhttp.readyState==4 && xmlhttp.status==200){
+
+            document.getElementById(div).innerHTML=xmlhttp.responseText;
+            document.getElementById('hd_agen_codi').value=agen_codi;
+            $("#agen_fech_ini").datepicker();
+            $("#agen_fech_fin").datepicker();
+            $('.timepicker').timepicker({
+                showInputs: false,
+                showMeridian:false
+            });
+			$('#agen_nuev').modal('show');
         }
     }
-    xmlhttp.open("POST","script_actualizacion_datos.php",true);
-    // xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    var data="agen_codi="+agen_codi;
+    xmlhttp.open("POST",'agenda_modal.php',true);
+    xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
     xmlhttp.send(data);
-
 }
