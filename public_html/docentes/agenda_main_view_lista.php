@@ -50,8 +50,9 @@
   <tr>
     <th width="9%" align="left">Fecha Inicio</th>
     <th width="9%" align="left">Fecha Fin&nbsp;</th>
-    <th width="67%" align="left">Detalles</th>
-     <th width="15%" style='text-align:center'>Opciones</th>
+      <th width="15%" align="left">Tipo de Agenda</th>
+    <th width="57%" align="left">Detalles</th>
+     <th width="10%" style='text-align:center'>Opciones</th>
   </tr>
 </thead> 
 <tbody>
@@ -59,12 +60,18 @@
   <tr>
     <td align="left"><?=  date_format( $row_agen_curs_para_mate_view["agen_fech_ini"], 'd/M/Y' ); ?></td>
     <td align="left"><?=  date_format( $row_agen_curs_para_mate_view["agen_fech_fin"], 'd/M/Y' ); ?> </td>
-  
+      <td align="left"><?= $row_agen_curs_para_mate_view["agen_tipo"]; ?> </td>
     <td align="left">
     	<h4><b><?= $row_agen_curs_para_mate_view["agen_titu"]; ?></b></h4>
-        <h5><?= $row_agen_curs_para_mate_view["agen_deta"] ?> ...</h5>    
+        <h5><?= $row_agen_curs_para_mate_view["agen_deta"] ?> ...</h5>
     </td>
       <td style='text-align:center'>
+          <?php if($row_agen_curs_para_mate_view['mater_codi']!=null){ ?>
+          <a  class="btn btn-default" target="_blank" title='Descargar Material Adjunto' onmouseover='$(this).tooltip("show")'
+              href="<?= $_SESSION['ruta_materiales_carga'].$row_agen_curs_para_mate_view['mater_file'];?>">
+              <span class="fa fa-download"></span>
+          </a>
+          <?}?>
 		<a class="btn btn-default" onclick="agen_del('para_main','script_agen.php',<?= $curs_para_mate_prof_codi;?>,<?= $curs_para_mate_codi;?>,<?= $row_agen_curs_para_mate_view["agen_codi"]; ?>)"
 			title='Eliminar' onmouseover='$(this).tooltip("show")'>
 			<span class="fa fa-trash btn_opc_lista_eliminar"></span> </a></td>

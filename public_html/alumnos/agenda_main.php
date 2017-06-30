@@ -49,7 +49,7 @@ include("../framework/funciones.php");
 
 			//str_replace('\n','<br>',str_replace('"','',str_replace('\r','',json_encode($row_agen_curs_view['agen_titu']))))  str_replace(' \','
 			//preg_replace('/[^A-Za-z0-9 \-]/', '',$row_agen_curs_view['agen_deta'])
-			$agendas_mes.='{title: " '.str_replace('\n','<br>',str_replace('"','',str_replace('\r','',json_encode($row_agen_curs_view['mate_deta'])))).' " ,titu: " '.str_replace('\n','<br>',str_replace('"','',str_replace('\r','',json_encode($row_agen_curs_view['agen_titu'])))).' ",description: " '.str_replace('\n','<br>',str_replace('"','',str_replace('\r','',json_encode($row_agen_curs_view['agen_deta'])))).' " ,start: new Date('.$agenda_year.', '.$agenda_month.', '.$agenda_day.',9,0), end: new Date('.$agenda_year_fin.', '.$agenda_month_fin.', '.$agenda_day_fin.',9,0), backgroundColor: "'.$color.'" ,borderColor: "'.$color.'" ,textColor: "#000000"},';
+			$agendas_mes.='{id: "'.$row_agen_curs_view['agen_codi'].'", title: " '.str_replace('\n','<br>',str_replace('"','',str_replace('\r','',json_encode($row_agen_curs_view['mate_deta'])))).' " ,titu: " '.str_replace('\n','<br>',str_replace('"','',str_replace('\r','',json_encode($row_agen_curs_view['agen_tipo_deta'])))).' ",start: new Date('.$agenda_year.', '.$agenda_month.', '.$agenda_day.',9,0), end: new Date('.$agenda_year_fin.', '.$agenda_month_fin.', '.$agenda_day_fin.',9,0), backgroundColor: "'.$color.'" ,borderColor: "'.$color.'" ,textColor: "#000000"},';
 
 			//,backgroundColor: ".'"'.$color.'"'.",borderColor: ".'"'.$color.'"'."},";
 		}
@@ -59,7 +59,7 @@ include("../framework/funciones.php");
 <div id="calendar"></div>
 <div class="modal fade " id="agenda_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div width="100%" class="modal-content">
+        <div width="100%" id="modal-body" class="modal-content">
             <div class="modal-header" id="modal-header" style="font-weight: bold !important;">
 		      	<button 
 		            type="button" 
@@ -112,15 +112,11 @@ include("../framework/funciones.php");
 			],
 			eventRender: function(event, element) { 
 				element.find('.fc-time').remove();
-				element.find('.fc-title').append("<br/>" + event.titu+"<br/> Ver más..."); 
+				element.find('.fc-title').append("<br/><small>" + event.titu+"</small><br/> Ver más...");
 			},
 			eventClick: function(event){
-				$('#modal-title').html(event.titu+'<small> - '+event.title+'</small>');
-				inidate = $.datepicker.formatDate( "d-M-yy",new Date(event.start));
-				findate = $.datepicker.formatDate( "d-M-yy",new Date(event.end));
-            	$('#modal-body').html('<p> <b>Fecha inicio:</b> '+inidate+'&ensp; <b>Fecha fin: </b>'+findate+'</p>'+'<p>'+event.description+'</p>');
-				$('#agenda_modal').modal();
-			} 
+                agen_view('modal-body',event.id);
+			}
 	  });
 	});
 </script>
