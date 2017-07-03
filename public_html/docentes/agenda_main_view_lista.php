@@ -83,7 +83,7 @@
                   <span class="fa fa-print"> </span>
               </a>
           <?}?>
-          <a class="btn btn-default" onclick="load_modal_content('agen_modal_content',<?=$row_agen_curs_para_mate_view['agen_codi'];?>)"
+          <a class="btn btn-default" onclick="load_modal_content('agen_modal_content',<?=$row_agen_curs_para_mate_view['agen_codi'];?>,<?= $curs_para_mate_codi;?>,<?= $curs_para_mate_prof_codi;?>)"
              title='Editar' onmouseover='$(this).tooltip("show")'>
               <span class="fa fa-pencil btn_opc_lista_editar"></span> </a>
 		<a class="btn btn-default" onclick="agen_del('para_main','script_agen.php',<?= $curs_para_mate_prof_codi;?>,<?= $curs_para_mate_codi;?>,<?= $row_agen_curs_para_mate_view["agen_codi"]; ?>)"

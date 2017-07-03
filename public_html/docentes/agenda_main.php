@@ -27,7 +27,7 @@
 										class="btn btn-primary"
 										data-toggle="modal"
 										data-target="#agen_nuev"
-										onclick="load_modal_content('agen_modal_content',0)">
+										onclick="load_modal_content('agen_modal_content',0,<?= $curs_para_mate_codi;?>,<?= $curs_para_mate_prof_codi;?>)">
 											<span class="fa fa-plus"></span> Agenda
 									</a>
 								</h3>

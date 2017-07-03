@@ -211,9 +211,10 @@ switch($opc)
 
                             }
                         }
-                        echo 'OK';
-                    }else{
 
+                    }else{
+                        $mater_view_opc=$_POST['mater_codi_edit'];
+//                        if(file_exists($_SESSION['ruta_materiales_carga'].$mater_view_opc.".".$extension)) unlink($_SESSION['ruta_materiales_carga'].$mater_view_opc.".".$extension);
                         if (move_uploaded_file($archivo['tmp_name'], $_SESSION['ruta_materiales_carga'].$mater_view_opc.".".$extension))
                         {
                             $sql_opc = "{call curs_para_mate_mater_edit(?,?,?,?)}";
@@ -231,7 +232,7 @@ switch($opc)
                             }
                         }
 
-                        echo 'OK';
+
                     }
 
                 }

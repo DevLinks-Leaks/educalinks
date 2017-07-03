@@ -47,8 +47,6 @@ function agen_add(div,url,curs_para_mate_prof_codi,curs_para_mate_codi)
     data.append('agen_retr', (document.getElementById('agen_retr').value=='' ? '' : document.getElementById('agen_retr').value));
     data.append('mater_codi', mater_codi);
 
-    var tipo = $('#tipo').val();
-
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', url , true);
 	xhr.onreadystatechange=function(){
@@ -137,7 +135,7 @@ function cambiar_por_tipo(value){
         $('#div_dynamic').hide();
 }
 
-function load_modal_content(div,agen_codi){
+function load_modal_content(div,agen_codi,curs_para_mate_codi,curs_para_mate_prof_codi){
     // document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
     if (window.XMLHttpRequest)
     {// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -162,7 +160,7 @@ function load_modal_content(div,agen_codi){
 			$('#agen_nuev').modal('show');
         }
     }
-    var data="agen_codi="+agen_codi;
+    var data="agen_codi="+agen_codi+"&curs_para_mate_codi="+curs_para_mate_codi+"&curs_para_mate_prof_codi="+curs_para_mate_prof_codi;
     xmlhttp.open("POST",'agenda_modal.php',true);
     xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
     xmlhttp.send(data);
