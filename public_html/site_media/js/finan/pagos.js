@@ -2,12 +2,7 @@
  * Created by Robert on 10/06/2015.
  */
 $(document).ready(function() {
-	$("#txt_fecha_ini").datepicker();
-    $("#txt_fecha_fin").datepicker();
-	$("#cmb_producto").select2();
-	$("#boton_busqueda").click(function(){
-		$("#desplegable_busqueda").slideToggle(200);
-	});
+	
 } );
 function js_Pago_revertir( codigo, div, url )
 {   $('#modal_revert').modal('show');

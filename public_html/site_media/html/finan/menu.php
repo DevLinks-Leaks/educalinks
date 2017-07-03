@@ -80,10 +80,6 @@
 					<ul class="treeview-menu">
 						<li class="{menu405}">{RepFACT}</li>
 						<li class="{menu404}">{RepNC}</li>
-						<li class="{menu408}">{RepCtasPorCobrar}</li>
-						<li class="{menu409}">{RepEmisiones}</li>
-						<li class="{menu410}">{RepMediacion}</li>
-						<li class="{menu411}">{RepAntiguedad}</li>
 						<li class="{menu41} treeview"><a href="#"><i class="fa fa-book"></i> <span>Otros reportes</span> <i class="fa fa-angle-left pull-right"></i></a>
 							<ul class="treeview-menu">
 								<li class="{menu402}">{Reporte_CRM_Cobranza}</li>
@@ -93,6 +89,10 @@
 								<li class="{menu401}">{Liquidez}</li>
 							</ul>
 						</li>
+						<li class="{menu408}">{RepCtasPorCobrar}</li>
+						<li class="{menu409}">{RepEmisiones}</li>
+						<li class="{menu410}">{RepMediacion}</li>
+						<li class="{menu411}">{RepAntiguedad}</li>
 					</ul>
 				</li>
 				<li class="{open5} treeview">

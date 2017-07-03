@@ -17,46 +17,57 @@
   </div>
 </div>
 <!-- Modal Editar-->
-<div class="form-inline">
-	<table width='50%'>
-		<tr>
-			<td>
-				<table class="table table-striped table-hover" width='100%'>
-					<tr>
-						<td width='30%'><label class="codigoPeriodo_busq" for="cursos">Per&iacute;odo:</label></td>
-						<td><div id="comboPeriodo">
-							   {combo_periodo}
+<div class='panel panel-info dismissible' id='panel_search' name='panel_search'>
+	<div class="panel-heading">
+		<h3 class="panel-title">
+			<a href="#/" class="boton_busqueda" style='text-decoration:none;'><span class="fa fa-search"></span>&nbsp;Búsqueda</a>
+			<div class="pull-right">
+				<a href="#/" class="boton_busqueda" style='text-decoration:none;'><span class='fa fa-minus'></span></a>
+			</div>
+		</h3>
+	</div>
+	<div class="panel-body" id="desplegable_busqueda" name="desplegable_busqueda">
+		<div class="form-horizontal" role="form">
+			<div class='col-md-7 col-sm-12'>
+				<div class='row'>
+					<div class='col-md-12 col-sm-12'>
+						<div class='form-group'>
+							<label class="col-md-4 col-sm-3 control-label" style='text-align: right;' for='txt_nom_cliente'>Per&iacute;odo:</label>
+							<div class="col-md-8 col-sm-8">
+								<div id="comboPeriodo">
+								   {combo_periodo}
+								</div>
 							</div>
-						</td>
-					</tr>
-					<tr>
-						<td><label class="codigoCurso_busq" for="cursos">Cursos:</label></td>
-						<td><div id="comboCursos">
-							   {combo_curso}
+						</div>
+					</div>
+					<div class='col-md-12 col-sm-12'>
+						<div class='form-group'>
+							<label class="col-md-4 col-sm-3 control-label" style='text-align: right;' for='txt_nom_cliente'>Cursos:</label>
+							<div class="col-md-8 col-sm-8">
+								<div id="comboCursos">
+								   {combo_curso}
+								</div>
 							</div>
-						</td>
-					</tr>
-					<tr>
-						<td width='30%'><label class="codigoTipoDesc_busq" for="descuento">Tipo de descuento:</label></td>
-						<td><div id="div_comboTipoDescuento">
-								{combo_tipo_descuento}
+						</div>
+					</div>
+					<div class='col-md-12 col-sm-12'>
+						<div class='form-group'>
+							<label class="col-md-4 col-sm-3 control-label" style='text-align: right;' for='txt_nom_cliente'>Tipo de descuento:</label>
+							<div class="col-md-8 col-sm-8">
+								<div id="div_comboTipoDescuento">
+									{combo_tipo_descuento}
+								</div>
 							</div>
-						</td>
-					</tr>
-				</table>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<div class="div_button" >
-					<button type="button" 
-							style="float:right" 
-							class="btn btn-primary" aria-hidden="true" data-toggle="modal"  data-target="#modal_edit" 
-							onclick=" carga_reports_descuentos('modal_edit_body','{ruta_html_finan}/rep_descuentos/controller.php','print_descuentos')">
-							<span class="glyphicon glyphicon-print"></span>&nbsp;Imprimir</button>
+						</div>
+					</div>
 				</div>
-			</td>
-		</tr>
-	</table>
+			</div>
+			<div class='col-md-5 col-sm-12' style='text-align:center;'>
+				<button type="button" 
+						class="btn btn-primary" aria-hidden="true" data-toggle="modal"  data-target="#modal_edit" 
+						onclick=" carga_reports_descuentos('modal_edit_body','{ruta_html_finan}/rep_descuentos/controller.php','print_descuentos')">
+						<span class="fa fa-print"></span></button>
+			</div>
+		</div>
+	</div>
 </div>
-

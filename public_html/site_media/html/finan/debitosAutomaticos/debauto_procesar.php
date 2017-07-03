@@ -132,6 +132,10 @@
 					<option value="8" selected='selected'>- Débito bancario -</option>
 					<option value="10">- Convenio de pago -</option>
 					<option value="11">- Pago por ventanilla del banco -</option>
+					<option value="12">- Pagado todo el año -</option>
+					<option value="13">- Debito rol de pago -</option>
+					<option value="1" >- Efectivo -</option>
+					<option value="6" >- Documento interno -</option>
 				</select>
 			</div>
 		</div>

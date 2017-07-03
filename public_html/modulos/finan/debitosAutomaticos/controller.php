@@ -28,20 +28,21 @@ function handler()
 			if($_SESSION['IN']!="OK"){$_SESSION['IN']="KO";$_SESSION['ERROR_MSG']="Por favor inicie sesión";header("Location:".$domain);}
             
 			$debito->get_all_campos( 'V_DatosAlumnosDebitos_Detalle' );
+			$formatos->get_all_formatos();
 			$item->get_item_selectFormat('');
 			$item->rows[0][1]='- Todos -';
 			$banco->get_bancofromCatologoSelectFormat( 1 ); //1 para que traiga opción 'todos'
 			$tarjCredito->get_tarjetasfromCatologoSelectFormat( 1 ); //1 para que traiga opción 'todos'
 			$settings->get_debitoautomatico_config();
-			
-			$data = array(	'{combo_campos_file}' =>array("elemento"=> "combo", 
+
+			$data = array(	'{combo_campos_file}' =>array("elemento"=> "combo",
                                                       	"datos"     => $debito->rows, 
                                                       	"options"   => array("name"=>"campos_add","id"=>"campos_add","required"=>"required","class"=>"form-control"),
                                                       	"selected"  => 0),
 						    '{cmb_copyPaste_formato}' => array(  	"elemento"  => "combo", 
 																	"datos"     => $formatos->rows, 
 																	"options"   => array("name"=>"formatos_add","id"=>"formatos_add","required"=>"required","class"=>"form-control","disabled"=>"disabled"),
-																	"selected"  => 0),								
+																	"selected"  => 0),
 							'{cmb_banco}' => array( "elemento"  => "combo",
 													"datos"     => $banco->rows,
 													"options"   => array(	"name" => "cmb_banco",
@@ -71,12 +72,12 @@ function handler()
 			$formatos->get_all_formatos();
 			$combo = "<select multiple='multiple' class='select2-select form-control' id='formatos_add' name='formatos_add[]' style='width: 400px;'>";
 			foreach( $formatos->rows as $rows)
-			{ 	if( !empty( $rows ) ) 
+			{ 	if( !empty( $rows ) )
 					$combo.= "<option value='".$rows['form_debi_codigo']."'>".$rows['form_debi_descripcion']."</option>";
-			}	
+			}
 			$combo.= "</select>";
 			$data['cmb_carga_formato'] = $combo;
-			
+
 			$data['cmb_producto'] = $select;
 			$data['active1']='';
 			$data['active2']='';
@@ -96,7 +97,7 @@ function handler()
 			if($_SESSION['IN']!="OK"){$_SESSION['IN']="KO";$_SESSION['ERROR_MSG']="Por favor inicie sesión";header("Location:".$domain);}
 			$settings->get_debitoautomatico_config();
 			echo '<label>Al momento de exportar:</label>
-						<div class="checkbox">
+						<div class="checkbox" style="display:none;">
 							<label>
 								<input type="checkbox" id="check_exp_opc_ant" 
 									name="check_exp_opc_ant" '.($settings->rows[0]['check_exp_opc_ant'] == 'S' ? 'checked': '' ).'> Preguntar por clientes con deudas antiguas por pagar.
@@ -111,17 +112,17 @@ function handler()
 			break;
 		case SET_DEBT_AUT_SETTINGS:
 			$check_exp_opc_ant = $check_exp_opc_ctas = "";
-			
+
 			if ( $debito_data['check_exp_opc_ant'] == 'true' )
 				$check_exp_opc_ant = 'S';
 			else
 				$check_exp_opc_ant = 'N';
-			
+
 			if ( $debito_data['check_exp_opc_ctas'] == 'true' )
 				$check_exp_opc_ctas = 'S';
 			else
 				$check_exp_opc_ctas = 'N';
-			
+
 			$settings->set_debitoautomatico_config( $check_exp_opc_ant , $check_exp_opc_ctas );
 			print_r($settings->mensaje);
 			break;
@@ -179,7 +180,7 @@ function handler()
 			}
 			$body.="	</tbody>
 					</table>";
-			
+
 			$data['tbl_formato'] = $body;
 			retornar_formulario(VIEW_MAINT, $data);
 			break;
@@ -188,7 +189,7 @@ function handler()
 			$formatos->get_all_formatos();
 			$combo = "<select multiple='multiple' class='js-example-basic-single' id='formatos_add' name='formatos_add[]' style='width: 400px;'>";
 			foreach( $formatos->rows as $rows)
-			{ 	if( !empty( $rows ) ) 
+			{ 	if( !empty( $rows ) )
 					$combo.= "<option value='".$rows[0]."'>".$rows[1]."</option>";
 			}
 			$combo.= "</select>";
@@ -415,7 +416,7 @@ function handler()
                                                       	"selected"  => 0),
 					);
 			
-			if ( $error_espacio == 1 )
+			if ( $error_espacio >0  )
 			{	$data['txt_mensaje'] = '<div class="alert alert-danger" role="alert">
 					<p><span class="fa fa-times-circle" aria-hidden="true"></span>
 						Educalinks Informa
@@ -479,7 +480,7 @@ function handler()
 				else
 				{	$textonook=$debito_data['textonook'];
 				}
-				
+
 				if($debito_data['filainicia']!='')
 				{	$primerafila=$debito_data['filainicia'];
 				}
@@ -502,7 +503,7 @@ function handler()
 			$highestColumn = PHPExcel_Cell::columnIndexFromString($objPHPExcel->getActiveSheet()->getHighestColumn());
 			$codigodeuda=0;$valor=0;
 			$columna=0;$columna2=0;$columna3=0;
-			$contador1=0;$contador2=0;$contador3=0;$rowcontador=0;
+			$contador1 = $contador2 = $contador3 = $contador4 = $contador5 = $rowcontador=0;
 			$pago = $sinliquidez = 0;
 			//  Loop through each row of the worksheet in turn
 			$acu=0;
@@ -534,10 +535,10 @@ function handler()
 					if($params[$i][$columna3]==$textonook &&  $j==$columna3)
 					{	$sinliquidez = $sinliquidez+1;
 					}
-					else if($params[$i][$columna3]!=$textook &&  $j==$columna3 && $params[$i][$columna3]!='')
+					else if($params[$i][$columna3]!=$textook && $params[$i][$columna3]!=$textonook && $j==$columna3 && $params[$i][$columna3]!='')
 					{	$pago=$pago+0;
-						$contador2=$contador2+1;
-						$hola=$params[$i][$columna3];
+						$contador4 = $contador4 + 1;
+						//$hola=$params[$i][$columna3];
 					}
 					else
 					{ 	$pago=$pago+0;
@@ -545,23 +546,26 @@ function handler()
 				}
 				if($pago>0)
 				{	$carga->setpagodebito( $codigodeuda, str_replace(",", ".", $valor), $_SESSION['usua_codigo'], $nombrearchivo, $debito_data['fecha_debito'], $debito_data['id_formaPago'] );
-					$rowcontador=$carga->rows[0];
-					$contador1=$contador1+$rowcontador['contadorpagados'];
-					$contador3=$contador3+$rowcontador['contadorsaldoafavor'];
+					$rowcontador = $carga->rows[0];
+					$contador1 = $contador1 + $rowcontador['contadorpagados'];
+					$contador2 = $contador2 + $rowcontador['contadorabonados'];
+					$contador3 = $contador3 + $rowcontador['contadorsaldoafavor'];
 				}
 				if($sinliquidez>0)
 				{
 					if ( $debito_data['id_formaPago'] == 8 ) //sólo si es débito bancario, registra cuenta sin liquidez.
-					{	$carga->setpagodebito_sinliquidez( $codigodeuda, str_replace(",", ".", $valor), $_SESSION['usua_codigo'], 
+					{	$carga->setpagodebito_sinliquidez( $codigodeuda, str_replace(",", ".", $valor), $_SESSION['usua_codigo'],
 															$nombrearchivo, $debito_data['fecha_debito'], $debito_data['id_formaPago'] );
-						$contador2 = $contador2 + 1;
+						$contador5 = $contador5 + 1;
 					}
 				}
 				$pago = $sinliquidez = 0;
 			}	
 			$data =	array(	"saldoafavor"	=> $contador3 ,
 							"pagado"		=> $contador1 ,
-							"nopagado"		=> $contador2 ,
+							"abonado"		=> $contador2 ,
+							"nonada"		=> $contador4,
+							"sinliquidez"	=> $contador5
 					);
 			$data['active1']='';
 			$data['active2']='in active';
@@ -747,7 +751,7 @@ function handler()
 			$xml_productos.="</productos>";
 			
 			$debito->get_all_deudas($cabecera_completa,$debito_data['hd_id_formato_exp'], $xml_productos,
-									$debito_data['cmb_fac_estado'], $debito_data['cmb_banco'], $debito_data['cmb_tarjCredito'], $_SESSION['peri_codi'] );
+									$debito_data['cmb_fac_estado'], $debito_data['cmb_banco'], $debito_data['cmb_tarjCredito'], $_SESSION['peri_codi'] , $debito_data['hd_opc_ctas_ant'] , $debito_data['hd_opc_ctas_inl'] );
 			$debitos_datos=$debito->rows;
 			$i_deta_fila=2;
 			$latestBLColumn = $objPHPExcel->getActiveSheet()->getHighestDataColumn();
@@ -802,17 +806,21 @@ function handler()
 			break;
 		case GET_DEUD_CTAS_ANTIQ :
 			$productos = json_decode($debito_data['cmb_producto'], true);
-			
+
 			$xml_productos='<?xml version="1.0" encoding="iso-8859-1"?><productos>';
 			foreach ( $productos as $producto )
 			{
 				$xml_productos.='<producto id="'.$producto.'" />';
 			}
 			$xml_productos.="</productos>";
-			
-			$formatos->get_deudores_ctas_antiguas(	$xml_productos , $_SESSION['peri_codi'] , $debito_data['hd_id_formato_exp'] , 
+
+			$formatos->get_deudores_ctas_antiguas(	$xml_productos , $_SESSION['peri_codi'] , $debito_data['hd_id_formato_exp'] ,
 													$debito_data['cmb_fac_estado'] , $debito_data['cmb_banco'] , $debito_data['cmb_tarjCredito'] );
 			print_r($formatos->rows[0]['ctas_antiguas']);
+			break;
+		case RESET_CTAS_INL :
+			$formatos->reset_deudores_ctas_inliquidas( $_SESSION['usua_codigo'] );
+			print_r($formatos->mensaje);
 			break;
 		case GET_DEUD_CTAS_INLIQ :
 			$formatos->get_deudores_ctas_inliquidas( $debito_data['hd_id_formato_exp'] , $_SESSION['peri_codi'] );

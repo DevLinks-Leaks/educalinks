@@ -275,7 +275,7 @@ function handler() {
 													"selected"  => 	0),
 						'{combo_curso}' => array(	"elemento"  => 	"combo", 
 													"datos"     => array(0 => array(0 => -1, 
-                                                                                        1 => 'Seleccione...',
+                                                                                        1 => '- Seleccione curso -',
                                                                                         3 => ''), 
                                                                             1=> array()),
                                                     "options"   => 	array(	"name"=>"cursos",

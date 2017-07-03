@@ -1,3 +1,9 @@
+$(document).ready(function() {
+    $(".boton_busqueda").click(function(){
+		$("#desplegable_busqueda").slideToggle(200);
+	});
+	$("#desplegable_busqueda").show();
+});
 function js_rep_debito_carga_reports_deudores( div, url, evento ) //PDF DE LA TABLA PRINCIPAL CON TOTALES VERTICALES Y HORIZONTALES
 {   "use strict";
     var doit = 'yes';

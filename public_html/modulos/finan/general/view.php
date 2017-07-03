@@ -56,7 +56,25 @@ function retornar_vista_general($vista, $data=array()) {
     $html = render_dinamic_content($html, array('usua_nombres'  => $_SESSION['usua_nombres'],'usua_apellidos' => $_SESSION['usua_apellidos'],'usua_codigo' => $_SESSION['usua_codigo']));
     $html = render_dinamic_content($html, $data);
     $html = activa_menu($vista, $html); 
-        
+       
+	if ( $_SESSION['caja_fecha'] < date('Ymd') )
+	{	$dias = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
+		$meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+ 
+		$date = new DateTime($_SESSION['caja_fecha']);
+		$mensaje = 
+		'<div id="div_caja_antigua_abierta" name="div_caja_antigua_abierta"
+				style="padding: 20px 30px; background: rgb(243, 156, 18); z-index: 999999; font-size: 16px; font-weight: 600;">
+				<p" style="color: rgba(255, 255, 255, 0.9); display: inline-block; margin-right: 10px; text-decoration: none;">Tiene una caja abierta del 
+				' .  $dias[ $date->format( 'w' ) ]." ". $date->format( 'd' ) ." de ".$meses[$date->format( 'n' )-1]. " del ".$date->format( 'Y' ) . '.</p>
+				<a class="btn btn-default btn-sm" href="#" onclick="js_general_close_and_open_cash();"
+					style="margin-top: -5px; border: 0px; box-shadow: none; color: rgb(243, 156, 18); font-weight: 600; background: rgb(255, 255, 255);">¡Cerrar caja y abrir caja de hoy!</a></div>';
+		$html = str_replace('{div_caja_antigua_abierta}', $mensaje, $html);
+	}
+	else
+	{
+		$html = str_replace('{div_caja_antigua_abierta}', '', $html);
+	}					
     if(array_key_exists('mensaje', $data))
 	{   $mensaje = $data['mensaje'];
     }

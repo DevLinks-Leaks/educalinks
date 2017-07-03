@@ -18,8 +18,11 @@
 	<div class="alert alert-success" role="alert">
 		<h4><i class="icon fa fa-check"></i> Subida de archivo con valores de pagos completado</h4>
 		<ul>
-			<li><strong>{pagado}</strong> pagos fueron registrados correctamente. <a href='../../../finan/pagos/'>Ir a pagos realizados</a> <span class='fa fa-list'></span>.</li>
-			<li><strong>{saldoafavor}</strong> pagos ya estaban saldados. Los valores fueron registrados como <a href='../../../finan/saldoaFavor/'>saldo a favor</a> <span class='fa fa-balance-scale'></span>.</li>
+			<li><strong>{pagado}</strong> abonos completos fueron registrados correctamente. <a href='../../../finan/pagos/'>Ir a pagos realizados</a> <span class='fa fa-list'></span>.</li>
+			<li><strong>{abonado}</strong> abonos parciales fueron registrados correctamente. <a href='../../../finan/pagos/'>Ir a pagos realizados</a> <span class='fa fa-list'></span>.</li>
+			<li><strong>{saldoafavor}</strong> deudas ya estaban pagadas totalmente. Los valores fueron registrados como <a href='../../../finan/saldoaFavor/'>saldo a favor</a> <span class='fa fa-balance-scale'></span>.</li>
+			<!--<li><strong>{nonada}</strong> deudas no tenían texto de confirmación, ni texto de reprobación.</li>-->
+			<li><strong>{sinliquidez}</strong> deudas fueron enviadas al historial de deudas con cuentas sin liquidez.</li>
 		</ul>
    </div>
 </div>

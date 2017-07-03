@@ -372,7 +372,8 @@ function handler() {
 							$i=0;
 					}
 				}
-			
+				
+				$periodo -> get_all_selectFormat();
 				$today=new DateTime('yesterday');
 				$tomorrow=new DateTime('today');
 				$data = array(
@@ -412,7 +413,7 @@ function handler() {
 													  "selected"  => -1)
 				);
 				$item->get_item_selectFormat('');
-				$select = "<select multiple='multiple' id=\"cmb_producto\" name=\"cmb_producto[]\" class='form-control' data-placeholder='- Seleccione producto -' style='width:320px;'>";
+				$select = "<select multiple='multiple' id=\"cmb_producto\" name=\"cmb_producto[]\" class='form-control' data-placeholder='- Seleccione producto -' style='width:280px;'>";
 				
 				foreach( $item->rows as $options )
 				{   if (!empty($options))
@@ -434,14 +435,18 @@ function handler() {
 																	"onChange"	=>	"cargaCursosPorNivelEconomico('resultadoCursos','".$diccionario['rutas_head']['ruta_html_finan']."/general/controller.php')"));
 				//$data['tabla']="¡Haga clic en b&uacute;squeda para filtrar la busqueda de tablas y reportes!";
 				$construct_table="
-						<table id='".$tabla."' class='table table-striped table-bordered'>
+						<table id='".$tabla."' class='table table-striped table-hover'>
 							<thead>
-								<th style='font-size:small;'>Curso</th>
-								<th style='font-size:small;'>Código</th>
-								<th style='font-size:small;'>Alumno</th>
+								<tr style='background-color:#605ca8 !important; color: white;'>
+									<th style='font-size:small;'>Curso</th>
+									<th style='font-size:small;'>Código</th>
+									<th style='font-size:small;'>Alumno</th>
+									<th style='font-size:small;'>Total</th>
+								</tr>
 							</thead>
 							<tbody>
 							<tr><td style='font-size:small;'></td>
+								<td style='font-size:small;'></td>
 								<td style='font-size:small;'></td>
 								<td style='font-size:small;'></td>
 							</tr></tbody></table>";
@@ -597,7 +602,7 @@ function handler() {
 										"selected"  => -1);
 			
 			$item->get_item_selectFormat('');
-			$select = "<select multiple='multiple' id=\"cmb_producto\" name=\"cmb_producto[]\" class='form-control' data-placeholder='- Seleccione producto -' style='width:320px;'>";
+			$select = "<select multiple='multiple' id=\"cmb_producto\" name=\"cmb_producto[]\" class='form-control' data-placeholder='- Seleccione producto -' style='width:280px;'>";
 			
 			foreach( $item->rows as $options )
 			{   if (!empty($options))
@@ -619,14 +624,18 @@ function handler() {
 																"onChange"	=>	"cargaCursosPorNivelEconomico('resultadoCursos','".$diccionario['rutas_head']['ruta_html_finan']."/general/controller.php')"));
 			//$data['tabla']="<small>¡Haga clic en b&uacute;squeda para cargar la consulta de deudas!</small>";
 			$construct_table="
-						<table id='".$tabla."' class='table table-striped table-bordered'>
+						<table id='".$tabla."' class='table table-striped table-hover'>
 							<thead>
-								<th style='font-size:small;'>Curso</th>
-								<th style='font-size:small;'>Código</th>
-								<th style='font-size:small;'>Alumno</th>
+								<tr style='background-color:#605ca8 !important; color: white;'>
+									<th style='font-size:small;'>Curso</th>
+									<th style='font-size:small;'>Código</th>
+									<th style='font-size:small;'>Alumno</th>
+									<th style='font-size:small;'>Total</th>
+								</tr>
 							</thead>
 							<tbody>
 							<tr><td style='font-size:small;'></td>
+								<td style='font-size:small;'></td>
 								<td style='font-size:small;'></td>
 								<td style='font-size:small;'></td>
 							</tr></tbody></table>";
@@ -930,7 +939,7 @@ function handler() {
 				{	$toggle_column.=".";
 				}
 			}
-			$data['{toggle_vis}'] = array(
+			/*$data['{toggle_vis}'] = array(
 								"elemento"  => "div",
 								"content"   => $toggle_column);
 			$c=0;
@@ -944,11 +953,17 @@ function handler() {
 											"data-column"	=> $c
 									));
 				$c++;
-			}
+			}*/
+			
+			$permiso_179 = new General();
+			$permiso_181 = new General();
+			$permiso_179->permiso_activo($_SESSION['usua_codigo'], 179);
+			$permiso->permiso_activo($_SESSION['usua_codigo'], 180);
+			$permiso_181->permiso_activo($_SESSION['usua_codigo'], 181);
 			
 			$construct_table="
-						<table id='".$tabla."' class='table table-striped table-bordered'>
-							<thead><tr>";
+						<table id='".$tabla."' class='table table-striped table-hover'>
+							<thead><tr style='background-color:#605ca8 !important; color: white;'>";
 			foreach ($test as $campo)
 			{	
 				$construct_table.= "<th style='font-size:small;text-align:center;'>".$campo[0]."</th>";
@@ -958,9 +973,23 @@ function handler() {
 			{	$construct_table .= "<tr>";
 				$c=0;
 				foreach ($datos[$j] as $campo)
-				{	if(($c==0) || ($c==1) || ($c==2))
+				{	if(($c==0) || ($c==1))
 					{
 						$construct_table .= "<td style='font-size:small;'>".$campo."</td>";
+					}
+					else if ( $c == 2)
+					{
+						$opc = get_cliente_opciones($permiso,$datos[$j]['codigo'],'span',
+															 $permiso_179->rows[0]['veri'],
+															 $permiso->rows[0]['veri'],
+															 $permiso_181->rows[0]['veri'] );
+						$construct_table .= '<td style="font-size:small;">
+							<div class="btn-group">
+								<a href="#/" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+									'.$campo.'
+								</a>
+								'.$opc.'
+							</div></td>';
 					}
 					else
 					{
@@ -2464,6 +2493,15 @@ function handler() {
 			else
 				$_SESSION['sidebar_status'] ='';
 			break;
+		case CLOSE_AND_OPEN_CASH :
+			$gene->cierre_y_apertura_caja( $_SESSION['caja_codi'], $_SESSION['usua_codigo'] );
+			$_SESSION['caja_codi']=$gene->caja_codi;
+			$_SESSION['caja_fecha']=$gene->caja_fecha;
+			if ( $gene->caja_fecha = date('Ymd') )
+				echo "OK";
+			else
+				echo "KO";
+			break;
         default:
 			$_SESSION['IN']="KO";
 			$_SESSION['ERROR_MSG']="Por favor inicie sesión";
@@ -2527,5 +2565,28 @@ function helper_data() {
     return $gene_data;
 }
 
+function get_cliente_opciones($permiso, $codigoCliente, $type='span', $permiso_179, $permiso_180, $permiso_181 )
+{	global $diccionario;
+	if($type=='span'){$tag=''; $space='&nbsp;';}
+	$client_options = array();
+	$opciones = '<ul class="dropdown-menu">';
+	if ($permiso_180 == 1 )
+	{	$opciones.= "<li><a href='#/' onclick='carga_visorEstadoCuenta(\"".$codigoCliente."\",".'"modal_showDebtState_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/clientes/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_showDebtState'  id='".$codigoCliente."_verEstadoCuenta' onmouseover='$(this).tooltip(".'"show"'.")' style='cursor:pointer;' data-placement='left'><span style='color:#DBBCDB;' class='fa fa-file'></span> Ver estado de cuenta</a></li>";
+	}
+	if ($permiso_179 == 1 )
+	{	$opciones.= "<li><a href='#/' onclick='js_clientes_carga_asignacion(\"".$codigoCliente."\",".'"modal_asign_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/clientes/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_asign'  id='".$codigoCliente."_asignar' 
+	onmouseover='$(this).tooltip(".'"show"'.");' data-placement='left' style='cursor:pointer;' 
+	><span style='color:#3a3b45;' class='fa fa-percent'></span> Asignar Descuentos</a></li>";
+	}
+	if ( $permiso_181 == 1 )
+	{	$opciones.= "<li><a href='#/' onclick='js_clientes_carga_asignacionGrupoEconomico(\"".$codigoCliente."\",".'"modal_showSetGrupoEconomico_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/clientes/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_showSetGrupoEconomico'  id='".$codigoCliente."_asignarGrupoEconomico' onmouseover='$(this).tooltip(".'"show"'.");'
+	style='cursor:pointer;' data-placement='top'><span style='color:#D89C3F;' class='fa fa-group'></span>Asignar Grupo Económico</a></li>";
+	}
+	$opciones.= "<li><a href='#/'
+	onclick='carga_tabla_asign_repr(\"".$codigoCliente."\",".'"div_asign_repr"'.",".'"'.$diccionario['rutas_head']['ruta_html_common'].'/representantes/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_asign_repr'  id='".$codigoCliente."_asignar_repr' 
+	style='cursor:pointer;' onmouseover='$(this).tooltip(".'"show"'.");' data-placement='top'><span style='color:#E55A2F;' class='fa fa-heart-o'></span> Asignar representante</a></li>";
+	
+	return $opciones."</ul>";
+}
 handler();
 ?>
