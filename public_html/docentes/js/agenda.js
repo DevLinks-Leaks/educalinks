@@ -180,6 +180,7 @@ function load_modal_content(div,agen_codi,curs_para_mate_codi,curs_para_mate_pro
                 showInputs: false,
                 showMeridian:false
             });
+            $('#agen_tiempo').val('00:00');
 			$('#agen_nuev').modal('show');
         }
     }
