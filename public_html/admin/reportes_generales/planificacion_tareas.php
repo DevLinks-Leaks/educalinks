@@ -106,7 +106,7 @@
     $tbl_agenda.='</tr>';
     $tbl_agenda.="<tr>";
     $tbl_agenda.='<td class="titulos" align="left" width="'.$ancho.'%">TIEMPO: </td>';
-    $tbl_agenda.='<td class="texto" width="'.(100-$ancho).'%">'.$row_agen_info['agen_tiempo'].'</td>';
+    $tbl_agenda.='<td class="texto" width="'.(100-$ancho).'%">'.$row_agen_info['agen_tiempo'].' horas </td>';
     $tbl_agenda.='</tr>';
     $tbl_agenda.="<tr>";
     $tbl_agenda.='<td class="titulos" align="left" width="'.$ancho.'%">MATERIALES: </td>';

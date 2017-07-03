@@ -130,7 +130,9 @@ switch($opc)
 		$params_form = array($_POST['agen_codi']);
 		$sql_form="{call agen_del(?)}";
 		sqlsrv_query($conn, $sql_form, $params_form);	
-				
+		// $result= json_encode(array ('state'=>'error',
+		// 				'result'=>'Error al actualizar datos del representante.',
+		// 				'console'=> sqlsrv_errors() ));
 		echo "OK";
 		
 	break;

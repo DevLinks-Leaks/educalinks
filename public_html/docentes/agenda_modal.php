@@ -129,5 +129,5 @@
 </form>
 
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary"  data-dismiss="modal" onClick="agen_add('para_main','script_agen.php',<?= $_POST['curs_para_mate_prof_codi'];?>,<?= $_POST['curs_para_mate_codi'];?>)">Aceptar</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+    <button type="button" class="btn btn-primary" onClick="agen_add('para_main','script_agen.php',<?= $_POST['curs_para_mate_prof_codi'];?>,<?= $_POST['curs_para_mate_codi'];?>)">Aceptar</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
 </div>
