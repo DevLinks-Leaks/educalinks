@@ -75,6 +75,43 @@
 			table.destroy();
 			$('#tabla_estadoCuenta').empty();
 		})
+		$(document).ready(function(){
+			$(".detalle").tooltip({
+				'selector': '',
+				'placement': 'bottom',
+				'container': 'body',
+				'tooltipClass': 'detalleTooltip'
+			});
+			$("#txt_fecha_nac_ini").datepicker();
+			$("#txt_fecha_nac_fin").datepicker();	
+			$("#txt_fecha_matri_ini").datepicker({ format: 'yyyy-mm-dd' });
+			$("#txt_fecha_matri_fin").datepicker({ format: 'yyyy-mm-dd' });
+			
+			$("#txt_fecha_nac_ini").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+			$("#txt_fecha_nac_fin").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+				
+			$("#txt_fecha_matri_ini").inputmask({
+				mask: "y-1-2", 
+				placeholder: "yyyy-mm-dd", 
+				leapday: "-02-29", 
+				separator: "-", 
+				alias: "yyyy/mm/dd"
+			});
+			$("#txt_fecha_matri_fin").inputmask({
+				mask: "y-1-2", 
+				placeholder: "yyyy-mm-dd", 
+				leapday: "-02-29", 
+				separator: "-", 
+				alias: "yyyy/mm/dd"
+			});
+						
+			$("#boton_busqueda").click(function(){
+				$("#desplegable_busqueda").slideToggle(200);
+			});
+			$("#desplegable_busqueda").show();
+			$('[rel=tooltip]').tooltip({container: 'body'});
+			shortcut.add("Enter", function() {$('#btn_search').trigger("click");});
+		});
 	});
 	</script>
 </body>

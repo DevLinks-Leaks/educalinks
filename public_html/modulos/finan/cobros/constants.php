@@ -16,6 +16,7 @@ const PRINT_PDF_PAGO = 'print_pdf_pago';
 const PRINTREPVISOR = 'print_rep_visor';
 
 const VIEW_GET_ALL = 'buscar_todos'; 
+const VIEW_COBRAR  = 'cobrar_deuda';
 const VIEW_CAJA_CERRADA = 'cajaCerrada'; 
 const VIEW_GET_CLIENT = 'buscar_clientes'; 
 const VIEW_RESULT_PAYMENT = 'ingresaPago';

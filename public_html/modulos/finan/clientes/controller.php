@@ -890,6 +890,7 @@ function construct_table_pagos($cod_alum, $fini, $ffin, $periodo, $deuda )
 					<thead style='background-color:#81d4fa;'><tr>".
 			"<th style='font-size:small;text-align:center;'>Ref.</th>".
 			"<th style='font-size:small;text-align:center;'>Total Pago</th>".
+			"<th style='font-size:small;text-align:center;'>Saldo a favor</th>".
 			"<th style='font-size:small;text-align:center;'>Forma de Pago</th>".
 			"<th style='font-size:small;text-align:center;'>Fecha pago</th>".
 			"<th style='font-size:small;text-align:center;'>PDF</th>".
@@ -933,7 +934,7 @@ function construct_table_pagos($cod_alum, $fini, $ffin, $periodo, $deuda )
 					$datos.= $column."</td></tr>";
 					$cedula = $column;
 				}
-				elseif( $x==4 || $x==7 || $x==8 || $x==9 || $x==10 || $x==12 || $x==13 )
+				elseif( $x==4 || $x==8 || $x==9 || $x==10 || $x==11 || $x==13 || $x==14 )
 				{	//do nothing;
 				}
 				else

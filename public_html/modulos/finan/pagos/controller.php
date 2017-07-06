@@ -249,8 +249,11 @@ function handler() {
 					'fill' => array('type' => PHPExcel_Style_Fill::FILL_SOLID,
 									'color' => array('rgb' => '3C8DBC'))
 				);
-			if( $user_data['tipo_reporte'] == 'completo' )
-			{   $cabeceras ='Pago ref.,Titular,Titular doc.,Titular id.,Número de documento,Total pago,Forma de pago,Cliente ref. interna,Cliente id.,Cliente nombre,Curso Paralelo,Fecha de pago,Cajero,Pago sec.,Observaciones';
+			if ( $user_data['tipo_visual'] == '1' )
+			{   $cabeceras ='Pago ref.,Titular,Titular doc.,Titular id.,Número de documento,Total pago(menos Saldo a favor),Saldo a favor,Forma de pago,Cliente ref. interna,Cliente id.,Cliente nombre,Curso Paralelo,Fecha de pago,Cajero,Observaciones';
+			}
+			if ( $user_data['tipo_visual'] == '2' )
+			{   $cabeceras ='Pago ref.,Titular,Titular doc.,Titular id.,Número de documento,Total pago(incluído saldo a favor),Forma de pago,Cliente ref. interna,Cliente id.,Cliente nombre,Curso Paralelo,Fecha de pago,Cajero,Observaciones';
 			}
 			$cabecera = explode( ",", $cabeceras );
 			$i_cabe=0;//Contador de cabeceras
@@ -268,11 +271,18 @@ function handler() {
 			
 			$pago = new Pagos();
 			if( $user_data['tipo_reporte'] == 'completo' )
-			{   $pago->get_PagosRealizados( $codigo_pago, $fechavenc_ini, $fechavenc_fin, $forma_pago,
-											$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
-											$nombre_titular, $ptvo_venta, $sucursal, $num_factura, $categoria_codigo, $prod_codigo, 
-											$estado, $tpago_ini, $tpago_fin, $user_data['cmb_usuario_cajero'], $user_data['periodos'],$user_data['cmb_grupoEconomico'],
-											$user_data['cmb_nivelesEconomicos'], $user_data['cursos'], $user_data['deuda'] );
+			{   if ( $user_data['tipo_visual'] == '1' )
+					$pago->get_PagosRealizados( $codigo_pago, $fechavenc_ini, $fechavenc_fin, $forma_pago,
+												$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
+												$nombre_titular, $ptvo_venta, $sucursal, $num_factura, $categoria_codigo, $prod_codigo, 
+												$estado, $tpago_ini, $tpago_fin, $user_data['cmb_usuario_cajero'], $user_data['periodos'],$user_data['cmb_grupoEconomico'],
+												$user_data['cmb_nivelesEconomicos'], $user_data['cursos'], $user_data['deuda'] );
+				if ( $user_data['tipo_visual'] == '2' )
+					$pago->get_PagosRealizados2($codigo_pago, $fechavenc_ini, $fechavenc_fin, $forma_pago,
+												$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
+												$nombre_titular, $ptvo_venta, $sucursal, $num_factura, $categoria_codigo, $prod_codigo, 
+												$estado, $tpago_ini, $tpago_fin, $user_data['cmb_usuario_cajero'], $user_data['periodos'],$user_data['cmb_grupoEconomico'],
+												$user_data['cmb_nivelesEconomicos'], $user_data['cursos'], $user_data['deuda'] );
 			}
             $pagos=$pago->rows;
 			$i_deta_fila=2;
@@ -432,7 +442,7 @@ function handler() {
 			
 			$html .='<table border="0" cellspacing="0" cellpadding="0">';
 			$detaPago_total_gene=0;
-			
+			$detaPago_total_cajero=0;
 			$div_by_user = '0';
 			
 			if( substr( $user_data['tipo_reporte'], 0, 5 ) == 'curso' )
@@ -456,258 +466,220 @@ function handler() {
 					$div_by_user = '0';
 			}
 			for($i=0;$i<count($reporte->rows)-1;$i++)
-			{   if( $usuario_actual != $tranx[$i]['usua_codi'] )
-				{   if ($div_by_user == '1') 
-					{	if( $i != 0 )
-						{   $html.='<tr><td colspan="7"><hr/></td></tr>';
-							$html.='<tr>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td><b>Subtotal '.$suborden_actual.'</b> </td>
-								<td align="right"><b>$'.number_format($detaPago_subtotal,2).'</b> </td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-							</tr>
-							<tr>
-								<td colspan="7">&nbsp;</td>
-							</tr>';
-							$html.='<tr><td colspan="7"><hr/></td></tr>';
-							$html.='<tr>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-								<td><b>Subtotal '.$item_actual.'</b> </td>
-								<td align="right"><b>$'.number_format($detaPago_total,2).'</b> </td>
-								<td>&nbsp;</td>
-								<td>&nbsp;</td>
-							</tr>
-							<tr>
-								<td colspan="7">&nbsp;</td>
-							</tr>';
-						}
-						$html.='<tr><td colspan="7"><h2>Cajero: '.$tranx[$i]['usua_codi'].'</h2></td></tr>';
-						$html.='<tr><td colspan="7"><h3>'.$item_nomen.': '.$tranx[$i][$item_orden].'</h3></td></tr>';
-						$html.='<tr><td colspan="7"><h4>'.$suborden.': '.$tranx[$i][$subitem_orden] .'</h4></td></tr>';
+			{   if( $usuario_actual != $tranx[$i]['usua_codi'] && $div_by_user == '1')
+				{   if( $i != 0 )
+					{   $html.='<tr><td colspan="8"><hr/></td></tr>';
 						$html.='<tr>
-							<th style="width:5%">Pago</th>
-							<th style="width:5%">Curso</th>
-							<th style="width:35%">Alumno</th>
-							<th style="width:19%">Pago a Facturas</th>
-							<th style="width:6%" align="right">Valor</th>
-							<th style="width:11%" align="right">Fecha</th>
-							<th style="width:19%" align="right">Detalle</th>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td><b>Subtotal '.$suborden_actual.'</b> </td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td align="right"><b>$'.number_format($detaPago_subtotal,2).'</b> </td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
 						</tr>
 						<tr>
-						<td colspan="7"><hr/></td>
+							<td colspan="8">&nbsp;</td>
+						</tr>';
+						$html.='<tr><td colspan="8"><hr/></td></tr>';
+						$html.='<tr>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td><b>Subtotal '.$item_actual.'</b> </td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td align="right"><b>$'.number_format($detaPago_total,2).'</b> </td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+						</tr>
+						<tr>
+							<td colspan="8">&nbsp;</td>
+						</tr>';
+						$html.='<tr><td colspan="8"><hr/></td></tr>';
+						$html.='<tr>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td><b>Subtotal cajero '."Subtotal cajero ". $usuario_actual.'</b> </td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td align="right"><b>$'.number_format($detaPago_total_cajero,2).'</b> </td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+						</tr>
+						<tr>
+							<td colspan="8">&nbsp;</td>
 						</tr>';
 					}
-					else
-					{   if( $item_actual != $tranx[$i][$item_orden] )
-						{   if( $i != 0 )
-							{   $html.='<tr>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td><b>Subtotal '.$suborden_actual.'</b> </td>
-									<td align="right"><b>$'.number_format($detaPago_subtotal,2).'</b> </td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-								</tr>
-								<tr>
-									<td colspan="7">&nbsp;</td>
-								</tr>';
-								$html.='<tr><td colspan="7"><hr/></td></tr>';
-								$html.='<tr>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-									<td><b>Total</b> </td>
-									<td align="right"><b>$'.number_format($detaPago_total,2).'</b> </td>
-									<td>&nbsp;</td>
-									<td>&nbsp;</td>
-								</tr>
-								<tr>
-									<td colspan="7">&nbsp;</td>
-								</tr>';
-							}
-							$html.='<tr><td colspan="7"><h3>'.$item_nomen.': '.$tranx[$i][$item_orden].'</h3></td></tr>';
-							$html.='<tr><td colspan="7"><h3>'.$suborden.': '.$tranx[$i][$subitem_orden].'</h3></td></tr>';
-							$html.='<tr>
-								<th style="width:5%">Pago</th>
-								<th style="width:5%">Curso</th>
-								<th style="width:35%">Alumno</th>
-								<th style="width:19%">Pago a Facturas</th>
-								<th style="width:6%" align="right">Valor</th>
-								<th style="width:11%" align="right">Fecha</th>
-								<th style="width:19%" align="right">Detalle</th>
-							</tr>
-							<tr>
-							<td colspan="7"><hr/></td>
-							</tr>';
-							$detaPago_total_gene = $detaPago_total_gene + $detaPago_total;
-							$detaPago_subtotal=0;
-							$detaPago_total=0;
-						}else
-						{   if( $suborden_actual != $tranx[$i][$subitem_orden] )
-							{   if( $i != 0 )
-								{	$html.='<tr><td colspan="7"><hr/></td></tr>';
-									$html.='<tr>
-										<td>&nbsp;</td>
-										<td>&nbsp;</td>
-										<td>&nbsp;</td>
-										<td><b>Subtotal '.$suborden_actual.'</b> </td>
-										<td align="right"><b>$'.number_format($detaPago_subtotal,2).'</b> </td>
-										<td>&nbsp;</td>
-										<td>&nbsp;</td>
-									</tr>
-									<tr>
-										<td colspan="7">&nbsp;</td>
-									</tr>';
-								}
-								$html.='<tr><td colspan="7"><h4>'.$suborden.': '.$tranx[$i][$subitem_orden].'</h4></td></tr>';
-								$html.='<tr>
-									<th style="width:5%">Pago</th>
-									<th style="width:5%">Curso</th>
-									<th style="width:35%">Alumno</th>
-									<th style="width:19%">Pago a Facturas</th>
-									<th style="width:6%" align="right">Valor</th>
-									<th style="width:11%" align="right">Fecha</th>
-									<th style="width:19%" align="right">Detalle</th>
-								</tr>
-								<tr>
-								<td colspan="7"><hr/></td>
-								</tr>';
-								$detaPago_subtotal=0;
-							}	
-						}
-					}
+					$html.='<tr><td colspan="8"><h2>Cajero: '.$tranx[$i]['usua_codi'].'</h2></td></tr>';
+					$html.='<tr><td colspan="8"><h3>'.$item_nomen.': '.$tranx[$i][$item_orden].'</h3></td></tr>';
+					$html.='<tr><td colspan="8"><h4>'.$suborden.': '.$tranx[$i][$subitem_orden] .'</h4></td></tr>';
+					$html.='<tr>
+						<th style="width:3%">#</th>
+						<th style="width:6%">Recibo</th>
+						<th style="width:21%">Curso</th>
+						<th style="width:25%">Alumno</th>
+						<th style="width:15%">Factura</th>
+						<th style="width:6%" align="right">Total abonado</th>
+						<th style="width:10%" align="right">Fecha</th>
+						<th style="width:14%" align="right">Detalle</th>
+					</tr>
+					<tr>
+					<td colspan="8"><hr/></td>
+					</tr>';
 					$detaPago_total = 0;
+					$detaPago_total_cajero = 0;
 				}
 				else
 				{   if( $item_actual != $tranx[$i][$item_orden] )
 					{   if( $i != 0 )
-						{   $html.='<tr><td colspan="7"><hr/></td></tr>';
+						{   $html.='<tr><td colspan="8"><hr/></td></tr>';
 							$html.='<tr>
 								<td>&nbsp;</td>
 								<td>&nbsp;</td>
-								<td>&nbsp;</td>
 								<td><b>Subtotal '.$suborden_actual.'</b> </td>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
 								<td align="right"><b>$'.number_format($detaPago_subtotal,2).'</b> </td>
 								<td>&nbsp;</td>
 								<td>&nbsp;</td>
 							</tr>
 							<tr>
-								<td colspan="7">&nbsp;</td>
+								<td colspan="8">&nbsp;</td>
 							</tr>';
-							$html.='<tr><td colspan="7"><hr/></td></tr>';
+							$html.='<tr><td colspan="8"><hr/></td></tr>';
 							$html.='<tr>
 								<td>&nbsp;</td>
 								<td>&nbsp;</td>
 								<td><b>Subtotal '.$item_actual.'</b> </td>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
 								<td align="right"><b>$'.number_format($detaPago_total,2).'</b> </td>
 								<td>&nbsp;</td>
 								<td>&nbsp;</td>
 							</tr>
 							<tr>
-								<td colspan="7">&nbsp;</td>
+								<td colspan="8">&nbsp;</td>
 							</tr>';
 						}
-						$html.='<tr><td colspan="7"><h3>'.$item_nomen.': '.$tranx[$i][$item_orden].'</h3></td></tr>';
-						$html.='<tr><td colspan="7"><h3>'.$suborden.': '.$tranx[$i][$subitem_orden].'</h3></td></tr>';
+						$html.='<tr><td colspan="8"><h3>'.$item_nomen.': '.$tranx[$i][$item_orden].'</h3></td></tr>';
+						$html.='<tr><td colspan="8"><h3>'.$suborden.': '.$tranx[$i][$subitem_orden].'</h3></td></tr>';
 						$html.='<tr>
-							<th style="width:5%">Pago</th>
-							<th style="width:5%">Curso</th>
-							<th style="width:35%">Alumno</th>
-							<th style="width:19%">Pago a Facturas</th>
-							<th style="width:6%" align="right">Valor</th>
-							<th style="width:11%" align="right">Fecha</th>
-							<th style="width:19%" align="right">Detalle</th>
+							<th style="width:3%">#</th>
+							<th style="width:6%">Recibo</th>
+							<th style="width:21%">Curso</th>
+							<th style="width:25%">Alumno</th>
+							<th style="width:15%">Factura</th>
+							<th style="width:6%" align="right">Total abonado</th>
+							<th style="width:10%" align="right">Fecha</th>
+							<th style="width:14%" align="right">Detalle</th>
 						</tr>
 						<tr>
-						<td colspan="7"><hr/></td>
+						<td colspan="8"><hr/></td>
 						</tr>';
-						$detaPago_total_gene = $detaPago_total_gene + $detaPago_total;
 						$detaPago_subtotal=0;
 						$detaPago_total=0;
 					}
 					else
 					{   if( $suborden_actual != $tranx[$i][$subitem_orden] )
 						{   if( $i != 0 )
-							{	$html.='<tr><td colspan="7"><hr/></td></tr>';
+							{	$html.='<tr><td colspan="8"><hr/></td></tr>';
 								$html.='<tr>
 									<td>&nbsp;</td>
 									<td>&nbsp;</td>
-									<td>&nbsp;</td>
 									<td><b>Subtotal '.$suborden_actual.'</b> </td>
+									<td>&nbsp;</td>
+									<td>&nbsp;</td>
 									<td align="right"><b>$'.number_format($detaPago_subtotal,2).'</b> </td>
 									<td>&nbsp;</td>
 									<td>&nbsp;</td>
 								</tr>
 								<tr>
-									<td colspan="7">&nbsp;</td>
+									<td colspan="8">&nbsp;</td>
 								</tr>';
 							}
-							$html.='<tr><td colspan="7"><h4>'.$suborden.': '.$tranx[$i][$subitem_orden].'</h4></td></tr>';
+							$html.='<tr><td colspan="8"><h4>'.$suborden.': '.$tranx[$i][$subitem_orden].'</h4></td></tr>';
 							$html.='<tr>
-								<th style="width:5%">Pago</th>
-								<th style="width:5%">Curso</th>
-								<th style="width:35%">Alumno</th>
-								<th style="width:19%">Pago a Facturas</th>
-								<th style="width:6%" align="right">Valor</th>
-								<th style="width:11%" align="right">Fecha</th>
-								<th style="width:19%" align="right">Detalle</th>
+								<th style="width:3%">#</th>
+								<th style="width:6%">Recibo</th>
+								<th style="width:21%">Curso</th>
+								<th style="width:25%">Alumno</th>
+								<th style="width:15%">Factura</th>
+								<th style="width:6%" align="right">Total abonado</th>
+								<th style="width:10%" align="right">Fecha</th>
+								<th style="width:14%" align="right">Detalle</th>
 							</tr>
 							<tr>
-							<td colspan="7"><hr/></td>
+							<td colspan="8"><hr/></td>
 							</tr>';
 							$detaPago_subtotal=0;
 						}
 					}
 				}
 				$html.='<tr>
-				<td>'.$tranx[$i]['cabepago_codigo'].' </td>
-				<td>'.$tranx[$i]['cliente_curso'].' </td>
-				<td>'.$tranx[$i]['alum_codi'].' - '.$tranx[$i]['cliente_nombre'].' </td>
-				<td>'.$tranx[$i]['deud_codigoDocumento'].' </td>
-				<td align="right">$'.$tranx[$i]['detaPago_total'].' </td>
-				<td align="right">'.$tranx[$i]['detaPago_fechaCreacion'].' </td>
-				<td align="right">'.$tranx[$i]['observacion'].' </td>
+				<td style="font-size:small;">'.($i+1).'</td>
+				<td style="font-size:small;">'.$tranx[$i]['cabepago_codigo'].' </td>
+				<td style="font-size:small;">'.$tranx[$i]['cliente_curso'].' </td>
+				<td style="font-size:small;">'.$tranx[$i]['alum_codi'].' - '.$tranx[$i]['cliente_nombre'].' </td>
+				<td style="font-size:small;">'.$tranx[$i]['deud_codigoDocumento'].' </td>
+				<td style="font-size:small;" align="right">$'.$tranx[$i]['detaPago_total'].' </td>
+				<td style="font-size:small;" align="right">'.$tranx[$i]['detaPago_fechaCreacion'].' </td>
+				<td style="font-size:small;" align="right">'.$tranx[$i]['observacion'].' </td>
 				</tr>';
 				$usuario_actual = $tranx[$i]['usua_codi'];
 				$item_actual = $tranx[$i][$item_orden];
 				$suborden_actual = $tranx[$i][$subitem_orden];
 				$detaPago_total = $detaPago_total + $tranx[$i]['detaPago_total'];
 				$detaPago_subtotal = $detaPago_subtotal + $tranx[$i]['detaPago_total'];
+				$detaPago_total_cajero = $detaPago_total_cajero + $tranx[$i]['detaPago_total'];
+				$detaPago_total_gene = $detaPago_total_gene + $tranx[$i]['detaPago_total'];
 				if( $i == count( $reporte->rows )-2 )
-				{   $html.='<tr><td colspan="7"><hr/></td></tr>';
+				{   $html.='<tr><td colspan="8"><hr/></td></tr>';
 					$html.='<tr>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
-					<td>&nbsp;</td>
 					<td><b>Subtotal '.$suborden_actual.'</b> </td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
 					<td align="right"><b>$'.number_format($detaPago_subtotal,2).'</b> </td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					</tr>
 					<tr>
-					<td colspan="7">&nbsp;</td>
+					<td colspan="8">&nbsp;</td>
 					</tr>';
-					$html.='<tr><td colspan="7"><hr/></td></tr>';
+					$html.='<tr><td colspan="8"><hr/></td></tr>';
 					$html.='<tr>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
-					<td>&nbsp;</td>
 					<td><b>Subtotal '.$item_actual.'</b> </td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
 					<td align="right"><b>$'.number_format($detaPago_total,2).'</b> </td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					</tr>
 					<tr>
-					<td colspan="7">&nbsp;</td>
+					<td colspan="8">&nbsp;</td>
 					</tr>';
-					$detaPago_total_gene = $detaPago_total_gene + $detaPago_total;
-					
+					if ($div_by_user == '1') 
+						$html.='
+						<tr>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td><b>Subtotal cajero '. $usuario_actual .'</b> </td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td align="right"><b>$'.number_format($detaPago_total_cajero,2).'</b> </td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+						</tr>
+						<tr>
+							<td colspan="8">&nbsp;</td>
+						</tr>';
 					$html.='<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td><b>Total Diario</b> </td>
@@ -716,7 +688,7 @@ function handler() {
 					<td>&nbsp;</td>
 					</tr>
 					<tr>
-					<td colspan="7">&nbsp;</td>
+					<td colspan="8">&nbsp;</td>
 					</tr>';
 					
 					$cabePago_total = 0;
@@ -860,6 +832,9 @@ function handler() {
 			$objPHPExcel->getActiveSheet()->getStyle('1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 			$objPHPExcel->getActiveSheet()->getStyle('1')->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
 			
+			$colores_headers_trama = '3c8dbc,398439,31b0d5,d73925,ec971f';
+			$colores_headers = explode(",", $colores_headers_trama);
+			
 			$styleTitulo = array(
 				'borders' => array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN)),
 				'font' => array('color' => array('rgb'=>'000000'),
@@ -938,203 +913,98 @@ function handler() {
 					$div_by_user = '0';
 			}
 			for($i=0;$i<count($reporte->rows)-1;$i++)
-			{   if( $usuario_actual != $tranx[$i]['usua_codi'] )
-				{   if ($div_by_user == '1') 
-					{	if( $i != 0 )
-						{   //Subtotal suborden
-							$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 0, $i_deta_fila, "Subtotal ".$suborden_actual );
-							$objPHPExcel->getActiveSheet()->getStyle(0, $i_deta_fila)->getAlignment()->setWrapText(true);
-							$objPHPExcel->getActiveSheet()->getStyle(0, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
-							
-							//Subtotal suborden VALOR
-							$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 5, $i_deta_fila, '$'.number_format($detaPago_subtotal,2) );
-							$objPHPExcel->getActiveSheet()->getStyle( 5, $i_deta_fila)->getAlignment()->setWrapText(true);
-							$objPHPExcel->getActiveSheet()->getStyle( 5, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
-							
-							$i_deta_fila=$i_deta_fila+1;
-							
-							//Subtotal orden
-							$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 0, $i_deta_fila, "Subtotal ".$item_actual );
-							$objPHPExcel->getActiveSheet()->getStyle( 0, $i_deta_fila)->getAlignment()->setWrapText(true);
-							$objPHPExcel->getActiveSheet()->getStyle( 0, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
-							
-							//Subtotal orden VALOR
-							$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 5, $i_deta_fila, '$'.number_format($detaPago_total,2) );
-							$objPHPExcel->getActiveSheet()->getStyle( 5, $i_deta_fila)->getAlignment()->setWrapText(true);
-							$objPHPExcel->getActiveSheet()->getStyle( 5, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
-							$objPHPExcel->getActiveSheet()->getStyle( 'A'.$i_deta_fila.':H'.$i_deta_fila )->applyFromArray( $styleEncabezado );
-							$objPHPExcel->getActiveSheet()->getStyle($i_deta_fila)->getFont()->setBold( true );
-							
-							$i_deta_fila=$i_deta_fila+1;
-						}
-						//CAJERO
-						$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 0, $i_deta_fila, 'CAJERO: '.$tranx[$i]['usua_codi'] );
-						$objPHPExcel->getActiveSheet()->getStyle( 0, $i_deta_fila)->getAlignment()->setWrapText(true);
-						$objPHPExcel->getActiveSheet()->getStyle( 0, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
-						$objPHPExcel->getActiveSheet()->getStyle( 'A'.$i_deta_fila.':H'.$i_deta_fila )->applyFromArray( $styleTotalFinal );
-						$objPHPExcel->getActiveSheet()->getStyle($i_deta_fila)->getFont()->setBold( true );
-						
-						$i_deta_fila=$i_deta_fila+1;
-						
-						//item_nomen
-						$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 0,  $i_deta_fila, $item_nomen.': '.$tranx[$i][$item_orden] );
-						$objPHPExcel->getActiveSheet()->getStyle( 0, $i_deta_fila)->getAlignment()->setWrapText(true);
-						$objPHPExcel->getActiveSheet()->getStyle( 0, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
-						$objPHPExcel->getActiveSheet()->getStyle( 'A'.$i_deta_fila.':H'.$i_deta_fila )->applyFromArray( $styleTotalFinal );
-						$objPHPExcel->getActiveSheet()->getStyle($i_deta_fila)->getFont()->setBold( true );
-						
-						$i_deta_fila=$i_deta_fila+1;
-						
-						//suborden
-						$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 0, $i_deta_fila, $suborden.': '.$tranx[$i][$subitem_orden] );
+			{   if( $usuario_actual != $tranx[$i]['usua_codi'] && $div_by_user == '1' )
+				{   if( $i != 0 )
+					{   //Subtotal suborden
+						$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 0, $i_deta_fila, "Subtotal ".$suborden_actual );
 						$objPHPExcel->getActiveSheet()->getStyle(0, $i_deta_fila)->getAlignment()->setWrapText(true);
 						$objPHPExcel->getActiveSheet()->getStyle(0, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+						
+						//Subtotal suborden VALOR
+						$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 5, $i_deta_fila, '$'.number_format($detaPago_subtotal,2) );
+						$objPHPExcel->getActiveSheet()->getStyle( 5, $i_deta_fila)->getAlignment()->setWrapText(true);
+						$objPHPExcel->getActiveSheet()->getStyle( 5, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
 						$objPHPExcel->getActiveSheet()->getStyle( 'A'.$i_deta_fila.':H'.$i_deta_fila )->applyFromArray( $styleEncabezado );
 						$objPHPExcel->getActiveSheet()->getStyle($i_deta_fila)->getFont()->setBold( true );
 						
 						$i_deta_fila=$i_deta_fila+1;
 						
-						$cabeceras ='No.,Pago,Curso,Alumno,Pago a Facturas,Valor,Fecha,Detalle';
-						$cabecera = explode( ",", $cabeceras );
+						//Subtotal orden
+						$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 0, $i_deta_fila, "Subtotal ".$item_actual );
+						$objPHPExcel->getActiveSheet()->getStyle( 0, $i_deta_fila)->getAlignment()->setWrapText(true);
+						$objPHPExcel->getActiveSheet()->getStyle( 0, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
 						
-						$i_cabe = 0;//Contador de cabeceras
-						$column = 'A';
-						
-						foreach($cabecera as $head)
-						{	if( !empty( $head ) )
-							{   $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow( $i_cabe, $i_deta_fila, $head );
-								$objPHPExcel->getActiveSheet()->getColumnDimension( $column )->setWidth(15);
-								$i_cabe = $i_cabe+1;
-								$column++;
-							}
-						}
-						$objPHPExcel->getActiveSheet()->getStyle( 'A'.$i_deta_fila.':H'.$i_deta_fila )->applyFromArray( $styleCabeceras );
+						//Subtotal orden VALOR
+						$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 5, $i_deta_fila, '$'.number_format($detaPago_total,2) );
+						$objPHPExcel->getActiveSheet()->getStyle( 5, $i_deta_fila)->getAlignment()->setWrapText(true);
+						$objPHPExcel->getActiveSheet()->getStyle( 5, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+						$objPHPExcel->getActiveSheet()->getStyle( 'A'.$i_deta_fila.':H'.$i_deta_fila )->applyFromArray( $styleEncabezado );
 						$objPHPExcel->getActiveSheet()->getStyle($i_deta_fila)->getFont()->setBold( true );
 						
 						$i_deta_fila=$i_deta_fila+1;
+						
+						//Subtotal cajero
+						$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 0, $i_deta_fila, "Subtotal cajero ". $usuario_actual );
+						$objPHPExcel->getActiveSheet()->getStyle( 0, $i_deta_fila)->getAlignment()->setWrapText(true);
+						$objPHPExcel->getActiveSheet()->getStyle( 0, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+						
+						//Subtotal cajero valor
+						$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 5, $i_deta_fila, '$'.number_format($detaPago_total_cajero,2) );
+						$objPHPExcel->getActiveSheet()->getStyle( 5, $i_deta_fila)->getAlignment()->setWrapText(true);
+						$objPHPExcel->getActiveSheet()->getStyle( 5, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+						$objPHPExcel->getActiveSheet()->getStyle( 'A'.$i_deta_fila.':H'.$i_deta_fila )->applyFromArray( $styleEncabezado );
+						$objPHPExcel->getActiveSheet()->getStyle($i_deta_fila)->getFont()->setBold( true );
+						
+						$i_deta_fila=$i_deta_fila+1;
+							
 					}
-					else
-					{   if( $item_actual != $tranx[$i][$item_orden] )
-						{   if( $i != 0 )
-							{   //Subtotal suborden
-								$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 0, $i_deta_fila, "Subtotal ".$suborden_actual );
-								$objPHPExcel->getActiveSheet()->getStyle(0, $i_deta_fila)->getAlignment()->setWrapText(true);
-								$objPHPExcel->getActiveSheet()->getStyle(0, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
-								
-								//Subtotal suborden VALOR
-								$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 5, $i_deta_fila, '$'.number_format($detaPago_subtotal,2) );
-								$objPHPExcel->getActiveSheet()->getStyle(5, $i_deta_fila)->getAlignment()->setWrapText(true);
-								$objPHPExcel->getActiveSheet()->getStyle(5, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
-								
-								$objPHPExcel->getActiveSheet()->getStyle(0, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
-								$objPHPExcel->getActiveSheet()->getStyle( 'A'.$i_deta_fila.':H'.$i_deta_fila )->applyFromArray( $styleCabeceras );
-								
-								$i_deta_fila=$i_deta_fila+1;
-								
-								//Subtotal orden
-								$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 0, $i_deta_fila, "Total: ".$item_actual );
-								$objPHPExcel->getActiveSheet()->getStyle(0, $i_deta_fila)->getAlignment()->setWrapText(true);
-								$objPHPExcel->getActiveSheet()->getStyle(0, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
-								
-								//Subtotal orden VALOR
-								$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 5, $i_deta_fila, '$'.number_format($detaPago_total,2) );
-								$objPHPExcel->getActiveSheet()->getStyle( 5, $i_deta_fila)->getAlignment()->setWrapText(true);
-								$objPHPExcel->getActiveSheet()->getStyle( 5, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
-								
-								$objPHPExcel->getActiveSheet()->getStyle( 'A'.$i_deta_fila.':H'.$i_deta_fila )->applyFromArray( $styleEncabezado );
-								$objPHPExcel->getActiveSheet()->getStyle( $i_deta_fila )->getFont()->setBold( true );
-								
-								$i_deta_fila=$i_deta_fila+1;
-							}
-							//ITEM NOMENCLATURA: ITEM ORDEN
-							$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 0, $i_deta_fila, ''.$item_nomen.': '.$tranx[$i][$item_orden].'' );
-							$objPHPExcel->getActiveSheet()->getStyle( 0, $i_deta_fila)->getAlignment()->setWrapText(true);
-							$objPHPExcel->getActiveSheet()->getStyle( 0, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
-							$objPHPExcel->getActiveSheet()->getStyle( 'A'.$i_deta_fila.':H'.$i_deta_fila )->applyFromArray( $styleTotalFinal );
-							$objPHPExcel->getActiveSheet()->getStyle($i_deta_fila)->getFont()->setBold( true );
-							
-							$i_deta_fila=$i_deta_fila+1;
-							
-							//SUBITEM NOMENCLATURA: SUBITEM ORDEN
-							$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 0, $i_deta_fila, $suborden.': '.$tranx[$i][$subitem_orden] );
-							$objPHPExcel->getActiveSheet()->getStyle( 0, $i_deta_fila)->getAlignment()->setWrapText(true);
-							$objPHPExcel->getActiveSheet()->getStyle( 0, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
-							$objPHPExcel->getActiveSheet()->getStyle( 'A'.$i_deta_fila.':H'.$i_deta_fila )->applyFromArray( $styleEncabezado );
-							$objPHPExcel->getActiveSheet()->getStyle($i_deta_fila)->getFont()->setBold( true );
-							
-							$i_deta_fila=$i_deta_fila+1;
-							
-							$cabeceras ='No.,Pago,Curso,Alumno,Pago a Facturas,Valor,Fecha,Detalle';
-							$cabecera = explode( ",", $cabeceras );
-							
-							$i_cabe = 0;//Contador de cabeceras
-							$column = 'A';
-							
-							foreach($cabecera as $head)
-							{	if( !empty( $head ) )
-								{   $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow( $i_cabe, $i_deta_fila, $head );
-									$objPHPExcel->getActiveSheet()->getColumnDimension( $column )->setWidth(15);
-									$i_cabe = $i_cabe+1;
-									$column++;
-								}
-							}
-							$objPHPExcel->getActiveSheet()->getStyle( 'A'.$i_deta_fila.':H'.$i_deta_fila )->applyFromArray( $styleCabeceras );
-							$objPHPExcel->getActiveSheet()->getStyle($i_deta_fila)->getFont()->setBold( true );
-							
-							$i_deta_fila=$i_deta_fila+1;
-							
-							$detaPago_total_gene = $detaPago_total_gene + $detaPago_total;
-							$detaPago_subtotal=0;
-							$detaPago_total=0;
-						}else
-						{   if( $suborden_actual != $tranx[$i][$subitem_orden] )
-							{   if( $i != 0 )
-								{	//Subtotal suborden
-									$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 0, $i_deta_fila, "Subtotal ".$suborden_actual );
-									$objPHPExcel->getActiveSheet()->getStyle( 0, $i_deta_fila)->getAlignment()->setWrapText(true);
-									$objPHPExcel->getActiveSheet()->getStyle( 0, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
-									
-									//Subtotal suborden VALOR
-									$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 5, $i_deta_fila, '$'.number_format($detaPago_subtotal,2) );
-									$objPHPExcel->getActiveSheet()->getStyle( 5, $i_deta_fila)->getAlignment()->setWrapText(true);
-									$objPHPExcel->getActiveSheet()->getStyle( 5, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
-									$objPHPExcel->getActiveSheet()->getStyle( 'A'.$i_deta_fila.':H'.$i_deta_fila )->applyFromArray( $styleCabeceras );
-									
-									$i_deta_fila=$i_deta_fila+1;
-								}
-								//suborden: subitem_orden
-								$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 0, $i_deta_fila, $suborden.': '.$tranx[$i][$subitem_orden] );
-								$objPHPExcel->getActiveSheet()->getStyle( 0, $i_deta_fila)->getAlignment()->setWrapText(true);
-								$objPHPExcel->getActiveSheet()->getStyle( 0, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
-								$objPHPExcel->getActiveSheet()->getStyle( 'A'.$i_deta_fila.':H'.$i_deta_fila )->applyFromArray( $styleEncabezado );
-								$objPHPExcel->getActiveSheet()->getStyle( $i_deta_fila )->getFont()->setBold( true );
-								
-								$i_deta_fila=$i_deta_fila+1;
-								
-								$cabeceras ='No.,Pago,Curso,Alumno,Pago a Facturas,Valor,Fecha,Detalle';
-								$cabecera = explode( ",", $cabeceras );
-								
-								$i_cabe = 0;//Contador de cabeceras
-								$column = 'A';
-								
-								foreach($cabecera as $head)
-								{	if( !empty( $head ) )
-									{   $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow( $i_cabe, $i_deta_fila, $head );
-										$objPHPExcel->getActiveSheet()->getColumnDimension( $column )->setWidth(15);
-										$i_cabe = $i_cabe+1;
-										$column++;
-									}
-								}
-								$objPHPExcel->getActiveSheet()->getStyle( 'A'.$i_deta_fila.':H'.$i_deta_fila )->applyFromArray( $styleCabeceras );
-								$objPHPExcel->getActiveSheet()->getStyle($i_deta_fila)->getFont()->setBold( true );
-								
-								$i_deta_fila=$i_deta_fila+1;
-								
-								$detaPago_subtotal=0;
-							}	
+					//CAJERO
+					$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 0, $i_deta_fila, 'CAJERO: '.$tranx[$i]['usua_codi'] );
+					$objPHPExcel->getActiveSheet()->getStyle( 0, $i_deta_fila)->getAlignment()->setWrapText(true);
+					$objPHPExcel->getActiveSheet()->getStyle( 0, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+					$objPHPExcel->getActiveSheet()->getStyle( 'A'.$i_deta_fila.':H'.$i_deta_fila )->applyFromArray( $styleTotalFinal );
+					$objPHPExcel->getActiveSheet()->getStyle($i_deta_fila)->getFont()->setBold( true );
+					
+					$i_deta_fila=$i_deta_fila+1;
+					
+					//item_nomen
+					$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 0,  $i_deta_fila, $item_nomen.': '.$tranx[$i][$item_orden] );
+					$objPHPExcel->getActiveSheet()->getStyle( 0, $i_deta_fila)->getAlignment()->setWrapText(true);
+					$objPHPExcel->getActiveSheet()->getStyle( 0, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+					$objPHPExcel->getActiveSheet()->getStyle( 'A'.$i_deta_fila.':H'.$i_deta_fila )->applyFromArray( $styleTotalFinal );
+					$objPHPExcel->getActiveSheet()->getStyle($i_deta_fila)->getFont()->setBold( true );
+					
+					$i_deta_fila=$i_deta_fila+1;
+					
+					//suborden
+					$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 0, $i_deta_fila, $suborden.': '.$tranx[$i][$subitem_orden] );
+					$objPHPExcel->getActiveSheet()->getStyle(0, $i_deta_fila)->getAlignment()->setWrapText(true);
+					$objPHPExcel->getActiveSheet()->getStyle(0, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+					$objPHPExcel->getActiveSheet()->getStyle( 'A'.$i_deta_fila.':H'.$i_deta_fila )->applyFromArray( $styleEncabezado );
+					$objPHPExcel->getActiveSheet()->getStyle($i_deta_fila)->getFont()->setBold( true );
+					
+					$i_deta_fila=$i_deta_fila+1;
+					
+					$cabeceras ='#,No. Recibo,Curso,Alumno/Cliente,Factura,Total abonado,Fecha,Detalle';
+					$cabecera = explode( ",", $cabeceras );
+					
+					$i_cabe = 0;//Contador de cabeceras
+					$column = 'A';
+					
+					foreach($cabecera as $head)
+					{	if( !empty( $head ) )
+						{   $objPHPExcel->setActiveSheetIndex(0)->setCellValueByColumnAndRow( $i_cabe, $i_deta_fila, $head );
+							$objPHPExcel->getActiveSheet()->getColumnDimension( $column )->setWidth(15);
+							$i_cabe = $i_cabe+1;
+							$column++;
 						}
 					}
+					$objPHPExcel->getActiveSheet()->getStyle( 'A'.$i_deta_fila.':H'.$i_deta_fila )->applyFromArray( $styleCabeceras );
+					$objPHPExcel->getActiveSheet()->getStyle($i_deta_fila)->getFont()->setBold( true );
+					
+					$i_deta_fila=$i_deta_fila+1;
 					$detaPago_total = 0;
+					$detaPago_total_cajero = 0;
 				}
 				else
 				{   if( $item_actual != $tranx[$i][$item_orden] )
@@ -1187,7 +1057,7 @@ function handler() {
 						
 						$i_deta_fila=$i_deta_fila+1;
 						
-						$cabeceras ='No.,Pago,Curso,Alumno,Pago a Facturas,Valor,Fecha,Detalle';
+						$cabeceras ='#,Recibo,Curso,Alumno/Cliente,Factura,Total abonado,Fecha,Detalle';
 						$cabecera = explode( ",", $cabeceras );
 						
 						$i_cabe = 0;//Contador de cabeceras
@@ -1206,7 +1076,6 @@ function handler() {
 						
 						$i_deta_fila=$i_deta_fila+1;
 						
-						$detaPago_total_gene = $detaPago_total_gene + $detaPago_total;
 						$detaPago_subtotal=0;
 						$detaPago_total=0;
 					}
@@ -1237,7 +1106,7 @@ function handler() {
 						
 							$i_deta_fila=$i_deta_fila+1;
 							
-							$cabeceras ='No.,Pago,Curso,Alumno,Pago a Facturas,Valor,Fecha,Detalle';
+							$cabeceras ='#,Recibo,Curso,Alumno/Cliente,Factura,Total abonado,Fecha,Detalle';
 							$cabecera = explode( ",", $cabeceras );
 							
 							$i_cabe = 0;//Contador de cabeceras
@@ -1307,6 +1176,8 @@ function handler() {
 				$suborden_actual = $tranx[$i][$subitem_orden];
 				$detaPago_total = $detaPago_total + $tranx[$i]['detaPago_total'];
 				$detaPago_subtotal = $detaPago_subtotal + $tranx[$i]['detaPago_total'];
+				$detaPago_total_cajero = $detaPago_total_cajero + $tranx[$i]['detaPago_total'];
+				$detaPago_total_gene = $detaPago_total_gene + $tranx[$i]['detaPago_total'];
 				if( $i == count( $reporte->rows )-2 )
 				{   //Subtotal suborden
 					$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 0, $i_deta_fila, "Subtotal ".$suborden_actual );
@@ -1338,7 +1209,25 @@ function handler() {
 						
 					$i_deta_fila=$i_deta_fila+1;
 					
-					$detaPago_total_gene = $detaPago_total_gene + $detaPago_total;
+					if ($div_by_user == '1') 
+					{
+						//Subtotal Cajero
+						$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 0, $i_deta_fila, "Subtotal cajero ". $usuario_actual );
+						$objPHPExcel->getActiveSheet()->getStyle( 0, $i_deta_fila)->getAlignment()->setWrapText(true);
+						$objPHPExcel->getActiveSheet()->getStyle( 0, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+						
+						//Subtotal Cajero
+						$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 5, $i_deta_fila, '$'.number_format($detaPago_total_cajero,2) );
+						$objPHPExcel->getActiveSheet()->getStyle( 5, $i_deta_fila)->getAlignment()->setWrapText(true);
+						$objPHPExcel->getActiveSheet()->getStyle( 5, $i_deta_fila)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_TOP);
+						
+						$objPHPExcel->getActiveSheet()->getStyle( 'A'.$i_deta_fila.':H'.$i_deta_fila )->applyFromArray( $styleEncabezado );
+						$objPHPExcel->getActiveSheet()->getStyle($i_deta_fila)->getFont()->setBold( true );
+							
+						$i_deta_fila=$i_deta_fila+1;
+						
+					}
+					
 					
 					//TOTAL DIARIO
 					$objPHPExcel->getActiveSheet()->setCellValueExplicitByColumnAndRow( 0, $i_deta_fila, "Total Diario" );
@@ -1463,12 +1352,25 @@ function construct_table_pagos($user_data)
 	else 
 		$tpago_fin = (float)$user_data['tneto_fin'];
 	$pago = new Pagos();
-	$pago->get_PagosRealizados( $codigo_pago, $fechavenc_ini, $fechavenc_fin, $forma_pago,
-										$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
-										$nombre_titular, $ptvo_venta, $sucursal, $num_factura, $categoria_codigo, $prod_codigo, 
-										$estado, $tpago_ini, $tpago_fin, $user_data['usuario_cajero'], $user_data['periodo'],$user_data['grupoEconomico'],
-										$user_data['nivelEconomico'],$user_data['cursos'], $user_data['deuda'] );
 	
+	if ( $user_data['tipo_visual'] == NULL )
+		$tipo_visual = 1;
+	else
+		$tipo_visual = $user_data['tipo_visual'];
+	
+	if ( $tipo_visual == '1' )
+		$pago->get_PagosRealizados( $codigo_pago, $fechavenc_ini, $fechavenc_fin, $forma_pago,
+									$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
+									$nombre_titular, $ptvo_venta, $sucursal, $num_factura, $categoria_codigo, $prod_codigo, 
+									$estado, $tpago_ini, $tpago_fin, $user_data['usuario_cajero'], $user_data['periodo'],$user_data['grupoEconomico'],
+									$user_data['nivelEconomico'],$user_data['cursos'], $user_data['deuda'] );
+	
+	if ( $tipo_visual == '2' )
+		$pago->get_PagosRealizados2( $codigo_pago, $fechavenc_ini, $fechavenc_fin, $forma_pago,
+									$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
+									$nombre_titular, $ptvo_venta, $sucursal, $num_factura, $categoria_codigo, $prod_codigo, 
+									$estado, $tpago_ini, $tpago_fin, $user_data['usuario_cajero'], $user_data['periodo'],$user_data['grupoEconomico'],
+									$user_data['nivelEconomico'],$user_data['cursos'], $user_data['deuda'] );
 	$nombre_extendido = ""; /* Agosto 18 2016. Hasta esta fecha, el único lugar de donde se puede recibir deuda es desde Cliente, Estado de cuento (clientes.js).*/
 	
 	if ( !empty( $user_data['deuda'] ) )
@@ -1480,19 +1382,15 @@ function construct_table_pagos($user_data)
 					<thead>
 						<tr style='background-color:rgba(60, 176, 188, 0.53);color:black;'>".
 							"<th style=\"text-align:center;vertical-align:middle\"></th>".
-							"<th style='font-size:small;text-align:center;'>Ref.</th>".
-							"<th style='font-size:small;text-align:center;'>Datos</th>".
-							"<th style='font-size:small;text-align:center;'>Total Pago</th>".
-							"<th style='font-size:small;text-align:center;'>Forma de Pago</th>".
-							"<th style='font-size:small;text-align:center;'>Cliente</th>".
-							"<th style='font-size:small;text-align:center;'>Id.</th>".
-							"<th style='font-size:small;text-align:center;'>Nombres cliente</th>".
-							"<th style='font-size:small;text-align:center;'>Curso Paralelo</th>".
-							"<th style='font-size:small;text-align:center;'>Fecha pago</th>".
-							"<th style='font-size:small;text-align:center;'>Cajero</th>".
-							"<th style='font-size:small;text-align:center;'>PDF</th>".
-							"<th style='font-size:small;text-align:center;'>HTML</th>".
-							"<th style='font-size:small;text-align:center;'>Revertir</th>
+							"<th style='font-size:x-small;text-align:center;'>Ref.</th>".
+							"<th style='font-size:x-small;text-align:right;'>Total Pago</th>".
+							( $tipo_visual == '1' ? "<th style='font-size:x-small;text-align:right;'>Saldo a favor</th>" : "" ).
+							"<th style='font-size:x-small;text-align:center;'>Formas de Pago</th>".
+							"<th style='font-size:x-small;text-align:center;'>Alumno/Cliente</th>".
+							"<th style='font-size:x-small;text-align:center;'>Información pago</th>".
+							"<th style='font-size:x-small;text-align:center;'>PDF</th>".
+							"<th style='font-size:x-small;text-align:center;'>HTML</th>".
+							"<th style='font-size:x-small;text-align:center;'>Revertir</th>
 						</tr>
 					</thead>";
 	//}
@@ -1507,6 +1405,8 @@ function construct_table_pagos($user_data)
 	$permiso_179 	= new General();
 	$permiso_181 	= new General();
 	$permiso 		= new General();
+	$permiso_10 	= new General();
+	$permiso_10->permiso_activo($_SESSION['usua_codigo'], 10);
 	$permiso_179->permiso_activo($_SESSION['usua_codigo'], 179);
 	$permiso->permiso_activo($_SESSION['usua_codigo'], 180);
 	$permiso_181->permiso_activo($_SESSION['usua_codigo'], 181);
@@ -1515,58 +1415,36 @@ function construct_table_pagos($user_data)
 	}
 	foreach($pago->rows as $row)
 	{	if($c<($aux-1))
-		{	$body.="<tr><td class='details-control'><i style='color:green;' class='fa fa-plus-circle' title='Ver facturas relacionadas'></i></td>";
-			$x=0;
-			$datos="";
-			foreach($row as $column)
-			{	if($x==1)
-				{	if($column=="")
-						$column = "N/A";
-					$datos.="<div style=\"text-align:left;\">".
-								"<table><tr><td style=\"vertical-align:top;\"><b>Titular:&nbsp;</b></td><td>". $column."</td></tr>";
-				}
-				elseif($x==2)
-				{	if($column=="")
-						$column = "C.I.";
-					$datos.="<tr><td><b>".$column.":&nbsp;</b></td><td>";
-					$cedula = $column;
-				}
-				elseif($x==3)
-				{	if($column=="")
-						$column = "N/A";
-					$datos.= $column."</td></tr>";
-					$cedula = $column;
-				}
-				elseif($x==4)
-				{	$datos.="<tr><td style=\"vertical-align:top;\"><b>D.A.:&nbsp;</b></td><td style=\"vertical-align:top;\">". $column."</td></tr></table></div>";
-					$body.= "<td style='font-size:small;'>".
-								"<span class='detalle' id='".$codigo."_cliente_direccion' onmouseover='$(this).tooltip(".'"show"'.")' title='".$datos."' data-placement='bottom'>".
-									"<span class='glyphicon glyphicon-search'></span></span></td>";
-				}
-				elseif( $x == 9 )
-				{	$opc = get_cliente_opciones( $permiso,$row['codigoAlumno'],'span',
-												 $permiso_179->rows[0]['veri'],
-												 $permiso->rows[0]['veri'],
-												 $permiso_181->rows[0]['veri'] );
-					$body .= '<td style="font-size:small;">
-						<div class="btn-group">
-							<a href="#/" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-								'.$column.'
-							</a>
-							'.$opc.'
-						</div></td>';
-				}
-				elseif( $x==13 || $x==14 )
-				{	//do nothing;
-				}
-				else
-				{	$body.="<td style='font-size:small;'>".$column."</div></td>";
-					if($x==0)
-					{	$codigo = $column;
-					}
-				}
-				$x++;
-			}
+		{	$codigo = $row['codigoPago'];
+			$body.="<tr style='font-size:12px;'>
+					<td class='details-control'><i style='color:green;' class='fa fa-plus-circle' title='Ver facturas relacionadas'></i></td>";
+			$body.='<td>'.$row['codigoPago'].'</td>
+					<td style="text-align:right">'.$row['totalPago'].'</td>'.
+					( $tipo_visual == '1' ? '<td style="text-align:right">'.$row['saldoafavor'].'</td>' : "" ).
+				   '<td>'.$row['formaPago'].'</td>';
+			$opc = get_cliente_opciones( $permiso,$row['codigoAlumno'],'span',
+										 $permiso_179->rows[0]['veri'],
+										 $permiso->rows[0]['veri'],
+										 $permiso_181->rows[0]['veri'] );
+			$body .= '<td>
+				<div class="btn-group">
+					<a href="#/" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+						'.$row['nombresAlumno'].'
+					</a>
+				</div><br>
+				'.$row['codigoAlumno'].' | ';
+			
+			if( $permiso_10->rows[0]['veri'] )
+				$body.= "<a href='#' onclick='js_clientes_go_to_courses(\"../../../admin/cursos_paralelo_main.php?curs_para_codi=".$row['curs_para_codi']."\");' 
+							data-toggle='modal' data-target='#modal_acad'
+							title='Ver información del curso ".$row["curso"]."'>".$row["curso"]."</a></td>";
+			else
+				$body.= $row["curso"].'</td>';
+				
+			$body .='<td>
+						<span title="Fecha de pago" onmousover="$(this).tooltip(\'show\');"><i class="fa fa-clock-o"></i> '.$row['fechaPago'].'</span> | '.
+						'<span title="Cajero" onmousover="$(this).tooltip(\'show\');"><i class="fa fa-user"></i> '.$row['cajero'].'</span></td>';
+				
 			$spanHTML="<span class='glyphicon glyphicon-print cursorlink' id='".$codigo."_ver_pago' onmouseover='$(this).tooltip(".'"show"'.")' title='Formato impresi&oacute;n grande.' data-placement='left'></span>";
 			$spanPDF="<span class='glyphicon glyphicon-print cursorlink' id='".$codigo."_ver_pago_PDF' onmouseover='$(this).tooltip(".'"show"'.")' title='Formato impresi&oacute;n punto de venta.' data-placement='left'></span>";
 			$spanRevertir="<div align='center' style='display:inline-block;'><span   onclick='js_Pago_revertir(".'"'.$codigo.'"'.",".'"modal_revert_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/pagos/controller.php"'.")'    class='btn_opc_lista_eliminar fa fa-history cursorlink'  aria-hidden='true' id='".$codigo."_revertir'   onmouseover='$(this).tooltip(".'"show"'.")' data-placement='left' title='Revertir y borrar pago.'></span></div>";

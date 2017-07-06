@@ -34,8 +34,12 @@
 				<li class="<? if (substr($Menu,0,1)==2) echo 'active'; ?> treeview"><!-- AQUI SERIA EL OPEN --><!--  -->
 					<a href="#"><i class="fa fa-list"></i> <span>Ver</span> <i class="fa fa-angle-left pull-right"></i></a>
 					<ul class="treeview-menu">
+						<?php if(permiso_activo(103))?> <li <? if($Menu==401) echo 'class="active"'; ?>><a href="../../finan/clientes/"><span class='fa fa-graduation-cap'></span> Alumnos </a></li>
+						<?php if(permiso_activo(208))?> <li <? if($Menu==411) echo 'class="active"'; ?>><a href="../../finan/descuentoalumnos/"><span class='fa fa-graduation-cap'></span> Alumnos con dscto.</a></li>
+						<?php if(permiso_activo(103))?> <li <? if($Menu==402) echo 'class="active"'; ?>><a href="../../finan/clientes_externos/"><span class='fa fa-users'></span> Clientes externos</a></li>
 						<?php if(permiso_activo(209))?> <li <? if($Menu==201) echo 'class="active"'; ?>><a href="../../finan/saldoaFavor/"><span class='fa fa-balance-scale'></span> Saldos a favor</a></li>
 						<?php if(permiso_activo(227))?> <li <? if($Menu==202) echo 'class="active"'; ?>><a href="../../finan/VerDocumentosAutorizados/"><span class='fa fa-barcode'></span> Doc. autorizados</a></li>
+						<?php if(permiso_activo(227))?> <li <? if($Menu==202) echo 'class="active"'; ?>><a href="../../finan/VerDeudasSinFacturas/"><span class='fa fa-barcode'></span> Deudas sin facturas</a></li>
 						<?php if(permiso_activo(227))?> <li <? if($Menu==206) echo 'class="active"'; ?>><a href="../../finan/pagos/"><span class='fa fa-list'></span> Pagos recibidos</a></li>
 						<?php if(permiso_activo(227))?> <li <? if($Menu==203) echo 'class="active"'; ?>><a href="../../finan/verCaja/"><span class='fa fa-history'></span> Historial cajas</a></li>
 					</ul>
@@ -87,15 +91,12 @@
 				<li class="<? if (substr($Menu,0,1)==4) echo 'active'; ?> treeview"><!-- AQUI SERIA EL OPEN --><!--  -->
 					<a href="#"><i class="fa fa-certificate"></i> <span>Supervisor</span> <i class="fa fa-angle-left pull-right"></i></a>
 					<ul class="treeview-menu">
-						<?php if(permiso_activo(103))?> <li <? if($Menu==401) echo 'class="active"'; ?>><a href="../../finan/clientes/"><span class='fa fa-graduation-cap'></span> Clientes </a></li>
-						<?php if(permiso_activo(103))?> <li <? if($Menu==402) echo 'class="active"'; ?>><a href="../../finan/clientes_externos/"><span class='fa fa-users'></span> Clientes externos</a></li>
 						<?php if(permiso_activo(106))?> <li <? if($Menu==407) echo 'class="active"'; ?>><a href="../../finan/sucursales/"><span class='fa fa-institution'></span> Sucursales</a></li>
 						<?php if(permiso_activo(110))?> <li <? if($Menu==403) echo 'class="active"'; ?>><a href="../../finan/puntos_emision/"><span class='glyphicon glyphicon-tent'></span> Puntos de emisión</a> </li>
 						<?php if(permiso_activo(115))?> <li <? if($Menu==404) echo 'class="active"'; ?>><a href="../../finan/tipo_descuento/"><span class='fa fa-percent'></span> Tipos de dsctos.</a></li>
 						<?php if(permiso_activo(119))?> <li <? if($Menu==406) echo 'class="active"'; ?>><a href="../../finan/aniosPeriodo/"><span class='fa fa-calendar'></span> Períodos anuales</a></li>
-						<?php if(permiso_activo(205))?> <li <? if($Menu==410) echo 'class="active"'; ?>><a href="../../finan/descuentofacturas/"><span class='fa fa-barcode'></span> Dsctos. de facturas</a></li>
+						<?php if(permiso_activo(205))?> <li <? if($Menu==410) echo 'class="active"'; ?>><a href="../../finan/descuentofacturas/"><span class='fa fa-barcode'></span> Modificación facturas</a></li>
 						<?php if(permiso_activo(206))?> <li <? if($Menu==411) echo 'class="active"'; ?>><a href="../../finan/debitosAutomaticos/"><span class='glyphicon glyphicon-import'></span> Débitos bancarios</a></li>
-						<?php if(permiso_activo(208))?> <li <? if($Menu==411) echo 'class="active"'; ?>><a href="../../finan/descuentoalumnos/"><span class='fa fa-graduation-cap'></span> Dsctos. por alumnos</a></li>
 						<?php if(permiso_activo(226))?> <li <? if($Menu==411) echo 'class="active"'; ?>><a href="../../finan/contabilidad/"><span class='icon icon-ctfco'></span> Contabilidad</a></li>
 					</ul>
 				</li>
@@ -104,12 +105,13 @@
 				<li class="<? if (substr($Menu,0,1)==6) echo 'active'; ?> treeview"><!-- AQUI SERIA EL OPEN --><!--  -->
 					<a href="#"><i class="fa fa-book"></i> <span>Reportes</span> <i class="fa fa-angle-left pull-right"></i></a>
 					<ul class="treeview-menu">
-						<?php if(permiso_activo(202))?> <li <? if($Menu==605) echo 'class="active"'; ?>><a href="../../finan/rep_facturas/"><span class='fa fa-bookmark-o'></span> Facturas Emitidas</a></li>
-						<?php if(permiso_activo(201))?> <li <? if($Menu==604) echo 'class="active"'; ?>><a href="../../finan/rep_notaCredito/"><span class='fa fa-bookmark-o'></span> Notas de Crédito</a></li>
-						<?php if(permiso_activo(202))?> <li <? if($Menu==607) echo 'class="active"'; ?>><a href="../../finan/rep_ctasporcobrar/"><span class='fa fa-bookmark-o'></span> Cuentas por Cobrar</a></li>
-						<?php if(permiso_activo(202))?> <li <? if($Menu==607) echo 'class="active"'; ?>><a href="../../finan/rep_emisiones/"><span class='fa fa-bookmark-o'></span> Reporte de emisiones</a></li>
-						<?php if(permiso_activo(202))?> <li <? if($Menu==607) echo 'class="active"'; ?>><a href="../../finan/rep_mediacion/"><span class='fa fa-bookmark-o'></span> Reporte de mediación</a></li>
-						<?php if(permiso_activo(202))?> <li <? if($Menu==607) echo 'class="active"'; ?>><a href="../../finan/rep_antiquity/"><span class='fa fa-bookmark-o'></span> R. Antigüedad Saldos</a></li>
+						<li class="{menu41} treeview"><a href="#"><i class="fa fa-book"></i> <span>R. Cierre caja</span> <i class="fa fa-angle-left pull-right"></i></a>
+							<ul class="treeview-menu">
+								<?php if(permiso_activo(194))?> <li <? if($Menu==603) echo 'class="active"'; ?>><a href="../../finan/rep_facturas/"><span class='fa fa-bookmark-o'></span> Facturas Emitidas</a></li>
+								<?php if(permiso_activo(202))?> <li <? if($Menu==607) echo 'class="active"'; ?>><a href="../../finan/rep_notaCredito/"><span class='fa fa-bookmark-o'></span> Notas de Crédito</a></li>
+								<?php if(permiso_activo(202))?> <li <? if($Menu==606) echo 'class="active"'; ?>><a href="../../finan/rep_caja_saldos/"><span class='fa fa-bookmark-o'></span> Saldos a favor</a></li>
+							</ul>
+						</li>
 						<li class="{menu41} treeview"><a href="#"><i class="fa fa-book"></i> <span>Otros reportes</span> <i class="fa fa-angle-left pull-right"></i></a>
 							<ul class="treeview-menu">
 								<?php if(permiso_activo(194))?> <li <? if($Menu==603) echo 'class="active"'; ?>><a href="../../finan/rep_cobranza/"><span class='fa fa-bookmark-o'></span> CRM Cobranza</a></li>
@@ -119,6 +121,10 @@
 								<?php if(permiso_activo(192))?> <li <? if($Menu==602) echo 'class="active"'; ?>><a href="../../finan/liquidez/"><span class='fa fa-bookmark-o'></span> R. de liquidez</a></li>
 							</ul>
 						</li>
+						<?php if(permiso_activo(202))?> <li <? if($Menu==607) echo 'class="active"'; ?>><a href="../../finan/rep_ctasporcobrar/"><span class='fa fa-bookmark-o'></span> Cuentas por Cobrar</a></li>
+						<?php if(permiso_activo(202))?> <li <? if($Menu==607) echo 'class="active"'; ?>><a href="../../finan/rep_emisiones/"><span class='fa fa-bookmark-o'></span> Reporte de emisiones</a></li>
+						<?php if(permiso_activo(202))?> <li <? if($Menu==607) echo 'class="active"'; ?>><a href="../../finan/rep_mediacion/"><span class='fa fa-bookmark-o'></span> Reporte de mediación</a></li>
+						<?php if(permiso_activo(202))?> <li <? if($Menu==607) echo 'class="active"'; ?>><a href="../../finan/rep_antiquity/"><span class='fa fa-bookmark-o'></span> R. Antigüedad Saldos</a></li>
 					</ul>
 				</li>
 				<?php //}?>

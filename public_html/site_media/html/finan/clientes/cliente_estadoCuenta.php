@@ -2,7 +2,8 @@
 	<ul class="nav nav-tabs" role="tablist">
 		<li role="presentation" class="active"><a href="#tab_estadoCuenta_deuda" aria-controls="Deudas" role="tab" data-toggle="tab">Deudas</a></li>
 		<li role="presentation"><a href="#tab_estadoCuenta_pagos" aria-controls="Pagos" role="tab" data-toggle="tab">Pagos</a></li>
-		<!--<li role="presentation"><a href="#tab3" aria-controls="Notas de crédito" role="tab" data-toggle="tab">Notas de crédito</a></li>-->
+		<!--<li role="presentation"><a href="#tab3" aria-controls="Saldos a favor" role="tab" data-toggle="tab">Saldos a favor</a></li>-->
+		<!--<li role="presentation"><a href="#tab4" aria-controls="Notas de crédito" role="tab" data-toggle="tab">Notas de crédito</a></li>-->
 	</ul>
 	<!-- Tab panes -->
 	<div class="tab-content">
@@ -72,6 +73,20 @@
 			<div class="row">
 				<div class="col-sm-12" id="resultadoPagos" name="resultadoPagos" style='background-color:#f4f4f4;height:300px;overflow-y:scroll;'>
 					{tablaPagos}
+				</div>
+			</div>
+		</div>
+		<div role="tabpanel" class="tab-pane" id="tab3">
+			<div class="row">
+				<div class="col-sm-12" id="resultadoSAF" name="resultadoSAF" style='background-color:#f4f4f4;height:300px;overflow-y:scroll;'>
+					{tablaSAF}
+				</div>
+			</div>
+		</div>
+		<div role="tabpanel" class="tab-pane" id="tab4">
+			<div class="row">
+				<div class="col-sm-12" id="resultadoNC" name="resultadoNC" style='background-color:#f4f4f4;height:300px;overflow-y:scroll;'>
+					{tablaNC}
 				</div>
 			</div>
 		</div>

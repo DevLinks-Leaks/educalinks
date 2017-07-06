@@ -9,13 +9,15 @@ $(document).ready(function() {
 });
 function carga_tabla_asign_repr(codigo,div,url){
     document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:darkred;" class="fa fa-cog fa-spin"></i></div>';
-    var data = new FormData();
+    console.log("here 1");
+	var data = new FormData();
     data.append('event', 'asignar');
     data.append('alum_codi', codigo);
     var xhr = new XMLHttpRequest();
     xhr.open('POST', url , true);
     xhr.onreadystatechange=function(){
         if (xhr.readyState==4 && xhr.status==200){
+			console.log(xhr.responseText);
             document.getElementById(div).innerHTML=xhr.responseText;
 			$('#tabla_asigna_repr').addClass('nowrap').DataTable({
 				lengthChange: false, 

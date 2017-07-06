@@ -36,50 +36,34 @@ function handler() {
 											"name"=>"periodo_activo")
 										   );
 		 
-			 $data['{combo_anual_deudas}'] = array("elemento"  => "combo", 
-                                                             "datos"     => $fecha->rows,
-                                                             "options"   => array("name"	=>"cmb_periodo_anual_deudas",
-                                                                                  "id"		=>"cmb_periodo_anual_deudas",
-																				  "class"	=>"form-control",
-                                                                                  "required"=>"required",
-															
-															"onchange" => "js_aniosPeriodo_buscadeudas('resultadomigracion_deudas','".$diccionario['rutas_head']['ruta_html_finan']."/aniosPeriodo/controller.php')"),
-															 "selected"  => 0);
-			$data['{combo_anual_pagos}'] = array("elemento"  =>"combo", 
-														 "datos"     => $fecha->rows,
-														 "options"   => array("name"	=>"cmb_periodo_anual_pagos",
-																			  "id"		=>"cmb_periodo_anual_pagos",
-																			  "class"	=>"form-control",
-																			  "required"=>"required",
-														 "onchange" => "js_contabilidad_buscapagos('resultadomigracion_pagos','".$diccionario['rutas_head']['ruta_html_finan']."/contabilidad/controller.php')"),
-														 "selected"  => 0);
-			$data['{combo_anual_pagos_update}'] = array("elemento"  => "combo",
-														"datos"     => $periodo->rows,
+			 $data['{combo_anual_deudas}'] = array( "elemento"  => "combo", 
+													"datos"     => $fecha->rows,
+													"options"   => array( "name"	=> "cmb_periodo_anual_deudas",
+																		  "id"		=> "cmb_periodo_anual_deudas",
+																		  "class"	=> "form-control",
+																		  "required"=> "required",
+																		  "onchange"=> "js_aniosPeriodo_buscadeudas('resultadomigracion_deudas','".$diccionario['rutas_head']['ruta_html_finan']."/aniosPeriodo/controller.php')"),
+													"selected"  => 0);
+			$data['{combo_anual_pagos}'] = array("elemento" => "combo",
+												 "datos"    =>$fecha->rows,
+												 "options"  =>array("name"		=> "cmb_periodo_anual_pagos",
+																	"id"		=> "cmb_periodo_anual_pagos",
+																	"class"		=> "form-control",
+																	"required"	=> "required",
+																	"onchange" 	=> "js_contabilidad_buscapagos('resultadomigracion_pagos','".$diccionario['rutas_head']['ruta_html_finan']."/contabilidad/controller.php')"),
+												 "selected"  => 0);
+			$data['{combo_anual_pagos_update}'] = array("elemento"  =>"combo",
+														"datos"     =>$fecha->rows,
 														"options"   =>array("name"		=> "cmb_periodo_anual_update",
 																			"id"		=> "cmb_periodo_anual_update",
 																			"class"		=> "form-control",
 																			"required"	=> "required",
-																			"onChange"	=> "js_contabilidad_buscaDNAsPagados('resultadomigracion_deudas','".$diccionario['rutas_head']['ruta_html_finan']."/aniosPeriodo/controller.php')"),
-														"selected"  => $_SESSION['peri_codi']);
+																			"onchange"	=> "js_contabilidad_buscaDNAsPagados('resultadomigracion_paidDNAs','".$diccionario['rutas_head']['ruta_html_finan']."/contabilidad/controller.php')"),
+														"selected"  => 0);
 			$mydate=getdate(date("U"));
 			$conta->get_all($mydate[year]);
 			$opcionesdeudas["Migrar"] = "<span  onclick='js_contabilidad_migrar(".'"{codigo}"'.",".'"modal_pagos_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/contabilidad/controller.php"'.")' class='btn_opc_lista_migrar glyphicon glyphicon-send cursorlink cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_edit' id='{codigo}' 	id='".'"#{codigo}"'."_migrar_deuda'  onmouseover='$(this).tooltip(".'"show"'.")' title='Migrar pagos'>&nbsp;</span>";
-			$data['{tabla_pagos}'] = array( "elemento"=>"tabla",
-											"clase"=>"table table-striped table-hover",
-											"id"=>"tablapagos",
-											"datos"=>$conta->rows,
-											"encabezado" => array("Mes",
-																  "Mes de Vencimiento",
-																  "Pagos por Migrar",
-																  "Valor Pagos",
-																  "Opciones"),
-											"options"=>array($opcionesdeudas),
-											"campo"=>"mes");
-			$data['periodo_codigo']=$_SESSION['peri_codi'];
-			
-			$conta->get_all_paid_dnas( $mydate[year] );
-			$opcionespaiddnas["Migrar"] = "<span onclick='js_contabilidad_actualizar_DNAs(".'"{codigo}"'.",".'"modal_actualizar_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/contabilidad/controller.php"'.")' class='btn_opc_lista_migrar glyphicon glyphicon-send cursorlink cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_actualizar' id='{codigo}' onmouseover='$(".'"#{codigo}"'.").tooltip(".'"show"'.")' title=\"Actualizar DNA's\">&nbsp;</span>";
-			$data['{tabla_paidDNAs}']=array("elemento"	=>"tabla",
+			$data['{tabla_pagos}'] = array( "elemento"	=>"tabla",
 											"clase"		=>"table table-striped table-hover",
 											"id"		=>"tablapagos",
 											"datos"		=>$conta->rows,
@@ -88,8 +72,25 @@ function handler() {
 																"Pagos por Migrar",
 																"Valor Pagos",
 																"Opciones"),
-											"options"	=>array($opcionespaiddnas),
+											"options"	=>array($opcionesdeudas),
 											"campo"		=>"mes");
+			$data['periodo_codigo']=$_SESSION['peri_codi'];
+			
+			$conta->get_all_paid_dnas( $mydate[year] );
+			$opcionespaiddnas["Migrar"] = "<span onclick='js_contabilidad_actualizar_DNAs(".'"{codigo}"'.",".'"modal_actualizar_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/contabilidad/controller.php"'.")' class='btn_opc_lista_migrar glyphicon glyphicon-send cursorlink cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_actualizar' id='{codigo}' onmouseover='$(".'"#{codigo}"'.").tooltip(".'"show"'.")' title=\"Actualizar DNA's\">&nbsp;</span>";
+			$data['{tabla_paidDNAs}']=array("elemento"	=>"tabla",
+											"clase"		=>"table table-striped table-hover",
+											"id"		=>"tabla_paidDNAs_main",
+											"datos"		=>$conta->rows,
+											"encabezado"=> array(
+															"Mes",
+															"Mes de Vencimiento",
+															"DNAs por Actualizar",
+															"Valor Factura",
+															"Opciones"),
+											"options"=>array($opcionespaiddnas),
+											"campo"=>"mes");
+											
 			$data['periodo_codigo']=$_SESSION['peri_codi'];
 			
 			$permiso->permiso_activo($_SESSION['usua_codigo'], 166);

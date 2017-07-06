@@ -669,22 +669,27 @@ function generaFactura_followed(div, url)
 		xhr.onreadystatechange=function()
 		{   if ( xhr.readyState === 4 && xhr.status === 200 )
 			{   document.getElementById(div).innerHTML=xhr.responseText;
-				document.getElementById('modalFooter_mostrarFactura').innerHTML='<button class="btn btn-default" data-dismiss="modal">Cerrar</button>'; /*+
+				document.getElementById('modalFooter_mostrarFactura').innerHTML='<button class="btn btn-block btn-sm btn-default" data-dismiss="modal">Continuar en esta página</button>'+
 					'<a href="#" onclick="js_facturas_cobrar_deuda(\'' + codigoCliente + 
-						'\', \'' + tipo_persona + 
-						'\', \'' + nombresCliente + 
-						'\', \'' + numeroIdentificacionCliente + 
-						'\')" class="btn btn-primary"><span class="fa fa-dollar"></span>&nbsp;Cobrar deuda</a>';*/
+						'\', \'' + tipo_persona + '\', \'' + nombresCliente + '\', \'' + numeroIdentificacionCliente + 
+						'\')" class="btn btn-block btn-sm btn-danger"><span class="fa fa-user-circle-o"></span>&nbsp;Cobrar deudas del cliente seleccionado</a>';
 				limpiaPagina();
+				$('#modal_mostrarFactura').modal("show");
 			}
 		};
 		xhr.send(data);
 	}
 	else
-	{   var mensajeError='No existe detalle alguno para enviar al servidor';
-		document.getElementById('modal_mostrarFactura_body').innerHTML="<div class='alert alert-warning'><strong>¡Advertencia! </strong>"+mensajeError+"</div>";
+	{   var mensajeError='No existe detalle alguno para crear una factura nueva.';
+		$.growl.warning({ title: 'Educalinks informa', message: mensajeError });
 	}
 }
+/*
+<button type="button" id='btn_modal_resultadoPago_current_cl' name='btn_modal_resultadoPago_current_cl'
+					class="btn btn-block btn-sm btn-danger" data-dismiss="modal"
+					onclick="js_cobros_selecciona( 'span_button_save_person','', document.getElementById('hd_tipo_persona').value );">
+					<i class='fa fa-user-circle-o'></i>&nbsp;Cobrar deuda al mismo cliente</button>
+					*/
 function js_facturas_check_generar_FAC()
 {
 	if ( document.getElementById('check_generar_FAC').checked )
@@ -701,18 +706,18 @@ function js_facturas_cobrar_deuda( codCliente, tipo_cliente )
     i.type    = 'hidden';
     i.name    = 'event';
     i.id      = 'evento';
-    i.value   = 'buscar_todos';
+    i.value   = 'cobrar_deuda';
     f.appendChild(i);
     var j     = document.createElement( 'input' );
     j.type    = 'hidden';
-    j.name    = 'hd_codCliente';
-    j.id      = 'hd_codCliente';
+    j.name    = 'codigoCliente';
+    j.id      = 'codigoCliente';
     j.value   = codCliente;
     f.appendChild(j);
     var k     = document.createElement( 'input' );
     k.type    = 'hidden';
-    k.name    = 'hd_tipo_cliente';
-    k.id      = 'hd_tipo_cliente';
+    k.name    = 'tipo_persona';
+    k.id      = 'tipo_persona';
     k.value   = tipo_cliente;
     f.appendChild(k);
     document.body.appendChild(f);

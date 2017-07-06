@@ -78,8 +78,13 @@
 				<li class="{open4} treeview">
 					<a href="#"><i class="fa fa-book"></i> <span>Reportes</span><i class="fa fa-angle-left pull-right"></i></a><!-- {open4} -->
 					<ul class="treeview-menu">
-						<li class="{menu405}">{RepFACT}</li>
-						<li class="{menu404}">{RepNC}</li>
+						<li class="{menu42} treeview"><a href="#"><i class="fa fa-book"></i> <span>R. Cierre de caja</span> <i class="fa fa-angle-left pull-right"></i></a>
+						<ul class="treeview-menu">
+								<li class="{menu405}">{RepFACT}</li>
+								<li class="{menu404}">{RepNC}</li>
+								<li class="{menu413}">{RepCajaSaldos}</li>
+							</ul>
+						</li>
 						<li class="{menu41} treeview"><a href="#"><i class="fa fa-book"></i> <span>Otros reportes</span> <i class="fa fa-angle-left pull-right"></i></a>
 							<ul class="treeview-menu">
 								<li class="{menu402}">{Reporte_CRM_Cobranza}</li>

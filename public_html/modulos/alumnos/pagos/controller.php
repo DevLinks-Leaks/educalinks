@@ -649,6 +649,15 @@ function handler() {
             
 			retornar_vista_general(VIEW_DEBT, $data);
 			break;
+		case GET_DEBT_ANS_DIN_POST : 
+			include_once("../../../includes/common/PlugInClient/TripleDESEncryption.php");
+			$lsdata = $_POST["xmlReq"];
+			$lsdata = urldecode($lsdata); 
+			$d3 = new TripleDESEncryption();
+			$llave = "lBaDyHanzinZPQ6F+AGr2SVdCEWd3GT9";
+			$iv = "4fj1yu36Z/w="; 
+			$lsdata = $d3->decrypt($lsdata, $llave, $iv); 
+			break;
 		case GET_DEBT_ANS_DINERS:
 			global $diccionario;
 			

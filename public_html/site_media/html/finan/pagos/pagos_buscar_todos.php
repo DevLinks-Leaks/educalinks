@@ -141,11 +141,12 @@
 <form id="file_form" action="{ruta_html_finan}/pagos/controller.php" enctype="multipart/form-data" method="POST" target="_blank">
 	<input type='hidden' name="event" id="evento" value="print_excel_all_data"/>
 	<input type='hidden' name="tipo_reporte" id="tipo_reporte" value="completo"/>
+	<input type='hidden' name="tipo_visual"  id="tipo_visual" value="completo"/>
 	<div class='panel panel-info dismissible' id='panel_search' name='panel_search'>
 		<div class="panel-heading">
-			<h3 class="panel-title"><a href="#/" id="boton_busqueda" name="boton_busqueda" style='text-decoration:none;'><span class="fa fa-search"></span>&nbsp;Búsqueda</a>
+			<h3 class="panel-title"><a href="#/" class="boton_busqueda" id="boton_busqueda" name="boton_busqueda" style='text-decoration:none;'><span class="fa fa-search"></span>&nbsp;Búsqueda</a>
 			<div class="pull-right">
-				<a href="#/"  id="boton_busqueda" name="boton_busqueda" style='text-decoration:none;'><span class='fa fa-minus'></span></a>
+				<a href="#/"  class="boton_busqueda" style='text-decoration:none;'><span class='fa fa-minus'></span></a>
 					<!--<a href="#/" data-target="#panel_search" data-dismiss="alert" aria-hidden="true"><span class='fa fa-times'></span></a>-->
 			</div>
 		</div>
@@ -197,8 +198,9 @@
 											class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 										<span style='color:green;' class='fa fa-file-excel-o'>&nbsp;</span><span class="caret"></span>
 									</button>
-									<ul class="dropdown-menu" role="menu">
-										<li><a href="#" onclick="js_Pago_to_excel_PagosRealizados('print_excel_all_data','completo');">Sin agrupación ni totales</a></li>
+									<ul class="dropdown-menu dropdown-menu-right" role="menu">
+										<li><a href="#" onclick="js_Pago_to_excel_PagosRealizados('print_excel_all_data','completo',1);">Mostrar con formas de pago agrupadas y el saldo a favor en una columna aparte</a></li>
+										<li><a href="#" onclick="js_Pago_to_excel_PagosRealizados('print_excel_all_data','completo',2);"> Mostrar segmentado en formas de pago</a></li>
 										<li><a href="#" onclick="js_Pago_to_excel_PagosRealizados('print_excel_all_data2','curso');">Totalizado por curso</a></li>
 										<li><a href="#" onclick="js_Pago_to_excel_PagosRealizados('print_excel_all_data2','curso_caja');">Totalizado por curso y cajero</a></li>
 										<li><a href="#" onclick="js_Pago_to_excel_PagosRealizados('print_excel_all_data2','forma_de_pago');">Totalizado por forma de pago</a></li>
@@ -210,7 +212,7 @@
 											class="btn btn-default dropdown-toggle" data-toggle="dropdown">
 										<span style='color:red;' class='fa fa-file-pdf-o'>&nbsp;</span><span class="caret"></span>
 									</button>
-									<ul class="dropdown-menu" role="menu">
+									<ul class="dropdown-menu dropdown-menu-right" role="menu">
 										<li><a href="#" onclick="js_Pago_to_excel_PagosRealizados('print_pdf_all_data','curso');">Totalizado por curso</a></li>
 										<li><a href="#" onclick="js_Pago_to_excel_PagosRealizados('print_pdf_all_data','curso_caja');">Totalizado por curso y cajero</a></li>
 										<li><a href="#" onclick="js_Pago_to_excel_PagosRealizados('print_pdf_all_data','forma_de_pago');">Totalizado por forma de pago</a></li>
@@ -435,9 +437,24 @@
 	</div>
 </form>
 <div class="box box-default">
+	<div class="box-header with-border">
+			<h3 class="box-title">Bandeja de pagos recibidos</h3>
+			 <div class="box-tools pull-right">
+					<div class="btn-group hidden-sm hidden-xs">
+						<button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false"
+							title='Opciones de vista'>
+						<i class="fa fa-eye"></i></button>
+						<ul class="dropdown-menu" role="menu">
+						<li><a href="#" onclick="return js_Pago_carga_PagosRealizados('resultadoProcesoPagos');"><i class='fa fa-list-ul'></i> Mostrar con formas de pago agrupadas y el saldo a favor en una columna aparte</a></li>
+						<li><a href="#" onclick="return js_Pago_carga_PagosRealizados('resultadoProcesoPagos',2);"><i class='fa fa-list-ul'></i> Mostrar segmentado en formas de pago</a></li>
+						</ul>
+					</div>
+			</div>
+			<input type='hidden' id='tipo_bandeja' name='tipo_bandeja' value=''/>
+		</div><!-- /.box-header -->
 	<div class="box-body">
 		<div id="resultadoProcesoPagos">
-			<div style='text-align:center'>- Consultar primero -</div>
+			<div style='font-size: small'>Haga clic en buscar para realiza una consulta.</div>
 			{tabla_pagos}
 		</div>
 	</div>

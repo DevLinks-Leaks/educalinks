@@ -145,7 +145,8 @@ function handler() {
 			
 			$caja_cier_codigo = $user_data["codigo"];
 			$hoy = getdate();
-			$cierre_caja->get_caja_cierre_items($caja_cier_codigo);
+			
+			$cierre_caja->get_caja_cierre_items( $caja_cier_codigo, $_SESSION['peri_codi'], NULL, NULL, '-1', '-1', '-1', NULL );
 			$tranx = $cierre_caja->rows;
 			$pdf->AddPage('L', 'A4');//P:Portrait, L=Landscape
 			$item_actual="";
@@ -158,30 +159,38 @@ function handler() {
 			$html .= '<h4>Usuario de caja: '.$tranx[0]['usua_codi'].'</h4>';
 			$html .= '<h4>Fecha de apertura caja: '.$fecha_h_result.'</h4>';
 			$html .= '<h5>Fecha de impresi&oacute;n de: '.$hoy['mon'].'/'.$hoy['mday'].'/'.$hoy['year'] .'. '.date('H:i').'. Usuario: '.$_SESSION['usua_codi'].'.</h5> ';
+			$html .= '<p style="font-size:9px">Los valores mostrados en la columna total pendiente, son un histórico del valor pendiente hasta la fecha en la que se hizo el pago mostrado.</p> ';
 			$html .='<table border="0" cellspacing="0" cellpadding="0">';
 			$cabePago_total_gene=0;
 			$detaFact_totalbruto_gene=0;
 			$detaFact_totalDescuento_gene=0;
 			$detaFact_totalIVA_gene=0;
-			$detaFact_totalICE_gene=0;
-			for($i=0;$i<count($cierre_caja->rows)-1;$i++){
-				if($item_actual!=$tranx[$i]['cate_nombre']){
-					if($i!=0){
-						$html.='<tr><td colspan="14"><hr/></td></tr>';
+			$detaFact_totalNeto_gene=0;
+			for($i=0;$i<count($cierre_caja->rows)-1;$i++)
+			{   if($item_actual!=$tranx[$i]['cate_nombre'])
+				{   if($i!=0)
+					{   $html.='<tr><td colspan="14"><hr/></td></tr>';
 						$html.='<tr>
 							<td style="font-size:small;">&nbsp;</td>
 							<td style="font-size:small;">&nbsp;</td>
 							<td style="font-size:small;">&nbsp;</td>
 							<td style="font-size:small;">&nbsp;</td>
-							<td style="font-size:small;"><b>Total</b> </td>
-							<td align="right" style="font-size:small;"><b>$'.number_format($detaFact_totalbruto,2).'</b> </td>
-							<td align="right" style="font-size:small;"><b>$'.number_format((float)$deud_totalProntopago,2,'.','').'</b> </td>
-							<td align="right" style="font-size:small;"><b>$'.number_format($detaFact_totalDescuento,2).'</b> </td>
-							<td align="right" style="font-size:small;"><b>$'.number_format($detaFact_totalIVA,2).'</b> </td>
-							<td align="right" style="font-size:small;"><b>$'.number_format($detaFact_totalICE,2).'</b> </td>
-							<td align="right" style="font-size:small;"><b>$'.number_format($cabePago_total,2).'</b> </td>
-							<td style="font-size:small;">&nbsp;</td>
-							<td style="font-size:small;">&nbsp;</td>
+							<td style="font-size:small;"><b>Total</b> </td>'.
+							'<td style="text-align: right; font-size:small;"></td>
+							<td style="text-align: right; font-size:small;"></td>
+							<td style="text-align: right; font-size:small;"></td>
+							<td style="text-align: right; font-size:small;"></td>
+							<td style="text-align: right; font-size:small;"></td>
+							<td style="text-align: right; font-size:small;"><b>'.number_format($cabePago_total,2).'</b> </td>
+							<td style="text-align: right; font-size:small;"></td>'.
+							/*'<td style="text-align: right; font-size:small;"><b>'.number_format($detaFact_totalbruto,2).'</b> </td>
+							<td style="text-align: right; font-size:small;"><b>'.number_format((float)$deud_totalProntopago,2,'.','').'</b> </td>
+							<td style="text-align: right; font-size:small;"><b>'.number_format($detaFact_totalDescuento,2).'</b> </td>
+							<td style="text-align: right; font-size:small;"><b>'.number_format($detaFact_totalIVA,2).'</b> </td>
+							<td style="text-align: right; font-size:small;"><b>'.number_format($detaFact_totalNeto,2).'</b> </td>
+							<td style="text-align: right; font-size:small;"><b>'.number_format($cabePago_total,2).'</b> </td>
+							<td style="text-align: right; font-size:small;"><b>'.number_format($deud_totalPendiente,2).'</b> </td>'.*/
+							'<td style="font-size:small;">&nbsp;</td>
 							<td style="font-size:small;">&nbsp;</td>
 						</tr>
 						<tr>
@@ -189,33 +198,36 @@ function handler() {
 						</tr>';
 					}
 					$html.='<tr>
-						<th align="center" 	style="font-size:small;width:3%"></th>
-						<th align="left"   	style="font-size:small;width:10%">'.$tranx[$i]['cate_nombre'].'</th>
-						<th align="center" 	style="font-size:small;width:21%">Cliente/Alumno</th>
-						<th align="center" 	style="font-size:small;width:5%">Fact. ref.</th>
-						<th align="right"  	style="font-size:small;width:5%">Pagos ref.</th>
-						<th align="right" 	style="font-size:small;width:5%">Total Bruto</th>
-						<th align="right" 	style="font-size:x-small;width:5%">(-)Pronto p.</th>
-						<th align="right" 	style="font-size:small;width:5%">(-)Dscto.</th>
-						<th align="right" 	style="font-size:small;width:5%">I.V.A.</th>
-						<th align="right" 	style="font-size:small;width:5%">I.C.E.</th>
-						<th align="right" 	style="font-size:small;width:5%">Total Neto</th>
-						<th align="right" 	style="font-size:x-small;width:18%">Tipo descuento</th>
-						<th align="right" 	style="font-size:small;width:8%">Fecha</th>
+						<th style="text-align: center;font-size:x-small;width:3%">#</th>
+						<th style="text-align: left;  font-size:x-small;width:9%">'.$tranx[$i]['cate_nombre'].'</th>
+						<th style="text-align: center;font-size:x-small;width:19%">Cliente/Alumno</th>
+						<th style="text-align: center;font-size:x-small;width:10%">Factura</th>
+						<th style="text-align: right; font-size:x-small;width:4%">Recibo</th>
+						<th style="text-align: right; font-size:x-small;width:5%">($)T. Bruto</th>
+						<th style="text-align: right; font-size:x-small;width:5%">($)(-)Pronto p.</th>
+						<th style="text-align: right; font-size:x-small;width:5%">($)(-)Dscto.</th>
+						<th style="text-align: right; font-size:x-small;width:5%">($)I.V.A.</th>
+						<th style="text-align: right; font-size:x-small;width:5%">($)T. Neto</th>
+						<th style="text-align: right; font-size:x-small;width:5%">($)T. abonado</th>
+						<th style="text-align: right; font-size:x-small;width:5%">($)T. Pdte.</th>
+						<th style="text-align: right; font-size:x-small;width:15%">Tipo descuento</th>
+						<th style="text-align: right; font-size:x-small;width:5%">Fecha</th>
 					</tr>
 					<tr>
 					<td colspan="14"><hr/></td>
 					</tr>';
 					$cabePago_total_gene=$cabePago_total_gene+$cabePago_total;
+					$deud_totalPendiente_gene=$deud_totalPendiente_gene+$deud_totalPendiente;
 					$detaFact_totalIVA_gene=$detaFact_totalIVA_gene+$detaFact_totalIVA;
-					$detaFact_totalICE_gene=$detaFact_totalICE_gene+$detaFact_totalCE;
+					$detaFact_totalNeto_gene=$detaFact_totalNeto_gene+$detaFact_totalNeto;
 					$detaFact_totalbruto_gene=$detaFact_totalbruto_gene+$detaFact_totalbruto;
 					$deud_totalProntopago_gene=$deud_totalProntopago_gene+$deud_totalProntopago;
 					$detaFact_totalDescuento_gene=$detaFact_totalDescuento_gene+$detaFact_totalDescuento;
 					
 					$cabePago_total=0;
+					$deud_totalPendiente=0;
 					$detaFact_totalIVA=0;
-					$detaFact_totalCE=0;
+					$detaFact_totalNeto=0;
 					$detaFact_totalbruto=0;
 					$deud_totalProntopago=0;
 					$detaFact_totalDescuento=0;
@@ -225,78 +237,96 @@ function handler() {
 				$pagos = str_replace('Pagos: ','',$tranx[$i]['cabePago_codigo']);
 				$tipo_dcto = str_replace('Descuento ','Dscto. ',$tranx[$i]['detaFact_desc_descripcion']);
 				$html.='<tr>
-				<td style="font-size:small;">'.( $i + 1 ) .'</td>
+				<td style="text-align: center;font-size:small;">'.( $i + 1 ) .'</td>
 				<td style="font-size:small;">'.$tranx[$i]['prod_nombre'].' </td>
-				<td align="center" 	style="font-size:x-small;">'.$tranx[$i]['alum_codi'].' - '.$tranx[$i]['alum_nombre'].' </td>
-				<td align="center" 	style="font-size:small;">'.$tranx[$i]['deud_codigoDocumento'].' </td>
-				<td align="right" 	style="font-size:small;">'.$pagos.' </td>
-				<td align="right" 	style="font-size:small;">$'.$tranx[$i]['detaFact_totalbruto'].' </td>
-				<td align="right" 	style="font-size:small;">$'.number_format((float)$tranx[$i]['deud_totalProntopago'],2,'.','').'</td>
-				<td align="right" 	style="font-size:small;">$'.$tranx[$i]['detaFact_totalDescuento'].' </td>
-				<td align="right" 	style="font-size:small;">$'.$tranx[$i]['detaFact_totalIVA'].'</td>
-				<td align="right" 	style="font-size:small;">$'.$tranx[$i]['detaFact_totalICE'].'</td>
-				<td align="right" 	style="font-size:small;">$'.$tranx[$i]['cabePago_total'].' </td>
-				<td align="right" 	style="font-size:small;">'.$tipo_dcto.'</td>
-				<td align="right" 	style="font-size:small;">'.$fecha_result.'</td>
+				<td style="text-align: center;font-size:x-small;">'.$tranx[$i]['alum_codi'].' - '.$tranx[$i]['alum_nombre'].' </td>
+				<td style="text-align: center;font-size:x-small;">'.$tranx[$i]['deud_codigoDocumento'].' </td>
+				<td style="text-align: right; font-size:x-small;">'.$pagos.' </td>
+				<td style="text-align: right; font-size:x-small;">'.$tranx[$i]['detaFact_totalbruto'].' </td>
+				<td style="text-align: right; font-size:x-small;">'.number_format((float)$tranx[$i]['deud_totalProntopago'],2,'.','').'</td>
+				<td style="text-align: right; font-size:x-small;">'.$tranx[$i]['detaFact_totalDescuento'].' </td>
+				<td style="text-align: right; font-size:x-small;">'.$tranx[$i]['detaFact_totalIVA'].' </td>
+				<td style="text-align: right; font-size:x-small;">'.$tranx[$i]['detaFact_totalNeto'].' </td>
+				<td style="text-align: right; font-size:x-small;">'.$tranx[$i]['cabePago_total'].' </td>
+				<td style="text-align: right; font-size:x-small;">'.number_format((float)$tranx[$i]['deud_totalPendiente'],2,'.','').' </td>
+				<td style="text-align: right; font-size:x-small;">'.$tipo_dcto.'</td>
+				<td style="text-align: right; font-size:x-small;">'.$fecha_result.'</td>
 				</tr>';
 				$item_actual=$tranx[$i]['cate_nombre'];
 				$cabePago_total=$cabePago_total+$tranx[$i]['cabePago_total'];
+				$deud_totalPendiente=$deud_totalPendiente+$tranx[$i]['deud_totalPendiente'];
 				$detaFact_totalIVA=$detaFact_totalIVA+$tranx[$i]['detaFact_totalIVA'];
-				$detaFact_totalICE=$detaFact_totalICE+$tranx[$i]['detaFact_totalICE'];
+				$detaFact_totalNeto=$detaFact_totalNeto+$tranx[$i]['detaFact_totalNeto'];
 				$detaFact_totalbruto=$detaFact_totalbruto+$tranx[$i]['detaFact_totalbruto'];
 				$deud_totalProntopago=$deud_totalProntopago+$tranx[$i]['deud_totalProntopago'];
 				$detaFact_totalDescuento=$detaFact_totalDescuento+$tranx[$i]['detaFact_totalDescuento'];
 				if($i==count($cierre_caja->rows)-2){
 					$html.='<tr><td colspan="14"><hr/></td></tr>';
 					$html.='<tr>
-					<td style="font-size:small;">&nbsp;</td>
-					<td style="font-size:small;">&nbsp;</td>
-					<td style="font-size:small;">&nbsp;</td>
-					<td style="font-size:small;">&nbsp;</td>
-					<td style="font-size:small;"><b>Total</b> </td>
-					<td align="right" style="font-size:small;"><b>$'.number_format($detaFact_totalbruto,2).'</b> </td>
-					<td align="right" style="font-size:small;"><b>$'.number_format((float)$deud_totalProntopago,2,'.','').'</b> </td>
-					<td align="right" style="font-size:small;"><b>$'.number_format($detaFact_totalDescuento,2).'</b> </td>
-					<td align="right" style="font-size:small;"><b>$'.number_format($detaFact_totalIVA,2).'</b> </td>
-					<td align="right" style="font-size:small;"><b>$'.number_format($detaFact_totalICE,2).'</b> </td>
-					<td align="right" style="font-size:small;"><b>$'.number_format($cabePago_total,2).'</b> </td>
-					<td style="font-size:small;">&nbsp;</td>
-					<td style="font-size:small;">&nbsp;</td>
-					<td style="font-size:small;">&nbsp;</td>
+						<td style="font-size:small;">&nbsp;</td>
+						<td style="font-size:small;">&nbsp;</td>
+						<td style="font-size:small;">&nbsp;</td>
+						<td style="font-size:small;">&nbsp;</td>
+						<td style="font-size:small;"><b>Total</b> </td>'.
+						'<td style="text-align: right; font-size:small;"></td>
+						<td style="text-align: right; font-size:small;"></td>
+						<td style="text-align: right; font-size:small;"></td>
+						<td style="text-align: right; font-size:small;"></td>
+						<td style="text-align: right; font-size:small;"></td>
+						<td style="text-align: right; font-size:small;"><b>'.number_format($cabePago_total,2).'</b> </td>
+						<td style="text-align: right; font-size:small;"></td>'.
+						/*'<td style="text-align: right; font-size:small;"><b>'.number_format($detaFact_totalbruto,2).'</b> </td>
+						<td style="text-align: right; font-size:small;"><b>'.number_format((float)$deud_totalProntopago,2,'.','').'</b> </td>
+						<td style="text-align: right; font-size:small;"><b>'.number_format($detaFact_totalDescuento,2).'</b> </td>
+						<td style="text-align: right; font-size:small;"><b>'.number_format($detaFact_totalIVA,2).'</b> </td>
+						<td style="text-align: right; font-size:small;"><b>'.number_format($detaFact_totalNeto,2).'</b> </td>
+						<td style="text-align: right; font-size:small;"><b>'.number_format($cabePago_total,2).'</b> </td>
+						<td style="text-align: right; font-size:small;"><b>'.number_format($deud_totalPendiente,2).'</b> </td>'.*/
+						'<td style="font-size:small;">&nbsp;</td>
+						<td style="font-size:small;">&nbsp;</td>
 					</tr>
 					<tr>
 					<td colspan="14">&nbsp;</td>
 					</tr>';
 					$cabePago_total_gene=$cabePago_total_gene+$cabePago_total;
+					$deud_totalPendiente_gene=$deud_totalPendiente_gene+$deud_totalPendiente;
 					$detaFact_totalIVA_gene=$detaFact_totalIVA_gene+$detaFact_totalIVA;
-					$detaFact_totalICE_gene=$detaFact_totalICE_gene+$detaFact_totalICE;
+					$detaFact_totalNeto_gene=$detaFact_totalNeto_gene+$detaFact_totalNeto;
 					$detaFact_totalbruto_gene=$detaFact_totalbruto_gene+$detaFact_totalbruto;
 					$deud_totalProntopago_gene=$deud_totalProntopago_gene+$deud_totalProntopago;
 					$detaFact_totalDescuento_gene=$detaFact_totalDescuento_gene+$detaFact_totalDescuento;
 					
 					$html.='<tr>
-					<td style="font-size:small;">&nbsp;</td>
-					<td style="font-size:small;">&nbsp;</td>
-					<td style="font-size:small;">&nbsp;</td>
-					<td style="font-size:small;">&nbsp;</td>
-					<td style="font-size:small;"><b>Total Diario</b> </td>
-					<td align="right" style="font-size:small;"><b>$'.number_format($detaFact_totalbruto_gene,2).'</b> </td>
-					<td align="right" style="font-size:small;"><b>$'.number_format($deud_totalProntopago_gene,2).'</b> </td>
-					<td align="right" style="font-size:small;"><b>$'.number_format($detaFact_totalDescuento_gene,2).'</b> </td>
-					<td align="right" style="font-size:small;"><b>$'.number_format($detaFact_totalIVA_gene,2).'</b> </td>
-					<td align="right" style="font-size:small;"><b>$'.number_format($detaFact_totalICE_gene,2).'</b> </td>
-					<td align="right" style="font-size:small;"><b>$'.number_format($cabePago_total_gene,2).'</b> </td>
-					<td style="font-size:small;">&nbsp;</td>
-					<td style="font-size:small;">&nbsp;</td>
-					<td style="font-size:small;">&nbsp;</td>
+						<td style="font-size:small;">&nbsp;</td>
+						<td style="font-size:small;">&nbsp;</td>
+						<td style="font-size:small;">&nbsp;</td>
+						<td style="font-size:small;">&nbsp;</td>
+						<td style="font-size:small;"><b>Total Diaro</b> </td>'.
+						'<td style="text-align: right; font-size:small;"></td>
+						<td style="text-align: right; font-size:small;"></td>
+						<td style="text-align: right; font-size:small;"></td>
+						<td style="text-align: right; font-size:small;"></td>
+						<td style="text-align: right; font-size:small;"></td>
+						<td style="text-align: right; font-size:small;"><b>'.number_format($cabePago_total_gene,2).'</b> </td>
+						<td style="text-align: right; font-size:small;"></td>'.
+						/*'<td style="text-align: right; font-size:small;"><b>'.number_format($detaFact_totalbruto_gene,2).'</b> </td>
+						<td style="text-align: right; font-size:small;"><b>'.number_format((float)$deud_totalProntopago_gene,2,'.','').'</b> </td>
+						<td style="text-align: right; font-size:small;"><b>'.number_format($detaFact_totalDescuento_gene,2).'</b> </td>
+						<td style="text-align: right; font-size:small;"><b>'.number_format($detaFact_totalIVA_gene,2).'</b> </td>
+						<td style="text-align: right; font-size:small;"><b>'.number_format($detaFact_totalNeto_gene,2).'</b> </td>
+						<td style="text-align: right; font-size:small;"><b>'.number_format($cabePago_total_gene,2).'</b> </td>
+						<td style="text-align: right; font-size:small;"><b>'.number_format($deud_totalPendiente_gene,2).'</b> </td>'.*/
+						'<td style="font-size:small;">&nbsp;</td>
+						<td style="font-size:small;">&nbsp;</td>
 					</tr>
 					<tr>
 					<td colspan="14">&nbsp;</td>
 					</tr>';
 					
 					$cabePago_total=0;
+					$deud_totalPendiente=0;
 					$detaFact_totalIVA=0;
-					$detaFact_totalCE=0;
+					$detaFact_totalNeto=0;
 					$detaFact_totalbruto=0;
 					$deud_totalProntopago=0;
 					$detaFact_totalDescuento=0;
@@ -311,7 +341,6 @@ function handler() {
 		case PRINTREP_FP:
 			header("Content-type:application/pdf");
           	header("Content-Disposition:attachment;filename='reporte_cierre_caja.pdf'");
-			
 			$pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 			$pdf->SetCreator("Redlinks");
 			$pdf->SetAuthor("Redlinks");
@@ -325,6 +354,10 @@ function handler() {
 			$hoy = getdate();
 			$cierre_caja->get_caja_cierre_fp($caja_cier_codigo);
 			$tranx = $cierre_caja->rows;
+			$meses = array("Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic");
+			$meses_h = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+			$fecha_h = explode('-',$tranx[0]['detaPago_fechaCreacion']);
+			$fecha_h_result = $meses_h[(int)$fecha_h[1]-1].' '.substr($fecha_h[2],0,2).', '.$fecha_h[0];
 			$pdf->AddPage('L', 'A4');//P:Portrait, L=Landscape
 			$item_actual="";
 			$html .= '<h2>Reporte de Cierre de Caja - Formas de Pago: '.$tranx[0]['cabePago_fecha'].'</h2>';
@@ -343,8 +376,9 @@ function handler() {
 			{   if( $usuario_actual != $tranx[$i]['usua_codi'] )
 				{   if ($div_by_user == '1') 
 					{	if( $i != 0 )
-						{   $html.='<tr><td colspan="7"><hr/></td></tr>';
+						{   $html.='<tr><td colspan="8"><hr/></td></tr>';
 							$html.='<tr>
+								<td>&nbsp;</td>
 								<td>&nbsp;</td>
 								<td>&nbsp;</td>
 								<td>&nbsp;</td>
@@ -354,29 +388,31 @@ function handler() {
 								<td>&nbsp;</td>
 							</tr>
 							<tr>
-								<td colspan="7">&nbsp;</td>
+								<td colspan="8">&nbsp;</td>
 							</tr>';
 						}
-						$html.='<tr><td colspan="7"><h4>Usuario - cajero: '.$tranx[$i]['usua_codi'].'</h4></td></tr>';
-						$html.='<tr><td colspan="7"><h4>'.$item_nomen.': '.$tranx[$i][$item_orden].'</h4></td></tr>';
+						$html.='<tr><td colspan="8"><h4>Usuario - cajero: '.$tranx[$i]['usua_codi'].'</h4></td></tr>';
+						$html.='<tr><td colspan="8"><h4>'.$item_nomen.': '.$tranx[$i][$item_orden].'</h4></td></tr>';
 						$html.='<tr>
-							<th style="width:3%"></th>
-							<th style="width:18%">'.$suborden.'</th>
+							<th style="width:3%">#</th>
+							<th style="width:6%" align="center">Recibo</th>
+							<th style="width:21%">'.$suborden.'</th>
 							<th style="width:25%">Alumno</th>
-							<th style="width:18%">Ref. Int.</th>
-							<th style="width:6%" align="right">Valor</th>
+							<th style="width:15%">Factura</th>
+							<th style="width:6%" align="right">Total abonado</th>
 							<th style="width:10%" align="right">Fecha</th>
-							<th style="width:20%" align="right">Detalle</th>
+							<th style="width:14%" align="right">Detalle</th>
 						</tr>
 						<tr>
-						<td colspan="7"><hr/></td>
+						<td colspan="8"><hr/></td>
 						</tr>';
 					}
 					else
 					{   if( $item_actual != $tranx[$i][$item_orden] )
 						{   if( $i != 0 )
-							{   $html.='<tr><td colspan="7"><hr/></td></tr>';
+							{   $html.='<tr><td colspan="8"><hr/></td></tr>';
 								$html.='<tr>
+									<td>&nbsp;</td>
 									<td>&nbsp;</td>
 									<td>&nbsp;</td>
 									<td>&nbsp;</td>
@@ -386,21 +422,22 @@ function handler() {
 									<td>&nbsp;</td>
 								</tr>
 								<tr>
-									<td colspan="7">&nbsp;</td>
+									<td colspan="8">&nbsp;</td>
 								</tr>';
 							}
-							$html.='<tr><td colspan="7"><h4>'.$item_nomen.': '.$tranx[$i][$item_orden].'</h4></td></tr>';
+							$html.='<tr><td colspan="8"><h4>'.$item_nomen.': '.$tranx[$i][$item_orden].'</h4></td></tr>';
 							$html.='<tr>
-								<th style="width:3%"></th>
-								<th style="width:18%">'.$suborden.'</th>
+								<th style="width:3%">#</th>
+								<th style="width:6%" align="center">Recibo</th>
+								<th style="width:21%">'.$suborden.'</th>
 								<th style="width:25%">Alumno</th>
-								<th style="width:18%">Ref. Int.</th>
-								<th style="width:6%" align="right">Valor</th>
+								<th style="width:15%">Factura</th>
+								<th style="width:6%" align="right">Total abonado</th>
 								<th style="width:10%" align="right">Fecha</th>
-								<th style="width:20%" align="right">Detalle</th>
+								<th style="width:14%" align="right">Detalle</th>
 							</tr>
 							<tr>
-							<td colspan="7"><hr/></td>
+							<td colspan="8"><hr/></td>
 							</tr>';
 							$detaPago_total_gene = $detaPago_total_gene + $detaPago_total;
 							
@@ -411,8 +448,9 @@ function handler() {
 				else
 				{   if( $item_actual != $tranx[$i][$item_orden] )
 					{   if( $i != 0 )
-						{   $html.='<tr><td colspan="7"><hr/></td></tr>';
+						{   $html.='<tr><td colspan="8"><hr/></td></tr>';
 							$html.='<tr>
+								<td>&nbsp;</td>
 								<td>&nbsp;</td>
 								<td>&nbsp;</td>
 								<td>&nbsp;</td>
@@ -422,21 +460,22 @@ function handler() {
 								<td>&nbsp;</td>
 							</tr>
 							<tr>
-								<td colspan="7">&nbsp;</td>
+								<td colspan="8">&nbsp;</td>
 							</tr>';
 						}
-						$html.='<tr><td colspan="7"><h4>'.$item_nomen.': '.$tranx[$i][$item_orden].'</h4></td></tr>';
+						$html.='<tr><td colspan="8"><h4>'.$item_nomen.': '.$tranx[$i][$item_orden].'</h4></td></tr>';
 						$html.='<tr>
-							<th style="width:3%"></th>
-							<th style="width:18%">'.$suborden.'</th>
+							<th style="width:3%">#</th>
+							<th style="width:6%" align="center">Recibo</th>
+							<th style="width:21%">'.$suborden.'</th>
 							<th style="width:25%">Alumno</th>
-							<th style="width:18%">Ref. Int.</th>
-							<th style="width:6%" align="right">Valor</th>
+							<th style="width:15%">Factura</th>
+							<th style="width:6%" align="right">Total abonado</th>
 							<th style="width:10%" align="right">Fecha</th>
-							<th style="width:20%" align="right">Detalle</th>
+							<th style="width:14%" align="right">Detalle</th>
 						</tr>
 						<tr>
-						<td colspan="7"><hr/></td>
+						<td colspan="8"><hr/></td>
 						</tr>';
 						$detaPago_total_gene = $detaPago_total_gene + $detaPago_total;
 						
@@ -444,21 +483,23 @@ function handler() {
 					}
 				}
 				$html.='<tr>
-				<td>'.($i+1).'</td>
-				<td>'.$tranx[$i][$subitem_orden].' </td>
-				<td>'.$tranx[$i]['alum_codi'].' - '.$tranx[$i]['cliente_nombre'].' </td>
-				<td>'.$tranx[$i]['deud_codigoDocumento'].' </td>
-				<td align="right">$'.$tranx[$i]['detaPago_total'].' </td>
-				<td align="right">'.$tranx[$i]['detaPago_fechaCreacion'].' </td>
-				<td align="right">'.$tranx[$i]['observacion'].' </td>
+				<td style="font-size:small;">'.($i+1).'</td>
+				<td style="font-size:small;" align="center">'.$tranx[$i]['cabePago_codigo'].' </td>
+				<td style="font-size:small;">'.$tranx[$i][$subitem_orden].' </td>
+				<td style="font-size:small;">'.$tranx[$i]['alum_codi'].' - '.$tranx[$i]['cliente_nombre'].' </td>
+				<td style="font-size:small;">'.$tranx[$i]['deud_codigoDocumento'].' </td>
+				<td style="font-size:small;" align="right">$'.$tranx[$i]['detaPago_total'].' </td>
+				<td style="font-size:small;" align="right">'.$tranx[$i]['detaPago_fechaCreacion'].' </td>
+				<td style="font-size:small;" align="right">'.$tranx[$i]['observacion'].' </td>
 				</tr>';
 				$usuario_actual = $tranx[$i]['usua_codi'];
 				$item_actual = $tranx[$i][$item_orden];
 				$detaPago_total = $detaPago_total + $tranx[$i]['detaPago_total'];
 				
 				if( $i == count( $cierre_caja->rows )-2 )
-				{   $html.='<tr><td colspan="7"><hr/></td></tr>';
+				{   $html.='<tr><td colspan="8"><hr/></td></tr>';
 					$html.='<tr>
+					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
@@ -468,11 +509,12 @@ function handler() {
 					<td>&nbsp;</td>
 					</tr>
 					<tr>
-					<td colspan="7">&nbsp;</td>
+					<td colspan="8">&nbsp;</td>
 					</tr>';
 					$detaPago_total_gene = $detaPago_total_gene + $detaPago_total;
 					
 					$html.='<tr>
+					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
@@ -482,7 +524,7 @@ function handler() {
 					<td>&nbsp;</td>
 					</tr>
 					<tr>
-					<td colspan="7">&nbsp;</td>
+					<td colspan="8">&nbsp;</td>
 					</tr>';
 					
 					$cabePago_total = 0;
@@ -493,6 +535,123 @@ function handler() {
 			$html.='</table>';
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->Output('reporte_cierre_caja.pdf', 'I');
+			break;
+		case PRINTREP_SAF:
+			header("Content-type:application/pdf");
+          	header("Content-Disposition:attachment;filename='reporte_cierre_caja_saldos_a_favor.pdf'");
+			$pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+			$pdf->SetCreator("Redlinks");
+			$pdf->SetAuthor("Redlinks");
+			$pdf->SetTitle("Cierre de Caja - Saldos a favor");
+			$pdf->SetSubject("Cierre de Caja");
+			$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+			$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+			$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+			$pdf->SetFont('Helvetica', '', 9, '', 'false');
+			$caja_cier_codigo = $user_data["codigo"];
+			$hoy = getdate();
+			$cierre_caja->get_caja_cierre_saf( $_SESSION['peri_codi'], $caja_cier_codigo );
+			$tranx = $cierre_caja->rows;
+			$meses = array("Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic");
+			$meses_h = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+			$fecha_h = explode('-',$tranx[0]['fechaPago']);
+			$fecha_h_result = $meses_h[(int)$fecha_h[1]-1].' '.substr($fecha_h[2],0,2).', '.$fecha_h[0];
+			$pdf->AddPage('L', 'A4');//P:Portrait, L=Landscape
+			$item_actual="";
+			$html .= '<h2>Reporte de Cierre de Caja - Saldos a favor: '.substr($tranx[0]['fechaPago'],0,10).'</h2>';
+			$html .= '<h4>Usuario de caja: '.$tranx[0]['usua_codi'].'</h4>';
+			$html .= '<h4>Fecha de apertura caja: '.$fecha_h_result.'</h4>';
+			$html .= '<h5>Fecha de impresi&oacute;n de: '.$hoy['mon'].'/'.$hoy['mday'].'/'.$hoy['year'] .'. '.date('H:i').'. Usuario: '.$_SESSION['usua_codi'].'.</h5>';
+			
+			$html .='<table border="0" cellspacing="0" cellpadding="0">';
+			$detaPago_total_gene=0;
+			$usuario_actual = "";
+			$div_by_user = '1';
+			for($i=0;$i<count($cierre_caja->rows)-1;$i++)
+			{   if( $usuario_actual != $tranx[$i]['usua_codi'] )
+				{   if( $i != 0 )
+						{   $html.='<tr><td colspan="8"><hr/></td></tr>';
+							$html.='<tr>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
+								<td><b>Total</b> </td>
+								<td align="right"><b>$'.number_format($detaPago_total,2).'</b> </td>
+								<td>&nbsp;</td>
+								<td>&nbsp;</td>
+							</tr>
+							<tr>
+								<td colspan="8">&nbsp;</td>
+							</tr>';
+						}
+						$html.='<tr><td colspan="8"><h4>Usuario - cajero: '.$tranx[$i]['usua_codi'].'</h4></td></tr>';
+						$html.='<tr>
+							<th style="width:  3%; font-size: small;">#</th>
+							<th style="width:  6%; font-size: small;; text-align: center;">Recibo</th>
+							<th style="width: 22%; font-size: small;">Curso</th>
+							<th style="width: 30%; font-size: small;">Alumno/Cliente</th>
+							<th style="width: 13%; font-size: small;">Factura</th>
+							<th style="width:  6%; text-align: right; font-size: small;">($)Saldo</th>
+							<th style="width: 10%; text-align: right; font-size: small;">Formas de pago</th>
+							<th style="width: 10%; text-align: right; font-size: small;">Fecha pago</th>
+						</tr>
+						<tr>
+						<td colspan="8"><hr/></td>
+						</tr>';
+				}
+				$html.='<tr>
+				<td style="font-size:small;">'.($i+1).'</td>
+				<td style="font-size:small;" align="center">'.$tranx[$i]['cabePago_codigo'].' </td>
+				<td style="font-size:small;">'.$tranx[$i]['cliente_curso'].' </td>
+				<td style="font-size:small;">'.$tranx[$i]['alum_codi'].' - '.$tranx[$i]['cliente_nombre'].' </td>
+				<td style="font-size:small;">'.$tranx[$i]['deud_codigoDocumento'].' </td>
+				<td style="font-size:small;" align="right">'.$tranx[$i]['totalSaldo'].' </td>
+				<td style="font-size:small;" align="right">'.$tranx[$i]['formaPago'].' </td>
+				<td style="font-size:small;" align="right">'.$tranx[$i]['fechaPago'].' </td>
+				</tr>';
+				$usuario_actual = $tranx[$i]['usua_codi'];
+				$detaPago_total = $detaPago_total + $tranx[$i]['totalSaldo'];
+				
+				if( $i == count( $cierre_caja->rows )-2 )
+				{   $html.='<tr><td colspan="8"><hr/></td></tr>';
+					$html.='<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td><b>Total</b> </td>
+					<td align="right"><b>'.number_format($detaPago_total,2).'</b> </td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					</tr>
+					<tr>
+					<td colspan="8">&nbsp;</td>
+					</tr>';
+					$detaPago_total_gene = $detaPago_total_gene + $detaPago_total;
+					
+					$html.='<tr>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td><b>Total Diario</b> </td>
+					<td align="right"><b>'.number_format($detaPago_total_gene,2).'</b> </td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					</tr>
+					<tr>
+					<td colspan="8">&nbsp;</td>
+					</tr>';
+					
+					$cabePago_total = 0;
+					$detaFact_totalNeto = 0;
+					$detaFact_totalDescuento=  0;
+				}
+			}
+			$html.='</table>';
+			$pdf->writeHTML($html, true, false, true, false, '');
+			$pdf->Output('reporte_cierre_caja_saldos_a_favor.pdf', 'I');
 			break;
 		case PRINTREP_NOTACREDITO:
 			header("Content-type:application/pdf");

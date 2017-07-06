@@ -205,14 +205,17 @@ function js_item_cargaItem( div_resultado, combo_nombre, categoria_codi )
 {   "use strict";
     document.getElementById( div_resultado ).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
 	var data = new FormData();
+    data.append( 'event', 'get_subtipo' );
     data.append( 'categoria', categoria_codi );
     data.append( 'combo_nombre', combo_nombre );
-    data.append( 'event', 'get_subtipo' );
     var xhr = new XMLHttpRequest();
     xhr.open('POST', document.getElementById('ruta_html_finan').value + '/items/controller.php' , true);
     xhr.onreadystatechange=function()
 	{   if ( xhr.readyState === 4 && xhr.status === 200 )
-		{   document.getElementById( div_resultado ).innerHTML=xhr.responseText;
+		{   document.getElementById( div_resultado ).innerHTML = xhr.responseText;
+			$("#cmb_producto").select2({
+				placeholder: "- Seleccione un producto -"
+			});
         }
     };
     xhr.send(data);

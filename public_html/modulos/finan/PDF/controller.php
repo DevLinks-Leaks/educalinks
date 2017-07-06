@@ -27,7 +27,7 @@ function handler() {
 					$cobro = new Cobro();
 					$datosPago = $cobro->get_infoPago($codigoPago);
 					generar_pago_PDF($_SESSION['print_dir_logo_cliente'],$datosPago[0]['codigoCliente'],$datosPago[0]['nombresCliente'],', '.$datosPago[0]['curso'],
-										$datosPago[0]['identificacionCliente'], $datosPago[0]['codigoPago'], "$ ".
+										$datosPago[0]['identificacionCliente'], $datosPago[0]['codigoPago'],
 										number_format($datosPago[0]['total'], 2, '.', ','),
 										$datosPago[0]['fechaEmision'], $datosPago[0]['usuario']);
 
@@ -87,7 +87,7 @@ function generar_pago_PDF($ruta_logo, $codCliente, $nombresCliente, $cursoParale
 		</table>
 		<br>
 		<br>
-		<table border="0">
+		<table border="0"  style="font-size:small;">
 			<tr><td colspan="2" align="left">Recibo de pago #'.$codigoPago.'</td></tr>
 			<tr><td colspan="2" align="right"></td></tr>
 			<tr><td colspan="2" align="center">DETALLE DE COMPRA SIN VALIDEZ TRIBUTARIA<br># FACTURA<br>{numeroFactura}</td></tr>
@@ -108,13 +108,13 @@ function generar_pago_PDF($ruta_logo, $codCliente, $nombresCliente, $cursoParale
 				<td align="right" style="font-size:small;">'.$nombreUsuario.'</td>
 			</tr>
 			<tr>
-				<td style="font-size:small;"><b>Total: </b></td>
-				<td align="right"><b>'.$total.'</b></td>
+				<td style="font-size:small;"><b>Total Pago: </b></td>
+				<td align="right" style="font-size:15px;"><b>$'.$total.'</b></td>
 			</tr>
 		</table>
 		<br>
 		<br>
-		<table width="100%" border="0">
+		<table width="100%" border="0" style="font-size:small;">
 			<tr>
 				<td colspan="2"><strong>'.$titularFactura.'</strong></td>
 			</tr>
@@ -142,40 +142,24 @@ function generar_pago_PDF($ruta_logo, $codCliente, $nombresCliente, $cursoParale
 			</tr>
 		</table>';
 	}
-		/*<br>
-		<br>
-		<table border="0">
-			<tr>
-				<td colspan="2">***Información del pago***</td>
-			</tr>
-			<tr>
-				<td width="75px">Código: </td>
-				<td width="100px" align="right">'.$codigoPago.'</td>
-			</tr>
-			<tr>
-				<td>Fecha: </td>
-				<td align="right">'.$fechaEmision.'</td>
-			</tr>
-			<tr>
-				<td>Cajero: </td>
-				<td align="right">'.$nombreUsuario.'</td>
-			</tr>
-		</table>';*/
 	$cobro = new Cobro();
 	$deudasAfectadas = $cobro->get_deudasAfectadas($codigoPago);
 	$detallePagos = $cobro->get_detallePagos($codigoPago);
 
 	$html.='
 		<br>
-		<table border="0">';
+		<table border="0" style="font-size:small;">';
+	$total_deuda_neta = 0;
 	foreach( $deudasAfectadas as $rows )
 	{	$html.='
-			<tr><td align="center" colspan="2"></td></tr>
+			<tr style="height:51x;"><td align="center" colspan="2"></td></tr>
 			<tr><td align="left" >Descripción: </td><td align="right">'.$rows['prod_nombre'].'</td></tr>
-			<tr><td align="left">Valor: </td><td align="right">$'.$rows['valorPrecio'].'</td></tr>';
+			<tr><td align="left">Total a pagar: </td><td align="right">$'.$rows['valorPrecio'].'</td></tr>';
 			if( $rows['valorDescuento'] > 0 )
-				$html.='
-			<tr><td align="left">(-) Descuento: </td><td align="right">$'.$rows['valorDescuento'].'</td></tr>';
+			{   $html.='<tr><td align="left">(-) Descuento: </td><td align="right">$'.$rows['valorDescuento'].'</td></tr>';
+				$html.='<tr><td align="left">Total: </td><td align="right">$'.($rows['valorPrecio'] - $rows['valorDescuento']).'</td></tr>';
+			}
+		$total_deuda_neta = $total_deuda_neta + $rows['valorPrecio'] - $rows['valorDescuento'];
 	}
 	$html.="
 		</table>";
@@ -183,9 +167,9 @@ function generar_pago_PDF($ruta_logo, $codCliente, $nombresCliente, $cursoParale
 	$html.='
 		---------------------------------------------------
 		<br>
-		<table  border="0">
+		<table  border="0"  style="font-size:small;">
 			<tr>
-				<td align="left" colspan="2"><b>Formas de Pago</b></td>
+				<td align="left" colspan="2"><b>Abonos - formas de Pago</b></td>
 			</tr>';
 	$total_fp = $subtotal = 0;
 	$numeroTitular = "";
@@ -204,10 +188,21 @@ function generar_pago_PDF($ruta_logo, $codCliente, $nombresCliente, $cursoParale
 		$nombreTitular = $rows['nombreTitular'];
 		$aux_estado++;
 	}
-	$html.='<tr><td align="left" colspan="2">--------</td></tr>';
-	$html.="<tr><td align=\"left\"><b>Total</b></td>";
-	$html.="<td align=\"right\" ><b>$".number_format($total_fp,2)."</b></td></tr>";
-	$html.="<tr><td colspan=\"2\" style=\"font-size:small;\" align=\"center\"><br><br>Puede revisar sus facturas en la sgte. dirección:<br>".$_SESSION['visor'];
+	$html.="<tr><td align=\"left\"><b>Total abonado</b></td>";
+	$html.='<td align="right" ><b>$'.number_format($total_fp,2).'</b></td></tr>';
+	/*$totalPendiente = $total_deuda_neta - $total_fp;
+	if ( $totalPendiente > 0 )
+	{   $html.="<tr><td align=\"left\"><b>Total pendiente</b></td>";
+		$html.='<td align="right" ><b>$'.number_format( $totalPendiente , 2 ).'</b></td></tr>';
+	}*/
+	$html.='</table>';
+	$html.='<table border="0"  style="font-size:small;" ><tr>';
+	$saf = $total - $total_fp;
+	if ( ($saf ) > '0' )
+	    $html.='<td align="left"><b>Saldo a favor generado</b></td><td align="right">$'.number_format($saf,2).'</td></tr>';
+	
+	
+	$html.="<tr><td colspan=\"2\" style=\"font-size:x-small;\" align=\"center\"><br><br>Puede revisar sus facturas desde el Módulo para Representantes de Educalinks. O entrando a la sgte. dirección:<br>".$_SESSION['visor'];
 	if ( $numeroTitular != "9999999999" )
 		$html.="<br>Usuario y Contraseña: ".$numeroTitular;
 	$html.="</td></tr>";

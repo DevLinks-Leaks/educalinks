@@ -36,6 +36,11 @@
         $_SESSION['dbname']=$row['clie_base'];
 		$_SESSION['menu_institucion'] = para_sist(3);
 	?>
+	  <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+	  <!-- Tell the browser to be responsive to screen width -->
+	  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
       <!-- Bootstrap 3.3.6 -->
 	  <link rel="stylesheet" href="includes/common/bootstrap/css/bootstrap.min.css">
 	  <!-- Ionicons -->
@@ -59,6 +64,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 	<script type="text/javascript" src="includes/common/shortcut.js"></script>
     <script src="theme/js/select.js"></script>
+    <link rel="shortcut icon" href="imagenes/favicon.png">
     <style>
 	</style>
 </head>
@@ -66,7 +72,6 @@
 	  -moz-background-size: cover;
 	  -o-background-size: cover;
 	  background-size: cover;">
-	<br>
 		<div class="login-box">
 			<div class="login-logo">
 				<img src="imagenes/clientes/<?= $_SESSION['directorio'];?>/logo_inicial_long.png" alt="Educalinks"  width="80%" height="80%">

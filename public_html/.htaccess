@@ -36,6 +36,7 @@
 	RewriteRule ^finan/crm_resultados/$ /modulos/finan/crm_resultados/controller.php
 	RewriteRule ^finan/rep_cobranza/$ /modulos/finan/rep_cobranza/controller.php
 	RewriteRule ^finan/rep_descuentos/$ /modulos/finan/rep_descuentos/controller.php
+	RewriteRule ^finan/rep_caja_saldos/$ /modulos/finan/rep_caja_saldos/controller.php
 	RewriteRule ^finan/rep_saldosafavor/$ /modulos/finan/rep_saldosafavor/controller.php
 	RewriteRule ^finan/rep_devoluciones/$ /modulos/finan/rep_devoluciones/controller.php
 	RewriteRule ^finan/rep_notaCredito/$ /modulos/finan/rep_notaCredito/controller.php
@@ -83,6 +84,7 @@
 	RewriteRule ^alumnos/pagos/$ /modulos/alumnos/pagos/controller.php
 	RewriteRule ^alumnos/pagos_respuesta/$ /modulos/alumnos/pagos/controller.php?event=get_debt_ans
 	RewriteRule ^alumnos/pagos_respuesta_diners/$ /modulos/alumnos/pagos/controller.php?event=get_debt_ans_diners
+	RewriteRule ^alumnos/pagos_respuesta_din_pstp/$ /modulos/alumnos/pagos/controller.php?event=get_debt_ans_din_post
 	RewriteRule ^alumnos/general/$ /modulos/alumnos/general/controller.php
 	RewriteRule ^admisiones/general/$ /modulos/admisiones/general/controller.php
 	RewriteRule ^admisiones/verSolicitud/$ /modulos/admisiones/verSolicitud/controller.php

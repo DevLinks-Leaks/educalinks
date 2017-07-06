@@ -33,6 +33,9 @@
 			border-radius:4px;
 			box-shadow: 5px 5px 8px #CCC;
 		}
+		.sorting, .sorting_asc, .sorting_desc {
+			background : none;
+		}
 	</style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini {sidebar_status}">
@@ -73,7 +76,7 @@
 			$("#txt_fecha_ini").datepicker();
 			$("#txt_fecha_fin").datepicker();
 			$("#cmb_producto").select2();
-			$("#boton_busqueda").click(function(){
+			$(".boton_busqueda").click(function(){
 				$("#desplegable_busqueda").slideToggle(200);
 			});
 		} );

@@ -23,8 +23,10 @@ class CajaCierre extends DBAbstractModel{
             $this->mensaje="Categorias no encontrados";
         }
     }
-	public function get_caja_cierre_items($caja_cier_codigo=""){
-        $this->parametros = array($caja_cier_codigo);
+	public function get_caja_cierre_items(	$caja_cier_codigo, 	$peri_codi, 	$fecha_ini, 	$fecha_fin,
+											$curs_codi, 		$niveEcon_codi, $peri_codi2, 	$xml_producto )
+	{   $this->parametros = array(	$caja_cier_codigo, 	$peri_codi, 	$fecha_ini, 	$fecha_fin,
+									$curs_codi, 		$niveEcon_codi, $peri_codi2, 	$xml_producto );
         $this->sp = "str_consultaCajaCierre_rep_items";
         $this->executeSPConsulta();
         if (count($this->rows)>0){
@@ -33,9 +35,19 @@ class CajaCierre extends DBAbstractModel{
             $this->mensaje="No existen transacciones realizadas";
         }
     }
-	public function get_caja_cierre_fp($caja_cier_codigo=""){
-        $this->parametros = array($caja_cier_codigo, $_SESSION['peri_codi']);
+	public function get_caja_cierre_fp( $caja_cier_codigo = "" )
+	{   $this->parametros = array( $caja_cier_codigo, $_SESSION['peri_codi'] );
         $this->sp = "str_consultaCajaCierre_rep_formaPago";
+        $this->executeSPConsulta();
+        if (count($this->rows)>0){
+            $this->mensaje="Transacciones encontradas";
+        }else{
+            $this->mensaje="No existen transacciones realizadas";
+        }
+    }
+	public function get_caja_cierre_saf( $peri_codi, $caja_cier_codigo = "-1" )
+	{   $this->parametros = array( $peri_codi, $caja_cier_codigo );
+        $this->sp = "str_consultaCajaCierre_rep_formaPagoSAF";
         $this->executeSPConsulta();
         if (count($this->rows)>0){
             $this->mensaje="Transacciones encontradas";
@@ -82,7 +94,6 @@ class CajaCierre extends DBAbstractModel{
             unset($rol);
         }
     }
-
     public function get($codigo=""){
         if($codigo!=""){
             $this->parametros = array($codigo);
@@ -133,7 +144,6 @@ class CajaCierre extends DBAbstractModel{
             $this->mensaje="Categoria no actualizada";
         }
     }
-
     public function close($codigo='',$usua_cierre='') {
         $this->parametros = array($usua_cierre,$codigo);
         $this->sp = "str_consultaCajaCierre_close";

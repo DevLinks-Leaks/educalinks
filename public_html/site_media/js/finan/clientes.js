@@ -1,41 +1,3 @@
-$(document).ready(function(){
-	$(".detalle").tooltip({
-        'selector': '',
-        'placement': 'bottom',
-        'container': 'body',
-		'tooltipClass': 'detalleTooltip'
-    });
-	$("#txt_fecha_nac_ini").datepicker();
-    $("#txt_fecha_nac_fin").datepicker();	
-	$("#txt_fecha_matri_ini").datepicker({ format: 'yyyy-mm-dd' });
-	$("#txt_fecha_matri_fin").datepicker({ format: 'yyyy-mm-dd' });
-	
-	$("#txt_fecha_nac_ini").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-	$("#txt_fecha_nac_fin").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-		
-	$("#txt_fecha_matri_ini").inputmask({
-		mask: "y-1-2", 
-		placeholder: "yyyy-mm-dd", 
-		leapday: "-02-29", 
-		separator: "-", 
-		alias: "yyyy/mm/dd"
-	});
-	$("#txt_fecha_matri_fin").inputmask({
-		mask: "y-1-2", 
-		placeholder: "yyyy-mm-dd", 
-		leapday: "-02-29", 
-		separator: "-", 
-		alias: "yyyy/mm/dd"
-	});
-				
-	$("#boton_busqueda").click(function(){
-		$("#desplegable_busqueda").slideToggle(200);
-	});
-	$("#desplegable_busqueda").show();
-	$('[rel=tooltip]').tooltip({container: 'body'});
-	shortcut.add("Enter", function() {$('#btn_search').trigger("click");});
-});
-
 function js_clientes_go_to_courses(url)
 {   document.getElementById( 'hd_url_acad' ).value = url;
 }
@@ -384,16 +346,14 @@ function carga_visorEstadoCuenta(codigo,div,url){
 									"columnDefs": [
 										{className: "dt-body-center" , "targets": [0], "visible": false},
 										{className: "dt-body-center" , "targets": [1]},
-										{className: "dt-body-center" , "targets": [2], "visible": false},
+										{className: "dt-body-center" , "targets": [2]},
 										{className: "dt-body-center" , "targets": [3]},
 										{className: "dt-body-center" , "targets": [4]},
 										{className: "dt-body-center" , "targets": [5], "visible": false},
-										{className: "dt-body-center" , "targets": [6], "visible": false},
-										{className: "dt-body-center" , "targets": [7], "visible": false},
-										{className: "dt-body-center" , "targets": [8], "visible": false},
-										{className: "dt-body-center" , "targets": [9]},
-										{className: "dt-body-center" , "targets":[10]},
-										{className: "dt-body-center" , "targets":[13], "visible": false}
+										{className: "dt-body-center" , "targets": [6]},
+										{className: "dt-body-center" , "targets": [7]},
+										{className: "dt-body-center" , "targets": [8]},
+										{className: "dt-body-center" , "targets": [9], "visible": false}
 									]
 								});	
 							}
@@ -758,6 +718,19 @@ function js_clientes_check_fecha_nac()
         document.getElementById("txt_fecha_nac_fin").disabled = true;
 		document.getElementById("txt_fecha_nac_ini").value = "";
         document.getElementById("txt_fecha_nac_fin").value = "";
+    }
+}
+function js_alumnos_main_check_fechamatr()
+{    var chk_tneto = document.getElementById("chk_fecha_matri").checked;
+    if(chk_tneto)
+    {   document.getElementById("txt_fecha_matri_ini").disabled = false;
+        document.getElementById("txt_fecha_matri_fin").disabled = false;
+    }
+    else
+    {   document.getElementById("txt_fecha_matri_ini").disabled = true;
+        document.getElementById("txt_fecha_matri_fin").disabled = true;
+		document.getElementById("txt_fecha_matri_ini").value = "";
+        document.getElementById("txt_fecha_matri_fin").value = "";
     }
 }
 function js_alumnos_lista_general()

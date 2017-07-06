@@ -136,24 +136,22 @@
 <!-- Modal para mostrar el resultado de la factura e imprimirla -->
 <!-- <form id='frm_deuda' name='frm_deuda' action='../../finan/cobros/controller.php' method='POST'> -->
 <div class="modal fade" id="modal_mostrarFactura" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		
-			<input type='hidden' id='hdnombresCliente' name='hdnombresCliente' value=''>
-			<input type='hidden' id='hdcodigoCliente' name='hdcodigoCliente' value=''>
-			<input type='hidden' id='hdnumeroIdentificacionCliente' name='hdnumeroIdentificacionCliente' value=''>
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="myModalLabel">Resultado de la operación</h4>
-				</div>
-				<div class="modal-body" id="modal_mostrarFactura_body">
-				...
-				</div>
-				<div class="modal-footer" id='modalFooter_mostrarFactura'>
-					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-				</div>
+	<div class="modal-dialog modal-sm">
+		<input type='hidden' id='hdnombresCliente' name='hdnombresCliente' value=''>
+		<input type='hidden' id='hdcodigoCliente' name='hdcodigoCliente' value=''>
+		<input type='hidden' id='hdnumeroIdentificacionCliente' name='hdnumeroIdentificacionCliente' value=''>
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Resultado de la operación</h4>
 			</div>
-		
+			<div class="modal-body" id="modal_mostrarFactura_body">
+			...
+			</div>
+			<div class="modal-footer" id='modalFooter_mostrarFactura'>
+				<button type="button" class="btn btn-block btn-sm btn-default" data-dismiss="modal">Continuar en esta página</button>
+			</div>
+		</div>
 	</div>
 </div>
 <!-- /. Modal para mostrar el resultado de la factura e imprimirla -->
@@ -373,7 +371,7 @@
 			<button type="button" class="btn btn-default " onclick="limpiaPaginaPreguntar('true')" >
 				<span class='fa fa-eraser'></span>&nbsp;Limpiar todo</button>
 			<button type="button" id='btn_generar_deuda' name='btn_generar_deuda'
-				class="btn btn-primary" aria-hidden="true" data-toggle="modal" data-target="#modal_mostrarFactura" 
+				class="btn btn-primary" aria-hidden="true"
 				onclick="generaFactura('modal_mostrarFactura_body','{ruta_html_finan}/facturas/controller.php')" {disabled_generar_deuda}>
 					<span class="fa fa-save"></span>&nbsp;Generar deuda y factura</button>
 		</div>

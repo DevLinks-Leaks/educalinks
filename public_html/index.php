@@ -40,7 +40,7 @@
 	  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	  <![endif]-->
     <title>Educalinks | Unidad Educativa <?= para_sist(2);?></title>
-    <link rel="shortcut icon" href="imagenes/logo_icon.png"> 
+    <link rel="shortcut icon" href="imagenes/favicon.png">
     
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -61,11 +61,11 @@
 
 				<form  action="framework/main_valid.php" method="POST"  id="form_main">
 					<div class="form-group has-feedback">
-						<input class='form-control' type="text"  name="usua" id="usua" placeholder="Usuario" required>
+						<input class='form-control login' type="text"  name="usua" id="usua" placeholder="Usuario" required>
 						<span class="glyphicon glyphicon-user form-control-feedback"></span>
 					</div>
 					<div class="form-group has-feedback">
-						<input class='form-control' type="password" name='pass' id="pass" placeholder="Contraseña" required> 
+						<input class='form-control login' type="password" name='pass' id="pass" placeholder="Contraseña" required> 
 						<span class="glyphicon glyphicon-lock form-control-feedback"></span>
 					</div>
 					<div class="form_element"><label>Perfil</label></div>
@@ -111,6 +111,8 @@
 				</div>
 				<a href="recupera_clave.php">Olvidé mi contraseña</a><br>-->
 			</div>
+			<br>
+			<div id="siteseal" style='text-align:center;'><script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=FlQPWbAX6oYSLDVP90Ybb1eKUJJ6s5UVy3Zm9OcSMplSKIpDfATkFpjcSfCd"></script></div>
 		</div>
 		<script>
 			$(document).ready(function(){
@@ -140,16 +142,16 @@
 				
 			}
 
-			// $('.login').keypress(function(e) {
-			// 	if(e.which == 13) {
-			// 		if (document.getElementById('option1').checked) document.getElementById('tipo').value=document.getElementById('option1').value;
-			// 		if (document.getElementById('option2').checked) document.getElementById('tipo').value=document.getElementById('option2').value;
-			// 		if (document.getElementById('option3').checked) document.getElementById('tipo').value=document.getElementById('option3').value;
-			// 		if (document.getElementById('option4').checked) document.getElementById('tipo').value=document.getElementById('option4').value;
+			 $('.login').keypress(function(e) {
+			 	if(e.which == 13) {
+			 		if (document.getElementById('option1').checked) document.getElementById('tipo').value=document.getElementById('option1').value;
+			 		if (document.getElementById('option2').checked) document.getElementById('tipo').value=document.getElementById('option2').value;
+			 		if (document.getElementById('option3').checked) document.getElementById('tipo').value=document.getElementById('option3').value;
+			 		if (document.getElementById('option4').checked) document.getElementById('tipo').value=document.getElementById('option4').value;
 					
-			// 		document.getElementById("form_main").submit();
-			// 	}
-			// });
+			 		document.getElementById("form_main").submit();
+			 	}
+			 });
 
 			
 		</script>

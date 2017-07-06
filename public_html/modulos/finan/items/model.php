@@ -33,17 +33,17 @@ class Item extends DBAbstractModel{
         if (count($this->rows)<0)
 		{   $this->mensaje="¡Advertencia! Productos no encontrados";
             array_pop($rol);
-            array_push($rol, array(0 => '', 
+            /*array_push($rol, array(0 => '', 
                                    1 => '- Seleccione producto -',
-                                   3 => ''));
+                                   3 => ''));*/
         }
 		else
 		{   $rol = array();
             // Agregar la opcion de ninguna categoria padre
             array_pop($rol);
-            array_push($rol, array(0 => '', 
+            /*array_push($rol, array(0 => '', 
                                    1 => '- Seleccione producto -',
-                                   3 => ''));
+                                   3 => ''));*/
             foreach($this->rows as $productos){
                 array_push($rol, array_values($productos));
             }
@@ -58,16 +58,16 @@ class Item extends DBAbstractModel{
 		if (count($this->rows)<=0)
 		{	$this->mensaje="¡Error! No existen items en el sistema.";
             array_pop($rol);
-            array_push($rol, array(0 => -1, 
+           /* array_push($rol, array(0 => -1, 
                                    1 => '- Seleccione producto -',
-                                   3 => ''));
+                                   3 => ''));*/
         }
 		else
 		{	$rol = array();
             array_pop($rol);
-            array_push($rol, array(0 => -1, 
+            /*array_push($rol, array(0 => -1, 
                                    1 => '- Seleccione producto -',
-                                   3 => ''));
+                                   3 => ''));*/
             foreach($this->rows as $item)
 			{	array_push($rol, array_values($item));
             }

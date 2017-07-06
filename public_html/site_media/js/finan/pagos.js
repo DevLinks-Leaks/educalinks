@@ -61,17 +61,19 @@ function js_Pago_revertir_followed_keep_e_info( codigo )
 	};
 	xhr.send(data);	
 }
-function js_Pago_to_excel_PagosRealizados( evento, tipo_reporte )
+function js_Pago_to_excel_PagosRealizados( evento, tipo_reporte, tipo_visual )
 {   document.getElementById( 'evento' ).value = evento;
+	document.getElementById( 'tipo_visual' ).value = tipo_visual;
     document.getElementById( 'tipo_reporte' ).value = tipo_reporte;
 	document.getElementById( 'file_form' ).submit();
 }
-function js_Pago_carga_PagosRealizados(div){
-    document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
+function js_Pago_carga_PagosRealizados(div, tipo_visual )
+{   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var fechavenc_ini = document.getElementById("txt_fecha_ini").value;
     var fechavenc_fin = document.getElementById("txt_fecha_fin").value;
     var data = new FormData();
     data.append('event', 'get_payments');
+	data.append('tipo_visual', ( !tipo_visual ? 1: tipo_visual ) );
     data.append('fechavenc_ini', fechavenc_ini);
     data.append('fechavenc_fin', fechavenc_fin);
     var ckb_opc_adv = document.getElementById("ckb_opc_adv").checked;
@@ -105,6 +107,7 @@ function js_Pago_carga_PagosRealizados(div){
     xhr.onreadystatechange=function(){
         if (xhr.readyState==4 && xhr.status==200)
 		{	document.getElementById(div).innerHTML=xhr.responseText;
+			
 			var table_pagos = $('#pagosRealizados_table').DataTable({
 				"bPaginate": true,
 				"bStateSave": false,
@@ -121,27 +124,14 @@ function js_Pago_carga_PagosRealizados(div){
 				paging: true,
 				lengthChange: true,
 				searching: true,
-				language: {url: '//cdn.datatables.net/plug-ins/1.10.8/i18n/Spanish.json'},
-				"columnDefs": [
-					{className: "dt-body-center" , "targets": [0]},
-					{className: "dt-body-center" , "targets": [1]},
-					{className: "dt-body-right"  , "targets": [2]},
-					{className: "dt-body-center" , "targets": [3]},
-					{className: "dt-body-center" , "targets": [4]},
-					{className: "dt-body-center" , "targets": [5], "visible": false},
-					{className: "dt-body-center" , "targets": [6]},
-					{className: "dt-body-center" , "targets": [7]},
-					{className: "dt-body-center" , "targets": [8]}
-				]
+				language: {url: '//cdn.datatables.net/plug-ins/1.10.8/i18n/Spanish.json'}
 			});
-			table_pagos.column( '7:visible' ).order( 'desc' );
-			$(".detalle").tooltip({
-				'html': 		true,
-				'selector': 	'',
-				'placement': 	'bottom',
-				'container': 	'body',
-				'tooltipClass': 'detalleTooltip'
-			});
+			if (!tipo_visual)
+				table_pagos.column( '6:visible' ).order( 'desc' );
+			if (tipo_visual == 1)
+				table_pagos.column( '6:visible' ).order( 'desc' );
+			if (tipo_visual == 2)
+				table_pagos.column( '5:visible' ).order( 'desc' );
 			$('#pagosRealizados_table tbody').on('click', 'td.details-control', function ()
 			{   var tr = $(this).closest('tr');
 				var row = table_pagos.row(tr);

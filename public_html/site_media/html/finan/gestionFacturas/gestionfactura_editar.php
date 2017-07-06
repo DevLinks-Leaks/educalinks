@@ -139,7 +139,7 @@
 				</div>
 				<div role="tabpanel" class="tab-pane" id="Reasignar">
 					<br>
-					<div id='div_asign_repr' name='div_asign_repr'>
+					<div id='div_asign_repr_fac_edit' name='div_asign_repr_fac_edit'>
 						...
 					</div>
 				</div>

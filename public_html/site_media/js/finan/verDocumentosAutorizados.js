@@ -194,16 +194,14 @@ function carga_tipoDocumentoAutorizado(div)
 									"columnDefs": [
 										{className: "dt-body-center" , "targets": [0], "visible": false},
 										{className: "dt-body-center" , "targets": [1]},
-										{className: "dt-body-center" , "targets": [2], "visible": false},
+										{className: "dt-body-center" , "targets": [2]},
 										{className: "dt-body-center" , "targets": [3]},
 										{className: "dt-body-center" , "targets": [4]},
 										{className: "dt-body-center" , "targets": [5], "visible": false},
-										{className: "dt-body-center" , "targets": [6], "visible": false},
-										{className: "dt-body-center" , "targets": [7], "visible": false},
-										{className: "dt-body-center" , "targets": [8], "visible": false},
-										{className: "dt-body-center" , "targets": [9]},
-										{className: "dt-body-center" , "targets":[10]},
-										{className: "dt-body-center" , "targets":[13], "visible": false}
+										{className: "dt-body-center" , "targets": [6]},
+										{className: "dt-body-center" , "targets": [7]},
+										{className: "dt-body-center" , "targets": [8]},
+										{className: "dt-body-center" , "targets": [9], "visible": false}
 									],
 									"fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
 										$('td', nRow).css('background-color', '#d6f9da');

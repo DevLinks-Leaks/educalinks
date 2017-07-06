@@ -11,6 +11,7 @@ require_once('../../../core/modelHTML.php');
 require_once('../facturas/model.php');
 require_once('../notaCredito/model.php');
 require_once('../bancos/model.php');
+require_once('../clientes/model.php');
 require_once('../tarjetasCredito/model.php');
 require_once('../pagos/model.php');
 require_once('../contabilidad/model.php');
@@ -19,12 +20,13 @@ require_once('../../../Framework/funciones.php');
 function handler()
 {
 	require('../../../core/rutas.php');
+	$cliente_inf= get_mainObject('Cliente');
 	$clientes 	= get_mainObject('General');
 	$prontopago = get_mainObject('General');
 	$cobro 		= get_mainObject('Cobro');
 	$saldo 		= get_mainObject('Cobro');
 	$cheques	= get_mainObject('Cobro');
-	$event 		= get_actualEvents(array(VIEW_GET_ALL, VIEW_GET_CLIENT, VIEW_SET_CLIENT, VIEW_GET_PRODUCT, VIEW_PRINT_FACT, GET_CLIENT,GET_DEUDAS_VENC_ANT), VIEW_GET_ALL);
+	$event 		= get_actualEvents(array(VIEW_COBRAR, VIEW_GET_ALL, VIEW_GET_CLIENT, VIEW_SET_CLIENT, VIEW_GET_PRODUCT, VIEW_PRINT_FACT, GET_CLIENT,GET_DEUDAS_VENC_ANT), VIEW_GET_ALL);
 	$user_data 	= get_frontData();
 	$tarjCredito= get_mainObject('tarjCredito');
 	$banco		= get_mainObject('Bancos');
@@ -41,8 +43,6 @@ function handler()
 			$pp=$general->prontopago;
 			$data['hd_prontopago']=$pp;
       		$opciones = array("Seleccionar" => "<div style='text-align:center;'><span style='color:#668DE5;' onclick='validaFechaVencimiento(".'"{codigo}"'.",".'"resultadoPendientesCobro"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/cobros/controller.php"'.")' class=' glyphicon glyphicon-circle-arrow-down cursorlink' aria-hidden='true'     id='{codigo}_seleccionar' onmouseover='$(".'"#{codigo}_seleccionar"'.").tooltip(".'"show"'.")' title='Seleccionar' data-placement='left'></span></div>");
-                              //"MostrarDetalle" => "<span style='color:#668DE5;' onclick='mostrarDetalleDeuda(".'"{codigo}"'.",".'"modal_showDetails_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/cobros/controller.php"'.")' class=' glyphicon glyphicon-eye-open cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_showDetails' id='{codigo}_mostrarDetalle' onmouseover='$(".'"#{codigo}_mostrarDetalle"'.").tooltip(".'"show"'.")' title='Mostrar detalle' data-placement='left'></span>&nbsp;&nbsp;&nbsp;",
-                              //"MostrarPagos" => "<span style='color:#FFDC89;' onclick='mostrarPagosDeuda(".'"{codigo}"'.",".'"modal_showPayments_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/cobros/controller.php"'.")' class=' glyphicon glyphicon-folder-open cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_showPayments' id='{codigo}_mostrarPago' onmouseover='$(".'"#{codigo}_mostrarPago"'.").tooltip(".'"show"'.")' title='Mostrar pagos' data-placement='left'></span></div>");
             $cobro->codigoCliente = $user_data['codigoCliente'];
 			$cobro->tipo_persona = $user_data['tipo_persona'];
             $cobro->get_deudas();
@@ -64,6 +64,44 @@ function handler()
                                                       "options"=>array($opciones),
                                                       "campo"=>"codigoDeuda",
                                                       "anidada"=>false);
+			$data['{tabla_deudasSeleccionadas}'] = array("elemento"=>"tabla",
+                                                       "clase"=>"table table-striped table-bordered",
+                                                       "id"=>'deudasSeleccionadas_table',
+                                                       "datos"=>array(),
+                                                       "encabezado" => array(//"Secuencia",
+                                                                             "Deuda",
+                                                                             "Total",
+                                                                             "Abono",
+                                                                             "Remover"),
+                                                       "options"=>array(),
+                                                       "campo"=>"",
+                                                       "anidada"=>false);
+
+			$data['{tabla_pagos}'] = array("elemento"=>"tabla",
+                                                       "clase"=>"table table-striped table-bordered",
+                                                       "id"=>'pagos_table',
+                                                       "datos"=>array(),
+                                                       "encabezado" => array(//"Secuencia",
+                                                                             "Forma de pago",
+                                                                             "Total",
+                                                                             "Editar",
+                                                                             "Remover"),
+                                                       "options"=>array(),
+                                                       "campo"=>"",
+                                                       "anidada"=>false);
+												 
+			$data['opciones_cliente'] = "";
+			$data['formularioCobro'] = 'inline';
+			$data['hd_in_event']= "cobrar_deuda";
+			$data['head_tipo_persona']= $user_data['tipo_persona'];
+			$data['head_codigoCliente']= $user_data['codigoCliente'];
+			$cliente_inf->get( $user_data['codigoCliente'], $user_data['tipo_persona'] );
+			$data['head_numeroIdentificacionCliente'] = $cliente_inf->numeroIdentificacion;
+			$data['head_nombresCliente'] = $cliente_inf->nombres;
+			$data['head_curso']= "";
+			$data['head_grupoEconomico']= "";
+			$data['head_nivel_economico']= "";
+			
 			if(( $_SESSION['caja_fecha']< date('Ymd') or $_SESSION['caja_codi']==0) or empty($_SESSION['puntVent_codigo']))
 			{   $data['disabled_caja']="disabled='disabled'";
 				$data['mensaje'] = "Caja de hoy: cerrada/o mantiene caja abierta de días atrás.";
@@ -74,6 +112,7 @@ function handler()
 				//$data['mensaje'] = var_dump($_POST['nombresClientes']);
 				retornar_vista(VIEW_GET_ALL, $data);
 			}
+			break;
 		case VIEW_GET_ALL:
           #  Presenta la pagina inicial
 		  /*if (!isset($user_data['cc']))
@@ -137,6 +176,15 @@ function handler()
                                                        "campo"=>"",
                                                        "anidada"=>false);
 			$data['opciones_cliente']= " ";
+			$data['formularioCobro'] = 'none';
+			$data['hd_in_event']= "buscar_todos";
+			$data['head_tipo_persona']= "";
+			$data['head_codigoCliente']= "";
+			$data['head_numeroIdentificacionCliente']= "";
+			$data['head_nombresCliente']= "";
+			$data['head_curso']= "";
+			$data['head_grupoEconomico']= "";
+			$data['head_nivel_economico']= "";
 			
 			if(( $_SESSION['caja_fecha']< date('Ymd') or $_SESSION['caja_codi']==0) or empty($_SESSION['puntVent_codigo'])){
 				$data['disabled_caja']="disabled='disabled'";
