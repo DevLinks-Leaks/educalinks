@@ -33,6 +33,9 @@
 			border-radius:4px;
 			box-shadow: 5px 5px 8px #CCC;
 		}
+		.sorting, .sorting_asc, .sorting_desc {
+			background : none;
+		}
 	</style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini {sidebar_status}">
@@ -41,12 +44,11 @@
 		{menu}
 		<div class="content-wrapper">
 			<section class="content-header">
-				<h1>
-					{subtitulo}
+				<h1>{subtitulo}
 					<small>{mensaje}</small>
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-home"></i> Supervisor</a></li>
+					<li><a href="#"><i class="fa fa-list"></i> Ver</a></li>
 					<li class="active">{subtitulo}</li>
 				</ol>
 			</section>
@@ -56,63 +58,28 @@
 			{menu_sidebar}
 		</div>
 		<form id="frm_rutas" name="frm_rutas" enctype="multipart/form-data" method="post">
-			{rutas_all}
+            {rutas_all}
+            <input type="hidden" id="index" name="index" value="{tipoid}" />
 		</form>
 		{footer}
 	</div>
 	{js_all}
+    
 	<script src="{ruta_js_finan}/general.js"></script>
+	<script src="{ruta_js_finan}/items.js"></script>
 	<script src="{ruta_js_finan}/clientes.js"></script>
-	<script src="{ruta_js_finan}/pagos.js"></script>
+	<script src="{ruta_js_finan}/rep_caja_saldos.js"></script>
 	<script src="{ruta_js_common}/representantes.js"></script>
 	
 	<script type="text/javascript" charset="utf-8">
-	$(document).ready(function() {
-		var table = $('#tabla_estadoCuenta').DataTable();
-		//Si no da click al boton cerrar, sino que da click fuera del modal, las tablas no se reseteaban.
-		//Esta funcion arregla eso.
-		$('#modal_showDebtState').on('hidden.bs.modal', function () {
-			table.destroy();
-			$('#tabla_estadoCuenta').empty();
-		})
-		$(document).ready(function(){
-			$(".detalle").tooltip({
-				'selector': '',
-				'placement': 'bottom',
-				'container': 'body',
-				'tooltipClass': 'detalleTooltip'
-			});
-			$("#txt_fecha_nac_ini").datepicker();
-			$("#txt_fecha_nac_fin").datepicker();	
-			$("#txt_fecha_matri_ini").datepicker({ format: 'yyyy-mm-dd' });
-			$("#txt_fecha_matri_fin").datepicker({ format: 'yyyy-mm-dd' });
-			
-			$("#txt_fecha_nac_ini").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-			$("#txt_fecha_nac_fin").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-				
-			$("#txt_fecha_matri_ini").inputmask({
-				mask: "y-1-2", 
-				placeholder: "yyyy-mm-dd", 
-				leapday: "-02-29", 
-				separator: "-", 
-				alias: "yyyy/mm/dd"
-			});
-			$("#txt_fecha_matri_fin").inputmask({
-				mask: "y-1-2", 
-				placeholder: "yyyy-mm-dd", 
-				leapday: "-02-29", 
-				separator: "-", 
-				alias: "yyyy/mm/dd"
-			});
-						
+		$(document).ready(function() {
+			$("#txt_fecha_ini").datepicker();
+			$("#txt_fecha_fin").datepicker();
+			$("#cmb_producto").select2();
 			$("#boton_busqueda").click(function(){
 				$("#desplegable_busqueda").slideToggle(200);
 			});
-			$("#desplegable_busqueda").show();
-			$('[rel=tooltip]').tooltip({container: 'body'});
-			shortcut.add("Enter", function() {$('#btn_search').trigger("click");});
-		});
-	});
+		} );
 	</script>
 </body>
 </html>

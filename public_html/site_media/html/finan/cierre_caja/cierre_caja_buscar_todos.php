@@ -7,17 +7,19 @@
         <h4 class="modal-title" id="myModalLabel">Visor de Cierre de Caja - Reportes de Cierre de Caja</h4>
       </div>
       <div class="modal-body">
-        <div>
+        <div class="nav-tabs-custom">
           <!-- Nav tabs -->
           <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#modal_edit_body" aria-controls="Reporte Items" role="tab" data-toggle="tab">Items</a></li>
             <li role="presentation"><a href="#modal_edit_body_fp" aria-controls="Reporte Forma de Pagos" role="tab" data-toggle="tab">Forma de Pago</a></li>
+			<li role="presentation"><a href="#modal_edit_body_saf" aria-controls="Reporte Saldos a favor" role="tab" data-toggle="tab">Saldos a favor</a></li>
 			<li role="presentation"><a href="#modal_edit_body_nc" aria-controls="Reporte Nota de Creditos" role="tab" data-toggle="tab">Notas de Cr&eacute;dito</a></li>
           </ul>
           <!-- Tab panes -->
           <div class="tab-content">
             <div role="tabpanel" class="tab-pane active" id="modal_edit_body">...</div>
             <div role="tabpanel" class="tab-pane" id="modal_edit_body_fp">...</div>
+			<div role="tabpanel" class="tab-pane" id="modal_edit_body_saf">...</div>
 			<div role="tabpanel" class="tab-pane" id="modal_edit_body_nc">...</div>
           </div>
         </div>

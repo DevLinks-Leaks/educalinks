@@ -14,7 +14,7 @@ $diccionario = array(
     'active_menu'=>array(
         'submenu'  => '{menu404}',
 		'open'  => '{open4}', 
-        'mainmenu' => '{menu4}' 
+        'mainmenu' => '{menu42}' 
                         ),
 	'usua_datos'=>array(
         'usua_nombres'  => $_SESSION['usua_nombres'], 

@@ -7,6 +7,7 @@ const MAIN = 'MAIN';
 const GET_DEBT = 'get_debt';
 const GET_DEBT_ANS = 'get_debt_ans';
 const GET_DEBT_ANS_DINERS = 'get_debt_ans_diners';
+const GET_DEBT_ANS_DIN_POST  = 'get_debt_ans_din_post';
 const GET_OVERDUE_DEBT = 'trae_deudas_vencidas_anteriores';
 # vistas
 const VIEW_MAIN = 'main';

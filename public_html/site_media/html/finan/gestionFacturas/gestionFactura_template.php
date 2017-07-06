@@ -64,7 +64,6 @@
 	{js_all}
 	<script src="{ruta_js_finan}/general.js"></script>
     <script src="{ruta_js_finan}/gestionFacturas.js"></script>
-	<script src="{ruta_js_common}/representantes.js"></script>
 	<script src="{ruta_js_finan}/clientes.js"></script>
 	<script src="{ruta_js_finan}/pagos.js"></script>
 	<script src="{ruta_js_common}/representantes.js"></script>

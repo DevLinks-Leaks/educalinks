@@ -31,25 +31,6 @@ class Pagos extends DBAbstractModel{
         }
         return $this->rows;
     }
-	public function get_PagosRealizados2($codigo_pago=0, $fechavenc_ini = '', $fechavenc_fin = '', $forma_pago = '',
-		$cod_titular = '', $id_titular = '', $cod_estudiante = '', $nombre_estudiante = '',
-		$nombre_titular = '', $ptvo_venta = '', $sucursal = '', $num_factura = '', $cat_codigo = '', $prod_codigo = '', 
-		$estado = '', $tpago_ini = 0, $tpago_fin = 0, $usua_codi = '-1', $periodo = 0, $grupoEconomico = 0, $nivelEconomico = 0, $curso = 0, $deuda = '-1' )
-	{
-		$this->parametros = array($_SESSION['peri_codi'], $codigo_pago, $fechavenc_ini, $fechavenc_fin, $forma_pago,
-		$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
-		$nombre_titular, $ptvo_venta, $sucursal, $num_factura, $cat_codigo, $prod_codigo, 
-		$estado, $tpago_ini, $tpago_fin, $usua_codi, $periodo, $grupoEconomico, $nivelEconomico, $curso, $deuda );
-        $this->sp = "str_consultaPagosRealizados2";
-        $this->executeSPConsulta();
-
-        if (count($this->rows)>1)
-		{   $this->mensaje="¡Exito! Pagos realizados encontradas.";
-        }else
-		{   $this->mensaje="¡Error! Pagos realizados no encontradas.";
-        }
-        return $this->rows;
-    }
 	public function get_formaPagoSelectFormat_caja($busq='')
 	{   $this->parametros = array($busq);
         $this->sp = "str_consultaFormaPago_busq";
@@ -98,8 +79,6 @@ class Pagos extends DBAbstractModel{
 			array_push($bypass, array(0 => '8', 1 => 'DEBITO BANCARIO', 3 => ''));
 			array_push($bypass, array(0 => '10', 1 => 'CONVENIO DE PAGO', 3 => ''));
 			array_push($bypass, array(0 => '11', 1 => 'PAGO POR VENTANILLA', 3 => ''));
-			array_push($bypass, array(0 => '12', 1 => 'PAGADO TODO EL AÑO', 3 => ''));
-			array_push($bypass, array(0 => '13', 1 => 'DEBITO ROL DE PAGO', 3 => ''));
             foreach($this->rows as $formasPago)
 			{   array_push($bypass, array_values($formasPago));
             }

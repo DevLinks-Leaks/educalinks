@@ -58,7 +58,7 @@
 				<div class='row'>
 					<div class='col-md-12 col-sm-12'>
 						<div class='form-group'>
-							<label class="col-md-4 col-sm-3 control-label" style='text-align: right;' for='txt_cod_cliente'>Categoria:</label>
+							<label class="col-md-4 col-sm-3 control-label" style='text-align: right;'>Categoria:</label>
 							<div class="col-md-8 col-sm-8">
 								{combo_categoria}
 							</div>
@@ -66,10 +66,9 @@
 					</div>
 					<div class='col-md-12 col-sm-12'>
 						<div class='form-group'>
-							<label class="col-md-4 col-sm-3 control-label" style='text-align: right;' for='txt_nom_cliente'>Producto:</label>
+							<label class="col-md-4 col-sm-3 control-label" style='text-align: right;'>Producto:</label>
 							<div class="col-md-8 col-sm-8"
 									data-placement="bottom"
-									title='Nombre del cliente representado'
 									onmouseover='$(this).tooltip("show")'>
 								<div id="resultadoProducto">
 									{combo_producto}

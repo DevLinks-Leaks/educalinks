@@ -154,7 +154,7 @@
 				<h4 class="modal-title" id="myModalLabel">Agregar pago</h4>
 			</div>
 			<form id='frm_agregarPago' name='frm_agregarPago' nonvalidate='false'
-				onsubmit="return validaAgregarPago('{ruta_html_finan}/cobros/controller.php')" role="form" data-toggle="validator" nonvalidate='false'>
+				onsubmit="" role="form" data-toggle="validator" nonvalidate='false'>
 				<div class="modal-body">
 					<div id="modal_agregarPago_body">...</div>
 					<table><tr><td height='1px' >
@@ -163,7 +163,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-					<button type="submit" class="btn btn-success"><span class='glyphicon glyphicon-grain'></span>&nbsp;Agregar</button>
+					<button type="button" onclick="validaAgregarPago('{ruta_html_finan}/cobros/controller.php')" class="btn btn-success"><span class='glyphicon glyphicon-grain'></span>&nbsp;Agregar</button>
 				</div>
 			</form>
 		</div>
@@ -186,21 +186,9 @@
 						...
 					</div>
 				</div>
-				<!-- <table width='100%'>
-					<tr>
-						<td width='50%' height='1px' style='text-align:left;'><div id='resultadoMetadataEditarPago' class='alert alert-error'></div></td>
-						<td width='50%' height='1px' style='text-align:right;'></td>
-					</tr>
-					<tr>
-						<td width='50%' height='1px' style='text-align:left;'><div id='frm_EditarPagoError' class='alert alert-error'></div></td>
-						<td width='50%' height='1px' style='text-align:right;'></td>
-					</tr>
-				</table>-->
-
 				<div class="modal-footer">
-					<!-- <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="editarPago();">Editar</button> -->
 					<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-					<button type="submit" class="btn btn-primary">Editar</button>
+					<button type="button" onclick="validaEditarPago('{ruta_html_finan}/cobros/controller.php')" class="btn btn-success"><span class='glyphicon glyphicon-grain'></span>&nbsp; Editar</button>
 				</div>
 			</form>
 		</div>
@@ -259,6 +247,7 @@
 </div>
 <!-- Modal  Migrar Confirmacion-->
 <div id="div_modal_seleccionar_persona_lista" name="div_modal_seleccionar_persona_lista"></div>
+<input type="hidden" id="hd_in_event" name="hd_in_event"  value='{hd_in_event}' />
 <!-- CLIENTE -->
 <div class='panel panel-info'>
 	<div class="panel-heading">
@@ -289,14 +278,15 @@
 		<div id="datosCliente" name="datosCliente" class="grid">
 			<div class="row">
 				<div class="col-sm-2">
-					<input type="hidden" readonly class="form-control" id="hd_tipo_persona" name="hd_tipo_persona" />
-					<input type="text" readonly class="form-control" id="codigoCliente" name="codigoCliente" placeholder="Codigo" />
+					<input type="hidden" readonly class="form-control" id="hd_tipo_persona" name="hd_tipo_persona"  value='{head_tipo_persona}' />
+					<input type="text" readonly class="form-control" id="codigoCliente" name="codigoCliente" placeholder="Codigo" value='{head_codigoCliente}'/>
 				</div>
 				<div class="col-sm-2">
-					<input type="text" readonly class="form-control" id="numeroIdentificacionCliente" name="numeroIdentificacionCliente" placeholder="CI / RUC" />
+					<input type="text" readonly class="form-control" id="numeroIdentificacionCliente" name="numeroIdentificacionCliente" placeholder="CI / RUC" 
+						value='{head_numeroIdentificacionCliente}' />
 				</div>
 				<div class="col-sm-4">
-					<input type="text" readonly class="form-control" id="nombresCliente" name="nombresCliente" placeholder="Nombres" />
+					<input type="text" readonly class="form-control" id="nombresCliente" name="nombresCliente" placeholder="Nombres"  value='{head_nombresCliente}'/>
 					<input type="hidden" class="form-control" id="hd_prontopago" name="hd_prontopago" value='{hd_prontopago}' />
 				</div>
 				<div class="col-sm-4" style='text-align:right;margin-top:2px;'>
@@ -306,13 +296,13 @@
 			<div class="row">
 				<div  id='div_datos_academicos_estudiante' name='div_datos_academicos_estudiante' style='display:inline;'>
 					<div class="col-sm-4">
-						<input id="txt_curso" type="text" class="form-control" placeholder="Grado/Curso" disabled style="width:100%" />
+						<input id="txt_curso" type="text" class="form-control" placeholder="Grado/Curso" disabled style="width:100%"  value='{head_curso}'/>
 					</div>
 					<div class="col-sm-4">
-						<input id="txt_grupo_economico" type="text" class="form-control" placeholder="Grupo económico" disabled style="width:100%" />
+						<input id="txt_grupo_economico" type="text" class="form-control" placeholder="Grupo económico" disabled style="width:100%"  value='{head_grupoEconomico}'/>
 					</div>
 					<div class="col-sm-4">
-						<input id="txt_nivel_economico" type="text" class="form-control" placeholder="Nivel económico" disabled style="width:100%" />
+						<input id="txt_nivel_economico" type="text" class="form-control" placeholder="Nivel económico" disabled style="width:100%" value='{head_nivel_economico}'/>
 					</div>
 				</div>
 			</div>
@@ -332,7 +322,7 @@
 		<div id="deudasPendientesCliente">
 			<!-- DEUDAS PENDIENTES-->
 			<br>
-			<div id='formularioCobro' style="display:none;">
+			<div id='formularioCobro' style="display:{formularioCobro};">
 				<div class='panel panel-info'>
 					<div class="panel-heading">
 						<table style='width:100%'>
@@ -424,13 +414,13 @@
 							<div class="row">
 								<div class="col-sm-4 col-sm-offset-4">
 									<div class="input-group" >
-										<span class="input-group-addon"><strong>T. Abonado: </strong>$</span>
+										<span class="input-group-addon"><strong>Total Abonado: </strong>$</span>
 										<input type="text" disabled="true" readonly class="form-control" name="Totalabonado" id="Totalabonado" placeholder="00.00" required="required">
 									</div>
 								</div>
 								<div class="col-sm-4">
 									<div class="input-group" >
-										<span class="input-group-addon"><strong>Saldo pdte.: </strong>$</span>
+										<span class="input-group-addon"><strong>Total pendiente </strong>$</span>
 										<input type="text" disabled="true" readonly class="form-control" name="totalDeudasSeleccionadas" id="totalDeudasSeleccionadas" placeholder="00.00" required="required">
 									</div>
 								</div>
@@ -480,7 +470,7 @@
 							<div class="row">
 								<div class="col-sm-4 col-sm-offset-4">
 									<div class="input-group" >
-										<span class="input-group-addon"><strong>Total Pagos: </strong>$</span>
+										<span class="input-group-addon"><strong>Total Pago: </strong>$</span>
 										<input type="text" disabled="true" readonly class="form-control" name="totalPagos" id="totalPagos" placeholder="00.00" required="required">
 									</div>
 								</div>

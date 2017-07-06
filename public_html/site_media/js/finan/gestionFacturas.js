@@ -130,7 +130,7 @@ function js_gestionFactura_editar(codigo,alum_codi,tipo_persona,div,url,url2,fol
         if (xhr.readyState==4 && xhr.status==200){
             document.getElementById(div).innerHTML=xhr.responseText;
 			if(follow_next)
-			{   carga_tabla_asign_repr(alum_codi,'div_asign_repr',url2); //funcion llamada de representantes.js
+			{   carga_tabla_asign_repr(alum_codi,'div_asign_repr_fac_edit',url2); //funcion llamada de representantes.js
 			}
         }
     };

@@ -138,15 +138,14 @@
     </div>
 </div>
 <!-- Modal Revertir deuda y borrar pago-->
-<form id="file_form" action="{ruta_html_finan}/pagos/controller.php" enctype="multipart/form-data" method="POST" target="_blank">
+<form id="file_form" action="{ruta_html_finan}/rep_caja_saldos/controller.php" enctype="multipart/form-data" method="POST" target="_blank">
 	<input type='hidden' name="event" id="evento" value="print_excel_all_data"/>
 	<input type='hidden' name="tipo_reporte" id="tipo_reporte" value="completo"/>
-	<input type='hidden' name="tipo_visual"  id="tipo_visual" value="completo"/>
 	<div class='panel panel-info dismissible' id='panel_search' name='panel_search'>
 		<div class="panel-heading">
-			<h3 class="panel-title"><a href="#/" class="boton_busqueda" id="boton_busqueda" name="boton_busqueda" style='text-decoration:none;'><span class="fa fa-search"></span>&nbsp;Búsqueda</a>
+			<h3 class="panel-title"><a href="#/" id="boton_busqueda" name="boton_busqueda" style='text-decoration:none;'><span class="fa fa-search"></span>&nbsp;Búsqueda</a>
 			<div class="pull-right">
-				<a href="#/"  class="boton_busqueda" style='text-decoration:none;'><span class='fa fa-minus'></span></a>
+				<a href="#/"  id="boton_busqueda" name="boton_busqueda" style='text-decoration:none;'><span class='fa fa-minus'></span></a>
 					<!--<a href="#/" data-target="#panel_search" data-dismiss="alert" aria-hidden="true"><span class='fa fa-times'></span></a>-->
 			</div>
 		</div>
@@ -180,7 +179,7 @@
 						<div class='form-group'>
 							<div class="checkbox checkbox-info col-md-4 col-sm-4  col-md-offset-0 col-sm-offset-4" style='text-align:right'>
 								<label for='ckb_opc_adv'>
-									<input type="checkbox" id='ckb_opc_adv' name='ckb_opc_adv' onclick='js_Pago_check_opc_avanzadas();'>
+									<input type="checkbox" id='ckb_opc_adv' name='ckb_opc_adv' onclick='js_rep_caja_saldos_check_opc_avanzadas();'>
 										<span style="text-align:left;font-size:small;font-weight:bold;">B&uacute;squeda avanzada</span>
 								</label>
 							</div>
@@ -188,37 +187,14 @@
 								<button type="button" class='btn btn-primary' id='btn_selectPago_search' name='btn_selectPago_search'
 									onmouseover='$(this).tooltip("show")' 
 									title="Buscar pagos" 
-									onclick="return js_Pago_carga_PagosRealizados('resultadoProcesoPagos');"><span class='fa fa-search'></span>
+									onclick="return js_rep_caja_saldos_carga_PagosRealizados('resultadoProcesoPagos');"><span class='fa fa-search'></span>
 								</button>
-								<!--<button type="button" class='btn btn-default' id='btn_selectPago_excel' name='btn_selectPago_excel' 
-										onclick="js_Pago_to_excel_PagosRealizados('print_excel_all_data','completo');"><span style='color:green;' class='fa fa-file-excel-o'></span>
-								</button>-->
-								<div class="btn-group">
-									<button type="button" id='btn_selectPago_xls2' name='btn_selectPago_xls2'
-											class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-										<span style='color:green;' class='fa fa-file-excel-o'>&nbsp;</span><span class="caret"></span>
-									</button>
-									<ul class="dropdown-menu dropdown-menu-right" role="menu">
-										<li><a href="#" onclick="js_Pago_to_excel_PagosRealizados('print_excel_all_data','completo',1);">Mostrar con formas de pago agrupadas y el saldo a favor en una columna aparte</a></li>
-										<li><a href="#" onclick="js_Pago_to_excel_PagosRealizados('print_excel_all_data','completo',2);"> Mostrar segmentado en formas de pago</a></li>
-										<li><a href="#" onclick="js_Pago_to_excel_PagosRealizados('print_excel_all_data2','curso');">Totalizado por curso</a></li>
-										<li><a href="#" onclick="js_Pago_to_excel_PagosRealizados('print_excel_all_data2','curso_caja');">Totalizado por curso y cajero</a></li>
-										<li><a href="#" onclick="js_Pago_to_excel_PagosRealizados('print_excel_all_data2','forma_de_pago');">Totalizado por forma de pago</a></li>
-										<li><a href="#" onclick="js_Pago_to_excel_PagosRealizados('print_excel_all_data2','forma_de_pago_caja');">Totalizado por forma de pago y cajero</a></li>
-									</ul>
-								</div>
-								<div class="btn-group">
-									<button type="button" id='btn_selectPago_pdf' name='btn_selectPago_pdf'
-											class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-										<span style='color:red;' class='fa fa-file-pdf-o'>&nbsp;</span><span class="caret"></span>
-									</button>
-									<ul class="dropdown-menu dropdown-menu-right" role="menu">
-										<li><a href="#" onclick="js_Pago_to_excel_PagosRealizados('print_pdf_all_data','curso');">Totalizado por curso</a></li>
-										<li><a href="#" onclick="js_Pago_to_excel_PagosRealizados('print_pdf_all_data','curso_caja');">Totalizado por curso y cajero</a></li>
-										<li><a href="#" onclick="js_Pago_to_excel_PagosRealizados('print_pdf_all_data','forma_de_pago');">Totalizado por forma de pago</a></li>
-										<li><a href="#" onclick="js_Pago_to_excel_PagosRealizados('print_pdf_all_data','forma_de_pago_caja');">Totalizado por forma de pago y cajero</a></li>
-									</ul>
-								</div>
+								<button type="button" class='btn btn-default' id='btn_selectFem_excel' name='btn_selectFem_excel' 
+									onclick="js_rep_caja_saldos_carga_reports('print_excel_all_data');"><span style='color:green;' class='fa fa-file-excel-o'></span></button>
+								<button type="button" 
+									class="btn btn-default" aria-hidden="true" 
+									onclick="js_rep_caja_saldos_carga_reports('print_pdf_all_data');"">
+									<span style='color:red;' class="fa fa-file-pdf-o"></span></button>
 								<div id='EducaLinksHelperCliente' style='display:inline;font-size:x-small;text-align:left;vertical-align:text-bottom;'>
 									<a href='#' onmouseover='$(this).tooltip("show")' 
 									title="Los filtros de búsqueda funcionan también para todos los reportes en Excel y PDF." data-placement='right'><span class='glyphicon glyphicon-info-sign'></span></a>
@@ -242,7 +218,14 @@
 						</div>
 						<div class='col-md-6 col-sm-12'>
 							<div class='form-group'>
-								<label class="col-md-4 col-sm-3 control-label" style='text-align: right;' for='txt_nom_cliente'>Forma de pago:</label>
+								<label class="col-md-4 col-sm-3 control-label" style='text-align: right;' for='txt_nom_cliente'>
+									<div id='EducaLinksHelperCliente' style='display:inline;font-size:x-small;text-align:left;vertical-align:text-bottom;'>
+										<a href='#' onmouseover='$(this).tooltip("show")' 
+										title="En caso de filtrar por 'forma de pago', considere lo siguiente: si una deuda fue cancelada con dos formas de pago diferentes, 
+											y una de ellas es la forma de pago que filtró, se mostrará tanto el valor completo del pago, como la lista de todas las formas de pago aplicada
+											a un mismo pago." data-placement='left'><span class='glyphicon glyphicon-info-sign'></span></a>
+									</div>
+									Forma de pago:</label>
 								<div class="col-md-8 col-sm-8">
 									{cmb_forma_pago}
 								</div>
@@ -320,7 +303,7 @@
 										 title='valor total neto, desde, hasta.'
 										 onmouseover='$(this).tooltip("show")'>
 										<span class="input-group-addon">
-											<input type="checkbox" id='chk_tneto' name='chk_tneto' onclick='js_Pago_check_tneto();'>
+											<input type="checkbox" id='chk_tneto' name='chk_tneto' onclick='js_rep_caja_saldos_check_tneto();'>
 										</span>			
 										<span class="input-group-addon" style="text-align:right;font-size:small;font-weight:bold;">de $</span>
 										<input type="text" class="form-control" name="txt_tneto_ini" id="txt_tneto_ini" placeholder='0.00' disabled='disabled'>
@@ -437,24 +420,9 @@
 	</div>
 </form>
 <div class="box box-default">
-	<div class="box-header with-border">
-			<h3 class="box-title">Bandeja de pagos recibidos</h3>
-			 <div class="box-tools pull-right">
-					<div class="btn-group hidden-sm hidden-xs">
-						<button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false"
-							title='Opciones de vista'>
-						<i class="fa fa-eye"></i></button>
-						<ul class="dropdown-menu" role="menu">
-						<li><a href="#" onclick="return js_Pago_carga_PagosRealizados('resultadoProcesoPagos');"><i class='fa fa-list-ul'></i> Mostrar con formas de pago agrupadas y el saldo a favor en una columna aparte</a></li>
-						<li><a href="#" onclick="return js_Pago_carga_PagosRealizados('resultadoProcesoPagos',2);"><i class='fa fa-list-ul'></i> Mostrar segmentado en formas de pago</a></li>
-						</ul>
-					</div>
-			</div>
-			<input type='hidden' id='tipo_bandeja' name='tipo_bandeja' value=''/>
-		</div><!-- /.box-header -->
 	<div class="box-body">
 		<div id="resultadoProcesoPagos">
-			<div style='font-size: small'>Haga clic en buscar para realiza una consulta.</div>
+			<div style='text-align:center'>- Consultar primero -</div>
 			{tabla_pagos}
 		</div>
 	</div>

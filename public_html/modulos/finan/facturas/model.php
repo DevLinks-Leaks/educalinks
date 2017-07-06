@@ -253,9 +253,9 @@ class Factura extends DBAbstractModel{
         $this->sp = "str_ingresaFactura";
         $this->executeSPAccion();
         if($this->codigo>0){
-            $this->mensaje="Factura generada con exito!";
+            $this->mensaje="<i class='fa fa-exclamation'></i> ¡Deuda generada correctamente!";
         }else{
-            $this->mensaje="Error al generar la factura";
+            $this->mensaje="<i class='fa fa-exclamation'></i> ¡Hubo un error al generar la deuda!";
         }
     }
     public function getSingleHeader($codigoFactura){

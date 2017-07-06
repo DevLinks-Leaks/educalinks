@@ -10,6 +10,7 @@ const RE_OPEN = 'reopen_caja';
 const GET = 'get'; // Consulta especifica
 const PRINTREP_ITEM = 'print_item'; 
 const PRINTREP_FP = 'print_fp'; 
+const PRINTREP_SAF = 'print_saf';
 const PRINTREP_NOTACREDITO = 'print_nc'; 
 const PRINTREPVISOR_ITEM = 'printvisor_item';
 const PRINTREPVISOR_FP = 'printvisor_fp';

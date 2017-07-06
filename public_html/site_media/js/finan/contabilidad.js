@@ -20,7 +20,7 @@ $(document).ready(function() {
     var table = $('#tablapagos').DataTable();
     table.column( '0:visible' ).order( 'asc' );
     
-    $('#tablaPaidDNAs').addClass( 'nowrap' ).DataTable({
+    $('#tabla_paidDNAs_main').addClass( 'nowrap' ).DataTable({
         lengthChange: false, 
         responsive: true, 
         searching: true,  
@@ -36,7 +36,7 @@ $(document).ready(function() {
             {className: "dt-body-center" , "targets": [4]}
         ]
     });
-    var table = $('#tablaPaidDNAs').DataTable();
+    var table = $('#tabla_paidDNAs_main').DataTable();
     table.column( '0:visible' ).order( 'asc' );
     
     $('#tablacategoria').addClass( 'nowrap' ).DataTable({
@@ -232,7 +232,26 @@ function js_contabilidad_migrarfacturasindividuales(codigo,div,url,elm)
     };
     xhr.send(data);
 }
-function js_contabilidad_actualizarfacturas(div,url)
+function js_contabilidad_updfacturasindividuales( codigo, div, url, elm )
+{   document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+    document.getElementById( 'span_upddeudaindividual_result_button' ).innerHTML = 
+    '<button type="button" class="btn btn-primary" id="btn_upddeudaindividual" name="btn_upddeudaindividual"' +
+    ' onclick="js_contabilidad_senddeudaindividualact(document.getElementById(\'codigodeuda\').value,\'modal_upd_dnas_confirmacion_body\','+
+    '\'modal_actualizar_body\',\''+document.getElementById('ruta_html_finan').value + '/contabilidad/controller.php\',document.getElementById(\'codigomes_paid_dnas\').value)">Migrar</button>';
+    
+    var data = new FormData();
+    data.append('event', 'migrarfacturasindividualesact');
+    data.append('codigodeuda', codigo);
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', url , true);
+    xhr.onreadystatechange=function()
+    {   if (xhr.readyState === 4 && xhr.status === 200)
+        {   document.getElementById(div).innerHTML=xhr.responseText;
+        }
+    };
+    xhr.send(data);
+}
+function js_contabilidad_actualizarfacturas( div, url )
 {   if ( document.getElementById('codigomes_paid_dnas') )
     {   var codigo = document.getElementById('codigomes_paid_dnas').value
         document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
@@ -283,7 +302,7 @@ function js_contabilidad_actualizar_DNAs( codigo, div, url )
         xhr.onreadystatechange = function()
         {   if ( xhr.readyState === 4 && xhr.status === 200 )
             {   document.getElementById(div).innerHTML=xhr.responseText;
-                $('#tabladeudamigrar').addClass( 'nowrap' ).DataTable({
+                $('#tablapaiddnas').addClass( 'nowrap' ).DataTable({
                     lengthChange: false, 
                     responsive: true, 
                     searching: true,  
@@ -753,10 +772,10 @@ function js_contabilidad_resultadofinalact( url, cc, ce, cd, indice, obj_len )
     };
     xhrII.send(data);
 }
-function js_contabilidad_senddeudaindividualact(id,div,url2,mes){
-    var deuda=document.getElementById('jsondeudas').innerHTML;
+function js_contabilidad_senddeudaindividualact( id, div, div2, url2, mes )
+{   var deuda=document.getElementById('jsondeudas').innerHTML;
+	document.getElementById( 'span_upddeudaindividual_result_button' ).innerHTML = '';
     document.getElementById(div).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
-    //var data = new FormData();
     var url='https://www.contifico.com/sistema/api/v1/documento/';
     var apikey =document.getElementById('apikey').value;
     var xhrr = new XMLHttpRequest();
@@ -765,24 +784,51 @@ function js_contabilidad_senddeudaindividualact(id,div,url2,mes){
     xhrr.setRequestHeader('Content-type','application/json; charset=utf-8');
     xhrr.onreadystatechange=function()
     {   if (xhrr.readyState === 4 && xhrr.status === 200 )
-        {   alert('El documento se creo correctamente');
-            js_contabilidad_upddocumentoindividual(xhrr.responseText,url2,id,div,'MI',0);
-            js_contabilidad_carga_deudas(mes,div,url2);
-        }else if (xhrr.readyState === 4 && xhrr.status === 401 )
-        {   alert('Error al validar credenciales');
-            js_contabilidad_carga_deudas(mes,div,url2);
+        {   //alert('El documento se creo correctamente');
+			document.getElementById(div).innerHTML = 
+                "<div class='callout callout-info'><h4><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>&nbsp;Contífico:</h4>" + 
+                "El documento se creo correctamente</div>";
+			var mensaje = JSON.parse( xhrr.responseText );
+			if( mensaje.tipo_documento != 'DNA' )
+			{   var data = new FormData();
+				data.append( 'event', 'updfacturas' );
+				data.append( 'codigo_documento', id ); //valores.descripcion
+				var xhrII = new XMLHttpRequest();
+				xhrII.open('POST', url2 , true);
+				xhrII.onreadystatechange = function()
+				{   if (xhrII.readyState === 4 && xhrII.status === 200)
+					{   js_contabilidad_actualizar_DNAs( mes, div2, url2 );
+					}
+				};
+				xhrII.send( data );
+			}
+        }
+		else if (xhrr.readyState === 4 && xhrr.status === 401 )
+        {   //alert('Error al validar credenciales');
+			document.getElementById(div).innerHTML = 
+                "<div class='callout callout-info'><h4><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>&nbsp;Contífico:</h4>" + 
+                "Error al validar credenciales</div>";
+            js_contabilidad_actualizar_DNAs( mes, div2, url2 );
         }else if (xhrr.readyState === 4 && xhrr.status === 409 )
-        {   alert('El documento ya existe');
-            js_contabilidad_carga_deudas(mes,div,url2);
+        {   //alert('El documento ya existe');
+			document.getElementById(div).innerHTML = 
+                "<div class='callout callout-info'><h4><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>&nbsp;Contífico:</h4>" + 
+                "El documento ya existe</div>";
+            js_contabilidad_actualizar_DNAs( mes, div2, url2 );
         }
         else if( xhrr.readyState === 4 && xhrr.status === 500 )
-        {   alert('Error en el sistema');
-            js_contabilidad_upddocumentoindividual(xhrr.responseText,url2,id,div,'ER',0);
-            js_contabilidad_carga_deudas(mes,div,url2);
-        }else if( xhrr.readyState === 4 && xhrr.status === 400 )
-        {   alert('Error en el documento');
-            js_contabilidad_upddocumentoindividual(xhrr.responseText,url2,id,div,'DE',0);
-            js_contabilidad_carga_deudas(mes,div,url2);
+        {   //alert('Error en el sistema');
+			document.getElementById(div).innerHTML = 
+                "<div class='callout callout-info'><h4><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>&nbsp;Contífico:</h4>" + 
+                "Error en el sistema</div>";
+			js_contabilidad_actualizar_DNAs( mes, div2, url2 );
+        }
+		else if( xhrr.readyState === 4 && xhrr.status === 400 )
+        {   var mensaje = JSON.parse( xhrr.responseText );
+			document.getElementById(div).innerHTML = 
+                "<div class='callout callout-danger'><h4><span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'></span>&nbsp;Contífico:</h4>" + 
+                "<b>Error en el documento</b>: "+mensaje.mensaje+"</div>";
+			js_contabilidad_actualizar_DNAs( mes, div2, url2 );
         }
     };
     xhrr.send(deuda);
@@ -952,6 +998,46 @@ function js_contabilidad_buscapagos(div,url)
             table.column( '0:visible' ).order( 'asc' );
             $('#modal_deudas').modal('hide');
         } 
+    };
+    xhr.send(data);
+}
+function js_contabilidad_buscaDNAsPagados( div, url ) //'resultadomigracion_paidDNAs'
+{   document.getElementById( div ).innerHTML='<br><div align="center"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i><br>Por favor, espere...</div><br>';
+    var anio = $("#cmb_periodo_anual_update option:selected").text();
+    var data = new FormData();
+    data.append( 'event', 'get_all_paidDNAs' );
+    data.append( 'anio', anio );
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', url, true);
+    xhr.onreadystatechange = function()
+    {   if ( xhr.readyState === 4 && xhr.status === 200 )
+        {   document.getElementById(div).innerHTML=xhr.responseText;
+            $('#tabla_paidDNAs_main').DataTable({
+                "bPaginate": true,
+                "bStateSave": false,
+                "bAutoWidth": false,
+                "bScrollAutoCss": true,
+                "bProcessing": true,
+                "bRetrieve": true,
+                "sDom": '<"H"CTrf>t<"F"lip>',
+                "aLengthMenu": [[10,25, 50, 100, -1], [10,25, 50, 100, "Todos"]],
+                "sScrollXInner": "110%",
+                "fnInitComplete": function() {
+                    this.css("visibility", "visible");
+                },
+                paging: true,
+                lengthChange: true,
+                searching: true,
+                language: {url: '//cdn.datatables.net/plug-ins/1.10.8/i18n/Spanish.json'},
+                "columnDefs": [
+                    {className: "dt-body-center", "targets": [0]},
+                    {className: "dt-body-center", "targets": [1]},
+                    {className: "dt-body-right" , "targets": [2]},
+                    {className: "dt-body-right" , "targets": [3]},
+                    {className: "dt-body-center", "targets": [4]}
+                ]
+            });
+        }
     };
     xhr.send(data);
 }

@@ -93,9 +93,12 @@ class Rep_facturas extends DBAbstractModel{
         }
     }
 	public function get_caja_cierre_items($caja_cier_codigo="%", $fecha_ini="%", $fecha_fin="%"){
-		if($caja_cier_codigo=='0')$caja_cier_codigo='%';
-		if($fecha_ini=='')$fecha_ini='%';
-		if($fecha_fin=='')$fecha_fin='%';
+		if($caja_cier_codigo=='0')
+				$caja_cier_codigo='%';
+		if($fecha_ini=='')
+			$fecha_ini='%';
+		if($fecha_fin=='')
+			$fecha_fin='%';
         $this->parametros = array($caja_cier_codigo, $fecha_ini, $fecha_fin);
         $this->sp = "str_consultaCajaCierre_rep";
         $this->executeSPConsulta();

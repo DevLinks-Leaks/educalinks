@@ -13,7 +13,7 @@
 				aria-hidden="true" data-toggle="modal" data-target="#modal_infoSaf"><i class="fa fa-info-circle" title='Ayuda' onmouseover='$(this).tooltip("show");'></i></a>
 		</li>
 		<li class='pull-right'>
-			<a href="#" class="text-muted" onclick="js_debtAut_get_config( );"
+			<a href="#" class="text-muted" onclick="js_debtAut_get_config( );" 
 				aria-hidden="true" data-toggle="modal" data-target="#modal_configSaf"><i class="fa fa-gear" title='Opciones' onmouseover='$(this).tooltip("show");'></i></a>
 		</li>
     </ul>
@@ -54,7 +54,7 @@
 					</div>
 					<div class="modal-body" id="modal_infoSaf_body">
 						<p>Esta ventana tiene la función de crear formatos que permitan al usuario exportar información del sistema relacionada a:</p>
-
+						
 						<ul>
 							<li>Alumnos con débito bancario.</li>
 							<li>Alumnos/Clientes con deudas.</li>
@@ -77,7 +77,7 @@
 						<h4 class="modal-title" id="modal_rep_ModalLabel"><span class='fa fa-cog'></span>&nbsp;Configuración de exportación de archivos<h4>
 					</div>
 					<div class="modal-body" id="modal_configSaf_body">
-
+					
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -203,7 +203,9 @@
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="mymodal_exportarFormatoArchivo">Exportar archivo con información lista</h4>
+						<h4 class="modal-title" id="mymodal_exportarFormatoArchivo">
+							Exportando archivo con el formato de <span id='forma_descripccion_exp' name='forma_descripccion_exp'></span>
+						</h4>
 					</div>
 					<div class="modal-body" id="modal_exportarFormatoArchivo_body">
 						<div id='div_step_1' name='div_step_1' class="form-horizontal" style='display:inline'>
@@ -355,7 +357,7 @@
 										<p><span class="fa fa-upload" aria-hidden="true"></span>
 											¡Aviso!
 											<hr style="padding:3px;margin:0px;">
-											Parece ser que en el plan de cobros (Períodos anuales), éste no es el primer ítem de cobro.
+											Parece ser que en el plan de cobros (Períodos anuales), éste no es el primer ítem de cobro. 
 											Hay items con fecha de inicio cobro menor, y hay alumno(s), los cuales, estás intentando obtener información para cobrar este ítem,
 											pero que tiene(n) deuda(s) pendiente(s) de items anteriores.
 										</p>
@@ -419,7 +421,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-						<button id="btn_formato_exportar_followed" name="btn_formato_exportar_followed"
+						<button id="btn_formato_exportar_followed" name="btn_formato_exportar_followed" 
 								class="btn btn-info" type="button"
 								style="display:inline"
 								onclick="return js_debtAut_genera_archivo_followed('file_form');">
@@ -758,10 +760,10 @@
                 <div class="form-horizontal">
                     <div class='form-group'>
                         <div class='col-sm-7'>
-
+							
                         </div>
 						<div class='col-sm-5'>
-
+							
 						</div>
 					</div>
 					<div class='form-group'>
@@ -769,7 +771,7 @@
 							.
                         </div>
 						<div class='col-sm-5'>
-
+							
 						</div>
 					</div>
                 </div>

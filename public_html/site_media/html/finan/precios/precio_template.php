@@ -65,6 +65,6 @@
 
 	<script src="{ruta_js_finan}/general.js"></script>
 	<script src="{ruta_js_finan}/items.js"></script>
-	<script src="{ruta_js_finan}/precios.js"></script>
+	<script src="{ruta_js_finan}/precios.js?i=1"></script>
 </body>
 </html>

@@ -132,7 +132,7 @@ function handler() {
                                                        "selected"  => -1),
                           '{combo_producto}' => array("elemento"  => "combo", 
                                                        "datos"     => array(0 => array(0 => -1, 
-                                                                                       1 => 'Seleccione...',
+                                                                                       1 => '- Seleccione un producto -',
                                                                                        2 => ''), 
                                                                             1=> array()),
                                                        "options"   => array("name"=>"codigoProducto_busq",
@@ -148,15 +148,19 @@ function handler() {
         case GET_PRODUCT:
             $item = new Item();
             $item->getProductos_selectFormat($user_data['codigoCategoria']);
+			
             global $diccionario;
-            $data['{combo}'] = array("elemento"  => "combo", 
-                                     "datos"     => $item->rows,
-                                     "options"   => array("name"=>"codigoProducto_busq",
-                                                          "id"=>"codigoProducto_busq",
-                                                          "required"=>"required",
-														  "class"=>"form-control",
-                                                          "onChange"=>"js_facturas_buscaPrecio('".$diccionario['rutas_head']['ruta_html_finan']."/facturas/controller.php')"),
-                                     "selected"  => 0);
+			$select = "<select id=\"codigoProducto_busq\" name=\"codigoProducto_busq\" class='form-control'
+						onChange=\"js_facturas_buscaPrecio('".$diccionario['rutas_head']['ruta_html_finan']."/facturas/controller.php')\">";
+			$select .= "<option value='-1'>- Seleccione un producto -</option>";
+			foreach( $item->rows as $options )
+			{   if (!empty($options))
+				{   $select .= "<option value='".$options[0]."' >".$options[1]."</option>";
+				}
+			}
+			$select.= "</select>";
+			
+			$data['combo'] = $select;
             retornar_result($data);
             break;
         case GET_PRICE:

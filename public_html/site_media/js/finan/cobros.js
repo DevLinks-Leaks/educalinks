@@ -76,19 +76,20 @@
 			//agregarPago('{ruta_html_finan}/cobros/controller.php');
 		}
 	})
+	if (document.getElementById('hd_in_event').value == 'cobrar_deuda' )
+		js_cobros_selecciona_directo( 'client_options', $('#hd_tipo_persona').val( ), $('#codigoCliente').val( ) );
 });
 
 // Carga el formulario para buscar a un cliente especifico
 function validaAgregarPago(url)
 {	var formaPago = document.getElementById('formaPago_asign').value;
-	if (formaPago!=-1)
+	if (!formaPago)
+	{	$.growl.warning({ title: 'Educalinks informa', message: "Seleccione una forma de pago para continuar" });
+		
+	}else
 	{	document.getElementById('div_formas_de_pago').style.display = "block";
 		agregarPago2(url);
-	}else
-	{	var mensaje = "¡Error! Faltaron completar algunos datos.";
-		$.growl.error({ title: 'Educalinks informa', message: mensaje });
 	}
-	return false
 }
 function js_cobros_selecciona( div_buttons, div_body, tipo_persona )
 {   var codigoCliente = $('#persona_table tr.selected').find('td:nth-child(1)').text();
@@ -98,6 +99,73 @@ function js_cobros_selecciona( div_buttons, div_body, tipo_persona )
 	$('#nombresCliente').val($('#persona_table tr.selected').find('td:nth-child(3)').text());
 	
 	$('#pagos_table tbody tr').each(function(){
+		$(this).remove();	// Remuevo la información de formas de pago.
+	});
+	document.getElementById('Totalabonado').value='';
+	// === Consulta de los datos del titular del cliente seleccionado
+	var data = new FormData();
+	data.append('event', 'get_cliente_info_adicional');
+	data.append('codigoCliente', codigoCliente );
+	data.append('tipo_persona', tipo_persona );
+	var nivel='';
+	var grupo='';
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', document.getElementById('ruta_html_common').value + '/persona/controller.php' , true);
+	xhr.onreadystatechange=function(){
+		if ( xhr.readyState === 4 && xhr.status === 200 )
+		{   // Parse del JSON enviado desde PHP
+			if( xhr.responseText.length > 0 )
+			{   var respuesta = JSON.parse(xhr.responseText);
+				if(respuesta[0].codigoGrupoEconomico==null)
+				{   grupo='-1';
+				}
+				else
+				{   grupo=respuesta[0].codigoGrupoEconomico;
+				}
+				$('#txt_grupo_economico').attr("data-codigo",grupo);
+				$('#txt_grupo_economico').val(respuesta[0].nombreGrupoEconomico);
+				$('#txt_curso').attr("data-codigo",respuesta[0].codigoCurso);
+				$('#txt_curso').val(respuesta[0].nombreCurso);
+			
+				if(respuesta[0].codigoNivelEconomico==null)
+				{   nivel='-1';
+				}
+				else
+				{   nivel=respuesta[0].codigoNivelEconomico;
+				}
+				$('#txt_nivel_economico').attr("data-codigo",nivel);
+				
+				$('#txt_nivel_economico').val(respuesta[0].nombreNivelEconomico);
+				$('#numeroIdentificacionTitular').val(respuesta[0].cedulatitular);
+				$('#nombreTitular').val(respuesta[0].nombretitular);
+				$('#emailTitular').val(respuesta[0].emailtitular);
+				$('#telefonoTitular').val(respuesta[0].telefonotitular);
+				$('#direccionTitular').val(respuesta[0].direcciontitular);
+				
+				$('#tipoIdentificacionTitular').val('CI');	
+				if( tipo_persona == 1 )
+				{   carga_cliente_opciones(codigoCliente,'client_options');
+					document.getElementById('div_datos_academicos_estudiante').style.display="inline";
+				}
+				else
+				{   document.getElementById('client_options').innerHTML="";
+					document.getElementById('div_datos_academicos_estudiante').style.display="none";
+				}
+				js_cobros_selecciona_get_deuda( codigoCliente, tipo_persona );
+			}
+			else
+			{   $('#txt_grupo_economico').val('');
+				$('#txt_grupo_economico').attr("data-codigo","");
+				$('#txt_curso').val('');
+				$('#txt_nivel_economico').val('');
+				$('#txt_nivel_economico').attr("data-codigo","");
+			}
+		}
+	};
+	xhr.send(data);
+}
+function js_cobros_selecciona_directo( div_buttons, tipo_persona, codigoCliente )
+{   $('#pagos_table tbody tr').each(function(){
 		$(this).remove();	// Remuevo la información de formas de pago.
 	});
 	document.getElementById('Totalabonado').value='';
@@ -526,12 +594,11 @@ function seleccionarDeuda(codigo,div,url)
 					nuevaLinea += "<td data-codigo='"+$(this).find('td').eq(0).text()+"' style='text-align:center;vertical-align:baseline;'>"+$(this).find('td').eq(1).text()+"</td>";
 					nuevaLinea += "<td data-prontopago='"+$(this).find('td').eq(3).text()+"' style='text-align:center;vertical-align:baseline;'>"+$(this).find('td').eq(8).text()+"</td>";
 					nuevaLinea += "<td  style='text-align:center;vertical-align:baseline;'>"+
-								  " <input id='"+idDeudaSeleccionada+"' class='txtAbonoDeuda form-control input-sm' " + 
-								  " title='No exceder valores de deuda o de pago.' data-placement='right'" +
-								  " onmouseover='$("+idDeudaSeleccionada+").tooltip(\"show\")' " + 
-								  " onfocus='$("+idDeudaSeleccionada+").tooltip(\"show\")' "+ 
+								  " <input id='"+idDeudaSeleccionada+"' disabled='disabled' style='background: rgba(0,0,0,0); border: none ; text-align:right;' " + 
+								  " title='Los valores son asignados automáticamente al agregar la(s) forma(s) de pago.' data-placement='right'" +
+								  " onmouseover='$(this).tooltip(\"show\")' " + 
 								  " onkeypress='return validaDesbordamientoAbono(event, this,document.getElementById("+'"'+"totalPagos"+'"'+").value,"+$(this).find('td').eq(8).text()+");' " +
-								  " onkeyup='actualizaTotalDeudasSeleccionadas();' style='padding: 0;' type='text' value='' placeholder='0000.00' /></td>";
+								  " onkeyup='actualizaTotalDeudasSeleccionadas();' style='padding: 0;' type='text' value='' placeholder='0.00' /></td>";
 					nuevaLinea += " <td style='text-align:center;vertical-align:baseline;'><span onclick='quitarDeuda("+'"'+$(this).find('td').eq(0).text()+'"'+")' " + 
 								  " onmouseover='$(this).tooltip(\"show\")' " +
 								  " class='btn_opc_lista_eliminar glyphicon glyphicon-remove-circle cursorlink' aria-hidden='true' data-placement='bottom' title='Eliminar'></span></td>";
@@ -546,9 +613,10 @@ function seleccionarDeuda(codigo,div,url)
 			}
 		}
 	});
+	
 	validaHabilitacionMontosAbono();
-
 	actualizaTotalDeudasSeleccionadas();
+	actualizaTotalPagosAgregados();
 }
 function validaHabilitacionMontosAbono(){
 	var totalPagosAgregados =0;
@@ -633,15 +701,7 @@ function quitarDeuda(codigoDeuda){
 	});
 	justificaMensajeNoData($('#deudasSeleccionadas_table'),'resultadoPendientesCobro'); // Agrego el div que coloca el datatable donde dice: "No data available in table"
 
-	actualizaTotalDeudasSeleccionadas();
-	
-	setearMontosAsignados();
-	
-	var saldopendiente=document.getElementById('Totalabonado').value;
-	var totalabonado=document.getElementById('Totalabonado').value;
-	if(totalabonado!=0){
-	document.getElementById('totalDeudasSeleccionadas').value=saldopendiente;}
-	document.getElementById('Totalabonado').value=0.00;
+	actualizaTotalPagosAgregados();
 }
 
 function randomString() {
@@ -657,111 +717,10 @@ function randomString() {
 }
 
 function agregarPago2(url)
-{	$('#pagos_table tbody tr').each(function()
-	{   if($(this).attr('class')=='odd')
-		{
-			$(this).remove();	// Quito el div que coloca el datatable donde dice: "No data available in table"
-		}
-	});
-
-	// Creo el objeto JSON de los metadatos para retenerlos en cada fila de su pago correspondiente
-	var metadato = {};
-	switch($('#formaPago_asign').find(':selected').text()){
-		case 'EFECTIVO':
-			metadato['formaPago'] = 'EFECTIVO'; 
-			metadato['codigoFormaPago'] = $('#formaPago_asign').find(':selected').val(); 
-			metadato['monto'] = $('#monto').val(); 
-			metadato['observacion'] = $('#observacion').val(); 
-			break;
-		case 'CHEQUE':
-			metadato['formaPago'] = 'CHEQUE'; 
-			metadato['codigoFormaPago'] = $('#formaPago_asign').find(':selected').val(); 
-			metadato['banco'] = $('#banco').find(':selected').val();
-			metadato['monto'] = $('#monto').val();
-			metadato['numeroCheque'] = $('#numeroCheque').val();
-			metadato['numeroCuenta'] = $('#numeroCuenta').val();
-			metadato['girador'] = $('#nombreGirador').val();
-			metadato['titular'] = $('#nombreTitular').val();
-			metadato['fechaDeposito'] = $('#fechaDeposito').val();
-			metadato['observacion'] = $('#observacion').val();
-			break;
-		case 'TARJETA DE CREDITO':
-			metadato['formaPago'] = 'TARJETA CREDITO'; 
-			metadato['codigoFormaPago'] = $('#formaPago_asign').find(':selected').val(); 
-			metadato['tarjetaCredito'] = $('#tarjetaCredito').find(':selected').val();
-			metadato['monto'] = $('#monto').val();
-			metadato['numero'] = $('#numero').val();
-			metadato['titular'] = $('#titular').val();
-			metadato['lote'] = $('#lote').val();
-			metadato['referencia'] = $('#referencia').val();
-			//metadato['fechaCaducidad'] = $('#fechaCaducidad').val();
-			metadato['red_de_pago'] = $('#red_de_pago').val();
-			metadato['observacion'] = $('#observacion').val();
-			break;
-		case 'DEPOSITO':
-			metadato['formaPago'] = 'DEPOSITO'; 
-			metadato['codigoFormaPago'] = $('#formaPago_asign').find(':selected').val(); 
-			metadato['banco'] = $('#banco').find(':selected').val();
-			//metadato['numeroCuentaOrigen'] = $('#numeroCuentaOrigen').val();
-			metadato['numeroCuentaDestino'] = $('#cuentaDestino').find(':selected').val();
-			metadato['referencia'] = $('#referencia').val();
-			metadato['fechaTransaccion'] = $('#fechaTransaccion').val();
-			metadato['monto'] = $('#monto').val();
-			metadato['observacion'] = $('#observacion').val();
-			break;
-		case 'TRANSFERENCIA':
-			metadato['formaPago'] = 'TRANSFERENCIA'; 
-			metadato['codigoFormaPago'] = $('#formaPago_asign').find(':selected').val(); 
-			metadato['banco'] = $('#banco').find(':selected').val();
-			metadato['numeroCuentaOrigen'] = $('#numeroCuentaOrigen').val();
-			metadato['numeroCuentaDestino'] = $('#cuentaDestino').find(':selected').val();
-			metadato['referencia'] = $('#referencia').val();
-			metadato['fechaTransaccion'] = $('#fechaTransaccion').val();
-			metadato['monto'] = $('#monto').val();
-			metadato['observacion'] = $('#observacion').val();
-			break; 
-		case 'SALDOS A FAVOR':
-			metadato['formaPago'] = 'SALDOS FAVOR'; 
-			metadato['codigoFormaPago'] = $('#formaPago_asign').find(':selected').val(); 
-			metadato['monto'] = $('#monto').val();
-			break; 
-		case 'DOCUMENTO INTERNO':
-			metadato['formaPago'] = 'DOCUMENTO INTERNO'; 
-			metadato['codigoFormaPago'] = $('#formaPago_asign').find(':selected').val(); 
-			metadato['monto'] = $('#monto').val(); 
-			metadato['detalle'] = $('#detalle').val(); 
-			metadato['observacion'] = $('#observacion').val(); 
-			break;
-	}
-
-	// Genero un identificador para cada fila del pago (Para identificacion en acciones posteriores)
-	var idPago = randomString();
-	var nuevoPago = '<tr>';
-		nuevoPago += "<td style='text-align:center;' data-id='"+idPago+"'  data-meta='"+JSON.stringify(metadato)+"' >"+$('#formaPago_asign').find(':selected').text()+"</td>";
-		nuevoPago += "<td style='text-align:center;'>"+$('#monto').val()+"</td>";
-		
-	if ( $('#formaPago_asign').find(':selected').text() != 'SALDOS A FAVOR' )
-		nuevoPago += "<td style='text-align:center;'><span onclick='cargaFormularioEditarPago("+'"'+url+'"'+","+'"'+idPago+'"'+")' class='glyphicon glyphicon-pencil cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_editarPago' onmouseover='$(this).tooltip(\"show\")' title='Editar Pago'  data-placement='left'></span></td>";
-	else
-		nuevoPago += "<td style='text-align:center;font-size:x-small;'>N/A</td>";
-		nuevoPago += "<td style='text-align:center;'><span onclick='quitarPago("+'"'+idPago+'"'+")' class='btn_opc_lista_eliminar glyphicon glyphicon-remove-circle cursorlink' aria-hidden='true' onmouseover='$(this).tooltip(\"show\")' title='Eliminar' data-placement='bottom'></span></td>";
-		nuevoPago += '</tr>';
-	$('#pagos_table tbody').append(nuevoPago);
-
-	validaHabilitacionMontosAbono();
-
-	actualizaTotalPagosAgregados();
-
-	//$('#resultadoMetadata').empty(); // Esto es para que cuando se editen los pagos, no interfieran los valores del último formulario
-	document.getElementById('formaPago_asign').value="";
-	document.getElementById('resultadoMetadata').innerHTML= "<div id='frm_pagoNones' class='form-horizontal' ><div class='alert alert-success'><strong>¡&Eacute;xito!</strong>"
-		+"<br> Forma de pago agregada. Puede seleccionar otra forma de pago o cerrar esta ventana haciendo clic en <a href='#' data-dismiss='modal'>Cerrar</a>.</div></div>";
-	
-}
-function agregarPago( url )
 {	if(validacionCamposNecesarios($('#formaPago_asign').find(':selected').text().trim()))
-	{	$('#pagos_table tbody tr').each(function(){
-			if($(this).attr('class')=='odd'){
+	{   $('#pagos_table tbody tr').each(function()
+		{   if($(this).attr('class')=='odd')
+			{
 				$(this).remove();	// Quito el div que coloca el datatable donde dice: "No data available in table"
 			}
 		});
@@ -805,7 +764,7 @@ function agregarPago( url )
 				metadato['codigoFormaPago'] = $('#formaPago_asign').find(':selected').val(); 
 				metadato['banco'] = $('#banco').find(':selected').val();
 				//metadato['numeroCuentaOrigen'] = $('#numeroCuentaOrigen').val();
-			    metadato['numeroCuentaDestino'] = $('#cuentaDestino').find(':selected').val();
+				metadato['numeroCuentaDestino'] = $('#cuentaDestino').find(':selected').val();
 				metadato['referencia'] = $('#referencia').val();
 				metadato['fechaTransaccion'] = $('#fechaTransaccion').val();
 				metadato['monto'] = $('#monto').val();
@@ -839,12 +798,14 @@ function agregarPago( url )
 		// Genero un identificador para cada fila del pago (Para identificacion en acciones posteriores)
 		var idPago = randomString();
 		var nuevoPago = '<tr>';
-			nuevoPago += "<td data-id='"+idPago+"'  data-meta='"+JSON.stringify(metadato)+"' >"+$('#formaPago_asign').find(':selected').text()+"</td>";
-			nuevoPago += '<td>'+$('#monto').val()+'</td>';
-			nuevoPago += '<td>';
-			nuevoPago += "<span onclick='quitarPago("+'"'+idPago+'"'+")' class='glyphicon glyphicon-remove cursorlink' aria-hidden='true' title='Eliminar Pago'>&nbsp;</span>";
-			nuevoPago += "<span onclick='cargaFormularioEditarPago("+'"'+url+'"'+","+'"'+idPago+'"'+")' class='glyphicon glyphicon-pencil cursorlink' aria-hidden='true' data-toggle='modal' data-target='#modal_editarPago' title='Editar Pago'>&nbsp;</span>";
-			nuevoPago += '</td>';
+			nuevoPago += "<td style='text-align:center;' data-id='"+idPago+"'  data-meta='"+JSON.stringify(metadato)+"' >"+$('#formaPago_asign').find(':selected').text()+"</td>";
+			nuevoPago += "<td style='text-align:center;'>"+$('#monto').val()+"</td>";
+			
+		if ( $('#formaPago_asign').find(':selected').text() != 'SALDOS A FAVOR' )
+			nuevoPago += "<td style='text-align:center;'><span onclick='cargaFormularioEditarPago("+'"'+url+'"'+","+'"'+idPago+'"'+")' class='glyphicon glyphicon-pencil cursorlink btn_opc_lista_editar' aria-hidden='true' data-toggle='modal' data-target='#modal_editarPago' onmouseover='$(this).tooltip(\"show\")' title='Editar Pago'  data-placement='left'></span></td>";
+		else
+			nuevoPago += "<td style='text-align:center;font-size:x-small;'>N/A</td>";
+			nuevoPago += "<td style='text-align:center;'><span onclick='quitarPago("+'"'+idPago+'"'+")' class='btn_opc_lista_eliminar glyphicon glyphicon-remove-circle cursorlink' aria-hidden='true' onmouseover='$(this).tooltip(\"show\")' title='Eliminar' data-placement='bottom'></span></td>";
 			nuevoPago += '</tr>';
 		$('#pagos_table tbody').append(nuevoPago);
 
@@ -853,44 +814,79 @@ function agregarPago( url )
 		actualizaTotalPagosAgregados();
 
 		//$('#resultadoMetadata').empty(); // Esto es para que cuando se editen los pagos, no interfieran los valores del último formulario
-		document.getElementById('resultadoMetadata').innerHTML= "";
-	
-	} // Fin de la validación de los campos necesarios
+		document.getElementById('formaPago_asign').value="";
+		document.getElementById('resultadoMetadata').innerHTML= "<div id='frm_pagoNones' class='form-horizontal' ><div class='alert alert-success'><strong>¡&Eacute;xito!</strong>"
+			+"<br> Forma de pago agregada. Puede seleccionar otra forma de pago o cerrar esta ventana haciendo clic en <a href='#' data-dismiss='modal'>Cerrar</a>.</div></div>";
+	}
 }
-
-function actualizaTotalPagosAgregados(){
-	var abonado = 0;
+function actualizaTotalPagosAgregados()
+{   var abonado = 0;
 	var saldoafavor=0;
+	var deuda_pdte = 0.00;
+	var aux_ya_asignado = 0.00;
+	var totalpago_aux=0.00;
+	var total_nuevo_abono = 0.00;
+	
+	
+	setearMontosAsignados();
+		
 	var deudas =document.getElementById('totalDeudasSeleccionadas').value;
  	$('#pagos_table tbody tr').each(function(){
  		if(!$(this).find('td').eq(0).attr('class')){ 
  			abonado += parseFloat($(this).find('td').eq(1).text());
  		}
  	});
-	saldoafavor=abonado-deudas;
- 	$('#totalPagos').val(abonado.toFixed(2));
 	
+ 	$('#totalPagos').val(abonado.toFixed(2));
+	totalpago_aux = parseFloat($('#totalPagos').val()) - parseFloat($('#Totalabonado').val());
+	$('#deudasSeleccionadas_table tbody tr').each(function()
+	{   if(!$(this).find('td').eq(0).attr('class'))
+		{ 	if (!$(this).find('td').eq(2).find('input').val( ))
+				aux_ya_asignado = 0;
+			else 
+				aux_ya_asignado = $(this).find('td').eq(2).find('input').val( );
+			
+			deuda_pdte = ( parseFloat($(this).find('td').eq(1).text()) - aux_ya_asignado ).toFixed(2);
+			console.log('deuda_pdte '+deuda_pdte);
+			console.log('totalapgoaux '+totalpago_aux);
+			if ( totalpago_aux > 0 )
+			{
+				if (deuda_pdte >= totalpago_aux )
+				{	total_nuevo_abono = (parseFloat(totalpago_aux) + parseFloat(aux_ya_asignado)).toFixed(2);
+					$(this).find('td').eq(2).find('input').val( total_nuevo_abono);
+					totalpago_aux = 0;
+				}
+				else if ( deuda_pdte < totalpago_aux )
+				{	total_nuevo_abono = (parseFloat(deuda_pdte) + parseFloat(aux_ya_asignado)).toFixed(2);
+					$(this).find('td').eq(2).find('input').val( total_nuevo_abono);	
+					totalpago_aux = totalpago_aux - deuda_pdte;
+				}
+			}
+			actualizaTotalDeudasSeleccionadas();
+			$('#saldofavor').val( (totalpago_aux > 0 ? totalpago_aux : 0.00 ).toFixed(2) );
+			console.log('deuda_pdte2 '+totalpago_aux);
+ 		}
+ 	});
 }
-
-function quitarPago(idPago){
-	$('#pagos_table tbody tr').each(function(){
-		if( $(this).find('td').eq(0).data('id') == idPago  ){
-			$(this).remove();
+function quitarPago(idPago)
+{   $('#pagos_table tbody tr').each(function()
+	{   if( $(this).find('td').eq(0).data('id') == idPago  )
+		{   $(this).remove();
 		}
 	});
+	
 	validaHabilitacionMontosAbono();
 
 	justificaMensajeNoData($('#pagos_table'),'div_formas_de_pago');
-
-	actualizaTotalPagosAgregados();
 	
-	setearMontosAsignados();
+	actualizaTotalPagosAgregados();
 }
 
 function setearMontosAsignados(){
 	$('#deudasSeleccionadas_table tbody tr').each(function(){
 		$(this).find('td').eq(2).find('input').val("");
 	});
+	$('#Totalabonado').val( '0.00' );
 }
 
 function justificaMensajeNoData(tabla, div){
@@ -934,100 +930,12 @@ function cargaFormularioEditarPago(url, idPago)
 	xhr.send(data);
 }
 function validaEditarPago(url)
-{	var formaPago = document.getElementById('frm_editarPago').value;
-	if (formaPago!=-1)
-	{	editarPago2();
-	}else
-	{	alert("¡Error! Faltaron completar algunos datos.");
-	}
-	return false
+{	editarPago2();
 }
-function editarPago2() {
-	var nombreFormaPago = $('#nombreFP').val();
-	var metadato = {};
-	var idPago = $('#pago').val();
-	switch(nombreFormaPago){
-		case 'EFECTIVO':
-			metadato['formaPago'] = 'EFECTIVO'; 
-			metadato['codigoFormaPago'] = $('#codigoFP').val(); 
-			metadato['monto'] = $('#monto').val(); 
-			metadato['observacion'] = $('#observacion').val(); 
-			break;
-		case 'CHEQUE':
-			metadato['formaPago'] = 'CHEQUE'; 
-			metadato['codigoFormaPago'] = $('#codigoFP').val(); 
-			metadato['banco'] = $('#banco').find(':selected').val();
-			metadato['monto'] = $('#monto').val();
-			metadato['numeroCheque'] = $('#numeroCheque').val();
-			metadato['numeroCuenta'] = $('#numeroCuenta').val();
-			metadato['girador'] = $('#nombreGirador').val();
-			metadato['titular'] = $('#nombreTitular').val();
-			metadato['fechaDeposito'] = $('#fechaDeposito').val();
-			metadato['observacion'] = $('#observacion').val();
-			break;
-		case 'TARJETA CREDITO':
-			metadato['formaPago'] = 'TARJETA CREDITO'; 
-			metadato['codigoFormaPago'] = $('#codigoFP').val(); 
-			metadato['tarjetaCredito'] = $('#tarjetaCredito').find(':selected').val();
-			metadato['monto'] = $('#monto').val();
-			metadato['numero'] = $('#numero').val();
-			metadato['titular'] = $('#titular').val();
-			metadato['lote'] = $('#lote').val();
-			metadato['referencia'] = $('#referencia').val();
-			//metadato['fechaCaducidad'] = $('#fechaCaducidad').val();
-			metadato['red_de_pago'] = $('#red_de_pago').val();
-			metadato['observacion'] = $('#observacion').val();
-			break;
-		case 'DEPOSITO':
-			metadato['formaPago'] = 'DEPOSITO'; 
-			metadato['codigoFormaPago'] = $('#codigoFP').val(); 
-			metadato['banco'] = $('#banco').find(':selected').val();
-			//metadato['numeroCuentaOrigen'] = $('#numeroCuentaOrigen').val();
-			metadato['numeroCuentaDestino'] = $('#cuentaDestino').find(':selected').val();
-			metadato['referencia'] = $('#referencia').val();
-			metadato['fechaTransaccion'] = $('#fechaTransaccion').val();
-			metadato['monto'] = $('#monto').val();
-			metadato['observacion'] = $('#observacion').val();
-			break;
-		case 'TRANSFERENCIA':
-			metadato['formaPago'] = 'TRANSFERENCIA'; 
-			metadato['codigoFormaPago'] = $('#codigoFP').val(); 
-			metadato['banco'] = $('#banco').find(':selected').val();
-			metadato['numeroCuentaOrigen'] = $('#numeroCuentaOrigen').val();
-			metadato['numeroCuentaDestino'] = $('#cuentaDestino').find(':selected').val();
-			metadato['referencia'] = $('#referencia').val();
-			metadato['fechaTransaccion'] = $('#fechaTransaccion').val();
-			metadato['monto'] = $('#monto').val();
-			metadato['observacion'] = $('#observacion').val();
-			break;
-		case 'DOCUMENTO INTERNO':
-			metadato['formaPago'] = 'DOCUMENTO INTERNO';
-			metadato['codigoFormaPago'] = $('#codigoFP').val();
-			metadato['monto'] = $('#monto').val();
-			metadato['detalle'] = $('#detalle').val();
-			metadato['observacion'] = $('#observacion').val();
-			break;
-	}
-
-	
-	$('#pagos_table tbody tr').each(function(){
-		if($(this).find('td').eq(0).attr('data-id')==idPago){
-			$(this).find('td').eq(1).text(metadato.monto);
-			$(this).find('td').eq(0).attr('data-meta',JSON.stringify(metadato));
-		}
-	});
-	
-	actualizaTotalPagosAgregados();
-
-	setearMontosAsignados();
-	
-	$.growl.notice({ title: 'Educalinks informa', message: 'Cambios almacenados' });
-}
-function editarPago() {
-	var nombreFormaPago = $('#nombreFP').val();
-	if(validacionCamposNecesarios(nombreFormaPago.trim())){
-		
-		var metadato = {};
+function editarPago2()
+{   var nombreFormaPago = $('#nombreFP').val();
+	if(validacionCamposNecesarios(nombreFormaPago.trim()))
+    {   var metadato = {};
 		var idPago = $('#pago').val();
 		switch(nombreFormaPago){
 			case 'EFECTIVO':
@@ -1100,167 +1008,183 @@ function editarPago() {
 			}
 		});
 		
+		validaHabilitacionMontosAbono();
+
+		justificaMensajeNoData($('#pagos_table'),'div_formas_de_pago');
+		
 		actualizaTotalPagosAgregados();
-
-		setearMontosAsignados();
-
-	} // Fin de la validación de los campos necesarios
+		
+		$.growl.notice({ title: 'Educalinks informa', message: 'Cambios almacenados' });
+		$('#modal_editarPago').modal("hide");
+	}
 }
-
+function enterpress_addpay(){ return false}
 function generaPago(div, url)
-{   var bandera=0;
-	var codigoCliente = $('#codigoCliente').val();
-	var totalPagos = $('#totalPagos').val();
-	if(validacionFinal())
-	{   document.getElementById('btn_modal_resultadoPago_new_cl').disabled='disabled';
-		document.getElementById('btn_modal_resultadoPago_current_cl').disabled='disabled';
-		document.getElementById('btn_modal_resultadoPago_pagos').disabled='disabled';
-		document.getElementById('btn_modal_resultadoPago_gestionFac').disabled='disabled';
-		document.getElementById('btn_gen_pago').disabled=true;
-		var pago = {};
-		pago['cabecera'] = {};
-		pago['cabecera']['codigoCliente'] = codigoCliente;
-		pago['cabecera']['tipoPersona'] = document.getElementById( 'hd_tipo_persona' ).value;
-		pago['cabecera']['total'] = totalPagos;
-		pago['detalle'] = [];
-		$('#pagos_table tbody tr').each(function()
-		{   var metadatos = JSON.parse($(this).find('td').eq(0).attr('data-meta'));
-			var detalle = {};
-			detalle['codigoFormaPago'] = metadatos['codigoFormaPago'];
-			detalle['formaPago'] = metadatos['formaPago'];
-			detalle['monto'] = metadatos['monto'];
-			detalle['metadato'] = {};
-			switch(metadatos['formaPago']){
-				case 'EFECTIVO':
-					detalle['metadato']['observacion'] = metadatos['observacion'];
-					break;
-				case 'CHEQUE':
-				 bandera=1;
-					detalle['metadato']['banco'] = metadatos['banco'];
-					detalle['metadato']['numeroCheque'] = metadatos['numeroCheque'];
-					detalle['metadato']['numeroCuenta'] = metadatos['numeroCuenta'];
-					detalle['metadato']['girador'] = metadatos['girador'];
-					detalle['metadato']['titular'] = metadatos['titular'];
-					detalle['metadato']['fechaDeposito'] = metadatos['fechaDeposito'];
-					detalle['metadato']['observacion'] = metadatos['observacion'];
-					break;
-				case 'TARJETA CREDITO':
-					detalle['metadato']['tarjetaCredito'] = metadatos['tarjetaCredito'];
-					detalle['metadato']['numero'] = metadatos['numero'];
-					detalle['metadato']['titular'] = metadatos['titular'];
-					detalle['metadato']['lote'] = metadatos['lote'];
-					detalle['metadato']['referencia'] = metadatos['referencia'];
-					//detalle['metadato']['fechaCaducidad'] = metadatos['fechaCaducidad'];
-					detalle['metadato']['red_de_pago'] = metadatos['red_de_pago'];
-					detalle['metadato']['observacion'] = metadatos['observacion'];
-					break;
-				case 'DEPOSITO':
-					detalle['metadato']['banco'] = metadatos['banco'];
-					//detalle['metadato']['numeroCuentaOrigen'] = metadatos['numeroCuentaOrigen'];
-					detalle['metadato']['numeroCuentaDestino'] = metadatos['numeroCuentaDestino'];
-					detalle['metadato']['referencia'] = metadatos['referencia'];
-					detalle['metadato']['fechaTransaccion'] = metadatos['fechaTransaccion'];
-					detalle['metadato']['observacion'] = metadatos['observacion'];
-					break;
-				case 'TRANSFERENCIA':
-					detalle['metadato']['banco'] = metadatos['banco'];
-					detalle['metadato']['numeroCuentaOrigen'] = metadatos['numeroCuentaOrigen'];
-					detalle['metadato']['numeroCuentaDestino'] = metadatos['numeroCuentaDestino'];
-					detalle['metadato']['referencia'] = metadatos['referencia'];
-					detalle['metadato']['fechaTransaccion'] = metadatos['fechaTransaccion'];
-					detalle['metadato']['observacion'] = metadatos['observacion'];
-					break;
-				case 'DOCUMENTO INTERNO':
-					detalle['metadato']['detalle'] = metadatos['detalle'];
-					detalle['metadato']['observacion'] = metadatos['observacion'];
-					break;
-			}
-			pago['detalle'].push(detalle);
-		});
+{   var continua = 0;
+	$('#deudasSeleccionadas_table tbody tr').each(function()
+	{   if ( !$(this).find('td').eq(2).find('input').val() || $(this).find('td').eq(2).find('input').val() === '0.00' )
+			continua++;
+	});
+	if ( continua === 0 )
+	{
+		var bandera=0;
+		var codigoCliente = $('#codigoCliente').val();
+		var totalPagos = $('#totalPagos').val();
+		if(validacionFinal())
+		{   document.getElementById('btn_modal_resultadoPago_new_cl').disabled='disabled';
+			document.getElementById('btn_modal_resultadoPago_current_cl').disabled='disabled';
+			document.getElementById('btn_modal_resultadoPago_pagos').disabled='disabled';
+			document.getElementById('btn_modal_resultadoPago_gestionFac').disabled='disabled';
+			document.getElementById('btn_gen_pago').disabled=true;
+			var pago = {};
+			pago['cabecera'] = {};
+			pago['cabecera']['codigoCliente'] = codigoCliente;
+			pago['cabecera']['tipoPersona'] = document.getElementById( 'hd_tipo_persona' ).value;
+			pago['cabecera']['total'] = totalPagos;
+			pago['detalle'] = [];
+			$('#pagos_table tbody tr').each(function()
+			{   var metadatos = JSON.parse($(this).find('td').eq(0).attr('data-meta'));
+				var detalle = {};
+				detalle['codigoFormaPago'] = metadatos['codigoFormaPago'];
+				detalle['formaPago'] = metadatos['formaPago'];
+				detalle['monto'] = metadatos['monto'];
+				detalle['metadato'] = {};
+				switch(metadatos['formaPago']){
+					case 'EFECTIVO':
+						detalle['metadato']['observacion'] = metadatos['observacion'];
+						break;
+					case 'CHEQUE':
+					 bandera=1;
+						detalle['metadato']['banco'] = metadatos['banco'];
+						detalle['metadato']['numeroCheque'] = metadatos['numeroCheque'];
+						detalle['metadato']['numeroCuenta'] = metadatos['numeroCuenta'];
+						detalle['metadato']['girador'] = metadatos['girador'];
+						detalle['metadato']['titular'] = metadatos['titular'];
+						detalle['metadato']['fechaDeposito'] = metadatos['fechaDeposito'];
+						detalle['metadato']['observacion'] = metadatos['observacion'];
+						break;
+					case 'TARJETA CREDITO':
+						detalle['metadato']['tarjetaCredito'] = metadatos['tarjetaCredito'];
+						detalle['metadato']['numero'] = metadatos['numero'];
+						detalle['metadato']['titular'] = metadatos['titular'];
+						detalle['metadato']['lote'] = metadatos['lote'];
+						detalle['metadato']['referencia'] = metadatos['referencia'];
+						//detalle['metadato']['fechaCaducidad'] = metadatos['fechaCaducidad'];
+						detalle['metadato']['red_de_pago'] = metadatos['red_de_pago'];
+						detalle['metadato']['observacion'] = metadatos['observacion'];
+						break;
+					case 'DEPOSITO':
+						detalle['metadato']['banco'] = metadatos['banco'];
+						//detalle['metadato']['numeroCuentaOrigen'] = metadatos['numeroCuentaOrigen'];
+						detalle['metadato']['numeroCuentaDestino'] = metadatos['numeroCuentaDestino'];
+						detalle['metadato']['referencia'] = metadatos['referencia'];
+						detalle['metadato']['fechaTransaccion'] = metadatos['fechaTransaccion'];
+						detalle['metadato']['observacion'] = metadatos['observacion'];
+						break;
+					case 'TRANSFERENCIA':
+						detalle['metadato']['banco'] = metadatos['banco'];
+						detalle['metadato']['numeroCuentaOrigen'] = metadatos['numeroCuentaOrigen'];
+						detalle['metadato']['numeroCuentaDestino'] = metadatos['numeroCuentaDestino'];
+						detalle['metadato']['referencia'] = metadatos['referencia'];
+						detalle['metadato']['fechaTransaccion'] = metadatos['fechaTransaccion'];
+						detalle['metadato']['observacion'] = metadatos['observacion'];
+						break;
+					case 'DOCUMENTO INTERNO':
+						detalle['metadato']['detalle'] = metadatos['detalle'];
+						detalle['metadato']['observacion'] = metadatos['observacion'];
+						break;
+				}
+				pago['detalle'].push(detalle);
+			});
 
-	 	pago['deudasAfectadas'] = [];
-	 	$('#deudasSeleccionadas_table tbody tr').each(function()
-		{   var deudas = {};
-			var prontopago = $(this).find('td').eq(1).attr('data-prontopago');
-			var deuda_pendiente = parseFloat($(this).find('td').eq(1).text());
-			var abono = $(this).find('td').eq(2).find('input').val();
+			pago['deudasAfectadas'] = [];
+			$('#deudasSeleccionadas_table tbody tr').each(function()
+			{   var deudas = {};
+				var prontopago = $(this).find('td').eq(1).attr('data-prontopago');
+				var deuda_pendiente = parseFloat($(this).find('td').eq(1).text());
+				var abono = $(this).find('td').eq(2).find('input').val();
+				
+				if ( abono )
+				{   deudas['codigoDeuda'] = $(this).find('td').eq(0).attr('data-codigo');
+					deudas['abono'] = abono;
+					
+					if(abono==deuda_pendiente)
+					{
+						deudas['prontopago']=$(this).find('td').eq(1).attr('data-prontopago');
+					}
+					else
+					{
+						deudas['prontopago']= 0 ;
+					}
+					pago['deudasAfectadas'].push(deudas);
+					//alert("va al xml:" + deudas['prontopago'] +" abono: "+ abono +" prontopago:"+ prontopago +" deuda_pendiente:"+ deuda_pendiente);
+				}
+			});
+			var codigoFC=0;
 			
-	 		deudas['codigoDeuda'] = $(this).find('td').eq(0).attr('data-codigo');
-	 		deudas['abono'] = abono;
-			
-			if(abono==deuda_pendiente)
+			var saldo=0;
+			if(document.getElementById('saldofavor').value!='')
 			{
-				deudas['prontopago']=$(this).find('td').eq(1).attr('data-prontopago');
+				saldo=document.getElementById('saldofavor').value;
 			}
 			else
 			{
-				deudas['prontopago']= 0 ;
+				saldo=0
 			}
-	 		pago['deudasAfectadas'].push(deudas);
-			//alert("va al xml:" + deudas['prontopago'] +" abono: "+ abono +" prontopago:"+ prontopago +" deuda_pendiente:"+ deuda_pendiente);
-	 	});
-		var codigoFC=0;
-	 	
-		var saldo=0;
-		if(document.getElementById('saldofavor').value!='')
-		{
-			saldo=document.getElementById('saldofavor').value;
-		}
-		else
-		{
-			saldo=0
-		}
-		var data = new FormData();
-		data.append('event', 'ingresaPago');
-		data.append('datosPago', JSON.stringify(pago));
-		data.append('valor',saldo);
-		
-		document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
-        $( '#modal_resultadoPago' ).modal('show');
-		
-		var xhrpago = new XMLHttpRequest();
-		xhrpago.open('POST', url , true);
-		//js_cobros_limpiar_despues_de_pago_existoso();
-		xhrpago.onreadystatechange=function()
-		{   if (xhrpago.readyState==4 && xhrpago.status==200)
-			{	var n = xhrpago.responseText.length;
-				if (n > 0)
-				{   document.getElementById('modal_resultadoPago_body').innerHTML = xhrpago.responseText;
-					document.getElementById('btn_modal_resultadoPago_new_cl').disabled = '';
-					document.getElementById('btn_modal_resultadoPago_current_cl').disabled = '';
-					document.getElementById('btn_modal_resultadoPago_pagos').disabled = '';
-					document.getElementById('btn_modal_resultadoPago_gestionFac').disabled = '';
-					document.getElementById('btn_gen_pago').disabled=false;
-					codigoFC = $("#fc_generada").val(); //PDTE. Si se va a manejar el crear más de una factura, enviar un arreglo de codigos.
-					//js_cobros_limpiar_despues_de_pago_existoso();
-					console.log('limpiar todo');
-					if( ( $("#fc_generada").val().length > 0 ) && ( $("#fc_generada").val() != 'no tiene' ) )
-						generaFcElect( codigoCliente, codigoFC, 'div_detalle_sri', url, bandera );
-					else if( $("#fc_generada").val() != 'no tiene' )
+			var data = new FormData();
+			data.append('event', 'ingresaPago');
+			data.append('datosPago', JSON.stringify(pago));
+			data.append('valor',saldo);
+			
+			document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
+			$( '#modal_resultadoPago' ).modal('show');
+			
+			var xhrpago = new XMLHttpRequest();
+			xhrpago.open('POST', url , true);
+			//js_cobros_limpiar_despues_de_pago_existoso();
+			xhrpago.onreadystatechange=function()
+			{   if (xhrpago.readyState==4 && xhrpago.status==200)
+				{	var n = xhrpago.responseText.length;
+					if (n > 0)
+					{   document.getElementById('modal_resultadoPago_body').innerHTML = xhrpago.responseText;
+						document.getElementById('btn_modal_resultadoPago_new_cl').disabled = '';
+						document.getElementById('btn_modal_resultadoPago_current_cl').disabled = '';
+						document.getElementById('btn_modal_resultadoPago_pagos').disabled = '';
+						document.getElementById('btn_modal_resultadoPago_gestionFac').disabled = '';
+						document.getElementById('btn_gen_pago').disabled=false;
+						codigoFC = $("#fc_generada").val(); //PDTE. Si se va a manejar el crear más de una factura, enviar un arreglo de codigos.
+						//js_cobros_limpiar_despues_de_pago_existoso();
+						console.log('limpiar todo');
+						if( ( $("#fc_generada").val().length > 0 ) && ( $("#fc_generada").val() != 'no tiene' ) )
+							generaFcElect( codigoCliente, codigoFC, 'div_detalle_sri', url, bandera );
+						else if( $("#fc_generada").val() != 'no tiene' )
 
-					{   document.getElementById( 'div_detalle_sri' ).innerHTML = 
-							"<div class='callout callout-info'><h4>Tiene más de una factura generada</h4>" + 
-							"Sus facturas han sido enviadas a la bandeja de <a href='" + 
-							"../gestionFacturas/'> gestión facturas</a>, " +
-							"para su posterior envío al sistema de Comprobantes electrónicos del SRI </div>";
-					}
-					else
-					{   document.getElementById( 'div_detalle_sri' ).innerHTML = "";
+						{   document.getElementById( 'div_detalle_sri' ).innerHTML = 
+								"<div class='callout callout-info'><h4>Tiene más de una factura generada</h4>" + 
+								"Sus facturas han sido enviadas a la bandeja de <a href='" + 
+								"../gestionFacturas/'> gestión facturas</a>, " +
+								"para su posterior envío al sistema de Comprobantes electrónicos del SRI </div>";
+						}
+						else
+						{   document.getElementById( 'div_detalle_sri' ).innerHTML = "";
+						}
 					}
 				}
-			}
-			if (xhrpago.readyState==4 && xhrpago.status==500)
-			{	var n = xhrpago.responseText.length;
-				if (n > 0)
-				{   document.getElementById('modal_resultadoPago_body').innerHTML = xhrpago.responseText;
-					document.getElementById('btn_modal_resultadoPago_close').disabled=false;
-					//js_cobros_limpiar_despues_de_pago_existoso();
-					console.log('limpiar todo');
+				if (xhrpago.readyState==4 && xhrpago.status==500)
+				{	var n = xhrpago.responseText.length;
+					if (n > 0)
+					{   document.getElementById('modal_resultadoPago_body').innerHTML = xhrpago.responseText;
+						document.getElementById('btn_modal_resultadoPago_close').disabled=false;
+						//js_cobros_limpiar_despues_de_pago_existoso();
+						console.log('limpiar todo');
+					}
 				}
-			}
-		};
-		xhrpago.send(data);
-	} // fin de condición que valida los campos necesarios
+			};
+			xhrpago.send(data);
+		} // fin de condición que valida los campos necesarios
+	}
+	else
+		$.growl.error({ title: 'Educalinks informa', message: 'Tiene una deuda seleccionada sin valor de abono. Por favor, complete.'});
 }
 function generaFcElect( codigoCliente, codigoFC, div, url, bandera )
 {   document.getElementById(div).innerHTML='Por favor, espere... <br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
@@ -1691,7 +1615,7 @@ function generaXML(url){
 }
 function enterpress_editpay(e){
 	if (e.keyCode == 13) {
-		editarPago();
+		editarPago2();
 		$('#modal_editarPago').modal('hide');
 		return true;
     }

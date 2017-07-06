@@ -165,14 +165,16 @@ function handler()
 		case GET_SUBTIPO_COMBO:
             $item = new Item();
 			$item->getProductos_selectFormat( $user_data['categoria'] );
-            $data['{'.$user_data['combo_nombre'].'}']=array("elemento"  => 	"combo", 
-															"datos"     => 	$item->rows, 
-															"options"   => 	array(	"name"		=>$user_data['combo_nombre'],
-																					"id"		=>$user_data['combo_nombre'],
-																					"required"	=>"required",
-																					"class"		=>"form-control",
-																					"onChange"	=>""),
-															"selected"  => 	0);
+            $select = "<select multiple='multiple' id=\"cmb_producto\" name=\"cmb_producto[]\" class='form-control' style='width:320px;'>";
+			
+			foreach( $item->rows as $options )
+			{   if (!empty($options))
+				{   $select .= "<option value='".$options[0]."' >".$options[1]."</option>";
+				}
+			}
+			$select.= "</select>";
+			
+			$data['cmb_producto'] = $select;
 			retornar_result($data);
             break;
         default :

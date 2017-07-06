@@ -64,5 +64,17 @@
 	{js_all}
 	<script src="{ruta_js_finan}/general.js"></script>
 	<script src="{ruta_js_finan}/rep_facturas.js"></script>
+	<script src="{ruta_js_finan}/items.js"></script>
+	
+	<script type="text/javascript" charset="utf-8">
+		$(document).ready(function() {
+			$("#txt_fecha_ini").datepicker();
+			$("#txt_fecha_fin").datepicker();
+			$("#cmb_producto").select2();
+			$("#boton_busqueda").click(function(){
+				$("#desplegable_busqueda").slideToggle(200);
+			});
+		} );
+	</script>
 </body>
 </html>

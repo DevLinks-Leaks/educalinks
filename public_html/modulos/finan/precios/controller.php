@@ -86,16 +86,20 @@ function handler() {
       			retornar_vista(VIEW_GET_ALL, $data);
             break;
         case GET_PRODUCTO:
-            $precio->getProductos_selectFormat($user_data['codigoCategoria']);
             global $diccionario;
-            $data['{combo}'] = array("elemento"  => "combo", 
-                                     "datos"     => $precio->rows,
-                                     "options"   => array("name"=>"codigoProducto_busq",
-                                                          "id"=>"codigoProducto_busq",
-                                                          "required"=>"required",
-                                                          "class"=>"form-control",
-                                                          "onChange"=>"busca('resultado','".$diccionario['rutas_head']['ruta_html_finan']."/precios/controller.php')"),
-                                     "selected"  => 0);
+			
+			$precio->getProductos_selectFormat($user_data['codigoCategoria']);
+			$select = "<select id=\"codigoProducto_busq\" name=\"codigoProducto_busq\" class='form-control' style='width:320px;'
+						onChange=\"busca('resultado','".$diccionario['rutas_head']['ruta_html_finan']."/precios/controller.php')\">";
+			$select .= "<option value='-1' >- Seleccione producto -</option>";
+			foreach( $precio->rows as $options )
+			{   if (!empty($options))
+				{   $select .= "<option value='".$options[0]."' >".$options[1]."</option>";
+				}
+			}
+			$select.= "</select>";
+			
+			$data['combo'] = $select;
             retornar_result($data);
             break;
         case GET_ALL_DATA:

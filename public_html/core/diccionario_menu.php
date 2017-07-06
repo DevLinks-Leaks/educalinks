@@ -260,7 +260,7 @@ $diccionario_menu=array(
 				),
 '{Descuentofacturas}'	=> 	array(
 						'href'=>'../../finan/descuentofacturas/',
-						'texto'=>'<span class=\'fa fa-barcode\'></span>&nbsp;Descuento de facturas',
+						'texto'=>'<span class=\'fa fa-barcode\'></span>&nbsp;Modificación de facturas',
 						'permiso'=>'205'
 			 	),
 '{Reporte_CRM_Cobranza}'	=>	array(
@@ -281,6 +281,11 @@ $diccionario_menu=array(
 '{RepFACT}'	=> 	array(
 						'href'=>'../../finan/rep_facturas/',
 						'texto'=>'<span class=\'fa fa-bookmark-o\'></span>&nbsp;Facturas emitidas',
+						'permiso'=>'202'
+				),
+'{RepCajaSaldos}'	=> 	array(
+						'href'=>'../../finan/rep_caja_saldos/',
+						'texto'=>'<span class=\'fa fa-bookmark-o\'></span>&nbsp;Saldos a favor',
 						'permiso'=>'202'
 				),
 '{RepDescuentos}'	=> 	array(

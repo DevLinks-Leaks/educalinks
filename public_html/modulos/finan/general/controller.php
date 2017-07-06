@@ -153,7 +153,7 @@ function handler() {
 					$_SESSION['print_dir_logo_cliente']=$print_ruta_logo_ecobab;
 					$_SESSION['print_dir_logo_cliente_bg']=$print_ruta_logo_ecobab_bg;
 					break;
-				case  "dev.educalinks.com.ec":
+				case  "local.educalinks.com.ec":
 					$_SESSION['llaveactiva']=$llavedesarrollo;
 					$_SESSION['passllaveactiva']=$clavellavedesarrollo;
 					$_SESSION['rutallave']=$rutallavedesarrollo;
