@@ -28,10 +28,8 @@
 	<header class="main-header">
         <!-- Logo -->
 		<a href="·" class="logo" id='a_nav_main' name='a_nav_main' data-toggle="offcanvas" role="button">
-          <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><div id='div_nav_logo_small' name='div_nav_logo_small'><img src="{navbar_logo_educalinks_small}" alt="EL"></div></span>
-          <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><div style="margin-left:-10px" id='div_nav_logo' name='div_nav_logo'><img src="{navbar_logo_educalinks}" alt="Educalinks"></div></span>
+			<span class="logo-mini"><div id='div_nav_logo_small' name='div_nav_logo_small'><img src="{navbar_logo_educalinks_small}" alt="EL"></div></span>
+			<span class="logo-lg"><div style="margin-left:-10px" id='div_nav_logo' name='div_nav_logo'><img src="{navbar_logo_educalinks}" alt="Educalinks"></div></span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -49,7 +47,6 @@
 						<a href="#" data-toggle="modal" data-target="#ModalPeriodoActivo"><i class="fa fa-calendar">
 							</i><span class='hidden-xs'>&nbsp; Período: {peri_deta}</span></a>
 					</li>
-					<!-- User Account: style can be found in dropdown.less -->
 					<li class="dropdown user user-menu">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 							<img src="../{fotoUsuario}" class="user-image" alt="Imagen de usuario">

@@ -60,10 +60,11 @@
 													</li>-->
 													<li class="list-group-item">
 													  <b class='fa fa-envelope'></b> <span class="pull-right">
-														<input type="text" id="usua_mail" name="usua_mail" value="<?= $_SESSION['usua_mail']; ?>"/></span>
+														<?= $_SESSION['usua_mail']; ?>
+														<!--<input type="text" id="usua_mail" name="usua_mail" value=""/></span>-->
 													</li>
 												</ul>
-												<a href="#" class="btn btn-primary btn-block"><b>Grabar cambio</b></a>
+												<!--<a href="#" class="btn btn-primary btn-block"><b>Grabar cambio</b></a>-->
 											</div>
 										</div>
 										<div class="box box-primary">

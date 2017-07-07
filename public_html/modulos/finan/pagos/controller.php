@@ -1429,8 +1429,8 @@ function construct_table_pagos($user_data)
 			$body .= '<td>
 				<div class="btn-group">
 					<a href="#/" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-						'.$row['nombresAlumno'].'
-					</a>
+						'.$row['nombresAlumno'].' 
+					</a>'.$opc.'
 				</div><br>
 				'.$row['codigoAlumno'].' | ';
 			

@@ -133,8 +133,8 @@ include ('../framework/funciones.php');
 	}
 </style>
 <table class="table table-striped table-hover" id="alum_table">
- <thead style='background-color:rgba(1, 126, 186, 0.1) !important;'>
-  <tr>
+ <thead>
+  <tr style='background-color:rgba(1, 126, 186, 0.1) !important;'>
     <th style="text-align:left">&nbsp;Alumnos </th>
   </tr>
  </thead>

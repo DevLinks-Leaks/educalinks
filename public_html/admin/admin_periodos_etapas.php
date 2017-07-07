@@ -10,12 +10,12 @@
 					<?php  
 					session_start();	 
 					include ('../framework/dbconf.php');
-					include ('script_cursos.php'); 
+					include ('script_cursos.php');
 					
 					$peri_codi=$_GET['peri_codi'];
 					$params = array($peri_codi);
 					$sql="{call peri_info(?)}";
-					$peri_info = sqlsrv_query($conn, $sql, $params);  
+					$peri_info = sqlsrv_query($conn, $sql, $params);
 					$row_peri_info = sqlsrv_fetch_array($peri_info);
 					?>
 					<h1>Etapas Periodo <?= $row_peri_info['peri_deta']; ?> </h1>

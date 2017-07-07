@@ -127,7 +127,7 @@ function js_general_cargaDeudores( div, url )
 {   "use strict";
 	$('#li_deudas_reportes').removeClass('active');
 	$('#li_deudas_tablas').addClass('active');
-	document.getElementById('div_cmb_producto').style.display = 'block';
+	document.getElementById('div_cmb_producto').style.display = 'inline';
 	document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
     var comboCursos = document.getElementById("curso");
     var comboNivelEcon = document.getElementById("cmb_nivelesEconomicos");

@@ -251,7 +251,6 @@
         </div>
 	</div>
 </div>
-
 <div class="form-horizontal">
 	<div class="row">
 		<div class="col-lg-9 col-sm-12">
@@ -266,7 +265,6 @@
 				</div>
 				<!-- /.box-header -->
 				<div class="box-body">
-									  
 					<form id="file_form" action="{ruta_html_finan}/general/controller.php" enctype="multipart/form-data" method="post" target="_blank">
 						<input type='hidden' name="event" id="evento" value="print_excel_all_data"/>
 						<input type='hidden' name="tipo_reporte" id="tipo_reporte" value="mini"/>
@@ -328,7 +326,7 @@
 												</div>
 											</div>
 											<div class='col-md-6 col-sm-12'>
-												<div class='form-group'  id='div_cmb_producto' name='div_cmb_producto'>
+												<div class='form-group'  id='div_cmb_producto' name='div_cmb_producto' style='display:none'>
 													<label class="col-md-4 col-sm-3 control-label" style='text-align: right;' for='txt_sucursal'>Producto:</label>
 													<div class="col-md-8 col-sm-8">
 														{combo_producto}
