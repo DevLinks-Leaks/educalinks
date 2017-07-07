@@ -249,7 +249,7 @@
 										<i class="fa fa-cog"></i></button>
 										<ul class="dropdown-menu" role="menu">
 										<li><a href="motivo_bloqueo_main.php"><i class='fa fa-ban'></i> Agregar motivos de bloqueos</a></li>
-										<li><a href="documentos_main.php"><i class='fa fa-briefcase'></i> Documentos entregados</a></li>
+										<!--<li><a href="documentos_main.php"><i class='fa fa-briefcase'></i> Documentos entregados</a></li>-->
 										</ul>
 									</div>
 									<div class="btn-group hidden-sm hidden-xs">

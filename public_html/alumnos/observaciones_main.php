@@ -4,7 +4,7 @@
     <body class="hold-transition skin-blue sidebar-mini">
 		<div class="wrapper">
 			<?php include ('template/header.php');?>
-			<?php $active="cons_estudiantes";include("template/menu.php");?>
+			<?php $Menu=8;include("template/menu.php");?>
 			<div class="content-wrapper">
 				<section class="content-header">
 					<h1>Hoja de vida

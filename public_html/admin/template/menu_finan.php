@@ -20,7 +20,7 @@
 					<a href="#"><i class="fa fa-money"></i> <span>Caja</span> <span class="pull-right-container" id="badge_gest_fac"></span></a>
 					<ul class="treeview-menu">
 						<?php if(permiso_activo(126))?> <li <? if($Menu==101) echo 'class="active"'; ?>><a href="../../finan/cobros/"><span class="submenu"><span class='fa fa-dollar'></span> Cobrar deuda</span></a></li>
-						<?php if(permiso_activo(130))?> <li <? if($Menu==102) echo 'class="active"'; ?>><a href="../../finan/facturas/"><span class="submenu"><span class='fa fa-clipboard'></span> Generar deuda</span></a></li>
+						<?php if(permiso_activo(130))?> <li <? if($Menu==102) echo 'class="active"'; ?>><a href="../../finan/facturas/"><span class="submenu"><span class='fa fa-paperclip'></span> Generar deuda</span></a></li>
 						<?php if(permiso_activo(133))?> <li <? if($Menu==103) echo 'class="active"'; ?>><a href="../../finan/notaCredito/"><span class="submenu"><span class='fa fa-minus'></span> Generar n/crédito</span></a></li>
 						<?php if(permiso_activo(125))?> <li <? if($Menu==105) echo 'class="active"'; ?>><a href="../../finan/gestionFacturas/"><span class="submenu"><span class='icon icon-sri'></span> Gestión facturas</span><span id="badge_gest_fac_in"></span></a></li>
 						<?php if(permiso_activo(207))?> <li <? if($Menu==105) echo 'class="active"'; ?>><a href="../../finan/gestionNotascredito/"><span class="submenu"><span class='icon icon-sri'></span> Gestión n/c</span><span id="badge_gest_nc_in"></span></a></li>
@@ -68,25 +68,6 @@
 					</ul>
 				</li>
 				<?php //}?>
-				<?php if (permiso_activo(4)){?>
-				<li class="<? if (substr($Menu,0,1)==5) echo 'active'; ?> treeview"><!-- AQUI SERIA EL OPEN --><!--  -->
-					<a href="#"><i class="fa fa-users"></i> <span>Config. de usuario</span> <i class="fa fa-angle-left pull-right"></i></a>
-					<ul class="treeview-menu">
-						<?php if(permiso_activo(15))?> <li <? if($Menu==501) echo 'class="active"'; ?>><a href="roles_main.php"><span class='fa fa-briefcase'></span> Roles de usuario</a></li>
-						<?php if(permiso_activo(20))?> <li <? if($Menu==416) echo 'class="active"'; ?>><a href="admin_permisos.php"><span class='fa fa-lock'></span> Permisos de usuario</a></li>
-						<?php if(permiso_activo(16))?> <li <? if($Menu==502) echo 'class="active"'; ?>><a href="usuarios_main.php"><span class='fa fa-users'></span> Usuarios</a></li>
-						<?php if(permiso_activo(71))?> <li <? if($Menu==503) echo 'class="active"'; ?>><a href="reset_pass.php"><span class='fa fa-key'></span> Reseteo de Clave</a></li>
-					</ul>
-				</li>
-				<li class="<? if (substr($Menu,0,1)==4) echo 'active'; ?> treeview"><!-- AQUI SERIA EL OPEN --><!--  -->
-					<a href="#"><i class="fa fa-cogs"></i> <span>Administración</span> <i class="fa fa-angle-left pull-right"></i></a>
-					<ul class="treeview-menu">
-						<?php if(permiso_activo(18))?> <li <? if($Menu==404) echo 'class="active"'; ?>><a href="admin_auditoria.php"><span class='fa fa-wpforms'></span> Auditoria</a></li>
-						<?php if(permiso_activo(11))?> <li <? if($Menu==418) echo 'class="active"'; ?>><a href="admin_periodos_etapas.php?peri_codi=<? echo $_SESSION['peri_codi']; ?>" title='El Usuario Administrador puede activar ciertas funcionalidades del sistema, determinando un rango de tiempo en el cual el acceso a la misma será vigente para que los usuarios administrativos/docentes/representantes/alumnos puedan utilizar.'><span class='fa fa-clock-o'></span> Activar funciones</a></li>
-						<?php if(permiso_activo(84))?> <li <? if($Menu==403) echo 'class="active"'; ?>><a href="para_sistema_main.php"><span class='fa fa-toggle-on'></span> Parámetros sistema</a></li>
-					</ul>
-				</li>
-				<?php }?>
 				<?php //if (permiso_activo(4)){?>
 				<li class="<? if (substr($Menu,0,1)==4) echo 'active'; ?> treeview"><!-- AQUI SERIA EL OPEN --><!--  -->
 					<a href="#"><i class="fa fa-certificate"></i> <span>Supervisor</span> <i class="fa fa-angle-left pull-right"></i></a>

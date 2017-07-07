@@ -26,7 +26,7 @@
 						<li class='<? if (substr($Menu,1,1)==2) echo 'active'; ?>  treeview'><a href="#"><i class="fa fa-wrench"></i> <span>Configuración</span> <i class="fa fa-angle-left pull-right"></i></a>
 							<ul class="treeview-menu">
 								<?php if(permiso_activo( 8))?> <li <? if($Menu==124) echo 'class="active"'; ?>><a href="motivo_bloqueo_main.php" title='Mantenimiento de motivos de bloqueo'><span class='fa fa-ban'></span> Motivos bloqueo</a></li>
-								<?php if(permiso_activo( 8))?> <li <? if($Menu==127) echo 'class="active"'; ?>><a href="documentos_main.php" title='Mantenimiento de los documentos solicitados en matriculación. Sirven para hacer check en la ventana de matriculación.'><span class='fa fa-briefcase'></span> Doc. entregados</a></li>
+								<!--<?php if(permiso_activo( 8))?> <li <? if($Menu==127) echo 'class="active"'; ?>><a href="documentos_main.php" title='Mantenimiento de los documentos solicitados en matriculación. Sirven para hacer check en la ventana de matriculación.'><span class='fa fa-briefcase'></span> Doc. entregados</a></li>-->
 							</ul>
 						</li>
 						<?php if(permiso_activo(83))?> <li <? if($Menu==105) echo 'class="active"'; ?>><a href="alum_matri_deuda_main.php" title='Listado de alumnos matriculados para bloquear libreta'><span class='fa fa-ban'></span> Bloqueo Libreta</a> </li>

@@ -22,6 +22,9 @@
     // if ($ActualizacionDatos!=1){
     //     session_activa(3);
     // }
+	if ( $_SESSION['peri_codi'] == NULL)
+	{	header("Location: ../periodo_no_activado.php");
+	}
     licencia_activa();
     if($_SESSION['USUA_TIPO']=='R')
         actualizacion_activa();

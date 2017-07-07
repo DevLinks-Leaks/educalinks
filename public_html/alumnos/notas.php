@@ -4,7 +4,7 @@
 <body class="hold-transition skin-blue sidebar-mini">
 	<div class="wrapper">
 		<?php include ('template/header.php');?>
-		<?php $active="cons_estudiantes";include("template/menu.php");?>
+		<?php $Menu=5;include("template/menu.php");?>
 		<div class="content-wrapper">
 			<section class="content-header">
 				<h1>Calificaciones
@@ -32,21 +32,23 @@
 					}
 					$peri_codi = $_SESSION['peri_codi'];
 					
-					if (!alum_tiene_deuda($_SESSION['alum_codi'],$_SESSION['curs_para_codi']) and !alum_tiene_deuda_vencida($_SESSION['alum_codi'],$peri_codi))
+					//if (!alum_tiene_deuda($_SESSION['alum_codi'],$_SESSION['curs_para_codi']) and !alum_tiene_deuda_vencida($_SESSION['alum_codi'],$peri_codi))
+					if ( 1 == 1)
 					{
 						?>
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h3 class="panel-title">
-									Lista de Calificaciones disponibles
-								</h3>
+						<div class="box box-info">
+							<div class="box-header with-border">
+								<h3 class="box-title">Lista de Calificaciones disponibles</h3>
+								<div class="box-tools pull-right">
+									
+								</div>
 							</div>
-							<div class="panel-body"  id="desplegable_busqueda" name="desplegable_busqueda">
-								<table class="table table-responsive">
+							<div class="box-body">
+								<table class="table table-striped table-hover">
 									<thead>
-										<tr class="active">
+										<tr style='background-color:rgba(1, 126, 186, 0.1) !important;'>
 											<th>Periodo</th>
-											<th>Opciones</th>
+											<th>Ver</th>
 										</tr>
 									</thead>
 										<? 
@@ -55,23 +57,33 @@
 										$params = array($peri_codi, $_SESSION['peri_dist_cab_tipo'],$peri_etap_codi);
 										$sql="{call peri_dist_peri_view_Lb_etapa(?,?,?)}";
 										$peri_dist_peri_view = sqlsrv_query($conn, $sql, $params);
-										while($row_peri_dist_peri_view = sqlsrv_fetch_array($peri_dist_peri_view)){
-
-											
-										?>
-										<tr>
-											<td width="87%"><?= $row_peri_dist_peri_view['peri_dist_deta'];?> </td>
-											<td width="13%">
-											
-											<a  class="btn btn-success" target="_blank"
-											href="<?= $url_libreta?>?peri_dist_codi=<?= $row_peri_dist_peri_view['peri_dist_codi'];?>&alum_codi=<?= $_SESSION['alum_codi']?>&curs_para_codi=<?= $_SESSION['curs_para_codi']?>">
-											<span class="fa fa-download" aria-hidden="true"></span> Ver
-											</a>
-										
-										</td>
-									</tr>
-									<?php 	} ?>
+										while($row_peri_dist_peri_view = sqlsrv_fetch_array($peri_dist_peri_view))
+										{	?>
+											<tr>
+												<td width="50%"><?= $row_peri_dist_peri_view['peri_dist_deta'];?></td>
+												<td width="50%">
+													<?php 
+													if ( $row_peri_dist_peri_view['activo'] == 'YES' ) 
+													{
+														echo '	<a class="btn btn-info" target="_blank"
+																	href="'. $url_libreta.'?peri_dist_codi='. $row_peri_dist_peri_view['peri_dist_codi'].
+																		'&alum_codi='. $_SESSION['alum_codi'].'&curs_para_codi='. $_SESSION['curs_para_codi'].'">
+																	<span class="fa fa-folder-open" aria-hidden="true"></span>
+														</a>';
+													}
+													else
+													{
+														echo "<span style='font-size: x-small;'>El colegio no le ha otorgado permisos para visualizar esta nota, o su permiso ya caducó.</span>";
+													}
+													?>
+													
+												</td><!--<span class="label label-danger">notas publicadas</span>-->
+											</tr>
+									<?php
+										} ?>
 								</table>
+							</div>
+							<div class="box-footer">
 							</div>
 						</div>
 						<?php }else{ ?>
@@ -85,9 +97,7 @@
 									<h4><b><?= para_sist(306); ?></b></h4>
 								</div>
 							</div>
-							
 						<?php } ?>
-
 						</div>
 					</section>
 					<?php include("template/menu_sidebar.php");?>

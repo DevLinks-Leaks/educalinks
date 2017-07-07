@@ -443,7 +443,7 @@
 					<div class="btn-group hidden-sm hidden-xs">
 						<button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown" aria-expanded="false"
 							title='Opciones de vista'>
-						<i class="fa fa-eye"></i></button>
+						<i class="fa fa-ellipsis-v"></i></button>
 						<ul class="dropdown-menu" role="menu">
 						<li><a href="#" onclick="return js_Pago_carga_PagosRealizados('resultadoProcesoPagos');"><i class='fa fa-list-ul'></i> Mostrar con formas de pago agrupadas y el saldo a favor en una columna aparte</a></li>
 						<li><a href="#" onclick="return js_Pago_carga_PagosRealizados('resultadoProcesoPagos',2);"><i class='fa fa-list-ul'></i> Mostrar segmentado en formas de pago</a></li>

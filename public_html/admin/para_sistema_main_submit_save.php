@@ -5,7 +5,7 @@
 		style="margin-top: -5px; border: 0px; box-shadow: none; color: rgb(243, 156, 18); font-weight: 600; background: rgb(255, 255, 255);">Ocultar</a></div>-->
 <?php
 	$params = array(
-		$_SESSION['usua_codigo'],
+		$_SESSION['usua_codi'],
 		$_POST['curso_cupos'],
 		$_POST['inst_siglas'],
 		$_POST['inst_nomb'],
@@ -30,54 +30,54 @@
 		$_POST['coordinacion_zonal_nomb'],
 		$_POST['codigo_AMIE'],
 		$_POST['alum_codi_digitos'],
-		(empty($_POST['incluir_alum_ret']) ? '1':'0'),
-		(empty($_POST['modo_genera_alum_codi']) ? '1':'0'),
-		(empty($_POST['bloqueo_preinscr_pantalla_bloqueo']) ? '1':'0'),
-		(empty($_POST['show_obs_matri']) ? '1':'0'),
-		(empty($_POST['bloq_matr_por_aprobacion']) ? '1':'0'),
-		(empty($_POST['frm_alum_debito_mandatorio']) ? '1':'0'),
-		(empty($_POST['frm_alum_cedula_mandatorio']) ? '1':'0'),
-		(empty($_POST['libretas_show_user_pass']) ? '1':'0'),
-		(empty($_POST['notas_decimales']) ? '1':'0'),
+		(empty($_POST['incluir_alum_ret']) 			 		? '0':'1'),
+		(empty($_POST['modo_genera_alum_codi']) 	 		? '0':'1'),
+		(empty($_POST['bloqueo_preinscr_pantalla_bloqueo']) ? '0':'1'),
+		(empty($_POST['show_obs_matri']) 			 		? '0':'1'),
+		(empty($_POST['bloq_matr_por_aprobacion'])   		? '0':'1'),
+		(empty($_POST['frm_alum_debito_mandatorio']) 		? '0':'1'),
+		(empty($_POST['frm_alum_cedula_mandatorio']) 		? '0':'1'),
+		(empty($_POST['libretas_show_user_pass'])    		? '0':'1'),
+		(empty($_POST['notas_decimales']) 			 		? '0':'1'),
 		$_POST['cantidad_decimales'],
 		$_POST['min_aceptable_supl'],
-		$_POST['mostrar_pase_en_libreta'],
+		(empty($_POST['mostrar_pase_en_libreta']) 			? '0':'1'),
 		$_POST['vista_libr_repr'],
-		(empty($_POST['sms_alum_admin']) ? 'A':'N'),
-		(empty($_POST['sms_alum_doc']) ? 'A':'N'),
-		(empty($_POST['sms_alum_alum']) ? 'A':'N'),
-		(empty($_POST['sms_alum_repr']) ? 'A':'N'),
-		(empty($_POST['sms_repr_admin']) ? 'A':'N'),
-		(empty($_POST['sms_repr_doc']) ? 'A':'N'),
-		(empty($_POST['sms_repr_alum']) ? 'A':'N'),
-		(empty($_POST['sms_repr_repr']) ? 'A':'N'),
-		(empty($_POST['sms_doc_admin']) ? 'A':'N'),
-		(empty($_POST['sms_doc_doc']) ? 'A':'N'),
-		(empty($_POST['sms_doc_alum']) ? 'A':'N'),
-		(empty($_POST['sms_doc_repr']) ? 'A':'N'),
+		(empty($_POST['sms_alum_admin'])? 'N':'A'),
+		(empty($_POST['sms_alum_doc'])  ? 'N':'A'),
+		(empty($_POST['sms_alum_alum']) ? 'N':'A'),
+		(empty($_POST['sms_alum_repr']) ? 'N':'A'),
+		(empty($_POST['sms_repr_admin'])? 'N':'A'),
+		(empty($_POST['sms_repr_doc'])  ? 'N':'A'),
+		(empty($_POST['sms_repr_alum']) ? 'N':'A'),
+		(empty($_POST['sms_repr_repr']) ? 'N':'A'),
+		(empty($_POST['sms_doc_admin']) ? 'N':'A'),
+		(empty($_POST['sms_doc_doc'])   ? 'N':'A'),
+		(empty($_POST['sms_doc_alum'])  ? 'N':'A'),
+		(empty($_POST['sms_doc_repr'])  ? 'N':'A'),
 		$_POST['ms_host'],
 		$_POST['ms_user'],
 		$_POST['ms_pass'],
 		$_POST['ms_port'],
 		$_POST['ms_sll'],
-		(empty($_POST['mod_doc_citas']) ? '1':'0'),
-		(empty($_POST['mod_alum_cambiar_foto']) ? '1':'0'),
+		(empty($_POST['mod_doc_citas']) ? '0':'1'),
+		(empty($_POST['mod_alum_cambiar_foto']) ? '0':'1'),
 		$_POST['iva_upd_deudas_cero'],
 		$_POST['prontopago'],
 		$_POST['iva'],
-		(empty($_POST['enviar_fac_sri_en_cobro']) ? 'S':'N'),
-		(empty($_POST['enviar_cheque_a_bandeja']) ? 'S':'N'),
-		(empty($_POST['quitar_limite_dias_validez']) ? 'S':'N'),
+		(empty($_POST['enviar_fac_sri_en_cobro']) ? 'N':'S'),
+		(empty($_POST['enviar_cheque_a_bandeja']) ? 'N':'S'),
+		(empty($_POST['quitar_limite_dias_validez']) ? 'N':'S'),
 		$_POST['rdb_metodo_descuento'],
-		$_POST['bloqueo'],
+		(empty($_POST['bloqueo']) ? 'N':'S'),
 		$_POST['apikey'],
 		$_POST['apikeytoken'],
-		(empty($_POST['genera_deuda_matr']) ? 'S':'N'),
-		(empty($_POST['bloquea_matr_por_deuda']) ? 'S':'N'),
-		(empty($_POST['biblio_genera_multa_por_mora']) ? 'S':'N'),
-		(empty($_POST['biblio_bloquea_prestamo_por_deuda']) ? 'S':'N'),
-		(empty($_POST['incl_mat_group_calc']) ? '1':'0'),
-		(empty($_POST['prom_nota_padre_supl']) ? '1':'0')
+		(empty($_POST['generar_deuda_matricula']) 			? 'N':'S'),
+		(empty($_POST['bloquear_matricula_deuda']) 			? 'N':'S'),
+		(empty($_POST['biblio_genera_multa_por_mora']) 		? 'N':'S'),
+		(empty($_POST['biblio_bloquea_prestamo_por_deuda']) ? 'N':'S'),
+		(empty($_POST['incl_mat_group_calc']) 				? '0':'1'),
+		(empty($_POST['prom_nota_padre_supl']) 				? '0':'1')
 	);
 	$sql="{call str_commonParametros_upd(".
 		"?,?,?,?,?,?,?,?,?,?,".
@@ -92,9 +92,8 @@
 	$row_para_sist = sqlsrv_fetch_array($para_sist_busq);
 ?>
 <div id='save_ans' name='save_ans'
-	style="padding: 20px 30px; background: rgb(243, 156, 18); z-index: 999999; font-size: 16px; font-weight: 600;">
-	<p" style="color: rgba(255, 255, 255, 0.9); display: inline-block; margin-right: 10px; text-decoration: none;">Los cambios han sido realizadosx!</p>
-	<p><?php echo (empty($_POST['rector_sexo']) ? 'F':'M').(empty($_POST['secr_sexo']) ? 'F':'M');?></p>
+	style="padding: 20px 30px; background: #00a65a; z-index: 999999; font-size: 16px; font-weight: 600;">
+	<p" style="color: rgba(255, 255, 255, 0.9); display: inline-block; margin-right: 10px; text-decoration: none;">Los cambios han sido realizados!</p>
 	<a class="btn btn-default btn-sm" href="#" onclick="dismiss_process_ans();"
-		style="margin-top: -5px; border: 0px; box-shadow: none; color: rgb(243, 156, 18); font-weight: 600; background: rgb(255, 255, 255);">¡Entendido!</a></div>
+		style="margin-top: -5px; border: 0px; box-shadow: none; color: #00a65a; font-weight: 600; background: rgb(255, 255, 255);">¡Entendido!</a></div>
 		
