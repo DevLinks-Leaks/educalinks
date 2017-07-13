@@ -77,7 +77,9 @@
 		(empty($_POST['biblio_genera_multa_por_mora']) 		? 'N':'S'),
 		(empty($_POST['biblio_bloquea_prestamo_por_deuda']) ? 'N':'S'),
 		(empty($_POST['incl_mat_group_calc']) 				? '0':'1'),
-		(empty($_POST['prom_nota_padre_supl']) 				? '0':'1')
+		(empty($_POST['prom_nota_padre_supl']) 				? '0':'1'),
+		(empty($_POST['ingr_notas_alum_retirados']) 		? 'N':'S')
+		
 	);
 	$sql="{call str_commonParametros_upd(".
 		"?,?,?,?,?,?,?,?,?,?,".
@@ -87,7 +89,7 @@
 		"?,?,?,?,?,?,?,?,?,?,".
 		"?,?,?,?,?,?,?,?,?,?,".
 		"?,?,?,?,?,?,?,?,?,?,".
-		"?,?,?)}";
+		"?,?,?,?)}";
 	$para_sist_busq = sqlsrv_query($conn, $sql, $params);  
 	$row_para_sist = sqlsrv_fetch_array($para_sist_busq);
 ?>

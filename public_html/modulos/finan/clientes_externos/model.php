@@ -142,9 +142,8 @@ class Cliente_xtn extends DBAbstractModel{
     }
 
 
-    public function getDscto_selectFormat($busq=""){
-        $busq="";
-        $this->parametros = array($busq);
+    public function getDscto_selectFormat($busq="zzz")
+	{   $this->parametros = array($busq);
         $this->sp = "str_consultaDescuento_busq";
         $this->executeSPConsulta();
 

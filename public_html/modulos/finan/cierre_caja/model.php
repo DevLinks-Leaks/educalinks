@@ -45,8 +45,42 @@ class CajaCierre extends DBAbstractModel{
             $this->mensaje="No existen transacciones realizadas";
         }
     }
-	public function get_caja_cierre_saf( $peri_codi, $caja_cier_codigo = "-1" )
-	{   $this->parametros = array( $peri_codi, $caja_cier_codigo );
+	public function get_caja_cierre_saf( 
+		$peri_codi, 
+		$caja_cier_codigo   = "-1",
+		$codigoPago			= "-1",
+		$fecha_ini			= '01/01/1900',
+		$fecha_fin			= '01/01/1900',
+		$forma_pago			= '-1',
+		$cod_titular		= '-1',
+		$id_titular			= '-1',
+		$cod_estudiante		= '-1',
+		$nombre_estudiante	= '-1',
+		$nombre_titular		= '-1',
+		$ptvo_venta			= '-1',
+		$sucursal			= '-1',
+		$ref_factura		= '-1',
+		$categoria_codigo	= '-1',
+		$prod_codigo		= '-1',
+		$estado				= '-1',
+		$tpago_ini			= '-1',
+		$tpago_fin			= '-1',
+		$usua_codi			= '-1',
+		$periodo			= '-1',
+		$grupoEconomico		= '-1',
+		$nivelEconomico		= '-1',
+		$Curso				= '-1')
+	{   $this->parametros = array(  $peri_codi, $caja_cier_codigo,	$codigoPago,
+									$fecha_ini,	$fecha_fin,			$forma_pago,	
+									$cod_titular,	$id_titular,	$cod_estudiante,
+									$nombre_estudiante,				$nombre_titular,
+									$ptvo_venta,					$sucursal,
+									$ref_factura,					$categoria_codigo,
+									$prod_codigo,					$estado,
+									$tpago_ini,						$tpago_fin,
+									$usua_codi,						$periodo,
+									$grupoEconomico,				$nivelEconomico,
+									$Curso );
         $this->sp = "str_consultaCajaCierre_rep_formaPagoSAF";
         $this->executeSPConsulta();
         if (count($this->rows)>0){

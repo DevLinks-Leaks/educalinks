@@ -1,3 +1,11 @@
+$(document).ready(function(){
+	$('#modal_showDebtState').on('hidden.bs.modal', function () {
+		document.getElementById('modal_showDebtState_body').innerHTML = "";
+	});
+	$('#modal_showDebtState_ext').on('hidden.bs.modal', function () {
+		document.getElementById('modal_showDebtState_body_ext').innerHTML = "";
+	});
+});
 function js_clientes_go_to_courses(url)
 {   document.getElementById( 'hd_url_acad' ).value = url;
 }

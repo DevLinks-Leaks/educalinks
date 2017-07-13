@@ -261,7 +261,7 @@ function handler() {
 			if( $user_data['tipo_reporte'] == 'completo' )
 			{   $cabeceras ='N/C ref.,Número de Nota de crédito,Tipo Id,Id del titular,Titular,email titular,Número de autorización,'.
 							'Clave de acceso,Fecha de autorización,Numero secuencial,Total bruto,Total descuento,Total I.V.A.,Total I.C.E.,Total neto,Total abonado,Alumno/Cliente ref. interna,'.
-							'Alumno/Cliente nombre,Alumno/Cliente cedula,Alumno/Cliente fecha nacimiento,Fecha creación N/C,Fecha de pago,Fecha de creación de deuda,Estado electrónico,Curso';
+							'Alumno/Cliente nombre,Alumno/Cliente cedula,Alumno/Cliente fecha nacimiento,Fecha creación N/C,Fecha de pago,Ref. Factura,Numero Factura,Detalle,Fecha de creación de deuda,Estado electrónico,Curso';
 			}
 			if( $user_data['tipo_reporte'] == 'mini' )
 			{   $cabeceras ='Nota de crédito ref.,Titular,Id del titular,Sucursal,Punto de venta,Número secuencial,Total neto,Cliente ref. interna,Cliente nombre,Fecha de emisión,estado electrónico';

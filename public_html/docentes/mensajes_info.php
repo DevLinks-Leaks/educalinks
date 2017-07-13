@@ -54,7 +54,7 @@
 		<?
 		}
 		?>
-		<h5><?=  date_format( $row_mens_info["mens_fech_envi"], 'd / M / Y  h:m:s' ); ?></h5>
+		<h5><?=  date_format( $row_mens_info["mens_fech_envi"], 'd / M / Y  h:i:s A' ); ?></h5>
 	</div>
 	<p>
 		<?= $row_mens_info['mens_deta']; ?>

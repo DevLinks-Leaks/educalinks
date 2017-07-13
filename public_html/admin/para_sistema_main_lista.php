@@ -509,6 +509,15 @@
 									<?php echo ($row_para_sist['prom_nota_padre_supl'] == '1' ? 'checked':''); ?>>
 							</div>
 						</div>
+						<div class="form-group">
+							<div class="col-sm-8">
+								<label style='font-size:small;'>Ingreso de notas a alumnos retirados</label>
+							</div>
+							<div class="col-sm-4">
+								<input type="checkbox" id="ingr_notas_alum_retirados" name="ingr_notas_alum_retirados" value="S" data-toggle="toggle" data-on="S" data-off="N"
+									<?php echo ($row_para_sist['ingr_notas_alum_retirados'] == 'S' ? 'checked':''); ?>>
+							</div>
+						</div>
 					</div>
 				</div><!-- /.tab-pane -->
 				<div class="tab-pane" id="tab_5">

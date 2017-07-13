@@ -55,6 +55,26 @@
 	</div>
 </div>
 <!-- /. Modal Visor Estado de cuenta-->
+<!-- Modal Visor Estado de cuenta Cliente externo-->
+<div class="modal fade bs-example-modal-lg" id="modal_showDebtState_ext" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="false" >
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header" style="background-color:#f4f4f4">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel" >Estado de cuenta</h4>
+			</div>
+			<div class="modal-body" id="modal_showDebtState_ext_body" style="background-color:#f4f4f4;">
+			...
+			</div>
+			<div class="modal-footer" style="background-color:#f4f4f4;">
+				<button type="button" class="btn btn-primary"
+					onclick="print_pdf('{ruta_html_finan}/clientes_externos/controller.php')"><i class='fa fa-file-pdf-o'></i>&nbsp;Estado de cuenta</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /. Modal Visor Estado de cuenta-->
 <!-- Modal Revertir deuda y borrar pago-->
 <div class="modal fade" id="modal_revert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" data-backdrop="static">
     <div class="modal-dialog">
@@ -157,7 +177,8 @@
 				<div class='form-group'>
 					<div class='col-md-6 col-sm-12'>
 						<div class='form-group'>
-							<label class="col-md-4 col-sm-3 control-label" style='text-align: right;' for='txt_ref_factura'>Fecha pago:</label>
+							<label id='span_fecha_filtro_main' name='span_fecha_filtro_main' 
+								class="col-md-4 col-sm-3 control-label" style='text-align: right;' for='txt_ref_factura'>F. pago:</label>
 							<div class="col-md-8 col-sm-8" id="div_fini" name="div_fini" >
 								<div class="input-group" id="div_fini" name="div_fini" data-placement="top"
 									 title='Fecha de pago, desde, hasta.'
@@ -250,7 +271,7 @@
 						</div>
 						<div class='col-md-6 col-sm-12'>
 							<div class='form-group'>
-								<label class="col-md-4 col-sm-3 control-label" style='text-align: right;' for='txt_ptoVenta'>No. factura:</label>
+								<label class="col-md-4 col-sm-3 control-label" style='text-align: right;' for='txt_ptoVenta'>No. secuencial:</label>
 								<div class="col-md-8 col-sm-8">
 									<input type="number" max='9999' min='1' class="form-control input-sm" name="txt_numeroFactura" id="txt_numeroFactura" >
 								</div>

@@ -661,6 +661,7 @@ function construct_table_pagos($cod_alum, $fini, $ffin, $periodo, $deuda )
 					<thead><tr>".
 			"<th style='font-size:small;text-align:center;'>Ref.</th>".
 			"<th style='font-size:small;text-align:center;'>Total Pago</th>".
+			"<th style='font-size:small;text-align:center;'>Saldo a favor</th>".
 			"<th style='font-size:small;text-align:center;'>Forma de Pago</th>".
 			"<th style='font-size:small;text-align:center;'>Fecha pago</th>".
 			"<th style='font-size:small;text-align:center;'>PDF</th>".

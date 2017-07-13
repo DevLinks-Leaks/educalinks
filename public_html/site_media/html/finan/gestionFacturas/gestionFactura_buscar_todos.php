@@ -55,6 +55,26 @@
 	</div>
 </div>
 <!-- /. Modal Visor Estado de cuenta-->
+<!-- Modal Visor Estado de cuenta Cliente externo-->
+<div class="modal fade bs-example-modal-lg" id="modal_showDebtState_ext" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="myModalLabel" aria-hidden="false" >
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header" style="background-color:#f4f4f4">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel" >Estado de cuenta</h4>
+			</div>
+			<div class="modal-body" id="modal_showDebtState_ext_body" style="background-color:#f4f4f4;">
+			...
+			</div>
+			<div class="modal-footer" style="background-color:#f4f4f4;">
+				<button type="button" class="btn btn-primary"
+					onclick="print_pdf('{ruta_html_finan}/clientes_externos/controller.php')"><i class='fa fa-file-pdf-o'></i>&nbsp;Estado de cuenta</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /. Modal Visor Estado de cuenta-->
 <!-- Modal Revertir deuda y borrar pago-->
 <div class="modal fade" id="modal_revert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" data-backdrop="static">
     <div class="modal-dialog">

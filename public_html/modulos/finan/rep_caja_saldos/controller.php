@@ -313,19 +313,25 @@ function handler() {
 			break;
 		case PRINT_PDF_ALL_DATA:
 			global $diccionario;
-			if(!isset($user_data['txt_codigo_pago']))
-				$codigo_pago = '';
+			$codigo_pago = $fechavenc_ini = $fechavenc_fin = $forma_pago =
+			$cod_titular = $id_titular = $cod_estudiante = $nombre_estudiante =
+			$nombre_titular = $ptvo_venta = $sucursal = $num_factura = $categoria_codigo = $prod_codigo = 
+			$estado = $tpago_ini = $tpago_fin = $usuario_cajero = $periodos =$grupoEconomico =
+			$nivelesEconomicos = $cursos = "-1";
+												
+			if(!isset($user_data['txt_codigo_pago']) || $user_data['txt_codigo_pago'] = '' || empty($user_data['txt_codigo_pago']) || $user_data['txt_codigo_pago'] = '0' )
+				$codigo_pago = '-1';
 			else 
 				$codigo_pago = $user_data['txt_codigo_pago'];
-			if(!isset($user_data['cmb_forma_pago']))
-				$forma_pago = '';
+			if(!isset($user_data['cmb_forma_pago']) || $user_data['cmb_forma_pago'] = '' || empty($user_data['cmb_forma_pago']) || $user_data['cmb_forma_pago'] = '0' )
+				$forma_pago = '-1';
 			else 
 				$forma_pago = $user_data['cmb_forma_pago'];
-			if(!isset($user_data['cmb_categoria']))
-				$categoria_codigo = '';
+			if(!isset($user_data['cmb_categoria']) || $user_data['cmb_categoria'] = '' || empty($user_data['cmb_categoria']) || $user_data['cmb_categoria'] = '0' )
+				$categoria_codigo = '-1';
 			else 
-				$categoria_codigo = $user_data['cmb_categoria'];
-			if(!isset($user_data['cmb_producto']))
+				$categoria_codigo = $_POST['cmb_categoria'];
+			if(!isset($user_data['cmb_producto']) || $user_data['cmb_producto'] = '' || empty($user_data['cmb_producto']) || $user_data['cmb_producto'] = '0' )
 				$prod_codigo = '';
 			else 
 			{   $true=0;
@@ -338,65 +344,85 @@ function handler() {
 				}
 				$prod_codigo.="</productos>";
 				if ( $true == 0 )
-					$prod_codigo = "";
+					$prod_codigo = '';
 			}
 			if(!isset($user_data['txt_fecha_ini']))
-				$fechavenc_ini = '';
+				$fechavenc_ini = '01/01/1900';
 			else 
 				$fechavenc_ini = $user_data['txt_fecha_ini'];
 			
 			if(!isset($user_data['txt_fecha_fin']))
-				$fechavenc_fin = '';
+				$fechavenc_fin = '01/01/1900';
 			else 
 				$fechavenc_fin = $user_data['txt_fecha_fin'];
-			if(!isset($user_data['cod_titular']))
-				$cod_titular = '';
+			if(!isset($user_data['cod_titular']) || $user_data['cod_titular'] = '' || empty($user_data['cod_titular']) || $user_data['cod_titular'] = '0' )
+				$cod_titular = '-1';
 			else 
 				$cod_titular = $user_data['cod_titular'];
-			if(!isset($user_data['txt_id_titular']))
-				$id_titular = '';
+			if(!isset($user_data['txt_id_titular']) || $user_data['txt_id_titular'] = '' || empty($user_data['txt_id_titular']) || $user_data['txt_id_titular'] = '0' )
+				$id_titular = '-1';
 			else 
 				$id_titular = $user_data['txt_id_titular'];
-			if(!isset($user_data['txt_cod_cliente']))
-				$cod_estudiante = '';
+			if(!isset($user_data['txt_cod_cliente']) || $user_data['txt_cod_cliente'] = '' || empty($user_data['txt_cod_cliente']) || $user_data['txt_cod_cliente'] = '0' )
+				$cod_estudiante = '-1';
 			else 
 				$cod_estudiante = $user_data['txt_cod_cliente'];
-			if(!isset($user_data['txt_nom_cliente']))
-				$nombre_estudiante = '';
+			if(!isset($user_data['txt_nom_cliente']) || $user_data['txt_nom_cliente'] = '' || empty($user_data['txt_nom_cliente']) || $user_data['txt_nom_cliente'] = '0' )
+				$nombre_estudiante = '-1';
 			else 
 				$nombre_estudiante = $user_data['txt_nom_cliente'];
-			if(!isset($user_data['txt_nom_titular']))
-				$nombre_titular = '';
+			if(!isset($user_data['txt_nom_titular']) || $user_data['txt_nom_titular'] = '' || empty($user_data['txt_nom_titular']) || $user_data['txt_nom_titular'] = '0' )
+				$nombre_titular = '-1';
 			else 
 				$nombre_titular = $user_data['txt_nom_titular'];
-			if(!isset($user_data['txt_ptoVenta']))
-				$ptvo_venta = '';
+			if(!isset($user_data['txt_ptoVenta']) || $user_data['txt_ptoVenta'] = '' || empty($user_data['txt_ptoVenta']) || $user_data['txt_ptoVenta'] = '0' )
+				$ptvo_venta = '-1';
 			else 
 				$ptvo_venta = $user_data['txt_ptoVenta'];
-			if(!isset($user_data['txt_sucursal']))
-				$sucursal = '';
+			if(!isset($user_data['txt_sucursal']) || $user_data['txt_sucursal'] = '' || empty($user_data['txt_sucursal']) || $user_data['txt_sucursal'] = '0' )
+				$sucursal = '-1';
 			else 
 				$sucursal = $user_data['txt_sucursal'];
-			if(!isset($user_data['num_factura']))
-				$num_factura = '';
+			if(!isset($user_data['num_factura']) || $user_data['num_factura'] = '' || empty($user_data['num_factura']) || $user_data['num_factura'] = '0' )
+				$num_factura = '-1';
 			else 
 				$num_factura = $user_data['num_factura'];
-			if(!isset($user_data['txt_ref_factura']))
-				$ref_factura = '';
+			if(!isset($user_data['txt_ref_factura']) || $user_data['txt_ref_factura'] = '' || empty($user_data['txt_ref_factura']) || $user_data['txt_ref_factura'] = '0' )
+				$ref_factura = '-1';
 			else 
 				$ref_factura = $user_data['txt_ref_factura'];
-			if(!isset($user_data['estado']))
-				$estado = '';
+			if(!isset($user_data['estado']) || $user_data['estado'] = '' || empty($user_data['estado']) || $user_data['estado'] = '0' )
+				$estado = '-1';
 			else 
 				$estado = $user_data['estado'];
-			if(!isset($user_data['txt_tneto_ini']))
-				$tpago_ini = 0;
+			if(!isset($user_data['txt_tneto_ini']) || $user_data['txt_tneto_ini'] = '' || empty($user_data['txt_tneto_ini']) || $user_data['txt_tneto_ini'] = '0' )
+				$tpago_ini = -1;
 			else 
 				$tpago_ini = (float)$user_data['txt_tneto_ini'];
-			if(!isset($user_data['txt_tneto_fin']))
-				$tpago_fin = 0;
+			if(!isset($user_data['txt_tneto_fin']) || $user_data['txt_tneto_fin'] = '' || empty($user_data['txt_tneto_fin']) || $user_data['txt_tneto_fin'] = '0' )
+				$tpago_fin = -1;
 			else 
 				$tpago_fin = (float)$user_data['txt_tneto_fin'];
+			if(!isset($user_data['cmb_grupoEconomico']) || $user_data['cmb_grupoEconomico'] = '' || empty($user_data['cmb_grupoEconomico']) || $user_data['cmb_grupoEconomico'] = '0' )
+				$grupoEconomico = '-1';
+			else 
+				$grupoEconomico = $user_data['cmb_grupoEconomico'];
+			if(!isset($user_data['periodos']) || $user_data['periodos'] = '' || empty($user_data['periodos']) || $user_data['periodos'] = '0' )
+				$periodos = '-1';
+			else 
+				$periodos = $_POST['periodos'];
+			if(!isset($user_data['cmb_usuario_cajero']) || $user_data['cmb_usuario_cajero'] = '' || empty($user_data['cmb_usuario_cajero']) || $user_data['cmb_usuario_cajero'] = '0' )
+				$usuario_cajero = '-1';
+			else 
+				$usuario_cajero = $user_data['cmb_usuario_cajero'];
+			if(!isset($user_data['cmb_nivelesEconomicos']) || $user_data['cmb_nivelesEconomicos'] = '' || empty($user_data['cmb_nivelesEconomicos']) || $user_data['cmb_nivelesEconomicos'] = '0' )
+				$nivelesEconomicos = '-1';
+			else 
+				$nivelesEconomicos = $_POST['cmb_nivelesEconomicos'];
+			if(!isset($user_data['cursos']) || $user_data['cursos'] = '' || empty($user_data['cursos'])  || $user_data['cursos'] = '0' )
+				$cursos = '-1';
+			else 
+				$cursos = $_POST['cursos'];
 			
 			header("Content-type:application/pdf");
           	header("Content-Disposition:attachment;filename='reporte_cierre_caja_saldos_a_favor.pdf'");
@@ -411,13 +437,13 @@ function handler() {
 			$pdf->SetFont('Helvetica', '', 9, '', 'false');
 			$caja_cier_codigo = $user_data["codigo"];
 			$hoy = getdate();
-			$cierre_caja->get_caja_cierre_saf( $_SESSION['peri_codi'], '-1' );
-			/*$reporte->get_caja_cierre_saf(  $codigo_pago, $fechavenc_ini, $fechavenc_fin, $forma_pago,
-											$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
-											$nombre_titular, $ptvo_venta, $sucursal, $num_factura, $categoria_codigo, $prod_codigo, 
-											$estado, $tpago_ini, $tpago_fin, $user_data['cmb_usuario_cajero'], $user_data['periodos'],$user_data['cmb_grupoEconomico'],
-											$user_data['cmb_nivelesEconomicos'],$user_data['cursos'], $user_data['tipo_reporte'] );
-			*/
+			$cierre_caja->get_caja_cierre_saf(  $_SESSION['peri_codi'], '-1',
+												$codigo_pago, $fechavenc_ini, $fechavenc_fin, $forma_pago,
+												$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
+												$nombre_titular, $ptvo_venta, $sucursal, $num_factura, $categoria_codigo, $prod_codigo, 
+												$estado, $tpago_ini, $tpago_fin, $usuario_cajero, $periodos,$grupoEconomico,
+												$nivelesEconomicos, $cursos );
+			
 			$tranx = $cierre_caja->rows;
 			$meses = array("Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic");
 			$meses_h = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");

@@ -114,7 +114,7 @@
 					else
 					{	$html_bandeja.='
 					  <td align="center">'. ( $row_mens_view_op["mens_fech_lect"] == NULL ? '<b>' : '').'
-					   '.date_format( $row_mens_view_op["mens_fech_envi"], 'd/M/Y  h:m:s' ).'
+					   '.date_format( $row_mens_view_op["mens_fech_envi"], 'd/M/Y  h:i:s A' ).'
 						'. ( $row_mens_view_op["mens_fech_lect"] == NULL ? '</b>' : '').'
 					  </td>';
 						if($op==1 or $op==2)
