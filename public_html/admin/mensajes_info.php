@@ -29,7 +29,7 @@
 			<h5>De: <?= $row_mens_info['mens_de_nomb']; ?>  (<?= $row_mens_info['mens_usua_tipo_deta_de']; ?>)
 				<? if($row_mens_info['mens_alum']!=''){ ?> - <?= $row_mens_info['mens_alum'] ?>  (<?= $row_mens_info['mens_alum_tipo_deta'] ?>)
 				<? } ?>
-				<span class="mailbox-read-time pull-right"><?=  date_format( $row_mens_info["mens_fech_envi"], 'd / M / Y  h:m:s' ); ?></span>
+				<span class="mailbox-read-time pull-right"><?=  date_format( $row_mens_info["mens_fech_envi"], 'd / M / Y  h:i:s A' ); ?></span>
 			</h5> 
 			<?
 			}
@@ -39,7 +39,7 @@
 			<h5>Para: <?= $row_mens_info['mens_para_nomb']; ?>  (<?= $row_mens_info['mens_usua_tipo_deta']; ?>)
 				<? if($row_mens_info['mens_alum']!=''){ ?> - <?= $row_mens_info['mens_alum'] ?>  (<?= $row_mens_info['mens_alum_tipo_deta'] ?>)
 				<? } ?>
-				<span class="mailbox-read-time pull-right"><?=  date_format( $row_mens_info["mens_fech_envi"], 'd / M / Y  h:m:s' ); ?></span>
+				<span class="mailbox-read-time pull-right"><?=  date_format( $row_mens_info["mens_fech_envi"], 'd / M / Y  h:i:s A' ); ?></span>
 			</h5> 
 			<?
 			}

@@ -193,7 +193,7 @@
 														$col_inicial = 2;
 														$ancho_notas = 13;
 														$ancho_nombres = 100-($ancho_notas*$num_ingr)+10;
-														/*Inicio de XML*/
+														/* Inicio de XML */
 														$xml = new DOMDocument("1.0","UTF-8");
 														/*Curso*/
 														$curso = $xml->createElement("curso");

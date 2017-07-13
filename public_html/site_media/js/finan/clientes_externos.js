@@ -42,7 +42,11 @@ $(document).ready(function(){
 				{className: "dt-body-center" , "targets": [5], "visible":false }
 			]
 	});
-	$('#modal_showDebtState').on('shown.bs.modal', function () {
+	$('#modal_showDebtState_ext').on('hidden.bs.modal', function () {
+		document.getElementById('modal_showDebtState_ext_body').innerHTML = "";
+	});
+	$('#modal_showDebtState').on('hidden.bs.modal', function () {
+		document.getElementById('modal_showDebtState_body').innerHTML = "";
 	}); 
 });
 shortcut.add("Enter", function() {$('#btn_search').trigger("click");});

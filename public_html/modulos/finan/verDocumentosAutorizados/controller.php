@@ -212,7 +212,7 @@ function handler()
 			{	if( $user_data['tipo_reporte'] == 'completo' )
 				{   $cabeceras ='N/C ref.,Número de Nota de crédito,Tipo Id,Id del titular,Titular,email titular,Número de autorización,'.
 								'Clave de acceso,Fecha de autorización,Numero secuencial,Total bruto,Total descuento,Total I.V.A.,Total I.C.E.,Total neto,Total abonado,Alumno/Cliente ref. interna,'.
-								'Alumno/Cliente nombre,Alumno/Cliente cedula,Alumno/Cliente fecha nacimiento,Fecha creación N/C,Fecha de pago,Fecha de creación de deuda,Estado electrónico,Curso';
+								'Alumno/Cliente nombre,Alumno/Cliente cedula,Alumno/Cliente fecha nacimiento,Fecha creación N/C,Fecha de pago,Ref. Factura,Numero Factura,Detalle,Fecha de creación de deuda,Estado electrónico,Curso';
 				}
 				if( $user_data['tipo_reporte'] == 'mini' )
 				{   $cabeceras ='Nota de crédito ref.,Titular,Id del titular,Sucursal,Punto de venta,Número secuencial,Total neto,Cliente ref. interna,Cliente nombre,Fecha de emisión,estado electrónico';
@@ -417,7 +417,7 @@ function handler()
 			{	$factura = new notaCredito();
 				$factura->get_notasCredito( $estadoElectronico, $fechavenc_ini, $fechavenc_fin,
 											$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
-											$nombre_titular, $ptvo_venta, $sucursal, $numeroFactura, $ref_factura, $prod_codigo, 
+											$nombre_titular, $ptvo_venta, $sucursal, $ref_factura, $prod_codigo, 
 											$estado, $tneto_ini, $tneto_fin,
 											$user_data['periodo'],$user_data['grupoEconomico'],$user_data['nivelEconomico'],
 											$user_data['curso'],$user_data['fechadeuda_ini'],$user_data['fechadeuda_fin'],
@@ -428,7 +428,7 @@ function handler()
 			{	$factura = new notaDebito();
 				$factura->get_notasDebito($estadoElectronico, $fechavenc_ini, $fechavenc_fin,
 											$cod_titular, $id_titular, $cod_estudiante, $nombre_estudiante,
-											$nombre_titular, $ptvo_venta, $sucursal, $numeroFactura, $ref_factura, 
+											$nombre_titular, $ptvo_venta, $sucursal, $ref_factura, 
 											$estado, $tneto_ini, $tneto_fin);
 				//$data['mensaje'] = "Bandeja de notas de d&eacute;bito autoziadas";
 			}
@@ -716,7 +716,7 @@ function tablaFacturaAutorizada($tabla, $factura, $permiso, $tipo_documento, $co
 				{	$opc = get_cliente_opciones( $permiso,$row['codigoAlumno'],'span',
 												 $permiso_179->rows[0]['veri'],
 												 $permiso->rows[0]['veri'],
-												 $permiso_181->rows[0]['veri'] );
+												 $permiso_181->rows[0]['veri'], $row['es_alumno'] );
 					$body .= '<td style="font-size:small;">
 						<div class="btn-group">
 							<a href="#/" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -763,26 +763,37 @@ function tablaFacturaAutorizada($tabla, $factura, $permiso, $tipo_documento, $co
 	$construct_table.="</tbody></table>";
 	return $construct_table;
 }
-function get_cliente_opciones($permiso, $codigoCliente, $type='span', $permiso_179, $permiso_180, $permiso_181 )
+function get_cliente_opciones($permiso, $codigoCliente, $type='span', $permiso_179, $permiso_180, $permiso_181, $es_alumno)
 {	global $diccionario;
+	
+	if ( $es_alumno == '1' )
+	{	$cliente = 'clientes';
+		$modal = 'modal_showDebtState';
+	}
+	else if ( $es_alumno == '0' )
+	{   $cliente = 'clientes_externos';
+		$modal = 'modal_showDebtState_ext';
+	}
+	
 	if($type=='span'){$tag=''; $space='&nbsp;';}
 	$client_options = array();
 	$opciones = '<ul class="dropdown-menu">';
 	if ($permiso_180 == 1 )
-	{	$opciones.= "<li><a href='#/' onclick='carga_visorEstadoCuenta(\"".$codigoCliente."\",".'"modal_showDebtState_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/clientes/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_showDebtState'  id='".$codigoCliente."_verEstadoCuenta' onmouseover='$(this).tooltip(".'"show"'.")' style='cursor:pointer;' data-placement='left'><span style='color:#DBBCDB;' class='fa fa-file'></span> Ver estado de cuenta</a></li>";
+	{	$opciones.= "<li><a href='#/' onclick='carga_visorEstadoCuenta(\"".$codigoCliente."\",".'"'.$modal.'_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/'.$cliente.'/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#".$modal."'  id='".$codigoCliente."_verEstadoCuenta' onmouseover='$(this).tooltip(".'"show"'.")' style='cursor:pointer;' data-placement='left'><span style='color:#DBBCDB;' class='fa fa-file'></span> Ver estado de cuenta</a></li>";
 	}
 	if ($permiso_179 == 1 )
-	{	$opciones.= "<li><a href='#/' onclick='js_clientes_carga_asignacion(\"".$codigoCliente."\",".'"modal_asign_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/clientes/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_asign'  id='".$codigoCliente."_asignar' 
+	{	$opciones.= "<li><a href='#/' onclick='js_clientes_carga_asignacion(\"".$codigoCliente."\",".'"modal_asign_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/'.$cliente.'/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_asign'  id='".$codigoCliente."_asignar' 
 	onmouseover='$(this).tooltip(".'"show"'.");' data-placement='left' style='cursor:pointer;' 
 	><span style='color:#3a3b45;' class='fa fa-percent'></span> Asignar Descuentos</a></li>";
 	}
-	if ( $permiso_181 == 1 )
-	{	$opciones.= "<li><a href='#/' onclick='js_clientes_carga_asignacionGrupoEconomico(\"".$codigoCliente."\",".'"modal_showSetGrupoEconomico_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/clientes/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_showSetGrupoEconomico'  id='".$codigoCliente."_asignarGrupoEconomico' onmouseover='$(this).tooltip(".'"show"'.");'
+	if ( $permiso_181 == 1 && $es_alumno == '1' )
+	{	$opciones.= "<li><a href='#/' onclick='js_clientes_carga_asignacionGrupoEconomico(\"".$codigoCliente."\",".'"modal_showSetGrupoEconomico_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/'.$cliente.'/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_showSetGrupoEconomico'  id='".$codigoCliente."_asignarGrupoEconomico' onmouseover='$(this).tooltip(".'"show"'.");'
 	style='cursor:pointer;' data-placement='top'><span style='color:#D89C3F;' class='fa fa-group'></span>Asignar Grupo Económico</a></li>";
 	}
-	$opciones.= "<li><a href='#/'
+	if ( $es_alumno == '1' )
+	{	$opciones.= "<li><a href='#/'
 	onclick='carga_tabla_asign_repr(\"".$codigoCliente."\",".'"div_asign_repr"'.",".'"'.$diccionario['rutas_head']['ruta_html_common'].'/representantes/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_asign_repr'  id='".$codigoCliente."_asignar_repr' 
 	style='cursor:pointer;' onmouseover='$(this).tooltip(".'"show"'.");' data-placement='top'><span style='color:#E55A2F;' class='fa fa-heart-o'></span> Asignar representante</a></li>";
-	
+	}
 	return $opciones."</ul>";
 }

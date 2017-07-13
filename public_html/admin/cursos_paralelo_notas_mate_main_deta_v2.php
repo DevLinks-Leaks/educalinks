@@ -41,12 +41,11 @@
 							<div class="box-body">
 								<script src="js/funciones_notas_secretaria.js"></script>
 								<div id="notas_view">
-									<table class="table table-striped table-bordered">
+									<table id='tbl_alumnos_notas_mate_main_deta' name='tbl_alumnos_notas_mate_main_deta' class="table table-striped table-hover">
 										<thead>
-											<tr>
-												<th  style='text-align:center;' width="10%">Código Alumno</th>
-												<th width="30%">Apellidos</th>
-												<th width="30%">Nombres</th>
+											<tr style='background-color:rgba(1, 126, 186, 0.1) !important;'>
+												<th  style='text-align:center;' width="10%">Código</th>
+												<th width="30%">Alumno</th>
 												<th style='text-align:center;' width="30%">Modificar Notas</th>
 											</tr>
 										</thead>
@@ -65,11 +64,11 @@
 											?>
 											<tr>
 												<td style='text-align:center;'><?=$row["alum_codi"]?></td>
-												<td><?=$row["alum_apel"]?></td>
-												<td><?=$row["alum_nomb"]?></td>
+												<td><?=$row["alum_apel"]?> <?=$row["alum_nomb"]?></td>
 												<td style='text-align:center;'>
-													<a 
-														class="btn btn-default" 
+													<a 	onmouseover='$(this).tooltip("show");'
+														title='Modificar notas'
+														class="btn btn-default"  data-placement='left'
 														onclick="IniciarForm('<?= $row["alum_apel"]." ".$row["alum_nomb"]?>',<?=$row["alum_curs_para_mate_codi"]?>,<?=$row["alum_codi"]?>);" 
 														data-toggle="modal" 
 														data-target="#ModalIngresarNotas">
@@ -119,6 +118,9 @@
 		<input class="form-control input-sm"name="mens_de_tipo"  type="hidden" id="mens_de_tipo" value='<?php echo $_SESSION['USUA_TIPO']; ?>'    />
 		<?php include("template/scripts.php");?>
 		<script type="text/javascript" language="javascript">
+			$(document).ready(function(){
+				$('#tbl_alumnos_notas_mate_main_deta').DataTable();
+			});
 			function ejecutar_submit(frm){
 				document.getElementById(frm).submit();
 			}

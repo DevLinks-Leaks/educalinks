@@ -1172,7 +1172,7 @@ function tablaFactura($tabla, $factura, $permiso, $estadoFac = 'P')
 									"<span class='glyphicon glyphicon-search'></span></span>";
 					$body.= "<td style='font-size:small;'>";
 					
-					if ($permiso2==true)
+					if ( $permiso2 == true )
 					{	$body.= $spanEdit;
 					}
 					$body.= "&nbsp;"."<a href='".$diccionario['ruta_html_finan']."/finan/documento/imprimir/factura/".$codigo."' target='_blank'>".$var_tooltip."</a>";
@@ -1183,7 +1183,7 @@ function tablaFactura($tabla, $factura, $permiso, $estadoFac = 'P')
 				{	$opc = get_cliente_opciones( $permiso,$row['codigoAlumno'],'span',
 												 $permiso_179->rows[0]['veri'],
 												 $permiso->rows[0]['veri'],
-												 $permiso_181->rows[0]['veri'] );
+												 $permiso_181->rows[0]['veri'], $row['es_alumno'] );
 					$body .= '<td style="font-size:small;">
 						<div class="btn-group">
 							<a href="#/" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -1228,26 +1228,37 @@ function tablaFactura($tabla, $factura, $permiso, $estadoFac = 'P')
 	$construct_table.="</tbody></table>";
 	return $construct_table;
 }
-function get_cliente_opciones($permiso, $codigoCliente, $type='span', $permiso_179, $permiso_180, $permiso_181 )
+function get_cliente_opciones($permiso, $codigoCliente, $type='span', $permiso_179, $permiso_180, $permiso_181, $es_alumno )
 {	global $diccionario;
+	
+	if ( $es_alumno == '1' )
+	{	$cliente = 'clientes';
+		$modal = 'modal_showDebtState';
+	}
+	else if ( $es_alumno == '0' )
+	{   $cliente = 'clientes_externos';
+		$modal = 'modal_showDebtState_ext';
+	}
+	
 	if($type=='span'){$tag=''; $space='&nbsp;';}
 	$client_options = array();
 	$opciones = '<ul class="dropdown-menu">';
 	if ($permiso_180 == 1 )
-	{	$opciones.= "<li><a href='#/' onclick='carga_visorEstadoCuenta(\"".$codigoCliente."\",".'"modal_showDebtState_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/clientes/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_showDebtState'  id='".$codigoCliente."_verEstadoCuenta' onmouseover='$(this).tooltip(".'"show"'.")' style='cursor:pointer;' data-placement='left'><span style='color:#DBBCDB;' class='fa fa-file'></span> Ver estado de cuenta</a></li>";
+	{	$opciones.= "<li><a href='#/' onclick='carga_visorEstadoCuenta(\"".$codigoCliente."\",".'"'.$modal.'_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/'.$cliente.'/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#".$modal."'  id='".$codigoCliente."_verEstadoCuenta' onmouseover='$(this).tooltip(".'"show"'.")' style='cursor:pointer;' data-placement='left'><span style='color:#DBBCDB;' class='fa fa-file'></span> Ver estado de cuenta</a></li>";
 	}
 	if ($permiso_179 == 1 )
-	{	$opciones.= "<li><a href='#/' onclick='js_clientes_carga_asignacion(\"".$codigoCliente."\",".'"modal_asign_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/clientes/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_asign'  id='".$codigoCliente."_asignar' 
+	{	$opciones.= "<li><a href='#/' onclick='js_clientes_carga_asignacion(\"".$codigoCliente."\",".'"modal_asign_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/'.$cliente.'/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_asign'  id='".$codigoCliente."_asignar' 
 	onmouseover='$(this).tooltip(".'"show"'.");' data-placement='left' style='cursor:pointer;' 
 	><span style='color:#3a3b45;' class='fa fa-percent'></span> Asignar Descuentos</a></li>";
 	}
-	if ( $permiso_181 == 1 )
-	{	$opciones.= "<li><a href='#/' onclick='js_clientes_carga_asignacionGrupoEconomico(\"".$codigoCliente."\",".'"modal_showSetGrupoEconomico_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/clientes/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_showSetGrupoEconomico'  id='".$codigoCliente."_asignarGrupoEconomico' onmouseover='$(this).tooltip(".'"show"'.");'
+	if ( $permiso_181 == 1 && $es_alumno == '1' )
+	{	$opciones.= "<li><a href='#/' onclick='js_clientes_carga_asignacionGrupoEconomico(\"".$codigoCliente."\",".'"modal_showSetGrupoEconomico_body"'.",".'"'.$diccionario['rutas_head']['ruta_html_finan'].'/'.$cliente.'/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_showSetGrupoEconomico'  id='".$codigoCliente."_asignarGrupoEconomico' onmouseover='$(this).tooltip(".'"show"'.");'
 	style='cursor:pointer;' data-placement='top'><span style='color:#D89C3F;' class='fa fa-group'></span>Asignar Grupo Económico</a></li>";
 	}
-	$opciones.= "<li><a href='#/'
+	if ( $es_alumno == '1' )
+	{	$opciones.= "<li><a href='#/'
 	onclick='carga_tabla_asign_repr(\"".$codigoCliente."\",".'"div_asign_repr"'.",".'"'.$diccionario['rutas_head']['ruta_html_common'].'/representantes/controller.php"'.")' aria-hidden='true' data-toggle='modal' data-target='#modal_asign_repr'  id='".$codigoCliente."_asignar_repr' 
 	style='cursor:pointer;' onmouseover='$(this).tooltip(".'"show"'.");' data-placement='top'><span style='color:#E55A2F;' class='fa fa-heart-o'></span> Asignar representante</a></li>";
-	
+	}
 	return $opciones."</ul>";
 }

@@ -6,15 +6,13 @@ function js_rep_caja_saldos_carga_reports( evento )
     document.getElementById( 'tipo_reporte' ).value = tipo_reporte;
 	document.getElementById( 'file_form' ).submit();
 }
-function js_rep_caja_saldos_carga_PagosRealizados(div, tipo_visual )
+function js_rep_caja_saldos_carga_PagosRealizados(div )
 {   document.getElementById(div).innerHTML='<br><div align="center" style="height:100%;"><i style="font-size:large;color:#E55A2F;" class="fa fa-cog fa-spin"></i></div>';
-    var fechavenc_ini = document.getElementById("txt_fecha_ini").value;
-    var fechavenc_fin = document.getElementById("txt_fecha_fin").value;
-    var data = new FormData();
-    data.append('event', 'get_payments');
-	data.append('tipo_visual', ( !tipo_visual ? 1: tipo_visual ) );
-    data.append('fechavenc_ini', fechavenc_ini);
-    data.append('fechavenc_fin', fechavenc_fin);
+    
+	var data = new FormData();
+    data.append('event', 'print_saf');
+    data.append('fechavenc_ini', document.getElementById("txt_fecha_ini").value);
+    data.append('fechavenc_fin', document.getElementById("txt_fecha_fin").value);
     var ckb_opc_adv = document.getElementById("ckb_opc_adv").checked;
 	data.append('ckb_opc_adv', ckb_opc_adv);
     if(ckb_opc_adv)
@@ -42,7 +40,7 @@ function js_rep_caja_saldos_carga_PagosRealizados(div, tipo_visual )
         data.append('cursos', document.getElementById("curso").value);
     }
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', document.getElementById('ruta_html_finan').value + '/pagos/controller.php' , true);
+    xhr.open('POST', document.getElementById('ruta_html_finan').value + '/cierre_caja/controller.php' , true);
     xhr.onreadystatechange=function(){
         if (xhr.readyState==4 && xhr.status==200)
 		{	document.getElementById(div).innerHTML=xhr.responseText;

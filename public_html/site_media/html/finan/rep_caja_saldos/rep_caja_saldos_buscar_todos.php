@@ -184,21 +184,21 @@
 								</label>
 							</div>
 							<div class='col-md-6 col-sm-4' style='text-align:left'>
-								<button type="button" class='btn btn-primary' id='btn_selectPago_search' name='btn_selectPago_search'
+								<!--<button type="button" class='btn btn-primary' id='btn_selectPago_search' name='btn_selectPago_search'
 									onmouseover='$(this).tooltip("show")' 
 									title="Buscar pagos" 
 									onclick="return js_rep_caja_saldos_carga_PagosRealizados('resultadoProcesoPagos');"><span class='fa fa-search'></span>
 								</button>
 								<button type="button" class='btn btn-default' id='btn_selectFem_excel' name='btn_selectFem_excel' 
-									onclick="js_rep_caja_saldos_carga_reports('print_excel_all_data');"><span style='color:green;' class='fa fa-file-excel-o'></span></button>
+									onclick="js_rep_caja_saldos_carga_reports('print_excel_all_data');"><span style='color:green;' class='fa fa-file-excel-o'></span></button>-->
 								<button type="button" 
 									class="btn btn-default" aria-hidden="true" 
 									onclick="js_rep_caja_saldos_carga_reports('print_pdf_all_data');"">
 									<span style='color:red;' class="fa fa-file-pdf-o"></span></button>
-								<div id='EducaLinksHelperCliente' style='display:inline;font-size:x-small;text-align:left;vertical-align:text-bottom;'>
+								<!--<div id='EducaLinksHelperCliente' style='display:inline;font-size:x-small;text-align:left;vertical-align:text-bottom;'>
 									<a href='#' onmouseover='$(this).tooltip("show")' 
 									title="Los filtros de búsqueda funcionan también para todos los reportes en Excel y PDF." data-placement='right'><span class='glyphicon glyphicon-info-sign'></span></a>
-								</div>
+								</div>-->
 							</div>
 						</div>
 					</div>
@@ -419,11 +419,12 @@
 		</div>
 	</div>
 </form>
+<!--
 <div class="box box-default">
 	<div class="box-body">
 		<div id="resultadoProcesoPagos">
-			<div style='text-align:center'>- Consultar primero -</div>
+			<div style='text-align:center; font-size:small'>Haga una consulta </div>
 			{tabla_pagos}
 		</div>
 	</div>
-</div>
+</div>-->
